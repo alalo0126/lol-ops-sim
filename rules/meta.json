@@ -1,0 +1,42 @@
+{
+  "patch": "26.20",
+  "game_version_prefix": "16.20",
+  "ddragon_version": "16.20.1",
+  "checked_at": "2026-10-19",
+  "source_levels": {
+    "verified": "검증됨: 위키, 패치노트, Data Dragon",
+    "consensus": "합의된 실전 지식: 천상계·프로가 기본기처럼 공유하는 지식",
+    "unverified": "미검증: 강의·추정값. 데이터로 확인 전까지 확정 사실로 쓰지 않음"
+  },
+  "field_convention": "규칙 항목은 {value, src, level, note?, crosscheck?} 형태. src는 아래 sources의 키. crosscheck는 1단계 실제 경기(16.20, KR 챌린저·GM 정글러)로 맞춰 본 결과.",
+  "sources": {
+    "wiki:Smite": "https://wiki.leagueoflegends.com/en-us/Smite",
+    "wiki:Role_Quests": "https://wiki.leagueoflegends.com/en-us/Role_Quests",
+    "wiki:Gustwalker_Hatchling": "https://wiki.leagueoflegends.com/en-us/Gustwalker_Hatchling",
+    "wiki:World_Atlas": "https://wiki.leagueoflegends.com/en-us/World_Atlas",
+    "wiki:Jungling": "https://wiki.leagueoflegends.com/en-us/Jungling",
+    "wiki:Gromp": "https://wiki.leagueoflegends.com/en-us/Gromp",
+    "wiki:Blue_Sentinel": "https://wiki.leagueoflegends.com/en-us/Blue_Sentinel",
+    "wiki:Red_Brambleback": "https://wiki.leagueoflegends.com/en-us/Red_Brambleback",
+    "wiki:Greater_Murk_Wolf": "https://wiki.leagueoflegends.com/en-us/Greater_Murk_Wolf",
+    "wiki:Crimson_Raptor": "https://wiki.leagueoflegends.com/en-us/Crimson_Raptor",
+    "wiki:Ancient_Krug": "https://wiki.leagueoflegends.com/en-us/Ancient_Krug",
+    "wiki:Rift_Scuttler": "https://wiki.leagueoflegends.com/en-us/Rift_Scuttler",
+    "wiki:Voidgrub": "https://wiki.leagueoflegends.com/en-us/Voidgrub",
+    "wiki:Rift_Herald": "https://wiki.leagueoflegends.com/en-us/Rift_Herald",
+    "wiki:Baron_Nashor": "https://wiki.leagueoflegends.com/en-us/Baron_Nashor",
+    "wiki:Dragon_pit": "https://wiki.leagueoflegends.com/en-us/Dragon_pit_(League_of_Legends)",
+    "wiki:Infernal_Drake": "https://wiki.leagueoflegends.com/en-us/Infernal_Drake",
+    "wiki:Elder_Dragon": "https://wiki.leagueoflegends.com/en-us/Elder_Dragon",
+    "wiki:Atakhan": "https://wiki.leagueoflegends.com/en-us/Atakhan",
+    "wiki:Minion": "https://wiki.leagueoflegends.com/en-us/Minion_(League_of_Legends)",
+    "wiki:Melee": "https://wiki.leagueoflegends.com/en-us/Melee",
+    "wiki:Runaans_Hurricane": "https://wiki.leagueoflegends.com/en-us/Runaan%27s_Hurricane",
+    "wiki:Tiamat": "https://wiki.leagueoflegends.com/en-us/Tiamat",
+    "wiki:Item": "https://wiki.leagueoflegends.com/en-us/Item_(League_of_Legends)",
+    "pn:26.1": "https://www.sheepesports.com/en/lol/articles/patch-26-1-new-role-quests-atakhan-and-feats-of-strength-removed-new-items-added/en",
+    "pn:26.20": "https://www.gameleap.com/articles/lol-26-20-patch-notes-all-changes",
+    "ddragon": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/",
+    "stage1": "1단계 수집 데이터 data/raw (2026-10-19 시점 158~169판, gameVersion 16.20 전부)"
+  }
+}

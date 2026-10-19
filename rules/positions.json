@@ -1,0 +1,140 @@
+{
+  "_doc": "포지션 구분과 패널티. 포지션은 챔피언 선택에서 배정된(drafted) 포지션 기준.",
+  "position_assignment": {
+    "value": "챔피언 선택에서 배정된 포지션이 강타 가능 여부, 서포터 아이템, 포지션 퀘스트를 정한다. 챔피언 선택 중 포지션을 바꾸면 퀘스트도 바뀐다.",
+    "src": "wiki:Role_Quests", "level": "verified"
+  },
+  "smite": {
+    "eligibility": {
+      "value": "정글 포지션으로 배정된 플레이어만 선택 가능. 다른 포지션은 선택 불가. V25.09부터 게임 중 다른 스펠로 교체도 불가.",
+      "src": "wiki:Smite", "level": "verified",
+      "note": "설계 문서의 '강타는 정글만'은 현재 규칙과 일치(V25.09 변경)."
+    },
+    "requires_jungle_item": {
+      "value": "강타 보유자는 정글 아이템(펫)을 사기 전엔 소모품만 구매 가능.",
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified"
+    },
+    "cooldown_s": {"value": 15, "src": "wiki:Smite", "level": "verified"},
+    "recharge_s": {"value": 90, "src": "wiki:Smite", "level": "verified", "note": "소환사 주문 가속으로 감소"},
+    "charges": {
+      "value": {"max": 2, "start": 1, "second_charge_recharge_starts_at_s": 48},
+      "src": "wiki:Smite", "level": "verified",
+      "note": "V26.01에서 충전 시작 1:20 → 0:48. 위키 문장이 '0:48부터 90초마다 충전'인지 '0:48에 2번째 충전'인지 애매함 → UNVERIFIED.md 참고",
+      "crosscheck": "1분 프레임이라 1단계 데이터로 확인 불가"
+    },
+    "range": {"value": 500, "src": "wiki:Smite", "level": "verified"},
+    "damage_true": {
+      "value": {"smite": 600, "unleashed": 1000, "primal": 1400, "vs_champion_or_pet": 40},
+      "src": "wiki:Smite", "level": "verified",
+      "note": "V26.01 수치. 강화 강타는 챔피언에 20% 둔화 2초, 원시 강타는 대상과 주변 몬스터 모두 피해"
+    },
+    "upgrade_thresholds_treats": {
+      "value": {"unleashed": 15, "primal": 35},
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified",
+      "note": "V26.01에서 20/40 → 15/35. 35 달성은 정글 포지션 퀘스트 완료와 같다."
+    }
+  },
+  "jungle_item": {
+    "items": ["Gustwalker Hatchling", "Mosstomper Seedling", "Scorchclaw Pup"],
+    "cost": {"value": 450, "src": "wiki:Gustwalker_Hatchling", "level": "verified", "note": "판매 불가, 시작 아이템 1개 제한"},
+    "purchase_requirement": {"value": "강타 보유", "src": "wiki:Gustwalker_Hatchling", "level": "verified"},
+    "lane_minion_xp_penalty": {
+      "value": "라인 미니언 경험치 70% → 0% 감소(게임 시간에 따라 줄어듦). 평균 레벨보다 1.5 이상 뒤처지면 적용 안 함.",
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified",
+      "note": "감소율이 0%가 되는 시각은 위키에 없음 → UNVERIFIED"
+    },
+    "monster_hunter_penalty": {
+      "value": "미니언 골드가 몬스터 골드의 40%를 넘으면 라인 미니언당 골드 -13, 경험치 -50%. 14분에 해제.",
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified"
+    },
+    "monster_damage": {
+      "value": {"bonus_damage_to_non_epic": 0.10, "damage_taken_from_non_epic_mult": 0.50},
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified", "note": "V26.01"
+    },
+    "large_monster_bonus_xp": {
+      "value": {"per_kill": 80, "first_kill_extra": 150, "comeback_per_level_behind": 50},
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified",
+      "note": "역전 보너스 발동 기준이 위키 안에서 1.1레벨/1.5레벨로 엇갈림 → UNVERIFIED"
+    },
+    "kill_heal": {
+      "value": "0 ~ (90~250, 평균 레벨 비례) + 잃은 체력 1%당 1.25%. 마나 19~87, 기력 15 회복.",
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified"
+    },
+    "pet_damage": {
+      "value": "초당 1회, 650 범위 안 나를 공격하는 몬스터 모두에게 고정 피해(기본 20~150). 에픽 몬스터 막타 불가. 펫이 때리는 동안 초당 6~36 회복. V26.06부터 여러 캠프 동시 타격 불가.",
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified",
+      "note": "V26.16 계수 상향(AP 16%, 방어력 25%, 마저 25%, 체력 4%)"
+    },
+    "treats": {
+      "value": {"per_large_monster": 1, "bonus_treat_every_s": 60, "bonus_treat_every_s_after_final": 90, "bonus_treat_gold": 20},
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified",
+      "note": "에픽 몬스터·챔피언 처치의 간식 규칙은 위키에 없음 → UNVERIFIED"
+    },
+    "gustwalker_final_ms": {
+      "value": {"in_brush": 0.30, "on_large_monster_kill": 0.45, "decay_s": 1.5},
+      "src": "wiki:Gustwalker_Hatchling", "level": "verified"
+    }
+  },
+  "role_quests": {
+    "_doc": "V26.01 도입. 퀘스트 보상은 포지션별. 수치는 V26.19까지 반영된 위키 기준.",
+    "jungle": {
+      "required_points": 35,
+      "point_source": "펫에게 간식 1개당 1점. 자연 증가 없음.",
+      "reward": "강화 강타 → 원시 강타, 정글 캠프당 골드 +10·경험치 +10, 정글·강가에서 이속 +4%(비전투 +8%)",
+      "src": "wiki:Role_Quests", "level": "verified"
+    },
+    "top": {
+      "required_points": 1200,
+      "reward": "강화 순간이동(쿨 390초, TP 보유 시 도착 후 최대 체력 35% 보호막 10초), 경험치 600, 모든 경험치 +11%, 처치 관여당 경험치 80, 레벨 상한 20",
+      "src": "wiki:Role_Quests", "level": "verified"
+    },
+    "mid": {
+      "required_points": 1350,
+      "reward": "AD·AP +8%, 2단계 신발 → 전용 3단계 신발 무료 업그레이드",
+      "src": "wiki:Role_Quests", "level": "verified"
+    },
+    "bot": {
+      "required_points": 1350,
+      "reward": "300골드, 미니언당 +2골드, 처치 관여당 +40골드, 신발 전용 칸(7번째 칸)",
+      "src": "wiki:Role_Quests", "level": "verified"
+    },
+    "support": {
+      "required_points": 800,
+      "point_source": "세계 지도집·룬 나침반으로 번 골드",
+      "reward": "룬 나침반 → 세계의 현상금(무료로 최종 서폿템 선택), 제어 와드 40골드, 퀘스트 칸에 제어 와드 보관",
+      "src": "wiki:Role_Quests", "level": "verified"
+    },
+    "lane_points": {
+      "value": {
+        "passive_start_s": 65, "passive_in_lane_per_5s": 7.5, "passive_out_of_lane_per_3s": 1,
+        "out_of_lane_penalty": "-75%, 퀘스트 진행도에 따라 -0%까지 줄어듦",
+        "roam_allowance": "라인에서 2분마다 1분 로밍 무패널티 적립",
+        "recall_pause_s": 12
+      },
+      "src": "wiki:Role_Quests", "level": "verified", "note": "V26.09 변경"
+    },
+    "off_lane_minion_penalty": {
+      "value": "탑·미드·바텀·서폿이 자기 라인 밖에서 미니언을 잡으면 골드·경험치 감소. V26.1 도입 시 -25%(레벨 3까지). V26.16에 서폿의 바텀 밖 패널티는 -33%, 레벨 기준 5로 변경.",
+      "src": "pn:26.1", "level": "verified",
+      "note": "탑·미드·원딜의 현재 값이 V26.1 이후 바뀌었는지 위키에서 확인 못 함 → UNVERIFIED"
+    }
+  },
+  "support_item": {
+    "item": "World Atlas",
+    "cost": {"value": 400, "src": "wiki:World_Atlas", "level": "verified"},
+    "eligibility": {
+      "value": "서포터로 배정된 플레이어만. 게임 시작 시 자동 구매. 다른 포지션은 접근 불가(V25.09).",
+      "src": "wiki:World_Atlas", "level": "verified"
+    },
+    "upgrade": {"value": "Shared Riches·기본 골드로 400골드 벌면 룬 나침반(와드 3개 충전)", "src": "wiki:World_Atlas", "level": "verified"},
+    "shared_riches": {
+      "value": {"charge_every_s": 20, "max_charges": 3, "first_charge_s": 65, "minion_kill_gold": 18, "damage_gold": 18,
+                "execute_threshold": {"melee_minion": 0.5, "ranged_minion": 0.3}},
+      "src": "wiki:World_Atlas", "level": "verified", "note": "V26.16에 골드 15 → 18"
+    },
+    "minion_gold_penalty": {
+      "value": "5분 전: 미니언 24÷(팀의 서폿템 수)마리 이상 잡으면 미니언 골드 -80%. 5분 후: 분당 6÷(서폿템 수)마리 이상이면 -50~80%.",
+      "src": "wiki:World_Atlas", "level": "verified", "note": "V26.06 기준값"
+    }
+  }
+}

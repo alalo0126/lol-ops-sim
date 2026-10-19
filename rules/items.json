@@ -1,0 +1,8233 @@
+{
+ "_doc": "Data Dragon item.json 중 협곡 아이템 정리본. 다른 모드 변형(6자리 id, 정글 펫 1105~1107)은 뺐다. bought_in_stage1은 1단계 경기에서 구매된 횟수. 구매 제한은 rules/items_restrictions.json이 기준.",
+ "_source": {
+  "src": "ddragon",
+  "level": "verified",
+  "ddragon_version": "16.20.1"
+ },
+ "items": {
+  "1001": {
+   "name_en": "Boots",
+   "name_ko": "장화",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 300,
+    "sell": 210
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 25
+   },
+   "from": [],
+   "into": [
+    "3005",
+    "3047",
+    "3008",
+    "3006",
+    "3009",
+    "3010",
+    "3020",
+    "3111",
+    "3117",
+    "3158"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1576
+  },
+  "1004": {
+   "name_en": "Faerie Charm",
+   "name_ko": "요정의 부적",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 200,
+    "sell": 140
+   },
+   "tags": [
+    "ManaRegen"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [
+    "3114",
+    "3012",
+    "4642"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 81
+  },
+  "1006": {
+   "name_en": "Rejuvenation Bead",
+   "name_ko": "원기 회복의 구슬",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 300,
+    "sell": 120
+   },
+   "tags": [
+    "HealthRegen"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [
+    "3109",
+    "3211",
+    "323109",
+    "3801"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 105
+  },
+  "1011": {
+   "name_en": "Giant's Belt",
+   "name_ko": "거인의 허리띠",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Health"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350
+   },
+   "from": [
+    "1028"
+   ],
+   "into": [
+    "4637",
+    "3084",
+    "2525",
+    "3039",
+    "3083",
+    "3116",
+    "3119",
+    "3143",
+    "323119",
+    "3748",
+    "6665",
+    "6609",
+    "6667",
+    "8001"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 221
+  },
+  "1018": {
+   "name_en": "Cloak of Agility",
+   "name_ko": "민첩성의 망토",
+   "gold": {
+    "base": 600,
+    "purchasable": true,
+    "total": 600,
+    "sell": 420
+   },
+   "tags": [
+    "CriticalStrike"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.15
+   },
+   "from": [],
+   "into": [
+    "123430",
+    "667666",
+    "3031",
+    "3086",
+    "6670",
+    "3033",
+    "3039",
+    "3508",
+    "3095",
+    "6676"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 586
+  },
+  "1026": {
+   "name_en": "Blasting Wand",
+   "name_ko": "방출의 마법봉",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 850,
+    "sell": 595
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 45
+   },
+   "from": [],
+   "into": [
+    "2522",
+    "3100",
+    "326621",
+    "4637",
+    "3135",
+    "3165",
+    "3115",
+    "324005",
+    "2510",
+    "3116",
+    "3118",
+    "326657",
+    "6621",
+    "6657"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 268
+  },
+  "1027": {
+   "name_en": "Sapphire Crystal",
+   "name_ko": "사파이어 수정",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 300,
+    "sell": 210
+   },
+   "tags": [
+    "Mana"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 300
+   },
+   "from": [],
+   "into": [
+    "3024",
+    "3802",
+    "3803"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 143
+  },
+  "1028": {
+   "name_en": "Ruby Crystal",
+   "name_ko": "루비 수정",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 280
+   },
+   "tags": [
+    "Health"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150
+   },
+   "from": [],
+   "into": [
+    "3742",
+    "1011",
+    "3068",
+    "2021",
+    "323222",
+    "323075",
+    "326617",
+    "323107",
+    "3012",
+    "3147",
+    "3067",
+    "3211",
+    "2502",
+    "322526",
+    "2526",
+    "3023",
+    "3044",
+    "3053",
+    "3066",
+    "3075",
+    "3152",
+    "3161",
+    "3801",
+    "3803",
+    "4401",
+    "4635",
+    "6035",
+    "6660",
+    "6662"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1675
+  },
+  "1029": {
+   "name_en": "Cloth Armor",
+   "name_ko": "천 갑옷",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 300,
+    "sell": 210
+   },
+   "tags": [
+    "Armor"
+   ],
+   "stats": {
+    "FlatArmorMod": 15
+   },
+   "from": [],
+   "into": [
+    "2421",
+    "2420",
+    "1031",
+    "323050",
+    "323190",
+    "2019",
+    "3193",
+    "3047",
+    "3024",
+    "3050",
+    "2524",
+    "3023",
+    "3076",
+    "3082",
+    "3105",
+    "3190"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 994
+  },
+  "1031": {
+   "name_en": "Chain Vest",
+   "name_ko": "쇠사슬 조끼",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "Armor"
+   ],
+   "stats": {
+    "FlatArmorMod": 40
+   },
+   "from": [
+    "1029"
+   ],
+   "into": [
+    "3742",
+    "3068",
+    "323002",
+    "3109",
+    "323075",
+    "2502",
+    "3002",
+    "3075",
+    "323109",
+    "6665",
+    "6662"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 301
+  },
+  "1033": {
+   "name_en": "Null-Magic Mantle",
+   "name_ko": "마법무효화의 망토",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 280
+   },
+   "tags": [
+    "SpellBlock"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 20
+   },
+   "from": [],
+   "into": [
+    "1057",
+    "3140",
+    "323050",
+    "323190",
+    "3193",
+    "3050",
+    "3001",
+    "3211",
+    "2524",
+    "3155",
+    "3105",
+    "3111",
+    "3190",
+    "4632"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 565
+  },
+  "1036": {
+   "name_en": "Long Sword",
+   "name_ko": "롱소드",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 350,
+    "sell": 245
+   },
+   "tags": [
+    "Damage",
+    "Lane"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 10
+   },
+   "from": [],
+   "into": [
+    "1053",
+    "4003",
+    "6701",
+    "2015",
+    "2019",
+    "2021",
+    "3077",
+    "6670",
+    "3133",
+    "2517",
+    "323004",
+    "3142",
+    "3004",
+    "2523",
+    "3032",
+    "3035",
+    "3044",
+    "3051",
+    "3155",
+    "6690",
+    "3123",
+    "3134",
+    "6699",
+    "6671",
+    "6692"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 3703
+  },
+  "1037": {
+   "name_en": "Pickaxe",
+   "name_ko": "곡괭이",
+   "gold": {
+    "base": 875,
+    "purchasable": true,
+    "total": 875,
+    "sell": 613
+   },
+   "tags": [
+    "Damage"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 25
+   },
+   "from": [],
+   "into": [
+    "667666",
+    "3071",
+    "6333",
+    "3031",
+    "3153",
+    "6701",
+    "2020",
+    "2517",
+    "3087",
+    "6695",
+    "2523",
+    "3053",
+    "3072",
+    "3124",
+    "3181",
+    "3139",
+    "3161",
+    "6029",
+    "6035",
+    "6673",
+    "6676",
+    "6692"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1150
+  },
+  "1038": {
+   "name_en": "B. F. Sword",
+   "name_ko": "B.F. 대검",
+   "gold": {
+    "base": 1300,
+    "purchasable": true,
+    "total": 1300,
+    "sell": 910
+   },
+   "tags": [
+    "Damage"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 40
+   },
+   "from": [],
+   "into": [
+    "3031",
+    "3026",
+    "3032",
+    "3072",
+    "3095",
+    "4403",
+    "6671"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 448
+  },
+  "1042": {
+   "name_en": "Dagger",
+   "name_ko": "단검",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 250,
+    "sell": 175
+   },
+   "tags": [
+    "AttackSpeed"
+   ],
+   "stats": {
+    "PercentAttackSpeedMod": 0.1
+   },
+   "from": [],
+   "into": [
+    "1043",
+    "3086",
+    "2510",
+    "3006",
+    "3046",
+    "3051",
+    "3073",
+    "3131",
+    "3144",
+    "6631",
+    "6675",
+    "6677"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1040
+  },
+  "1043": {
+   "name_en": "Recurve Bow",
+   "name_ko": "곡궁",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 700,
+    "sell": 490
+   },
+   "tags": [
+    "AttackSpeed",
+    "OnHit"
+   ],
+   "stats": {
+    "PercentAttackSpeedMod": 0.15
+   },
+   "from": [
+    "1042"
+   ],
+   "into": [
+    "3302",
+    "3153",
+    "3115",
+    "6672",
+    "3091",
+    "3124"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 234
+  },
+  "1052": {
+   "name_en": "Amplifying Tome",
+   "name_ko": "증폭의 고서",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 280
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 20
+   },
+   "from": [],
+   "into": [
+    "3113",
+    "2421",
+    "2420",
+    "3145",
+    "124011",
+    "4637",
+    "3916",
+    "6656",
+    "3147",
+    "3146",
+    "3802",
+    "4005",
+    "2508",
+    "326616",
+    "3108",
+    "3116",
+    "3124",
+    "4630",
+    "323504",
+    "4628",
+    "4632",
+    "4635",
+    "4642",
+    "4644"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1735
+  },
+  "1053": {
+   "name_en": "Vampiric Scepter",
+   "name_ko": "흡혈의 낫",
+   "gold": {
+    "base": 550,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Damage",
+    "LifeSteal"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 15,
+    "PercentLifeStealMod": 0.07
+   },
+   "from": [
+    "1036"
+   ],
+   "into": [
+    "3153",
+    "3146",
+    "3072",
+    "3074",
+    "3139",
+    "4403"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 82
+  },
+  "1054": {
+   "name_en": "Doran's Shield",
+   "name_ko": "도란의 방패",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 180
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 110,
+    "FlatHPRegenMod": 0.8
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 138
+  },
+  "1055": {
+   "name_en": "Doran's Blade",
+   "name_ko": "도란의 검",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 180
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "LifeSteal",
+    "SpellVamp",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 80,
+    "FlatPhysicalDamageMod": 10
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 203
+  },
+  "1056": {
+   "name_en": "Doran's Ring",
+   "name_ko": "도란의 반지",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "Lane",
+    "ManaRegen",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 90,
+    "FlatMagicDamageMod": 18
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 465
+  },
+  "1057": {
+   "name_en": "Negatron Cloak",
+   "name_ko": "음전자 망토",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 850,
+    "sell": 595
+   },
+   "tags": [
+    "SpellBlock"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 45
+   },
+   "from": [
+    "1033"
+   ],
+   "into": [
+    "2504",
+    "8020",
+    "328020",
+    "3091",
+    "6665",
+    "4401"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 96
+  },
+  "1058": {
+   "name_en": "Needlessly Large Rod",
+   "name_ko": "쓸데없이 큰 지팡이",
+   "gold": {
+    "base": 1200,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 65
+   },
+   "from": [],
+   "into": [
+    "3157",
+    "4645",
+    "3089",
+    "3102",
+    "3128",
+    "4403"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 414
+  },
+  "1082": {
+   "name_en": "Dark Seal",
+   "name_ko": "암흑의 인장",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 350,
+    "sell": 140
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 50,
+    "FlatMagicDamageMod": 15
+   },
+   "from": [],
+   "into": [
+    "3041"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 413
+  },
+  "1083": {
+   "name_en": "Cull",
+   "name_ko": "수확의 낫",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 180
+   },
+   "tags": [
+    "Damage",
+    "OnHit",
+    "Lane"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 7
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 146
+  },
+  "1086": {
+   "name_en": "Doran's Bow",
+   "name_ko": "도란의 활",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed",
+    "SpellVamp",
+    "Lane"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 8,
+    "PercentAttackSpeedMod": 0.15
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 427
+  },
+  "1101": {
+   "name_en": "Scorchclaw Pup",
+   "name_ko": "새끼 화염발톱",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 0
+   },
+   "tags": [
+    "Jungle"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 215
+  },
+  "1102": {
+   "name_en": "Gustwalker Hatchling",
+   "name_ko": "새끼 바람돌이",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 0
+   },
+   "tags": [
+    "Jungle"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 228
+  },
+  "1103": {
+   "name_en": "Mosstomper Seedling",
+   "name_ko": "새끼 이끼쿵쿵이",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 0
+   },
+   "tags": [
+    "Jungle"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 10
+  },
+  "1120": {
+   "name_en": "Doran's Helm",
+   "name_ko": "도란의 투구",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 450,
+    "sell": 180
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "Armor",
+    "Lane"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 8,
+    "FlatHPPoolMod": 150,
+    "FlatArmorMod": 8
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 117
+  },
+  "1501": {
+   "name_en": "Fortification",
+   "name_ko": "요새화",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1502": {
+   "name_en": "Reinforced Armor",
+   "name_ko": "이중 갑옷",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1503": {
+   "name_en": "Warden's Eye",
+   "name_ko": "파수꾼의 눈",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "HealthRegen",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1505": {
+   "name_en": "Reinforced Armor",
+   "name_ko": "이중 갑옷",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1506": {
+   "name_en": "Reinforced Armor",
+   "name_ko": "이중 갑옷",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1507": {
+   "name_en": "Overcharged",
+   "name_ko": "과충전",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1508": {
+   "name_en": "Anti-tower Socks",
+   "name_ko": "방탄 양말",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1509": {
+   "name_en": "Gusto",
+   "name_ko": "체질",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1510": {
+   "name_en": "Phreakish Gusto",
+   "name_ko": "특이 체질",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1511": {
+   "name_en": "Super Mech Armor",
+   "name_ko": "슈퍼 메크 방어구",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1512": {
+   "name_en": "Super Mech Power Field",
+   "name_ko": "슈퍼 메크 전력장",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1515": {
+   "name_en": "Turret Plating",
+   "name_ko": "포탑 방패",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1516": {
+   "name_en": "Structure Bounty",
+   "name_ko": "구조물 현상금",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "HealthRegen",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1517": {
+   "name_en": "Structure Bounty",
+   "name_ko": "구조물 현상금",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "HealthRegen",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1518": {
+   "name_en": "Structure Bounty",
+   "name_ko": "구조물 현상금",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "HealthRegen",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1519": {
+   "name_en": "Structure Bounty",
+   "name_ko": "구조물 현상금",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "HealthRegen",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1520": {
+   "name_en": "OvererchargedHA",
+   "name_ko": "과충전HA",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1521": {
+   "name_en": "Fortification",
+   "name_ko": "요새화",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1522": {
+   "name_en": "Tower Power-Up",
+   "name_ko": "포탑 강화",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "Damage"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1523": {
+   "name_en": "Overcharged",
+   "name_ko": "과충전",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "ManaRegen",
+    "OnHit"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "1524": {
+   "name_en": "Overgrowth",
+   "name_ko": "과잉성장",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Armor",
+    "Damage"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2001": {
+   "name_en": "Recall",
+   "name_ko": "귀환",
+   "gold": {
+    "base": 60,
+    "purchasable": false,
+    "total": 60,
+    "sell": 42
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2003": {
+   "name_en": "Health Potion",
+   "name_ko": "체력 물약",
+   "gold": {
+    "base": 50,
+    "purchasable": true,
+    "total": 50,
+    "sell": 20
+   },
+   "tags": [
+    "HealthRegen",
+    "Consumable",
+    "Lane",
+    "Jungle"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 3873
+  },
+  "2007": {
+   "name_en": "Disabled Recall",
+   "name_ko": "귀환 비활성화",
+   "gold": {
+    "base": 60,
+    "purchasable": false,
+    "total": 60,
+    "sell": 42
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2010": {
+   "name_en": "Total Biscuit of Everlasting Will",
+   "name_ko": "굳건한 의지의 완전한 비스킷",
+   "gold": {
+    "base": 50,
+    "purchasable": false,
+    "total": 50,
+    "sell": 5
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2019": {
+   "name_en": "Steel Sigil",
+   "name_ko": "강철 인장",
+   "gold": {
+    "base": 150,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "Armor",
+    "Damage"
+   ],
+   "stats": {
+    "FlatArmorMod": 30,
+    "FlatPhysicalDamageMod": 15
+   },
+   "from": [
+    "1029",
+    "1036",
+    "1029"
+   ],
+   "into": [
+    "6333",
+    "6700",
+    "3026"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 215
+  },
+  "2020": {
+   "name_en": "The Brutalizer",
+   "name_ko": "야수화",
+   "gold": {
+    "base": 212,
+    "purchasable": true,
+    "total": 1337,
+    "sell": 936
+   },
+   "tags": [
+    "Damage",
+    "CooldownReduction",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 25
+   },
+   "from": [
+    "2022",
+    "1037"
+   ],
+   "into": [
+    "6698",
+    "2520",
+    "6699",
+    "6696"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 357
+  },
+  "2021": {
+   "name_en": "Tunneler",
+   "name_ko": "땅굴 채굴기",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 1150,
+    "sell": 805
+   },
+   "tags": [
+    "Health",
+    "Damage"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 250,
+    "FlatPhysicalDamageMod": 15
+   },
+   "from": [
+    "1036",
+    "1028"
+   ],
+   "into": [
+    "2501",
+    "3053",
+    "3073",
+    "3814",
+    "3181",
+    "3161",
+    "3748",
+    "6610"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 231
+  },
+  "2022": {
+   "name_en": "Glowing Mote",
+   "name_ko": "빛나는 티끌",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 250,
+    "sell": 175
+   },
+   "tags": [
+    "CooldownReduction"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [
+    "2020",
+    "3024",
+    "3133",
+    "3802",
+    "3067",
+    "3057",
+    "3108",
+    "3158",
+    "4642",
+    "6660"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 749
+  },
+  "2031": {
+   "name_en": "Refillable Potion",
+   "name_ko": "충전형 물약",
+   "gold": {
+    "base": 150,
+    "purchasable": true,
+    "total": 150,
+    "sell": 60
+   },
+   "tags": [
+    "HealthRegen",
+    "Consumable",
+    "Active",
+    "Lane",
+    "Jungle"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [
+    "2033"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1138
+  },
+  "2033": {
+   "name_en": "Corrupting Potion",
+   "name_ko": "부패 물약",
+   "gold": {
+    "base": 350,
+    "purchasable": false,
+    "total": 500,
+    "sell": 200
+   },
+   "tags": [
+    "Active",
+    "Consumable",
+    "HealthRegen",
+    "Lane",
+    "ManaRegen"
+   ],
+   "stats": {},
+   "from": [
+    "2031"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2051": {
+   "name_en": "Guardian's Horn",
+   "name_ko": "수호자의 뿔피리",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 950,
+    "sell": 665
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150,
+    "FlatHPRegenMod": 4
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2052": {
+   "name_en": "Poro-Snax",
+   "name_ko": "포로 간식",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2055": {
+   "name_en": "Control Ward",
+   "name_ko": "제어 와드",
+   "gold": {
+    "base": 75,
+    "purchasable": true,
+    "total": 75,
+    "sell": 30
+   },
+   "tags": [
+    "Consumable",
+    "Lane",
+    "Stealth",
+    "Vision"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 8908
+  },
+  "2065": {
+   "name_en": "Shurelya's Battlesong",
+   "name_ko": "슈렐리아의 군가",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 2200,
+    "sell": 1540
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "Active",
+    "CooldownReduction",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 50,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3113",
+    "4642"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 20
+  },
+  "2138": {
+   "name_en": "Elixir of Iron",
+   "name_ko": "강철의 영약",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 500,
+    "sell": 200
+   },
+   "tags": [
+    "Health",
+    "Consumable",
+    "NonbootsMovement",
+    "Tenacity"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 41
+  },
+  "2139": {
+   "name_en": "Elixir of Sorcery",
+   "name_ko": "마법의 영약",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 500,
+    "sell": 200
+   },
+   "tags": [
+    "Consumable",
+    "ManaRegen",
+    "SpellDamage"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 38
+  },
+  "2140": {
+   "name_en": "Elixir of Wrath",
+   "name_ko": "분노의 영약",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 500,
+    "sell": 200
+   },
+   "tags": [
+    "Consumable",
+    "Damage",
+    "LifeSteal",
+    "SpellVamp"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 64
+  },
+  "2141": {
+   "name_en": "Cappa Juice",
+   "name_ko": "카파 주스",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 300,
+    "sell": 300
+   },
+   "tags": [
+    "Damage",
+    "Consumable"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2150": {
+   "name_en": "Elixir of Skill",
+   "name_ko": "숙련의 영약",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Consumable"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2151": {
+   "name_en": "Elixir of Avarice",
+   "name_ko": "탐욕의 영약",
+   "gold": {
+    "base": 50,
+    "purchasable": false,
+    "total": 50,
+    "sell": 20
+   },
+   "tags": [
+    "Health",
+    "Consumable",
+    "Tenacity"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2152": {
+   "name_en": "Elixir of Force",
+   "name_ko": "힘의 영약",
+   "gold": {
+    "base": 50,
+    "purchasable": false,
+    "total": 50,
+    "sell": 20
+   },
+   "tags": [
+    "Consumable",
+    "Tenacity"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2403": {
+   "name_en": "Minion Dematerializer",
+   "name_ko": "미니언 해체분석기",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "2420": {
+   "name_en": "Seeker's Armguard",
+   "name_ko": "추적자의 팔목 보호대",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 1600,
+    "sell": 640
+   },
+   "tags": [
+    "Armor",
+    "SpellDamage",
+    "Active"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 40,
+    "FlatArmorMod": 25
+   },
+   "from": [
+    "1052",
+    "1029",
+    "1052"
+   ],
+   "into": [
+    "3157"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 200
+  },
+  "2421": {
+   "name_en": "Shattered Armguard",
+   "name_ko": "부서진 팔목 보호대",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 1600,
+    "sell": 640
+   },
+   "tags": [],
+   "stats": {
+    "FlatMagicDamageMod": 40,
+    "FlatArmorMod": 25
+   },
+   "from": [
+    "1052",
+    "1029",
+    "1052"
+   ],
+   "into": [
+    "3157"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2422": {
+   "name_en": "Slightly Magical Footwear",
+   "name_ko": "약간 신비한 신발",
+   "gold": {
+    "base": 300,
+    "purchasable": false,
+    "total": 300,
+    "sell": 90
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 25
+   },
+   "from": [],
+   "into": [
+    "3006",
+    "3047",
+    "3020",
+    "3158",
+    "3111",
+    "3117",
+    "3009",
+    "3008"
+   ],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2501": {
+   "name_en": "Overlord's Bloodmail",
+   "name_ko": "지배자의 피갑옷",
+   "gold": {
+    "base": 1000,
+    "purchasable": true,
+    "total": 3300,
+    "sell": 2310
+   },
+   "tags": [
+    "Health",
+    "Damage"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 550,
+    "FlatPhysicalDamageMod": 30
+   },
+   "from": [
+    "2021",
+    "2021"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2502": {
+   "name_en": "Unending Despair",
+   "name_ko": "끝없는 절망",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Health",
+    "Armor",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 400,
+    "FlatArmorMod": 50
+   },
+   "from": [
+    "1031",
+    "3067",
+    "1028"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 11
+  },
+  "2503": {
+   "name_en": "Blackfire Torch",
+   "name_ko": "어둠불꽃 횃불",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 600,
+    "FlatMagicDamageMod": 80
+   },
+   "from": [
+    "3802",
+    "2508"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 97
+  },
+  "2504": {
+   "name_en": "Kaenic Rookern",
+   "name_ko": "케이닉 루컨",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "HealthRegen"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 80,
+    "FlatHPPoolMod": 400
+   },
+   "from": [
+    "3211",
+    "1057"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 20
+  },
+  "2508": {
+   "name_en": "Fated Ashes",
+   "name_ko": "운명의 재",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 30
+   },
+   "from": [
+    "1052"
+   ],
+   "into": [
+    "2503",
+    "6653"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 115
+  },
+  "2510": {
+   "name_en": "Dusk and Dawn",
+   "name_ko": "황혼과 새벽",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "Health",
+    "AttackSpeed",
+    "SpellDamage",
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 300,
+    "FlatMagicDamageMod": 60,
+    "PercentAttackSpeedMod": 0.2
+   },
+   "from": [
+    "3057",
+    "1026",
+    "3067",
+    "1042"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 45
+  },
+  "2512": {
+   "name_en": "Fiendhunter Bolts",
+   "name_ko": "악마사냥꾼의 화살",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "CriticalStrike",
+    "AttackSpeed",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "PercentAttackSpeedMod": 0.45,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3086",
+    "3144"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 4
+  },
+  "2517": {
+   "name_en": "Endless Hunger",
+   "name_ko": "끝없는 갈망",
+   "gold": {
+    "base": 825,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "Damage",
+    "LifeSteal",
+    "SpellVamp",
+    "Tenacity",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 65
+   },
+   "from": [
+    "3133",
+    "1037",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 25
+  },
+  "2520": {
+   "name_en": "Bastionbreaker",
+   "name_ko": "요새파괴자",
+   "gold": {
+    "base": 663,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "2020",
+    "3134"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 181
+  },
+  "2522": {
+   "name_en": "Actualizer",
+   "name_ko": "실체화 장비",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 300,
+    "FlatMagicDamageMod": 90
+   },
+   "from": [
+    "3802",
+    "1026"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 4
+  },
+  "2523": {
+   "name_en": "Hexoptics C44",
+   "name_ko": "마법광학 장치 C44",
+   "gold": {
+    "base": 275,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "1037",
+    "6670",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 68
+  },
+  "2524": {
+   "name_en": "Bandlepipes",
+   "name_ko": "밴들파이프",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2300,
+    "sell": 1610
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "Armor",
+    "AttackSpeed",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 20,
+    "FlatHPPoolMod": 200,
+    "FlatArmorMod": 20
+   },
+   "from": [
+    "3067",
+    "1029",
+    "1033"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 20
+  },
+  "2525": {
+   "name_en": "Protoplasm Harness",
+   "name_ko": "원형질 안전벨트",
+   "gold": {
+    "base": 900,
+    "purchasable": true,
+    "total": 2600,
+    "sell": 1820
+   },
+   "tags": [
+    "Health",
+    "NonbootsMovement",
+    "Tenacity",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 600
+   },
+   "from": [
+    "3067",
+    "1011"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 24
+  },
+  "2526": {
+   "name_en": "Whispering Circlet",
+   "name_ko": "속삭이는 머리띠",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 2250,
+    "sell": 1575
+   },
+   "tags": [
+    "Health",
+    "Mana",
+    "ManaRegen"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 300,
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "3114",
+    "1028",
+    "3070"
+   ],
+   "into": [
+    "2530"
+   ],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "2530": {
+   "name_en": "Diadem of Songs",
+   "name_ko": "악곡의 왕관",
+   "gold": {
+    "base": 2250,
+    "purchasable": false,
+    "total": 2250,
+    "sell": 1575
+   },
+   "tags": [
+    "Health",
+    "Mana",
+    "ManaRegen",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 1000,
+    "FlatHPPoolMod": 200
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3002": {
+   "name_en": "Trailblazer",
+   "name_ko": "개척자",
+   "gold": {
+    "base": 800,
+    "purchasable": false,
+    "total": 2400,
+    "sell": 1680
+   },
+   "tags": [
+    "Health",
+    "Armor",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 250,
+    "FlatArmorMod": 40,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3066",
+    "1031"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3003": {
+   "name_en": "Archangel's Staff",
+   "name_ko": "대천사의 지팡이",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 600,
+    "FlatMagicDamageMod": 70
+   },
+   "from": [
+    "3070",
+    "3802",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 22
+  },
+  "3004": {
+   "name_en": "Manamune",
+   "name_ko": "마나무네",
+   "gold": {
+    "base": 1100,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Damage",
+    "Mana",
+    "CooldownReduction",
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 500,
+    "FlatPhysicalDamageMod": 35
+   },
+   "from": [
+    "3070",
+    "3133",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 68
+  },
+  "3006": {
+   "name_en": "Berserker's Greaves",
+   "name_ko": "광전사의 군화",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "AttackSpeed",
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45,
+    "PercentAttackSpeedMod": 0.3
+   },
+   "from": [
+    "1001",
+    "1042",
+    "1042"
+   ],
+   "into": [
+    "3172"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 220
+  },
+  "3008": {
+   "name_en": "Gluttonous Greaves",
+   "name_ko": "탐욕의 군화",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "LifeSteal",
+    "SpellVamp",
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "1001"
+   ],
+   "into": [
+    "3168"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 108
+  },
+  "3009": {
+   "name_en": "Boots of Swiftness",
+   "name_ko": "신속의 장화",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 55
+   },
+   "from": [
+    "1001"
+   ],
+   "into": [
+    "3170"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 247
+  },
+  "3010": {
+   "name_en": "Symbiotic Soles",
+   "name_ko": "공생형 밑창",
+   "gold": {
+    "base": 600,
+    "purchasable": false,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 40
+   },
+   "from": [
+    "1001"
+   ],
+   "into": [
+    "3013"
+   ],
+   "depth": 2,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3011": {
+   "name_en": "Chemtech Putrifier",
+   "name_ko": "화학공학 부패기",
+   "gold": {
+    "base": 500,
+    "purchasable": false,
+    "total": 1900,
+    "sell": 1330
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 35
+   },
+   "from": [
+    "3916",
+    "3114"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3013": {
+   "name_en": "Synchronized Souls",
+   "name_ko": "하나 된 영혼",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "3010"
+   ],
+   "into": [
+    "3176"
+   ],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3020": {
+   "name_en": "Sorcerer's Shoes",
+   "name_ko": "마법사의 신발",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "Boots",
+    "MagicPenetration"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "1001"
+   ],
+   "into": [
+    "3175"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 273
+  },
+  "3024": {
+   "name_en": "Glacial Buckler",
+   "name_ko": "얼음 방패",
+   "gold": {
+    "base": 50,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Armor",
+    "Mana",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 300,
+    "FlatArmorMod": 25
+   },
+   "from": [
+    "1029",
+    "1027",
+    "2022"
+   ],
+   "into": [
+    "323110",
+    "3110"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 18
+  },
+  "3026": {
+   "name_en": "Guardian Angel",
+   "name_ko": "수호 천사",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 1280
+   },
+   "tags": [
+    "Armor",
+    "Damage"
+   ],
+   "stats": {
+    "FlatArmorMod": 45,
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "2019",
+    "1038"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 69
+  },
+  "3031": {
+   "name_en": "Infinity Edge",
+   "name_ko": "무한의 대검",
+   "gold": {
+    "base": 725,
+    "purchasable": true,
+    "total": 3500,
+    "sell": 2450
+   },
+   "tags": [
+    "CriticalStrike",
+    "Damage"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 75
+   },
+   "from": [
+    "1038",
+    "1037",
+    "1018"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 182
+  },
+  "3032": {
+   "name_en": "Yun Tal Wildarrows",
+   "name_ko": "윤 탈 야생화살",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike",
+    "AttackSpeed"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 50,
+    "PercentAttackSpeedMod": 0.45
+   },
+   "from": [
+    "1038",
+    "3144",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 86
+  },
+  "3033": {
+   "name_en": "Mortal Reminder",
+   "name_ko": "필멸자의 운명",
+   "gold": {
+    "base": 150,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 35
+   },
+   "from": [
+    "3123",
+    "3035",
+    "1018"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 65
+  },
+  "3035": {
+   "name_en": "Last Whisper",
+   "name_ko": "최후의 속삭임",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 1450,
+    "sell": 1015
+   },
+   "tags": [
+    "ArmorPenetration",
+    "Damage"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 20
+   },
+   "from": [
+    "1036",
+    "1036"
+   ],
+   "into": [
+    "3033",
+    "3036",
+    "6694"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 240
+  },
+  "3036": {
+   "name_en": "Lord Dominik's Regards",
+   "name_ko": "도미닉 경의 인사",
+   "gold": {
+    "base": 550,
+    "purchasable": true,
+    "total": 3300,
+    "sell": 2310
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 35
+   },
+   "from": [
+    "3035",
+    "6670"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 111
+  },
+  "3040": {
+   "name_en": "Seraph's Embrace",
+   "name_ko": "대천사의 포옹",
+   "gold": {
+    "base": 2900,
+    "purchasable": false,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 1000,
+    "FlatMagicDamageMod": 70
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3041": {
+   "name_en": "Mejai's Soulstealer",
+   "name_ko": "메자이의 영혼약탈자",
+   "gold": {
+    "base": 1150,
+    "purchasable": true,
+    "total": 1500,
+    "sell": 1050
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 100,
+    "FlatMagicDamageMod": 20
+   },
+   "from": [
+    "1082"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 61
+  },
+  "3042": {
+   "name_en": "Muramana",
+   "name_ko": "무라마나",
+   "gold": {
+    "base": 2900,
+    "purchasable": false,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Damage",
+    "Mana",
+    "CooldownReduction",
+    "OnHit",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 1000,
+    "FlatPhysicalDamageMod": 35
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3044": {
+   "name_en": "Phage",
+   "name_ko": "탐식의 망치",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200,
+    "FlatPhysicalDamageMod": 15
+   },
+   "from": [
+    "1028",
+    "1036"
+   ],
+   "into": [
+    "3071",
+    "3078",
+    "3073",
+    "6630",
+    "6631"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 334
+  },
+  "3046": {
+   "name_en": "Phantom Dancer",
+   "name_ko": "유령 무희",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "CriticalStrike",
+    "AttackSpeed",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "PercentAttackSpeedMod": 0.65,
+    "PercentMovementSpeedMod": 0.1
+   },
+   "from": [
+    "1042",
+    "3086",
+    "1042"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 35
+  },
+  "3047": {
+   "name_en": "Plated Steelcaps",
+   "name_ko": "판금 장화",
+   "gold": {
+    "base": 600,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "Armor",
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45,
+    "FlatArmorMod": 25
+   },
+   "from": [
+    "1001",
+    "1029"
+   ],
+   "into": [
+    "3174"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 354
+  },
+  "3050": {
+   "name_en": "Zeke's Convergence",
+   "name_ko": "지크의 융합",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 2200,
+    "sell": 1540
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "Armor",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 25,
+    "FlatHPPoolMod": 300,
+    "FlatArmorMod": 25
+   },
+   "from": [
+    "3067",
+    "1029",
+    "1033"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 99
+  },
+  "3051": {
+   "name_en": "Hearthbound Axe",
+   "name_ko": "온기가 필요한 자의 도끼",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 20,
+    "PercentAttackSpeedMod": 0.2
+   },
+   "from": [
+    "1036",
+    "1042",
+    "1036"
+   ],
+   "into": [
+    "3078",
+    "3302",
+    "6672"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 180
+  },
+  "3053": {
+   "name_en": "Sterak's Gage",
+   "name_ko": "스테락의 도전",
+   "gold": {
+    "base": 775,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 2240
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "Tenacity"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 400
+   },
+   "from": [
+    "1037",
+    "2021",
+    "1028"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 12
+  },
+  "3057": {
+   "name_en": "Sheen",
+   "name_ko": "광휘의 검",
+   "gold": {
+    "base": 650,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {},
+   "from": [
+    "2022"
+   ],
+   "into": [
+    "3078",
+    "3100",
+    "2510",
+    "3508",
+    "6632",
+    "6662"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 257
+  },
+  "3065": {
+   "name_en": "Spirit Visage",
+   "name_ko": "정령의 형상",
+   "gold": {
+    "base": 650,
+    "purchasable": true,
+    "total": 2700,
+    "sell": 1890
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "HealthRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 50,
+    "FlatHPPoolMod": 400
+   },
+   "from": [
+    "3211",
+    "3067"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 14
+  },
+  "3066": {
+   "name_en": "Winged Moonplate",
+   "name_ko": "비상의 월갑",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "Health",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "1028"
+   ],
+   "into": [
+    "3742",
+    "323002",
+    "3002",
+    "3181",
+    "4401"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 78
+  },
+  "3067": {
+   "name_en": "Kindlegem",
+   "name_ko": "점화석",
+   "gold": {
+    "base": 150,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "Health",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "1028",
+    "2022"
+   ],
+   "into": [
+    "3071",
+    "8020",
+    "323050",
+    "328020",
+    "124011",
+    "323190",
+    "323222",
+    "3165",
+    "6620",
+    "3050",
+    "3109",
+    "6656",
+    "326617",
+    "323107",
+    "2502",
+    "2510",
+    "2524",
+    "2525",
+    "6617",
+    "3065",
+    "3152",
+    "3119",
+    "326620",
+    "3190",
+    "3222",
+    "323109",
+    "323119",
+    "4403",
+    "4629",
+    "4644",
+    "6630",
+    "6632",
+    "8001"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 992
+  },
+  "3068": {
+   "name_en": "Sunfire Aegis",
+   "name_ko": "태양불꽃 방패",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Health",
+    "Armor",
+    "Aura",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatArmorMod": 50
+   },
+   "from": [
+    "6660",
+    "1031",
+    "1028"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 11
+  },
+  "3070": {
+   "name_en": "Tear of the Goddess",
+   "name_ko": "여신의 눈물",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 280
+   },
+   "tags": [
+    "Mana",
+    "ManaRegen"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 240
+   },
+   "from": [],
+   "into": [
+    "3003",
+    "3004",
+    "2526",
+    "3119"
+   ],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 159
+  },
+  "3071": {
+   "name_en": "Black Cleaver",
+   "name_ko": "칠흑의 양날 도끼",
+   "gold": {
+    "base": 225,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "CooldownReduction",
+    "OnHit",
+    "NonbootsMovement",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 400,
+    "FlatPhysicalDamageMod": 45
+   },
+   "from": [
+    "3044",
+    "3067",
+    "1037"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 121
+  },
+  "3072": {
+   "name_en": "Bloodthirster",
+   "name_ko": "피바라기",
+   "gold": {
+    "base": 325,
+    "purchasable": true,
+    "total": 3400,
+    "sell": 2380
+   },
+   "tags": [
+    "Damage",
+    "LifeSteal"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 80,
+    "PercentLifeStealMod": 0.15
+   },
+   "from": [
+    "1038",
+    "1037",
+    "1053"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 16
+  },
+  "3073": {
+   "name_en": "Experimental Hexplate",
+   "name_ko": "실험적 마공학판",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "AttackSpeed",
+    "CooldownReduction",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 450,
+    "FlatPhysicalDamageMod": 40,
+    "PercentAttackSpeedMod": 0.2
+   },
+   "from": [
+    "2021",
+    "1042",
+    "3044"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 46
+  },
+  "3074": {
+   "name_en": "Ravenous Hydra",
+   "name_ko": "굶주린 히드라",
+   "gold": {
+    "base": 150,
+    "purchasable": true,
+    "total": 3300,
+    "sell": 2310
+   },
+   "tags": [
+    "Damage",
+    "LifeSteal",
+    "CooldownReduction",
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 65,
+    "PercentLifeStealMod": 0.12
+   },
+   "from": [
+    "3077",
+    "1053",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 31
+  },
+  "3075": {
+   "name_en": "Thornmail",
+   "name_ko": "가시 갑옷",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 2450,
+    "sell": 1715
+   },
+   "tags": [
+    "Health",
+    "Armor"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150,
+    "FlatArmorMod": 75
+   },
+   "from": [
+    "3076",
+    "1031",
+    "1028"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 11
+  },
+  "3076": {
+   "name_en": "Bramble Vest",
+   "name_ko": "덤불 조끼",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "Armor"
+   ],
+   "stats": {
+    "FlatArmorMod": 30
+   },
+   "from": [
+    "1029",
+    "1029"
+   ],
+   "into": [
+    "323075",
+    "3075"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 33
+  },
+  "3077": {
+   "name_en": "Tiamat",
+   "name_ko": "티아맷",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "Damage",
+    "OnHit"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 25
+   },
+   "from": [
+    "1036",
+    "1036"
+   ],
+   "into": [
+    "3074",
+    "3748",
+    "6698",
+    "6631"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 105
+  },
+  "3078": {
+   "name_en": "Trinity Force",
+   "name_ko": "삼위일체",
+   "gold": {
+    "base": 133,
+    "purchasable": true,
+    "total": 3333,
+    "sell": 2333
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "AttackSpeed",
+    "CooldownReduction",
+    "OnHit",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 333,
+    "FlatPhysicalDamageMod": 36,
+    "PercentAttackSpeedMod": 0.3
+   },
+   "from": [
+    "3057",
+    "3044",
+    "3051"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 145
+  },
+  "3082": {
+   "name_en": "Warden's Mail",
+   "name_ko": "파수꾼의 갑옷",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "Armor"
+   ],
+   "stats": {
+    "FlatArmorMod": 40
+   },
+   "from": [
+    "1029",
+    "1029"
+   ],
+   "into": [
+    "323110",
+    "3110",
+    "3143"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 64
+  },
+  "3083": {
+   "name_en": "Warmog's Armor",
+   "name_ko": "워모그의 갑옷",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "Health",
+    "HealthRegen"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 1000
+   },
+   "from": [
+    "1011",
+    "1011",
+    "3801"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 3
+  },
+  "3084": {
+   "name_en": "Heartsteel",
+   "name_ko": "강철심장",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "HealthRegen"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 900
+   },
+   "from": [
+    "1011",
+    "3801",
+    "1011"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 44
+  },
+  "3085": {
+   "name_en": "Runaan's Hurricane",
+   "name_ko": "루난의 허리케인",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "CriticalStrike",
+    "AttackSpeed",
+    "OnHit",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "PercentAttackSpeedMod": 0.4,
+    "PercentMovementSpeedMod": 0.05
+   },
+   "from": [
+    "3086",
+    "3144"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 53
+  },
+  "3086": {
+   "name_en": "Zeal",
+   "name_ko": "열정의 검",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "CriticalStrike",
+    "AttackSpeed",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.15,
+    "PercentAttackSpeedMod": 0.15,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "1018",
+    "1042"
+   ],
+   "into": [
+    "2512",
+    "3094",
+    "3046",
+    "3085",
+    "4403",
+    "6671",
+    "6675"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 200
+  },
+  "3087": {
+   "name_en": "Statikk Shiv",
+   "name_ko": "스태틱의 단검",
+   "gold": {
+    "base": 625,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed",
+    "SpellDamage",
+    "OnHit",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 45,
+    "FlatPhysicalDamageMod": 45,
+    "PercentAttackSpeedMod": 0.3,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3144",
+    "3113",
+    "1037"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 20
+  },
+  "3089": {
+   "name_en": "Rabadon's Deathcap",
+   "name_ko": "라바돈의 죽음모자",
+   "gold": {
+    "base": 1100,
+    "purchasable": true,
+    "total": 3500,
+    "sell": 2450
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 130
+   },
+   "from": [
+    "1058",
+    "1058"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 59
+  },
+  "3091": {
+   "name_en": "Wit's End",
+   "name_ko": "마법사의 최후",
+   "gold": {
+    "base": 550,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "SpellBlock",
+    "AttackSpeed",
+    "OnHit",
+    "Tenacity"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 45,
+    "PercentAttackSpeedMod": 0.5
+   },
+   "from": [
+    "1043",
+    "1057",
+    "1043"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 6
+  },
+  "3094": {
+   "name_en": "Rapid Firecannon",
+   "name_ko": "고속 연사포",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "CriticalStrike",
+    "AttackSpeed",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "PercentAttackSpeedMod": 0.35,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3086",
+    "3144"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 44
+  },
+  "3095": {
+   "name_en": "Stormrazor",
+   "name_ko": "폭풍갈퀴",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 2240
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike",
+    "AttackSpeed",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 50,
+    "PercentAttackSpeedMod": 0.25
+   },
+   "from": [
+    "1038",
+    "1018",
+    "3144"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 33
+  },
+  "3100": {
+   "name_en": "Lich Bane",
+   "name_ko": "리치베인",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "SpellDamage",
+    "OnHit",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 100,
+    "PercentMovementSpeedMod": 0.06
+   },
+   "from": [
+    "3057",
+    "3113",
+    "1026"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 102
+  },
+  "3102": {
+   "name_en": "Banshee's Veil",
+   "name_ko": "밴시의 장막",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "SpellBlock",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 40,
+    "FlatMagicDamageMod": 105
+   },
+   "from": [
+    "1058",
+    "4632"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 11
+  },
+  "3107": {
+   "name_en": "Redemption",
+   "name_ko": "구원",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 2300,
+    "sell": 1610
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 30
+   },
+   "from": [
+    "3108",
+    "3114"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 3
+  },
+  "3108": {
+   "name_en": "Fiendish Codex",
+   "name_ko": "악마의 마법서",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 850,
+    "sell": 595
+   },
+   "tags": [
+    "SpellDamage",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 25
+   },
+   "from": [
+    "1052",
+    "2022"
+   ],
+   "into": [
+    "123430",
+    "4636",
+    "323003",
+    "3115",
+    "3003",
+    "326616",
+    "3107",
+    "3128",
+    "3137",
+    "8010",
+    "6616",
+    "4628",
+    "4629",
+    "4633"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 156
+  },
+  "3109": {
+   "name_en": "Knight's Vow",
+   "name_ko": "기사의 맹세",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 2300,
+    "sell": 1610
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "Armor",
+    "Aura",
+    "Active",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200,
+    "FlatArmorMod": 40
+   },
+   "from": [
+    "3067",
+    "1031",
+    "1006"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 185
+  },
+  "3110": {
+   "name_en": "Frozen Heart",
+   "name_ko": "얼어붙은 심장",
+   "gold": {
+    "base": 600,
+    "purchasable": true,
+    "total": 2500,
+    "sell": 1750
+   },
+   "tags": [
+    "Armor",
+    "Mana",
+    "Aura",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 400,
+    "FlatArmorMod": 75
+   },
+   "from": [
+    "3082",
+    "3024"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 20
+  },
+  "3111": {
+   "name_en": "Mercury's Treads",
+   "name_ko": "헤르메스의 발걸음",
+   "gold": {
+    "base": 550,
+    "purchasable": true,
+    "total": 1250,
+    "sell": 875
+   },
+   "tags": [
+    "Boots",
+    "SpellBlock",
+    "Tenacity"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 20,
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "1001",
+    "1033"
+   ],
+   "into": [
+    "3173"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 261
+  },
+  "3112": {
+   "name_en": "Guardian's Orb",
+   "name_ko": "수호자의 보주",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 950,
+    "sell": 665
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "ManaRegen",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150,
+    "FlatMagicDamageMod": 50
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3113": {
+   "name_en": "Aether Wisp",
+   "name_ko": "에테르 환영",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "NonbootsMovement",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 30,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "1052"
+   ],
+   "into": [
+    "123430",
+    "3100",
+    "2065",
+    "322065",
+    "3087",
+    "323504",
+    "3504",
+    "4629",
+    "4646"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 246
+  },
+  "3114": {
+   "name_en": "Forbidden Idol",
+   "name_ko": "금지된 우상",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 600,
+    "sell": 420
+   },
+   "tags": [
+    "ManaRegen"
+   ],
+   "stats": {},
+   "from": [
+    "1004"
+   ],
+   "into": [
+    "124011",
+    "326621",
+    "223011",
+    "323222",
+    "323107",
+    "322526",
+    "2526",
+    "3011",
+    "326616",
+    "3107",
+    "3222",
+    "323504",
+    "3504",
+    "6616",
+    "6621"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 100
+  },
+  "3115": {
+   "name_en": "Nashor's Tooth",
+   "name_ko": "내셔의 이빨",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "AttackSpeed",
+    "SpellDamage",
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 80,
+    "PercentAttackSpeedMod": 0.5
+   },
+   "from": [
+    "1043",
+    "1026",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 25
+  },
+  "3116": {
+   "name_en": "Rylai's Crystal Scepter",
+   "name_ko": "라일라이의 수정홀",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 2600,
+    "sell": 1820
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "Slow"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 400,
+    "FlatMagicDamageMod": 65
+   },
+   "from": [
+    "1026",
+    "1011",
+    "1052"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 34
+  },
+  "3117": {
+   "name_en": "Mobility Boots",
+   "name_ko": "기동력의 장화",
+   "gold": {
+    "base": 700,
+    "purchasable": false,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "1001"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3118": {
+   "name_en": "Malignance",
+   "name_ko": "악의",
+   "gold": {
+    "base": 650,
+    "purchasable": true,
+    "total": 2700,
+    "sell": 1890
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 600,
+    "FlatMagicDamageMod": 90
+   },
+   "from": [
+    "3802",
+    "1026"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 21
+  },
+  "3119": {
+   "name_en": "Winter's Approach",
+   "name_ko": "혹한의 손길",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 2400,
+    "sell": 1680
+   },
+   "tags": [
+    "Health",
+    "Mana",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 500,
+    "FlatHPPoolMod": 550
+   },
+   "from": [
+    "3070",
+    "1011",
+    "3067"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 9
+  },
+  "3121": {
+   "name_en": "Fimbulwinter",
+   "name_ko": "종말의 겨울",
+   "gold": {
+    "base": 2400,
+    "purchasable": false,
+    "total": 2400,
+    "sell": 1680
+   },
+   "tags": [
+    "Health",
+    "Mana",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 1000,
+    "FlatHPPoolMod": 550
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3123": {
+   "name_en": "Executioner's Calling",
+   "name_ko": "처형인의 대검",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "Damage"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 15
+   },
+   "from": [
+    "1036"
+   ],
+   "into": [
+    "3033",
+    "6609"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 67
+  },
+  "3124": {
+   "name_en": "Guinsoo's Rageblade",
+   "name_ko": "구인수의 격노검",
+   "gold": {
+    "base": 1025,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed",
+    "SpellDamage",
+    "OnHit"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 30,
+    "FlatPhysicalDamageMod": 30,
+    "PercentAttackSpeedMod": 0.25
+   },
+   "from": [
+    "1052",
+    "1043",
+    "1037"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 55
+  },
+  "3133": {
+   "name_en": "Caulfield's Warhammer",
+   "name_ko": "콜필드의 전투 망치",
+   "gold": {
+    "base": 100,
+    "purchasable": true,
+    "total": 1050,
+    "sell": 735
+   },
+   "tags": [
+    "Damage",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 20
+   },
+   "from": [
+    "1036",
+    "2022",
+    "1036"
+   ],
+   "into": [
+    "6333",
+    "126697",
+    "6697",
+    "4402",
+    "3156",
+    "2517",
+    "323004",
+    "6693",
+    "3004",
+    "3508",
+    "3074",
+    "3179",
+    "6691",
+    "6609",
+    "6610",
+    "6632",
+    "6692",
+    "6694",
+    "6696"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 462
+  },
+  "3134": {
+   "name_en": "Serrated Dirk",
+   "name_ko": "톱날 단검",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "Damage",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 20
+   },
+   "from": [
+    "1036",
+    "1036"
+   ],
+   "into": [
+    "3142",
+    "667666",
+    "126697",
+    "6697",
+    "6701",
+    "6693",
+    "2520",
+    "4004",
+    "6695",
+    "3814",
+    "3131",
+    "3179",
+    "6691",
+    "6676"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 559
+  },
+  "3135": {
+   "name_en": "Void Staff",
+   "name_ko": "공허의 지팡이",
+   "gold": {
+    "base": 1050,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "MagicPenetration",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 95
+   },
+   "from": [
+    "4630",
+    "1026"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 18
+  },
+  "3137": {
+   "name_en": "Cryptbloom",
+   "name_ko": "무덤꽃",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "SpellDamage",
+    "MagicPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 75
+   },
+   "from": [
+    "4630",
+    "3108",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 12
+  },
+  "3139": {
+   "name_en": "Mercurial Scimitar",
+   "name_ko": "헤르메스의 시미터",
+   "gold": {
+    "base": 125,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 2240
+   },
+   "tags": [
+    "SpellBlock",
+    "Damage",
+    "LifeSteal",
+    "Active",
+    "NonbootsMovement",
+    "Tenacity"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 35,
+    "FlatPhysicalDamageMod": 50,
+    "PercentLifeStealMod": 0.1
+   },
+   "from": [
+    "3140",
+    "1037",
+    "1053"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 10
+  },
+  "3140": {
+   "name_en": "Quicksilver Sash",
+   "name_ko": "수은 장식띠",
+   "gold": {
+    "base": 900,
+    "purchasable": true,
+    "total": 1300,
+    "sell": 910
+   },
+   "tags": [
+    "Active",
+    "SpellBlock"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 30
+   },
+   "from": [
+    "1033"
+   ],
+   "into": [
+    "3139",
+    "6035"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 23
+  },
+  "3142": {
+   "name_en": "Youmuu's Ghostblade",
+   "name_ko": "요우무의 유령검",
+   "gold": {
+    "base": 675,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Damage",
+    "Active",
+    "NonbootsMovement",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3134",
+    "6690",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 50
+  },
+  "3143": {
+   "name_en": "Randuin's Omen",
+   "name_ko": "란두인의 예언",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2700,
+    "sell": 1890
+   },
+   "tags": [
+    "Health",
+    "Armor",
+    "Active",
+    "Slow"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatArmorMod": 75
+   },
+   "from": [
+    "3082",
+    "1011"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 25
+  },
+  "3144": {
+   "name_en": "Scout's Slingshot",
+   "name_ko": "정찰병의 새총",
+   "gold": {
+    "base": 100,
+    "purchasable": true,
+    "total": 600,
+    "sell": 420
+   },
+   "tags": [
+    "AttackSpeed"
+   ],
+   "stats": {
+    "PercentAttackSpeedMod": 0.2
+   },
+   "from": [
+    "1042",
+    "1042"
+   ],
+   "into": [
+    "2512",
+    "3094",
+    "3087",
+    "3032",
+    "3085",
+    "3095"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 197
+  },
+  "3145": {
+   "name_en": "Hextech Alternator",
+   "name_ko": "마법공학 교류 발전기",
+   "gold": {
+    "base": 300,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 45
+   },
+   "from": [
+    "1052",
+    "1052"
+   ],
+   "into": [
+    "4645",
+    "4636",
+    "3146",
+    "6655",
+    "3152",
+    "4646"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 435
+  },
+  "3146": {
+   "name_en": "Hextech Gunblade",
+   "name_ko": "마법공학 총검",
+   "gold": {
+    "base": 600,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "LifeSteal",
+    "SpellDamage",
+    "Active",
+    "SpellVamp"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 80,
+    "FlatPhysicalDamageMod": 40
+   },
+   "from": [
+    "1053",
+    "3145",
+    "1052"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 27
+  },
+  "3147": {
+   "name_en": "Haunting Guise",
+   "name_ko": "기괴한 가면",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 1300,
+    "sell": 910
+   },
+   "tags": [
+    "Health",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200,
+    "FlatMagicDamageMod": 30
+   },
+   "from": [
+    "1052",
+    "1028"
+   ],
+   "into": [
+    "8010",
+    "4633",
+    "6653"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 121
+  },
+  "3152": {
+   "name_en": "Hextech Rocketbelt",
+   "name_ko": "마법공학 로켓 벨트",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "Active",
+    "CooldownReduction",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatMagicDamageMod": 60
+   },
+   "from": [
+    "3145",
+    "3067",
+    "1028"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 167
+  },
+  "3153": {
+   "name_en": "Blade of The Ruined King",
+   "name_ko": "몰락한 왕의 검",
+   "gold": {
+    "base": 725,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 2240
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed",
+    "LifeSteal",
+    "Slow",
+    "OnHit"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 40,
+    "PercentAttackSpeedMod": 0.25,
+    "PercentLifeStealMod": 0.1
+   },
+   "from": [
+    "1053",
+    "1043",
+    "1037"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 37
+  },
+  "3155": {
+   "name_en": "Hexdrinker",
+   "name_ko": "주문포식자",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 1300,
+    "sell": 910
+   },
+   "tags": [
+    "Damage",
+    "SpellBlock"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 25,
+    "FlatPhysicalDamageMod": 25
+   },
+   "from": [
+    "1036",
+    "1033",
+    "1036"
+   ],
+   "into": [
+    "3156"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 51
+  },
+  "3156": {
+   "name_en": "Maw of Malmortius",
+   "name_ko": "맬모셔스의 아귀",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "SpellBlock",
+    "Damage",
+    "LifeSteal",
+    "SpellVamp",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 40,
+    "FlatPhysicalDamageMod": 60
+   },
+   "from": [
+    "3155",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 18
+  },
+  "3157": {
+   "name_en": "Zhonya's Hourglass",
+   "name_ko": "존야의 모래시계",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 3250,
+    "sell": 2275
+   },
+   "tags": [
+    "Armor",
+    "SpellDamage",
+    "Active"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 105,
+    "FlatArmorMod": 50
+   },
+   "from": [
+    "1058",
+    "2420"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 137
+  },
+  "3158": {
+   "name_en": "Ionian Boots of Lucidity",
+   "name_ko": "명석함의 아이오니아 장화",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Boots",
+    "CooldownReduction"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "1001",
+    "2022"
+   ],
+   "into": [
+    "3171"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 407
+  },
+  "3161": {
+   "name_en": "Spear of Shojin",
+   "name_ko": "쇼진의 창",
+   "gold": {
+    "base": 675,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 450,
+    "FlatPhysicalDamageMod": 45
+   },
+   "from": [
+    "1037",
+    "2021",
+    "1028"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 49
+  },
+  "3165": {
+   "name_en": "Morellonomicon",
+   "name_ko": "모렐로노미콘",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 2850,
+    "sell": 1995
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatMagicDamageMod": 75
+   },
+   "from": [
+    "3916",
+    "1026",
+    "3067"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 4
+  },
+  "3168": {
+   "name_en": "Immortal Path",
+   "name_ko": "불멸의 길",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "LifeSteal",
+    "SpellVamp",
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "3008"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3170": {
+   "name_en": "Swiftmarch",
+   "name_ko": "신속행진",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 1000,
+    "sell": 700
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 65
+   },
+   "from": [
+    "3009"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1
+  },
+  "3171": {
+   "name_en": "Crimson Lucidity",
+   "name_ko": "핏빛 명석함",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "CooldownReduction",
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "3158"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3172": {
+   "name_en": "Gunmetal Greaves",
+   "name_ko": "건메탈 군화",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "AttackSpeed",
+    "LifeSteal",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45,
+    "PercentAttackSpeedMod": 0.45,
+    "PercentLifeStealMod": 0.05
+   },
+   "from": [
+    "3006"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3173": {
+   "name_en": "Chainlaced Crushers",
+   "name_ko": "사슬끈 분쇄자",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 1250,
+    "sell": 875
+   },
+   "tags": [
+    "SpellBlock",
+    "Boots",
+    "Tenacity",
+    "MagicResist"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 25,
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "3111"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3174": {
+   "name_en": "Armored Advance",
+   "name_ko": "무장 진격",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "Armor",
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45,
+    "FlatArmorMod": 35
+   },
+   "from": [
+    "3047"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3175": {
+   "name_en": "Spellslinger's Shoes",
+   "name_ko": "주문투척자의 신발",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "Boots",
+    "MagicPenetration"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 45
+   },
+   "from": [
+    "3020"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 2
+  },
+  "3176": {
+   "name_en": "Forever Forward",
+   "name_ko": "영원한 전진",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Boots"
+   ],
+   "stats": {
+    "FlatMovementSpeedMod": 55
+   },
+   "from": [
+    "3013"
+   ],
+   "into": [],
+   "depth": 4,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3177": {
+   "name_en": "Guardian's Blade",
+   "name_ko": "수호자의 검",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 950,
+    "sell": 665
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "Lane",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150,
+    "FlatPhysicalDamageMod": 30
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3179": {
+   "name_en": "Umbral Glaive",
+   "name_ko": "그림자 검",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Damage",
+    "Vision",
+    "CooldownReduction",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 60
+   },
+   "from": [
+    "3134",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 51
+  },
+  "3181": {
+   "name_en": "Hullbreaker",
+   "name_ko": "선체파괴자",
+   "gold": {
+    "base": 175,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 500,
+    "FlatPhysicalDamageMod": 40,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "2021",
+    "3066",
+    "1037"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 7
+  },
+  "3184": {
+   "name_en": "Guardian's Hammer",
+   "name_ko": "수호자의 망치",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 950,
+    "sell": 665
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "LifeSteal",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150,
+    "FlatPhysicalDamageMod": 25,
+    "PercentLifeStealMod": 0.05
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3190": {
+   "name_en": "Locket of the Iron Solari",
+   "name_ko": "강철의 솔라리 펜던트",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 2200,
+    "sell": 1540
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "Armor",
+    "Aura",
+    "Active",
+    "MagicResist",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 30,
+    "FlatHPPoolMod": 200,
+    "FlatArmorMod": 30
+   },
+   "from": [
+    "3067",
+    "1029",
+    "1033"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 149
+  },
+  "3211": {
+   "name_en": "Spectre's Cowl",
+   "name_ko": "망령의 두건",
+   "gold": {
+    "base": 150,
+    "purchasable": true,
+    "total": 1250,
+    "sell": 875
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "SpellBlock"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 35,
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "1028",
+    "1033",
+    "1006"
+   ],
+   "into": [
+    "2504",
+    "3065",
+    "6664"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 49
+  },
+  "3222": {
+   "name_en": "Mikael's Blessing",
+   "name_ko": "미카엘의 축복",
+   "gold": {
+    "base": 900,
+    "purchasable": true,
+    "total": 2300,
+    "sell": 1610
+   },
+   "tags": [
+    "Health",
+    "ManaRegen",
+    "Active",
+    "CooldownReduction",
+    "Tenacity",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 250
+   },
+   "from": [
+    "3067",
+    "3114"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 42
+  },
+  "3302": {
+   "name_en": "Terminus",
+   "name_ko": "경계",
+   "gold": {
+    "base": 1100,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed",
+    "OnHit",
+    "MagicPenetration",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 30,
+    "PercentAttackSpeedMod": 0.35
+   },
+   "from": [
+    "3051",
+    "1043"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 22
+  },
+  "3330": {
+   "name_en": "Scarecrow Effigy",
+   "name_ko": "허수아비",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Active",
+    "Jungle",
+    "Lane",
+    "Trinket",
+    "Vision"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": "FiddleSticks",
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3340": {
+   "name_en": "Stealth Ward",
+   "name_ko": "투명 와드",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Active",
+    "Jungle",
+    "Lane",
+    "Trinket",
+    "Vision"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1280
+  },
+  "3363": {
+   "name_en": "Farsight Alteration",
+   "name_ko": "망원형 개조",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Active",
+    "Trinket",
+    "Vision"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 750
+  },
+  "3364": {
+   "name_en": "Oracle Lens",
+   "name_ko": "예언자의 렌즈",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Active",
+    "Trinket",
+    "Vision"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1235
+  },
+  "3400": {
+   "name_en": "Your Cut",
+   "name_ko": "수당",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Consumable",
+    "GoldPer"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "3504": {
+   "name_en": "Ardent Censer",
+   "name_ko": "불타는 향로",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 2200,
+    "sell": 1540
+   },
+   "tags": [
+    "AttackSpeed",
+    "SpellDamage",
+    "ManaRegen",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 45,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3113",
+    "3114"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 31
+  },
+  "3508": {
+   "name_en": "Essence Reaver",
+   "name_ko": "정수 약탈자",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 3050,
+    "sell": 2135
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike",
+    "ManaRegen",
+    "CooldownReduction",
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 50
+   },
+   "from": [
+    "3057",
+    "3133",
+    "1018"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 57
+  },
+  "3599": {
+   "name_en": "Kalista's Black Spear",
+   "name_ko": "칼리스타의 칠흑의 창",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Consumable"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": "Kalista",
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3600": {
+   "name_en": "Kalista's Black Spear",
+   "name_ko": "칼리스타의 칠흑의 창",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [
+    "Consumable"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": "Sylas",
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3742": {
+   "name_en": "Dead Man's Plate",
+   "name_ko": "망자의 갑옷",
+   "gold": {
+    "base": 900,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Health",
+    "Armor",
+    "Slow",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatArmorMod": 55,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3066",
+    "1028",
+    "1031"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 35
+  },
+  "3748": {
+   "name_en": "Titanic Hydra",
+   "name_ko": "거대한 히드라",
+   "gold": {
+    "base": 50,
+    "purchasable": true,
+    "total": 3300,
+    "sell": 2310
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "Damage",
+    "OnHit"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 600,
+    "FlatPhysicalDamageMod": 40
+   },
+   "from": [
+    "3077",
+    "2021",
+    "1011"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 12
+  },
+  "3801": {
+   "name_en": "Crystalline Bracer",
+   "name_ko": "수정 팔 보호구",
+   "gold": {
+    "base": 100,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "Health",
+    "HealthRegen"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "1028",
+    "1006"
+   ],
+   "into": [
+    "3084",
+    "3083"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 23
+  },
+  "3802": {
+   "name_en": "Lost Chapter",
+   "name_ko": "사라진 양피지",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 1200,
+    "sell": 840
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 300,
+    "FlatMagicDamageMod": 40
+   },
+   "from": [
+    "1052",
+    "1027",
+    "2022"
+   ],
+   "into": [
+    "2522",
+    "323003",
+    "6656",
+    "3003",
+    "6655",
+    "2503",
+    "3118",
+    "4644"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 213
+  },
+  "3803": {
+   "name_en": "Catalyst of Aeons",
+   "name_ko": "억겁의 카탈리스트",
+   "gold": {
+    "base": 200,
+    "purchasable": true,
+    "total": 1300,
+    "sell": 910
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "Mana",
+    "ManaRegen"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 375,
+    "FlatHPPoolMod": 300
+   },
+   "from": [
+    "1028",
+    "1028",
+    "1027"
+   ],
+   "into": [
+    "4402",
+    "326657",
+    "6657"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 42
+  },
+  "3814": {
+   "name_en": "Edge of Night",
+   "name_ko": "밤의 끝자락",
+   "gold": {
+    "base": 850,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 250,
+    "FlatPhysicalDamageMod": 50
+   },
+   "from": [
+    "3134",
+    "2021"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 93
+  },
+  "3865": {
+   "name_en": "World Atlas",
+   "name_ko": "세계 지도집",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 432
+  },
+  "3866": {
+   "name_en": "Runic Compass",
+   "name_ko": "룬 나침반",
+   "gold": {
+    "base": 400,
+    "purchasable": false,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 60
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3867": {
+   "name_en": "Bounty of Worlds",
+   "name_ko": "세계의 결실",
+   "gold": {
+    "base": 400,
+    "purchasable": false,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [],
+   "into": [
+    "3869",
+    "3870",
+    "3871",
+    "3876",
+    "3877"
+   ],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "3869": {
+   "name_en": "Celestial Opposition",
+   "name_ko": "천상의 이의",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "3867"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 3
+  },
+  "3870": {
+   "name_en": "Dream Maker",
+   "name_ko": "꿈 생성기",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "3867"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1
+  },
+  "3871": {
+   "name_en": "Zaz'Zak's Realmspike",
+   "name_ko": "자자크의 세계가시",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "3867"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1
+  },
+  "3876": {
+   "name_en": "Solstice Sleigh",
+   "name_ko": "태양의 썰매",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "3867"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 2
+  },
+  "3877": {
+   "name_en": "Bloodsong",
+   "name_ko": "피의 노래",
+   "gold": {
+    "base": 0,
+    "purchasable": true,
+    "total": 400,
+    "sell": 160
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "ManaRegen",
+    "Vision",
+    "GoldPer",
+    "Lane"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200
+   },
+   "from": [
+    "3867"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1
+  },
+  "3901": {
+   "name_en": "<rarityLegendary>Fire at Will</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>",
+   "name_ko": "<rarityLegendary>가차없는 포격</rarityLegendary><br><subtitleLeft><silver>바다뱀 은화 500닢</silver></subtitleLeft>",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": "Gangplank",
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "3902": {
+   "name_en": "<rarityLegendary>Death's Daughter</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>",
+   "name_ko": "<rarityLegendary>죽음의 여신</rarityLegendary><br><subtitleLeft><silver>바다뱀 은화 500닢</silver></subtitleLeft>",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": "Gangplank",
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "3903": {
+   "name_en": "<rarityLegendary>Raise Morale</rarityLegendary><br><subtitleLeft><silver>500 Silver Serpents</silver></subtitleLeft>",
+   "name_ko": "<rarityLegendary>사기진작</rarityLegendary><br><subtitleLeft><silver>바다뱀 은화 500닢</silver></subtitleLeft>",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": "Gangplank",
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "3916": {
+   "name_en": "Oblivion Orb",
+   "name_ko": "망각의 구",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 800,
+    "sell": 560
+   },
+   "tags": [
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 25
+   },
+   "from": [
+    "1052"
+   ],
+   "into": [
+    "223011",
+    "3165",
+    "3011"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 61
+  },
+  "4005": {
+   "name_en": "Imperial Mandate",
+   "name_ko": "제국의 명령",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 2400,
+    "sell": 1680
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 60
+   },
+   "from": [
+    "1052",
+    "4642",
+    "1052"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 16
+  },
+  "4401": {
+   "name_en": "Force of Nature",
+   "name_ko": "대자연의 힘",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 55,
+    "FlatHPPoolMod": 400,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "1057",
+    "1028",
+    "3066"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 16
+  },
+  "4628": {
+   "name_en": "Horizon Focus",
+   "name_ko": "지평선의 초점",
+   "gold": {
+    "base": 600,
+    "purchasable": true,
+    "total": 2700,
+    "sell": 1890
+   },
+   "tags": [
+    "SpellDamage",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 75
+   },
+   "from": [
+    "3108",
+    "3108",
+    "1052"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 17
+  },
+  "4629": {
+   "name_en": "Cosmic Drive",
+   "name_ko": "우주의 추진력",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatMagicDamageMod": 70,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "3067",
+    "3113",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 13
+  },
+  "4630": {
+   "name_en": "Blighting Jewel",
+   "name_ko": "역병의 보석",
+   "gold": {
+    "base": 700,
+    "purchasable": true,
+    "total": 1100,
+    "sell": 770
+   },
+   "tags": [
+    "MagicPenetration",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 25
+   },
+   "from": [
+    "1052"
+   ],
+   "into": [
+    "3135",
+    "3137"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 71
+  },
+  "4632": {
+   "name_en": "Verdant Barrier",
+   "name_ko": "신록의 장벽",
+   "gold": {
+    "base": 400,
+    "purchasable": true,
+    "total": 1600,
+    "sell": 1120
+   },
+   "tags": [
+    "SpellBlock",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 25,
+    "FlatMagicDamageMod": 40
+   },
+   "from": [
+    "1052",
+    "1033",
+    "1052"
+   ],
+   "into": [
+    "3102"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 21
+  },
+  "4633": {
+   "name_en": "Riftmaker",
+   "name_ko": "균열 생성기",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "CooldownReduction",
+    "SpellVamp"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatMagicDamageMod": 70
+   },
+   "from": [
+    "3147",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 36
+  },
+  "4635": {
+   "name_en": "Leeching Leer",
+   "name_ko": "흡수의 시선",
+   "gold": {
+    "base": 465,
+    "purchasable": false,
+    "total": 1265,
+    "sell": 886
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "SpellVamp"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 250,
+    "FlatMagicDamageMod": 20
+   },
+   "from": [
+    "1028",
+    "1052"
+   ],
+   "into": [],
+   "depth": 2,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "4636": {
+   "name_en": "Night Harvester",
+   "name_ko": "밤의 수확자",
+   "gold": {
+    "base": 815,
+    "purchasable": false,
+    "total": 2765,
+    "sell": 1936
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "CooldownReduction",
+    "NonbootsMovement",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 300,
+    "FlatMagicDamageMod": 90
+   },
+   "from": [
+    "3145",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "4637": {
+   "name_en": "Demonic Embrace",
+   "name_ko": "악마의 포옹",
+   "gold": {
+    "base": 850,
+    "purchasable": false,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 350,
+    "FlatMagicDamageMod": 75
+   },
+   "from": [
+    "1026",
+    "1011",
+    "1052"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "4641": {
+   "name_en": "Stirring Wardstone",
+   "name_ko": "고무의 와드석",
+   "gold": {
+    "base": 350,
+    "purchasable": false,
+    "total": 350,
+    "sell": 140
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "SpellDamage",
+    "ManaRegen",
+    "Vision",
+    "Active",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 80
+   },
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "4642": {
+   "name_en": "Bandleglass Mirror",
+   "name_ko": "밴들유리 거울",
+   "gold": {
+    "base": 50,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 20
+   },
+   "from": [
+    "1004",
+    "1052",
+    "2022"
+   ],
+   "into": [
+    "2065",
+    "322065",
+    "6620",
+    "326617",
+    "324005",
+    "4005",
+    "6617",
+    "326620"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 83
+  },
+  "4645": {
+   "name_en": "Shadowflame",
+   "name_ko": "그림자불꽃",
+   "gold": {
+    "base": 900,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 2240
+   },
+   "tags": [
+    "SpellDamage",
+    "MagicPenetration"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 110
+   },
+   "from": [
+    "3145",
+    "1058"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 113
+  },
+  "4646": {
+   "name_en": "Stormsurge",
+   "name_ko": "폭풍 쇄도",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "SpellDamage",
+    "GoldPer",
+    "NonbootsMovement",
+    "MagicPenetration"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 90,
+    "PercentMovementSpeedMod": 0.06
+   },
+   "from": [
+    "3145",
+    "3113"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 69
+  },
+  "6333": {
+   "name_en": "Death's Dance",
+   "name_ko": "죽음의 무도",
+   "gold": {
+    "base": 275,
+    "purchasable": true,
+    "total": 3300,
+    "sell": 2310
+   },
+   "tags": [
+    "Armor",
+    "Damage",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatArmorMod": 50,
+    "FlatPhysicalDamageMod": 60
+   },
+   "from": [
+    "2019",
+    "1037",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 100
+  },
+  "6609": {
+   "name_en": "Chempunk Chainsword",
+   "name_ko": "화공 펑크 사슬검",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 450,
+    "FlatPhysicalDamageMod": 45
+   },
+   "from": [
+    "3123",
+    "1011",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "6610": {
+   "name_en": "Sundered Sky",
+   "name_ko": "갈라진 하늘",
+   "gold": {
+    "base": 900,
+    "purchasable": true,
+    "total": 3100,
+    "sell": 2170
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 400,
+    "FlatPhysicalDamageMod": 40
+   },
+   "from": [
+    "2021",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 22
+  },
+  "6616": {
+   "name_en": "Staff of Flowing Water",
+   "name_ko": "흐르는 물의 지팡이",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2250,
+    "sell": 1575
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 35
+   },
+   "from": [
+    "3108",
+    "3114"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1
+  },
+  "6617": {
+   "name_en": "Moonstone Renewer",
+   "name_ko": "월석 재생기",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 2200,
+    "sell": 1540
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200,
+    "FlatMagicDamageMod": 25
+   },
+   "from": [
+    "3067",
+    "4642"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 20
+  },
+  "6620": {
+   "name_en": "Echoes of Helia",
+   "name_ko": "헬리아의 메아리",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 2200,
+    "sell": 1540
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "ManaRegen",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 200,
+    "FlatMagicDamageMod": 35
+   },
+   "from": [
+    "3067",
+    "4642"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 23
+  },
+  "6621": {
+   "name_en": "Dawncore",
+   "name_ko": "새벽심장",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 2500,
+    "sell": 1750
+   },
+   "tags": [
+    "SpellDamage",
+    "ManaRegen"
+   ],
+   "stats": {
+    "FlatMagicDamageMod": 45
+   },
+   "from": [
+    "1026",
+    "3114",
+    "3114"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 1
+  },
+  "6631": {
+   "name_en": "Stridebreaker",
+   "name_ko": "발걸음 분쇄기",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 3300,
+    "sell": 2310
+   },
+   "tags": [
+    "Health",
+    "Damage",
+    "AttackSpeed",
+    "Slow"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 450,
+    "FlatPhysicalDamageMod": 40,
+    "PercentAttackSpeedMod": 0.25
+   },
+   "from": [
+    "3077",
+    "3044",
+    "1042"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 38
+  },
+  "6653": {
+   "name_en": "Liandry's Torment",
+   "name_ko": "리안드리의 고통",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Health",
+    "SpellDamage"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 300,
+    "FlatMagicDamageMod": 60
+   },
+   "from": [
+    "3147",
+    "2508"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 55
+  },
+  "6655": {
+   "name_en": "Luden's Echo",
+   "name_ko": "루덴의 메아리",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 2750,
+    "sell": 1925
+   },
+   "tags": [
+    "SpellDamage",
+    "Mana",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 600,
+    "FlatMagicDamageMod": 100
+   },
+   "from": [
+    "3802",
+    "3145"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 68
+  },
+  "6657": {
+   "name_en": "Rod of Ages",
+   "name_ko": "영겁의 지팡이",
+   "gold": {
+    "base": 450,
+    "purchasable": true,
+    "total": 2600,
+    "sell": 1820
+   },
+   "tags": [
+    "Health",
+    "HealthRegen",
+    "SpellDamage",
+    "Mana",
+    "ManaRegen"
+   ],
+   "stats": {
+    "FlatMPPoolMod": 500,
+    "FlatHPPoolMod": 350,
+    "FlatMagicDamageMod": 45
+   },
+   "from": [
+    "1026",
+    "3803"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 45
+  },
+  "6660": {
+   "name_en": "Bami's Cinder",
+   "name_ko": "바미의 불씨",
+   "gold": {
+    "base": 250,
+    "purchasable": true,
+    "total": 900,
+    "sell": 630
+   },
+   "tags": [
+    "Health",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 150
+   },
+   "from": [
+    "1028",
+    "2022"
+   ],
+   "into": [
+    "3068",
+    "6664"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 23
+  },
+  "6662": {
+   "name_en": "Iceborn Gauntlet",
+   "name_ko": "얼어붙은 건틀릿",
+   "gold": {
+    "base": 800,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Health",
+    "Armor",
+    "CooldownReduction",
+    "Slow",
+    "OnHit",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 300,
+    "FlatArmorMod": 50
+   },
+   "from": [
+    "3057",
+    "1028",
+    "1031"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 15
+  },
+  "6664": {
+   "name_en": "Hollow Radiance",
+   "name_ko": "공허한 광휘",
+   "gold": {
+    "base": 650,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "HealthRegen",
+    "Aura",
+    "MagicResist",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 40,
+    "FlatHPPoolMod": 400
+   },
+   "from": [
+    "6660",
+    "3211"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 13
+  },
+  "6665": {
+   "name_en": "Jak'Sho, The Protean",
+   "name_ko": "해신 작쇼",
+   "gold": {
+    "base": 650,
+    "purchasable": true,
+    "total": 3200,
+    "sell": 2240
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "Armor",
+    "MagicResist"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 45,
+    "FlatHPPoolMod": 350,
+    "FlatArmorMod": 45
+   },
+   "from": [
+    "1011",
+    "1031",
+    "1057"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 22
+  },
+  "6670": {
+   "name_en": "Noonquiver",
+   "name_ko": "절정의 화살",
+   "gold": {
+    "base": 350,
+    "purchasable": true,
+    "total": 1300,
+    "sell": 910
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.2,
+    "FlatPhysicalDamageMod": 15
+   },
+   "from": [
+    "1036",
+    "1018"
+   ],
+   "into": [
+    "2523",
+    "3036",
+    "6673"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 206
+  },
+  "6672": {
+   "name_en": "Kraken Slayer",
+   "name_ko": "크라켄 학살자",
+   "gold": {
+    "base": 325,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "AttackSpeed",
+    "OnHit",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 45,
+    "PercentAttackSpeedMod": 0.4,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "6690",
+    "3051",
+    "1043"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 99
+  },
+  "6673": {
+   "name_en": "Immortal Shieldbow",
+   "name_ko": "불멸의 철갑궁",
+   "gold": {
+    "base": 825,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "1037",
+    "6670"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 79
+  },
+  "6675": {
+   "name_en": "Navori Flickerblade",
+   "name_ko": "나보리 명멸검",
+   "gold": {
+    "base": 950,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "CriticalStrike",
+    "AttackSpeed",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "PercentAttackSpeedMod": 0.4,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "1042",
+    "3086",
+    "1042"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 68
+  },
+  "6676": {
+   "name_en": "The Collector",
+   "name_ko": "징수의 총",
+   "gold": {
+    "base": 525,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "CriticalStrike",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatCritChanceMod": 0.25,
+    "FlatPhysicalDamageMod": 50
+   },
+   "from": [
+    "1037",
+    "3134",
+    "1018"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 83
+  },
+  "6690": {
+   "name_en": "Rectrix",
+   "name_ko": "꽁지깃",
+   "gold": {
+    "base": 425,
+    "purchasable": true,
+    "total": 775,
+    "sell": 543
+   },
+   "tags": [
+    "Damage",
+    "NonbootsMovement"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 15,
+    "PercentMovementSpeedMod": 0.04
+   },
+   "from": [
+    "1036"
+   ],
+   "into": [
+    "4003",
+    "6700",
+    "6672",
+    "3142"
+   ],
+   "depth": 2,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 122
+  },
+  "6692": {
+   "name_en": "Eclipse",
+   "name_ko": "월식",
+   "gold": {
+    "base": 625,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Damage",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 60
+   },
+   "from": [
+    "3133",
+    "1037",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 91
+  },
+  "6693": {
+   "name_en": "Prowler's Claw",
+   "name_ko": "자객의 발톱",
+   "gold": {
+    "base": 800,
+    "purchasable": false,
+    "total": 2850,
+    "sell": 1995
+   },
+   "tags": [
+    "Damage",
+    "CooldownReduction",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "3134",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "6694": {
+   "name_en": "Serylda's Grudge",
+   "name_ko": "세릴다의 원한",
+   "gold": {
+    "base": 500,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "CooldownReduction",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 45
+   },
+   "from": [
+    "3133",
+    "3035"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 55
+  },
+  "6695": {
+   "name_en": "Serpent's Fang",
+   "name_ko": "독사의 송곳니",
+   "gold": {
+    "base": 625,
+    "purchasable": true,
+    "total": 2500,
+    "sell": 1750
+   },
+   "tags": [
+    "Damage",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "3134",
+    "1037"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 71
+  },
+  "6696": {
+   "name_en": "Axiom Arc",
+   "name_ko": "원칙의 원형낫",
+   "gold": {
+    "base": 363,
+    "purchasable": true,
+    "total": 2750,
+    "sell": 1925
+   },
+   "tags": [
+    "Damage",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "2020",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 4
+  },
+  "6697": {
+   "name_en": "Hubris",
+   "name_ko": "오만",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 2800,
+    "sell": 1960
+   },
+   "tags": [
+    "Damage",
+    "Active",
+    "CooldownReduction",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "3134",
+    "3133"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 56
+  },
+  "6698": {
+   "name_en": "Profane Hydra",
+   "name_ko": "불경한 히드라",
+   "gold": {
+    "base": 313,
+    "purchasable": true,
+    "total": 2850,
+    "sell": 1995
+   },
+   "tags": [
+    "Damage",
+    "Active",
+    "CooldownReduction",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "3077",
+    "2020"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 33
+  },
+  "6699": {
+   "name_en": "Voltaic Cyclosword",
+   "name_ko": "벼락폭풍검",
+   "gold": {
+    "base": 963,
+    "purchasable": true,
+    "total": 3000,
+    "sell": 2100
+   },
+   "tags": [
+    "Damage",
+    "Active",
+    "CooldownReduction",
+    "ArmorPenetration",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "2020",
+    "1036",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 201
+  },
+  "6701": {
+   "name_en": "Opportunity",
+   "name_ko": "기회",
+   "gold": {
+    "base": 475,
+    "purchasable": false,
+    "total": 2700,
+    "sell": 1890
+   },
+   "tags": [
+    "Damage",
+    "Active",
+    "NonbootsMovement",
+    "ArmorPenetration"
+   ],
+   "stats": {
+    "FlatPhysicalDamageMod": 55
+   },
+   "from": [
+    "1037",
+    "3134",
+    "1036"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "7050": {
+   "name_en": "Gangplank Placeholder",
+   "name_ko": "갱플랭크 Placeholder",
+   "gold": {
+    "base": 0,
+    "purchasable": false,
+    "total": 0,
+    "sell": 0
+   },
+   "tags": [],
+   "stats": {},
+   "from": [],
+   "into": [],
+   "depth": null,
+   "in_store": false,
+   "required_champion": "Gangplank",
+   "required_ally": null,
+   "consumed": true,
+   "bought_in_stage1": 0
+  },
+  "8001": {
+   "name_en": "Anathema's Chains",
+   "name_ko": "증오의 사슬",
+   "gold": {
+    "base": 800,
+    "purchasable": false,
+    "total": 2500,
+    "sell": 1750
+   },
+   "tags": [
+    "Health",
+    "Active",
+    "CooldownReduction",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 650
+   },
+   "from": [
+    "3067",
+    "1011"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": false,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 0
+  },
+  "8010": {
+   "name_en": "Bloodletter's Curse",
+   "name_ko": "핏빛 저주",
+   "gold": {
+    "base": 750,
+    "purchasable": true,
+    "total": 2900,
+    "sell": 2030
+   },
+   "tags": [
+    "Health",
+    "SpellDamage",
+    "CooldownReduction",
+    "MagicPenetration"
+   ],
+   "stats": {
+    "FlatHPPoolMod": 400,
+    "FlatMagicDamageMod": 65
+   },
+   "from": [
+    "3147",
+    "3108"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 22
+  },
+  "8020": {
+   "name_en": "Abyssal Mask",
+   "name_ko": "심연의 가면",
+   "gold": {
+    "base": 1000,
+    "purchasable": true,
+    "total": 2650,
+    "sell": 1855
+   },
+   "tags": [
+    "Health",
+    "SpellBlock",
+    "CooldownReduction",
+    "MagicResist",
+    "AbilityHaste"
+   ],
+   "stats": {
+    "FlatSpellBlockMod": 45,
+    "FlatHPPoolMod": 350
+   },
+   "from": [
+    "3067",
+    "1057"
+   ],
+   "into": [],
+   "depth": 3,
+   "in_store": true,
+   "required_champion": null,
+   "required_ally": null,
+   "consumed": false,
+   "bought_in_stage1": 7
+  }
+ }
+}

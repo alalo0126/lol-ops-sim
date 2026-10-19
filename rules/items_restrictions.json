@@ -1,0 +1,39 @@
+{
+  "_doc": "포지션별 초반 아이템 제한과 근거리·원거리 구분. 개별 아이템 스탯은 tools/build_ddragon_rules.py가 Data Dragon에서 만드는 items.json을 쓴다.",
+  "position_items": {
+    "jungle": {"value": "강타 보유자 전용 정글 펫 3종(450골드). 정글 아이템 전엔 소모품만 구매 가능.", "src": "wiki:Gustwalker_Hatchling", "level": "verified"},
+    "support": {"value": "서포터 배정자만 세계 지도집(400골드) 자동 구매, 다른 포지션 접근 불가.", "src": "wiki:World_Atlas", "level": "verified"},
+    "starter_limit": {"value": "시작 아이템 1개 제한(정글 펫, 세계 지도집, 도란 아이템 등이 같은 그룹)", "src": "wiki:Gustwalker_Hatchling", "level": "verified"}
+  },
+  "range_purchase_restrictions": {
+    "ranged_only": {"value": ["Runaan's Hurricane"], "src": "wiki:Melee", "level": "verified"},
+    "melee_only": {"value": [], "src": "wiki:Melee", "level": "verified",
+      "note": "현재 근접 전용 구매 제한 아이템 없음. 티아맷은 V10.23부터 원거리도 구매 가능(wiki:Tiamat)."},
+    "design_doc_note": "설계 문서의 '근거리·원거리 구분 아이템 제한'은 구매 제한으로는 1개뿐이고, 대부분은 '같은 아이템이 근거리·원거리에서 수치가 다름'이다. 시뮬레이터는 range_dependent_effects로 다뤄야 한다."
+  },
+  "range_dependent_effects": {
+    "value": {
+      "Black Cleaver": "Fervor", "Blade of The Ruined King": "Mist's Edge", "Bloodsong": "Expose Weakness",
+      "Celestial Opposition": "Blessing of the Mountain", "Crimson Lucidity": "Noxian Haste", "Death's Dance": "Ignore Pain",
+      "Doran's Shield": "Enduring Focus", "Eclipse": "Ever Rising Moon", "Experimental Hexplate": "Overdrive",
+      "Fimbulwinter": "Everlasting", "Hexdrinker": "Lifeline", "Hullbreaker": "Skipper, Boarding Party",
+      "Iceborn Gauntlet": "frost zone", "Immortal Shieldbow": "Lifeline", "Kraken Slayer": "Bring It Down",
+      "Maw of Malmortius": "Lifeline", "Muramana": "Shock", "Phage": "Rage", "Profane Hydra": "Cleave",
+      "Ravenous Hydra": "Cleave", "Riftmaker": "Void Corruption", "Serpent's Fang": "Shield Reaver",
+      "Stridebreaker": "Cleave", "Sundered Sky": "Lightshield Strike", "Tiamat": "Cleave",
+      "Titanic Hydra": "Cleave, Titanic Crescent", "Umbral Glaive": "Blackout", "Voltaic Cyclosword": "Firmament",
+      "World Atlas / Runic Compass": "Shared Riches", "Youmuu's Ghostblade": "Haunt, Wraith Step",
+      "Yun Tal Wildarrows": "Practice Makes Lethal"
+    },
+    "src": "wiki:Melee", "level": "verified",
+    "note": "효과 이름만 확인. 근거리·원거리 수치는 v2(스탯 교전)에서 아이템별로 채움. 정글 v1에 필요한 건 없음."
+  },
+  "other_range_differences": {
+    "value": {"turret_damage_from_melee": "+20%", "demolish_bonus": {"melee": "85 + 최대 체력 28%", "ranged": "50 + 최대 체력 20%"}},
+    "src": "pn:26.1", "level": "verified"
+  },
+  "item_groups": {
+    "value": "같은 그룹 아이템은 하나만(예: Hydra 그룹). 신발 1개, 전설 아이템은 같은 것 1개만.",
+    "src": "wiki:Item", "level": "verified", "note": "전체 그룹 목록은 Data Dragon에 없음 → UNVERIFIED"
+  }
+}

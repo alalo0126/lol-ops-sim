@@ -1,0 +1,20 @@
+{
+  "_doc": "라인 미니언 웨이브. 시간은 게임 시계 초.",
+  "first_wave_s": {"value": 30, "src": "wiki:Minion", "level": "verified", "note": "V26.01에 1:05 → 0:30 (pn:26.1 상세 목록 기준. 같은 기사 서문의 '1:30'은 오기로 판단)"},
+  "wave_interval_s": {
+    "value": [{"until_s": 840, "interval": 30}, {"until_s": 1800, "interval": 25}, {"until_s": null, "interval": 20}],
+    "src": "wiki:Minion", "level": "verified"
+  },
+  "wave_composition": {
+    "value": {"melee": 3, "caster": 3, "spawn_gap_s": 0.792,
+      "siege": "첫 대포는 3번째 웨이브(1:30). 14:00 전엔 3웨이브마다, 이후 2웨이브마다, 25:00 이후 매 웨이브. 14:00 이후 대포가 나오는 웨이브는 근접 1마리 감소. 30:00 이후 원거리 1마리 감소. 슈퍼 미니언 웨이브엔 대포 없음."},
+    "src": "wiki:Minion", "level": "verified", "note": "위키 예시 시퀀스에 12:00이 섞여 있어 14:00 전환 시각과 어긋남 → UNVERIFIED"
+  },
+  "gold": {
+    "value": {"melee": 20, "cannon": "50 + 90초마다 1", "super": "50 + 90초마다 1", "caster": null},
+    "src": "pn:26.1", "level": "verified", "note": "원거리 미니언 골드와 근접·원거리 경험치는 출처에서 못 찾음 → UNVERIFIED"
+  },
+  "xp": {"value": {"cannon": 75, "super": 75}, "src": "pn:26.1", "level": "verified", "note": "경험치는 1500 범위 안 적 챔피언끼리 균등 분배(wiki:Minion)"},
+  "move_speed": {"value": 350, "src": "pn:26.1", "level": "verified"},
+  "ambient_gold_start_s": {"value": 65, "src": "pn:26.1", "level": "verified", "note": "초당 자연 골드 액수는 UNVERIFIED"}
+}

@@ -1,0 +1,61 @@
+{
+  "_doc": "에픽 몬스터. 시간은 게임 시계 초. crosscheck는 1단계 경기(16.20) 첫 처치 시각과 비교한 결과(처치 시각은 생성 시각 이후여야 함).",
+  "drake": {
+    "first_spawn_s": {"value": 300, "src": "wiki:Infernal_Drake", "level": "verified",
+      "crosscheck": "157판 중 첫 드래곤 최조 5:25, 중앙값 8:49 → 일치"},
+    "respawn_s": {"value": 300, "src": "wiki:Dragon_pit", "level": "verified",
+      "crosscheck": "연속 드래곤 처치 간격 최소 304.97초 → 일치"},
+    "element_rule": {"value": "첫 드래곤은 무작위 원소, 이후는 아직 안 나온 원소. 2번째 드래곤 처치 후 3번째 원소가 정해지며 맵이 원소 협곡으로 바뀜. 4번째 원소 드래곤 처치 팀이 지배 원소의 영혼 획득.",
+      "src": "wiki:Dragon_pit", "level": "verified"},
+    "rewards": {"value": {"kill_gold": 75, "local_xp": [160, 400]}, "src": "pn:26.1", "level": "verified",
+      "note": "wiki:Infernal_Drake도 골드 75, 경험치 160~400"},
+    "stats_v26_1": {"value": {"min_level": 6, "hp": "3625 + 375/레벨", "armor": "34 + 8/레벨", "mr": "32 + 4/레벨"}, "src": "pn:26.1", "level": "verified"},
+    "dragon_vengeance_dr": {"value": [0.15, 0.30, 0.45], "src": "pn:26.1", "level": "verified", "note": "드래곤 스택 차이에 따른 피해 감소. 정확한 발동 조건은 UNVERIFIED"}
+  },
+  "elder_dragon": {
+    "spawn_condition": {"value": "한 팀이 4번째 원소 드래곤을 잡으면 그 다음부터 장로 드래곤 생성", "src": "wiki:Elder_Dragon", "level": "verified",
+      "crosscheck": "장로 5회 모두 한 팀 드래곤 4개 이후 → 일치"},
+    "respawn_s": {"value": 360, "src": "wiki:Elder_Dragon", "level": "verified"},
+    "buff_duration_s": {"value": 150, "src": "wiki:Elder_Dragon", "level": "verified"},
+    "rewards": {"value": {"kill_gold": 100, "global_gold": 150, "global_xp": 650}, "src": "pn:26.1", "level": "verified"},
+    "_scope": "v1 범위(0~20분) 밖. 기록용"
+  },
+  "voidgrubs": {
+    "spawn_s": {"value": 480, "src": "wiki:Voidgrub", "level": "verified",
+      "crosscheck": "169판 첫 유충 최조 8:07 → 일치"},
+    "count": {"value": 3, "src": "wiki:Voidgrub", "level": "verified", "crosscheck": "169판 모두 유충 처치 3회 → 일치"},
+    "respawn": {"value": null, "note": "V25.09부터 리스폰 없음(게임당 1회)", "src": "wiki:Voidgrub", "level": "verified"},
+    "despawn_s": {"value": 885, "in_combat": 895, "src": "wiki:Voidgrub", "level": "verified",
+      "crosscheck": "마지막 유충 처치 최대 14:45.0 → 일치"},
+    "rewards_each": {"value": {"local_gold": 30, "xp": 65, "xp_radius": 2000}, "src": "wiki:Voidgrub", "level": "verified"},
+    "buff": {"value": "처치당 팀 전원 Touch of the Void 1스택(구조물 공격에 고정 화상). 3스택에서 Hunger of the Void(포탑 공격 시 아군 공허 진드기 소환).",
+      "src": "wiki:Voidgrub", "level": "verified", "note": "스택별 정확한 수치는 UNVERIFIED"},
+    "stats_v26_1": {"value": {"min_level": 7, "hp_by_level": [2269, 4700], "bonus_damage_to_non_champions": 0.5}, "src": "wiki:Voidgrub", "level": "verified"}
+  },
+  "rift_herald": {
+    "spawn_s": {"value": 900, "src": "wiki:Rift_Herald", "level": "verified",
+      "crosscheck": "133판 첫 전령 최조 15:12 → 일치"},
+    "respawn": {"value": null, "note": "게임당 1회", "src": "wiki:Rift_Herald", "level": "verified"},
+    "despawn_s": {"value": 1185, "in_combat": 1195, "src": "wiki:Rift_Herald", "level": "verified",
+      "crosscheck": "전령 처치 최대 19:45.2 → 일치"},
+    "rewards": {"value": {"gold_to_killer": 100, "xp": 240, "xp_radius": 2000}, "src": "wiki:Rift_Herald", "level": "verified"},
+    "eye": {"value": "협곡의 눈이 둥지 입구에 20초 떨어짐. 처치 팀 1명이 주워 전령 소환(용병)", "src": "wiki:Rift_Herald", "level": "verified"},
+    "stats_v26_1": {"value": {"min_level": 9, "hp_by_level": [11718, 18900], "bonus_damage_to_non_champions": 0.5, "mercenary_charge_damage": 3000}, "src": "wiki:Rift_Herald", "level": "verified"}
+  },
+  "baron": {
+    "spawn_s": {"value": 1200, "src": "wiki:Baron_Nashor", "level": "verified",
+      "note": "V25.S1.1에 25:00으로 늦췄다가 V26.01에 20:00으로 복귀", "crosscheck": "98판 첫 바론 최조 20:13 → 일치"},
+    "respawn_s": {"value": 360, "src": "wiki:Baron_Nashor", "level": "verified", "crosscheck": "연속 바론 간격 최소 371.8초 → 일치"},
+    "rewards": {"value": {"kill_gold": 100, "global_gold": 150, "global_xp": 650, "losing_team_xp_bonus": "레벨 뒤처질 때마다 +25%, 최대 2배"}, "src": "wiki:Baron_Nashor", "level": "verified"},
+    "buff_duration_s": {"value": 180, "src": "wiki:Baron_Nashor", "level": "verified"},
+    "_scope": "스폰이 정확히 20:00이라 v1 범위(0~20분) 경계. 바론 자체는 범위 밖"
+  },
+  "atakhan": {
+    "value": "V26.01에서 제거. 피의 장미, 무력의 위업(Feats of Strength)도 제거",
+    "src": "wiki:Atakhan", "level": "verified"
+  },
+  "first_blood_and_turret_gold": {
+    "value": {"first_blood_bonus": 100, "first_turret_bonus": 300, "first_turret_note": "첫 외곽 포탑, 근처 플레이어 분배"},
+    "src": "pn:26.1", "level": "verified"
+  }
+}
