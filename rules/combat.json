@@ -1,0 +1,10 @@
+{
+  "_doc": "챔피언 처치·사망 보상. 현상금(연속 처치·셧다운) 체계는 v1에서 뺐다.",
+  "kill_gold": {"value": 300, "src": "consensus", "level": "consensus", "note": "기본 처치 골드. 현상금 가감 없음"},
+  "assist_gold_pool": {"value": 150, "src": "consensus", "level": "consensus", "note": "처치 골드의 50%를 도움 준 사람끼리 나눔"},
+  "first_blood_bonus": {"value": 100, "src": "pn:26.1", "level": "verified", "note": "objectives.json first_blood_and_turret_gold와 같은 값"},
+  "kill_xp": {"value": {"base": 140, "per_victim_level": 25}, "src": "estimate", "level": "unverified", "note": "처치 경험치 = base + per_victim_level × (피해자 레벨 − 1). 도움 준 사람은 절반을 나눔. 위키 표 확인 필요"},
+  "death_timer_s": {"value": [10, 10, 12, 12, 14, 16, 20, 25, 28, 32.5, 35, 37.5, 40, 42.5, 45, 47.5, 50, 52.5], "src": "estimate", "level": "unverified", "note": "레벨별 부활 시간. 0~20분 시간 보정 없음"},
+  "recall_channel_s": {"value": 8, "src": "consensus", "level": "consensus", "note": "3단계 문서에서 규칙 파일 미등록으로 표시한 값"},
+  "passive_gold_per_s": {"value": 2.04, "start_s": 65, "src": "consensus", "level": "unverified", "note": "시작 65초는 minions.json ambient_gold_start_s(검증). 초당 액수는 미검증. 1단계 2분 골드(중앙 887 = 500 + 캠프 3개 274 + 55초 × 2.05)와 맞음"}
+}

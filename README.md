@@ -11,7 +11,10 @@
 |---|---|
 | `collect/` | 1단계: Riot API 경기 수집(`collect_matches.py`)과 분포 요약(`summarize.py`) |
 | `rules/` | 2단계: 패치 26.20 규칙 데이터, 항목마다 출처 태그. 미검증 목록은 `rules/UNVERIFIED.md` |
-| `tools/` | 규칙 생성(`build_ddragon_rules.py`)과 실제 경기 대조(`crosscheck_rules.py`) |
+| `tools/` | 규칙 생성(`build_ddragon_rules.py`, `build_map_graph.py`), 실제 경기 대조(`crosscheck_rules.py`), 4단계 기준값 추출(`stage4_targets.py`) |
+| `sim/` | 4단계: 1초 틱 최소 시뮬레이터와 규칙 봇. 모델 값은 `sim/params.json` |
+| `tests/` | `python -m unittest discover tests` |
+| `reports/` | 시뮬레이터와 실제 분포 비교표 |
 | `data/` | 수집 원본·Data Dragon 캐시. git에 올리지 않음 |
 
 ## 1단계: 실제 데이터 수집
@@ -42,3 +45,18 @@ WSL이면 `cd /mnt/d/AI/lol/ops-sim` 후 `export RIOT_API_KEY=...`, 경로 구�
 - 프레임은 60초 간격. 일반 캠프 처치 이벤트가 없어 첫 풀캠 시각은 직접 잴 수 없다.
 - `WARD_PLACED`에는 위치가 없다(`WARD_KILL`도 마찬가지). 시야 상태는 수동 입력 대상.
 - `CHAMPION_KILL`, `ELITE_MONSTER_KILL`, `BUILDING_KILL`에는 위치·시각이 있고, 참가자 프레임에도 분당 위치가 있다.
+
+## 4단계: 강화학습 없는 최소 시뮬레이터
+
+```bat
+python tools\stage4_targets.py          :: data\raw → data\stage4_targets.json (실제 경기 기준값)
+copy data\stage4_targets.json sim\targets_stage1.json
+python -m sim.run_baseline --games 300  :: 규칙 봇 300판 → reports\stage4_baseline.md
+python -m unittest discover tests
+```
+
+- 맵: `rules/map_nodes.json` 노드 33개. `tools/build_map_graph.py`로 만든다(블루 진영만 적고 레드는 점대칭). 포탑·용/바론 둥지·우물 좌표는 1단계 이벤트 위치로 확인했다.
+- 엔진(`sim/game.py`): 1초 틱, 0~20분. 캠프 생성·리스폰, 처치 시간(체력 ÷ 초당 피해), 골드·경험치·펫 보너스·간식, 강타 충전, 귀환, 처치·부활, 용·유충·전령, 팀별 시야와 인지 제약.
+- 규칙 봇(`sim/bots.py`): 정글러는 시작 캠프별 정해진 동선으로 첫 풀캠 → 귀환 → 갱 기회 > 오브젝트 > 캠프 > 리스폰 대기. 라이너는 3단계 kk 기준 중 후퇴·귀환·와드·기본만(웨이브 모듈이 없어서 나머지는 아직).
+- 이벤트 계산 함수(`sim/events.py`): 갱 성공 확률은 로지스틱 자리표시. 입출력 형식만 설계 문서대로 고정.
+- `sim/targets_stage1.json`은 실제 경기의 집계값(분위수)만 담는다. 1단계 수집이 끝나면 위 두 줄로 다시 만든다.

@@ -1,0 +1,644 @@
+{
+ "_doc": "맵 노드 그래프. 좌표는 Riot 타임라인 좌표계(0~약 14900). 엣지 [a, b, 계수]: 이동 거리 = 직선 거리 × 계수. 생성: python tools/build_map_graph.py (손으로 고치지 말고 스크립트를 고칠 것).",
+ "level_meaning": {
+  "stage1": "1단계 경기 이벤트 위치 중앙값으로 확인(포탑·둥지·우물)",
+  "consensus": "흔히 쓰는 좌표. 캠프는 1분 프레임 정글러 위치와 420~510 차이(공격 사거리만큼 떨어져 섬)",
+  "unverified": "길목·부시·라인 중앙 대략 위치"
+ },
+ "edge_factor": {
+  "value": "1.0~1.3",
+  "level": "unverified",
+  "note": "벽을 돌아가는 정도. 실측 이동 시간 자료가 없어 추정값"
+ },
+ "fixed_node_attributes": "부시 여부(brush), 종류(kind), 진영(side)만 고정. 적 시야 여부는 매 틱 와드·챔피언 위치로 계산(3단계 결정).",
+ "nodes": {
+  "B_fountain": {
+   "x": 662,
+   "y": 285,
+   "kind": "fountain",
+   "side": 100,
+   "brush": false,
+   "level": "stage1"
+  },
+  "R_fountain": {
+   "x": 14426,
+   "y": 14170,
+   "kind": "fountain",
+   "side": 200,
+   "brush": false,
+   "level": "stage1",
+   "mirror_of": "B_fountain"
+  },
+  "B_blue": {
+   "x": 3821,
+   "y": 8101,
+   "kind": "camp",
+   "side": 100,
+   "brush": false,
+   "level": "consensus"
+  },
+  "R_blue": {
+   "x": 10999,
+   "y": 6799,
+   "kind": "camp",
+   "side": 200,
+   "brush": false,
+   "level": "consensus",
+   "mirror_of": "B_blue"
+  },
+  "B_gromp": {
+   "x": 2288,
+   "y": 8448,
+   "kind": "camp",
+   "side": 100,
+   "brush": false,
+   "level": "consensus"
+  },
+  "R_gromp": {
+   "x": 12532,
+   "y": 6452,
+   "kind": "camp",
+   "side": 200,
+   "brush": false,
+   "level": "consensus",
+   "mirror_of": "B_gromp"
+  },
+  "B_wolves": {
+   "x": 3780,
+   "y": 6443,
+   "kind": "camp",
+   "side": 100,
+   "brush": false,
+   "level": "consensus"
+  },
+  "R_wolves": {
+   "x": 11040,
+   "y": 8457,
+   "kind": "camp",
+   "side": 200,
+   "brush": false,
+   "level": "consensus",
+   "mirror_of": "B_wolves"
+  },
+  "B_raptors": {
+   "x": 6943,
+   "y": 5422,
+   "kind": "camp",
+   "side": 100,
+   "brush": false,
+   "level": "consensus"
+  },
+  "R_raptors": {
+   "x": 7877,
+   "y": 9478,
+   "kind": "camp",
+   "side": 200,
+   "brush": false,
+   "level": "consensus",
+   "mirror_of": "B_raptors"
+  },
+  "B_red": {
+   "x": 7765,
+   "y": 4020,
+   "kind": "camp",
+   "side": 100,
+   "brush": false,
+   "level": "consensus"
+  },
+  "R_red": {
+   "x": 7055,
+   "y": 10880,
+   "kind": "camp",
+   "side": 200,
+   "brush": false,
+   "level": "consensus",
+   "mirror_of": "B_red"
+  },
+  "B_krugs": {
+   "x": 8394,
+   "y": 2641,
+   "kind": "camp",
+   "side": 100,
+   "brush": false,
+   "level": "consensus"
+  },
+  "R_krugs": {
+   "x": 6426,
+   "y": 12259,
+   "kind": "camp",
+   "side": 200,
+   "brush": false,
+   "level": "consensus",
+   "mirror_of": "B_krugs"
+  },
+  "B_top_entrance": {
+   "x": 2600,
+   "y": 9900,
+   "kind": "jungle_entrance",
+   "side": 100,
+   "brush": true,
+   "level": "unverified"
+  },
+  "R_bot_entrance": {
+   "x": 12220,
+   "y": 5000,
+   "kind": "jungle_entrance",
+   "side": 200,
+   "brush": true,
+   "level": "unverified",
+   "mirror_of": "B_top_entrance"
+  },
+  "B_bot_entrance": {
+   "x": 9900,
+   "y": 2900,
+   "kind": "jungle_entrance",
+   "side": 100,
+   "brush": true,
+   "level": "unverified"
+  },
+  "R_top_entrance": {
+   "x": 4920,
+   "y": 12000,
+   "kind": "jungle_entrance",
+   "side": 200,
+   "brush": true,
+   "level": "unverified",
+   "mirror_of": "B_bot_entrance"
+  },
+  "top_B_outer": {
+   "x": 981,
+   "y": 10441,
+   "kind": "tower",
+   "side": 100,
+   "brush": false,
+   "level": "stage1"
+  },
+  "bot_R_outer": {
+   "x": 13866,
+   "y": 4505,
+   "kind": "tower",
+   "side": 200,
+   "brush": false,
+   "level": "stage1",
+   "mirror_of": "top_B_outer"
+  },
+  "mid_B_outer": {
+   "x": 5846,
+   "y": 6396,
+   "kind": "tower",
+   "side": 100,
+   "brush": false,
+   "level": "stage1"
+  },
+  "mid_R_outer": {
+   "x": 8955,
+   "y": 8510,
+   "kind": "tower",
+   "side": 200,
+   "brush": false,
+   "level": "stage1",
+   "mirror_of": "mid_B_outer"
+  },
+  "bot_B_outer": {
+   "x": 10504,
+   "y": 1029,
+   "kind": "tower",
+   "side": 100,
+   "brush": false,
+   "level": "stage1"
+  },
+  "top_R_outer": {
+   "x": 4318,
+   "y": 13875,
+   "kind": "tower",
+   "side": 200,
+   "brush": false,
+   "level": "stage1",
+   "mirror_of": "bot_B_outer"
+  },
+  "top_center": {
+   "x": 2300,
+   "y": 12600,
+   "kind": "lane",
+   "side": 0,
+   "brush": false,
+   "level": "unverified"
+  },
+  "bot_center": {
+   "x": 12520,
+   "y": 2300,
+   "kind": "lane",
+   "side": 0,
+   "brush": false,
+   "level": "unverified"
+  },
+  "mid_center": {
+   "x": 7410,
+   "y": 7450,
+   "kind": "lane",
+   "side": 0,
+   "brush": false,
+   "level": "unverified"
+  },
+  "river_top_scuttle": {
+   "x": 4400,
+   "y": 9640,
+   "kind": "scuttle",
+   "side": 0,
+   "brush": false,
+   "level": "consensus"
+  },
+  "river_bot_scuttle": {
+   "x": 10420,
+   "y": 5260,
+   "kind": "scuttle",
+   "side": 0,
+   "brush": false,
+   "level": "consensus"
+  },
+  "river_top_brush": {
+   "x": 3300,
+   "y": 11300,
+   "kind": "river",
+   "side": 0,
+   "brush": true,
+   "level": "unverified"
+  },
+  "river_bot_brush": {
+   "x": 11520,
+   "y": 3600,
+   "kind": "river",
+   "side": 0,
+   "brush": true,
+   "level": "unverified"
+  },
+  "baron_pit": {
+   "x": 5007,
+   "y": 10471,
+   "kind": "epic",
+   "side": 0,
+   "brush": false,
+   "level": "stage1"
+  },
+  "dragon_pit": {
+   "x": 9861,
+   "y": 4447,
+   "kind": "epic",
+   "side": 0,
+   "brush": false,
+   "level": "stage1"
+  }
+ },
+ "edges": [
+  [
+   "B_fountain",
+   "B_wolves",
+   1.25
+  ],
+  [
+   "R_fountain",
+   "R_wolves",
+   1.25
+  ],
+  [
+   "B_fountain",
+   "B_raptors",
+   1.25
+  ],
+  [
+   "R_fountain",
+   "R_raptors",
+   1.25
+  ],
+  [
+   "B_fountain",
+   "B_red",
+   1.2
+  ],
+  [
+   "R_fountain",
+   "R_red",
+   1.2
+  ],
+  [
+   "B_fountain",
+   "top_B_outer",
+   1.05
+  ],
+  [
+   "R_fountain",
+   "bot_R_outer",
+   1.05
+  ],
+  [
+   "B_fountain",
+   "mid_B_outer",
+   1.05
+  ],
+  [
+   "R_fountain",
+   "mid_R_outer",
+   1.05
+  ],
+  [
+   "B_fountain",
+   "bot_B_outer",
+   1.05
+  ],
+  [
+   "R_fountain",
+   "top_R_outer",
+   1.05
+  ],
+  [
+   "B_blue",
+   "B_gromp",
+   1.15
+  ],
+  [
+   "R_blue",
+   "R_gromp",
+   1.15
+  ],
+  [
+   "B_blue",
+   "B_wolves",
+   1.15
+  ],
+  [
+   "R_blue",
+   "R_wolves",
+   1.15
+  ],
+  [
+   "B_blue",
+   "B_top_entrance",
+   1.15
+  ],
+  [
+   "R_blue",
+   "R_bot_entrance",
+   1.15
+  ],
+  [
+   "B_blue",
+   "river_top_scuttle",
+   1.2
+  ],
+  [
+   "R_blue",
+   "river_bot_scuttle",
+   1.2
+  ],
+  [
+   "B_gromp",
+   "B_top_entrance",
+   1.15
+  ],
+  [
+   "R_gromp",
+   "R_bot_entrance",
+   1.15
+  ],
+  [
+   "B_gromp",
+   "B_wolves",
+   1.2
+  ],
+  [
+   "R_gromp",
+   "R_wolves",
+   1.2
+  ],
+  [
+   "B_wolves",
+   "mid_B_outer",
+   1.15
+  ],
+  [
+   "R_wolves",
+   "mid_R_outer",
+   1.15
+  ],
+  [
+   "B_wolves",
+   "B_raptors",
+   1.3
+  ],
+  [
+   "R_wolves",
+   "R_raptors",
+   1.3
+  ],
+  [
+   "B_raptors",
+   "B_red",
+   1.15
+  ],
+  [
+   "R_raptors",
+   "R_red",
+   1.15
+  ],
+  [
+   "B_raptors",
+   "mid_B_outer",
+   1.15
+  ],
+  [
+   "R_raptors",
+   "mid_R_outer",
+   1.15
+  ],
+  [
+   "B_raptors",
+   "mid_center",
+   1.15
+  ],
+  [
+   "R_raptors",
+   "mid_center",
+   1.15
+  ],
+  [
+   "B_raptors",
+   "river_bot_scuttle",
+   1.25
+  ],
+  [
+   "R_raptors",
+   "river_top_scuttle",
+   1.25
+  ],
+  [
+   "B_red",
+   "B_krugs",
+   1.15
+  ],
+  [
+   "R_red",
+   "R_krugs",
+   1.15
+  ],
+  [
+   "B_red",
+   "B_bot_entrance",
+   1.2
+  ],
+  [
+   "R_red",
+   "R_top_entrance",
+   1.2
+  ],
+  [
+   "B_krugs",
+   "B_bot_entrance",
+   1.15
+  ],
+  [
+   "R_krugs",
+   "R_top_entrance",
+   1.15
+  ],
+  [
+   "B_bot_entrance",
+   "bot_B_outer",
+   1.1
+  ],
+  [
+   "R_top_entrance",
+   "top_R_outer",
+   1.1
+  ],
+  [
+   "B_bot_entrance",
+   "river_bot_brush",
+   1.15
+  ],
+  [
+   "R_top_entrance",
+   "river_top_brush",
+   1.15
+  ],
+  [
+   "B_bot_entrance",
+   "dragon_pit",
+   1.2
+  ],
+  [
+   "R_top_entrance",
+   "baron_pit",
+   1.2
+  ],
+  [
+   "B_top_entrance",
+   "top_B_outer",
+   1.1
+  ],
+  [
+   "R_bot_entrance",
+   "bot_R_outer",
+   1.1
+  ],
+  [
+   "B_top_entrance",
+   "river_top_brush",
+   1.15
+  ],
+  [
+   "R_bot_entrance",
+   "river_bot_brush",
+   1.15
+  ],
+  [
+   "B_top_entrance",
+   "river_top_scuttle",
+   1.15
+  ],
+  [
+   "R_bot_entrance",
+   "river_bot_scuttle",
+   1.15
+  ],
+  [
+   "top_B_outer",
+   "top_center",
+   1.05
+  ],
+  [
+   "bot_R_outer",
+   "bot_center",
+   1.05
+  ],
+  [
+   "mid_B_outer",
+   "mid_center",
+   1.0
+  ],
+  [
+   "mid_R_outer",
+   "mid_center",
+   1.0
+  ],
+  [
+   "bot_B_outer",
+   "bot_center",
+   1.05
+  ],
+  [
+   "top_R_outer",
+   "top_center",
+   1.05
+  ],
+  [
+   "river_top_scuttle",
+   "baron_pit",
+   1.1
+  ],
+  [
+   "river_bot_scuttle",
+   "dragon_pit",
+   1.1
+  ],
+  [
+   "river_top_scuttle",
+   "mid_center",
+   1.1
+  ],
+  [
+   "river_bot_scuttle",
+   "mid_center",
+   1.1
+  ],
+  [
+   "river_top_scuttle",
+   "river_top_brush",
+   1.1
+  ],
+  [
+   "river_bot_scuttle",
+   "river_bot_brush",
+   1.1
+  ],
+  [
+   "river_top_brush",
+   "top_center",
+   1.1
+  ],
+  [
+   "river_bot_brush",
+   "bot_center",
+   1.1
+  ],
+  [
+   "river_top_brush",
+   "baron_pit",
+   1.15
+  ],
+  [
+   "river_bot_brush",
+   "dragon_pit",
+   1.15
+  ]
+ ]
+}
