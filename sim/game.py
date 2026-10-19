@@ -398,6 +398,40 @@ class Game:
         elif kind == "ganking" and c.task.get("resolved"):
             c.task = None
 
+    def _skirmish(self):
+        """정글·강가 조우 교전: 두 정글러가 가까이 있으면 확률적으로 교전이 난다(3단계 '적 정글러 조우 시 교전 모듈')."""
+        ps = self.p["skirmish"]
+        j1, j2 = (next(c for c in self.champs if c.team == t and c.role == "JUNGLE") for t in (100, 200))
+        if not (j1.alive(self.t) and j2.alive(self.t)) or self.t - getattr(self, "_last_skirmish", -999) < ps["cooldown_s"]:
+            return
+        if any(self.map.nodes[j.node]["kind"] == "fountain" or (j.task and j.task.get("kind") == "recalling") for j in (j1, j2)):
+            return
+        n1, n2 = self.map.nodes[j1.node], self.map.nodes[j2.node]
+        if ((n1["x"] - n2["x"]) ** 2 + (n1["y"] - n2["y"]) ** 2) ** 0.5 > ps["encounter_range"]:
+            return
+        if self.rng.random() >= ps["engage_prob_per_s"]:
+            return
+        self._last_skirmish = self.t
+        sides = {}
+        for j in (j1, j2):
+            side = [j]
+            for c in self.champs:
+                if c.team == j.team and c.role != "JUNGLE" and c.alive(self.t) and not c.task \
+                        and self.map.travel_s(c.node, j.node, c.ms) <= ps["join_travel_s"] and self.rng.random() < ps["join_prob"]:
+                    side.append(c)
+            sides[j.team] = side
+        res = events.resolve_skirmish(sides, self.t, self.rng, ps)
+        for pid, hp in res.hp_after.items():
+            next(x for x in self.champs if x.pid == pid).hp = hp
+        for m in sides[100] + sides[200]:
+            m.busy_until = max(m.busy_until, self.t) + res.duration_s
+            if m.task and m.task.get("kind") == "clearing":
+                m.task["until"] = m.busy_until
+        for victim, killer, assists in res.deaths:
+            self.kill(killer, victim, assists)
+        self.events.append({"t": self.t, "type": "skirmish", "node": j1.node, "winner": res.winner,
+                            "sizes": [len(sides[100]), len(sides[200])], "deaths": len(res.deaths)})
+
     def record_frame(self):
         self.frames.append({
             "t": self.t,
@@ -415,6 +449,7 @@ class Game:
             self._economy(c)
             self._finish_tasks(c)
             self._advance(c)
+        self._skirmish()
         for c in self.champs:
             if c.alive(self.t):
                 self.bots[c.pid].tick()

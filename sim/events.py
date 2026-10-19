@@ -70,3 +70,46 @@ def resolve_gank(inp: GankInput, now, rng, p):
         res.killer = t
         res.assists = [c for c in inp.defenders if c is not t]
     return res
+
+
+@dataclass
+class SkirmishResult:
+    winner: int
+    deaths: list = field(default_factory=list)      # (victim, killer, assists)
+    hp_after: dict = field(default_factory=dict)
+    duration_s: float = 0.0
+    prob: float = 0.0
+
+
+def resolve_skirmish(sides, now, rng, p):
+    """정글·강가 조우 교전. sides = {팀: [Champ, ...]}. 첫 번째 원소가 그 팀 정글러.
+
+    승리 확률은 인원·레벨 합·체력 합 차이의 로지스틱. 진 쪽에서 1명이 죽고, 일정 확률로 1명 더,
+    이긴 쪽도 일정 확률로 1명 잃는다(맞교환). 계산식은 자리표시이며 킬 이벤트로 보정한다.
+    """
+    (ta, a), (tb, b) = sides.items()
+    c = p["coef"]
+    x = (c["num_adv"] * (len(a) - len(b))
+         + c["level_diff"] * (sum(m.level for m in a) - sum(m.level for m in b)) / max(len(a), len(b))
+         + c["hp_diff"] * (sum(m.hp for m in a) - sum(m.hp for m in b)))
+    prob = logistic(x)
+    win, lose = (a, b) if rng.random() < prob else (b, a)
+    res = SkirmishResult(winner=(ta if win is a else tb), duration_s=p["duration_s"], prob=prob)
+    lo, hi = p["hp_cost"]
+    for m in a + b:
+        res.hp_after[m.pid] = max(0.05, m.hp - rng.uniform(lo, hi))
+
+    def take(victims, killers):
+        v = min(victims, key=lambda m: res.hp_after[m.pid])
+        victims.remove(v)
+        k = rng.choice(killers)
+        res.deaths.append((v, k, [m for m in killers if m is not k]))
+
+    lose_left, win_left = list(lose), list(win)
+    if rng.random() < p["loser_death"]:
+        take(lose_left, win_left)
+        if lose_left and rng.random() < p["second_death"]:
+            take(lose_left, win_left)
+        if win_left and lose_left and rng.random() < p["trade_death"]:
+            take(win_left, lose_left)
+    return res

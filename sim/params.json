@@ -3,7 +3,7 @@
   "jungler": {
     "base_ms": {"value": 345, "level": "calibrated", "note": "1단계 정글러 2·3분 프레임 movementSpeed 중앙값 345"},
     "boots_ms": {"value": 25, "level": "unverified", "note": "첫 귀환 때 신발 구매로 가정"},
-    "dps_level1": {"value": 125, "level": "calibrated", "note": "평타·스킬 합산 초당 피해(펫 제외). 첫 풀캠(3분 프레임 정글 CS 24 도달 비율)에 맞춤 → 첫 풀캠 지표는 검증 대상이 아님"},
+    "dps_level1": {"value": 118, "level": "calibrated", "note": "평타·스킬 합산 초당 피해(펫 제외). 첫 풀캠(3분 프레임 정글 CS 24 도달 비율)에 맞춤 → 첫 풀캠 지표는 검증 대상이 아님"},
     "dps_per_level": {"value": 0.09, "level": "unverified", "note": "레벨당 +9%"},
     "dps_per_1000_item_gold": {"value": 0.18, "level": "unverified"},
     "aoe_small_unit_factor": {"value": 0.45, "level": "unverified", "note": "작은 몬스터 체력은 광역 피해로 이만큼만 따로 깎는다고 봄"},
@@ -63,6 +63,19 @@
     "flash_cooldown_s": {"value": 300, "level": "consensus"},
     "duration_s": {"value": 10, "level": "unverified"},
     "hp_cost": {"value": [0.15, 0.4], "level": "unverified"}
+  },
+  "skirmish": {
+    "encounter_range": {"value": 3500, "level": "unverified", "note": "두 정글러가 이 거리 안(현재 노드 좌표 기준)에 있으면 조우 가능"},
+    "engage_prob_per_s": {"value": 0.1, "level": "calibrated", "note": "조우 중 초당 교전 시작 확률. 정글러 10분 데스 평균(1,000판 1.1)을 넘지 않는 선에서 정함. 더 올리면 킬보다 데스가 먼저 늘어남"},
+    "cooldown_s": {"value": 45, "level": "unverified"},
+    "join_travel_s": {"value": 12, "level": "unverified", "note": "이 시간 안에 올 수 있는 라이너가 합류 후보"},
+    "join_prob": {"value": 0.7, "level": "unverified"},
+    "coef": {"value": {"num_adv": 0.9, "level_diff": 0.45, "hp_diff": 1.2}, "level": "unverified"},
+    "loser_death": {"value": 0.7, "level": "unverified"},
+    "second_death": {"value": 0.25, "level": "unverified"},
+    "trade_death": {"value": 0.2, "level": "unverified"},
+    "duration_s": {"value": 8, "level": "unverified"},
+    "hp_cost": {"value": [0.2, 0.5], "level": "unverified"}
   },
   "objective": {
     "epic_dps_factor": {"value": 0.8, "level": "unverified", "note": "에픽 몬스터 방어력 등으로 정글러 피해가 줄어드는 정도"},
