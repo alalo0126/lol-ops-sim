@@ -17,7 +17,7 @@
     "cooldown_s": {"value": 15, "src": "wiki:Smite", "level": "verified"},
     "recharge_s": {"value": 90, "src": "wiki:Smite", "level": "verified", "note": "소환사 주문 가속으로 감소"},
     "charges": {
-      "value": {"max": 2, "start": 1, "second_charge_recharge_starts_at_s": 48},
+      "value": {"max": 2, "start": 1, "second_charge_recharge_starts_at_s": 48, "second_charge_at_s": 140, "second_charge_at_s_cosmic_insight": 127},
       "src": "wiki:Smite", "level": "verified",
       "note": "V26.01에서 충전 시작 1:20 → 0:48. 위키 문장이 '0:48부터 90초마다 충전'인지 '0:48에 2번째 충전'인지 애매함 → UNVERIFIED.md 참고",
       "crosscheck": "1분 프레임이라 1단계 데이터로 확인 불가"
