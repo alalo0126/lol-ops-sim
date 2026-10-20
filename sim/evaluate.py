@@ -129,7 +129,8 @@ def report(out, policy_path, dst):
         else:
             r = None
         if r:
-            realcol = f"{r['p10']:g}~{r['p90']:g} ({r['median']:g})"
+            num = lambda x: f"{x:.0f}" if abs(x) >= 100 else f"{x:.3g}"
+            realcol = f"{num(r['p10'])}~{num(r['p90'])} ({num(r['median'])})"
             m = s["agent"]["median"]
             verdict = "OK" if r["p25"] <= m <= r["p75"] else ("주의" if r["p10"] <= m <= r["p90"] else "밖")
         fmt = lambda x: f"{x['median']:g} ({x['mean']:.2f})"

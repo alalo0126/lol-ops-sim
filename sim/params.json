@@ -64,6 +64,8 @@
     "recall_hp": {"value": 0.35, "level": "kk"},
     "pushed": {"value": 0.8, "level": "kk"},
     "unseen_ward_s": {"value": 45, "level": "kk"},
+    "post_gank_recall_hp": {"value": 0.35, "level": "unverified", "note": "갱을 버틴 라이너가 이 체력 미만이면 웨이브 상태와 상관없이 귀환. kk 귀환 기준의 35%를 쓰되 '웨이브 밀림' 조건은 뺌(Claude 기본값, kk 검토 필요). 5단계 학습 정글러가 빈사로 남은 라이너를 10초 간격으로 다시 갱하던 문제 대응"},
+    "post_gank_retreat_s": {"value": 15, "level": "unverified", "note": "갱을 버틴 라이너가 체력이 남아 있으면 이만큼 포탑으로 물러남(Claude 기본값)"},
     "core_component_gold": {"value": 1100, "level": "unverified", "note": "kk 귀환 기준의 '핵심 하위 아이템 가격' 자리표시"}
   },
   "gank": {

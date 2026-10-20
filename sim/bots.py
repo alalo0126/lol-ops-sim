@@ -263,6 +263,9 @@ class JunglerBot:
         for v in res.deaths:
             g.kill(res.killer, v, res.assists)
         g.events.append({"t": g.t, "type": "gank", "pid": c.pid, "lane": lane, "success": res.success, "prob": round(res.prob, 3), "seen": round(seen, 3)})
+        for d in defenders:
+            if d.role != "JUNGLE" and d.alive(g.t):
+                g.bots[d.pid].after_gank()
         if c.alive(g.t):
             c.busy_until = g.t + res.duration_s
             c.task = {"kind": "ganking", "resolved": True}
@@ -334,6 +337,22 @@ class LanerBot:
         c.hp = min(1.0, c.hp + pl["hp_regen_per_s"])
         if c.node == center and g.t >= c.next_trade:
             self.trade(center)
+
+    def after_gank(self):
+        """갱을 버틴 뒤: 체력이 낮으면 바로 귀환, 아니면 잠시 포탑으로 물러남(5단계에서 찾은 연속 갱 악용 대응, Claude 기본값).
+
+        kk 귀환 기준(체력 35% 미만 + 웨이브 밀림)은 웨이브 모듈이 없어 거의 발동하지 않아서, 갱 직후에는 웨이브 조건을 뺀다.
+        """
+        g, c, pl = self.g, self.c, self.g.p["laner"]
+        if c.task:
+            return
+        if c.hp < pl["post_gank_recall_hp"]:
+            g.start_recall(c)
+            return
+        c.retreat_until = g.t + pl["post_gank_retreat_s"]
+        tower = g.tower_node(c.lane, c.team)
+        if c.node != tower:
+            g.move_to(c, tower)
 
     def should_retreat(self, center):
         g, c, pl = self.g, self.c, self.g.p["laner"]
