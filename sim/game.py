@@ -32,6 +32,8 @@ class Champ:
     spent: float = 0.0
     item_gold: float = 0.0
     lane_cs: float = 0.0
+    monster_gold: float = 0.0    # 정글러: 캠프에서 번 골드(몬스터 사냥꾼 패널티 판정용)
+    minion_gold: float = 0.0     # 정글러: 라인 미니언에서 번 골드
     jungle_cs: int = 0
     kills: int = 0
     deaths: int = 0
@@ -42,7 +44,7 @@ class Champ:
     busy_until: float = 0.0
     dead_until: float = -1.0
     flash_at: float = 0.0        # 이 시각부터 점멸 사용 가능
-    exposures: list = field(default_factory=list)   # 이번 이동에서 적 시야에 노출된 시간들
+    exposures: list = field(default_factory=list)   # 적 시야 노출 (시각, 머문 초). 갱 발각은 최근 seen_window_s만 봄
     champion: str = ""
     homeguard_left: float = 0.0  # 우물 이속 효과가 남은 이동 거리
     homeguard_t: float = 0.0     # 우물을 나선 뒤 지난 초
@@ -97,7 +99,8 @@ class Camp:
 
 
 class Game:
-    def __init__(self, seed=0, cognition="challenger", rules=None, bot_classes=None):
+    def __init__(self, seed=0, cognition="challenger", rules=None, bot_classes=None, jungler_override=None):
+        """jungler_override = {팀: (game, champ) → 봇}. 5단계 학습 정글러를 한 팀에만 넣을 때 쓴다."""
         from .bots import JunglerBot, LanerBot
         self.rules = rules or Rules()
         self.p = self.rules.params
@@ -112,6 +115,10 @@ class Game:
         self.wave = {"top": 0.5, "mid": 0.5, "bot": 0.5}   # 블루 기준 웨이브 위치(0 = 블루 포탑)
         # 팀별로 적 정글러를 마지막으로 본 (노드, 인지된 시각)
         self.enemy_jgl_seen = {100: (None, -999.0), 200: (None, -999.0)}
+        # 팀별 '새 정보' 카운터(적 정글러 발견, 킬, 오브젝트 생성). 3단계 결정 주기의 세 번째 조건
+        self.info_version = {100: 0, 200: 0}
+        # 정글러가 라인 미니언을 먹는 동안 그 라인 라이너는 수입이 없다(같은 웨이브를 나눠 먹지 않음)
+        self.lane_taken_until = {"top": -1.0, "mid": -1.0, "bot": -1.0}
 
         self.champs = []
         for team in (100, 200):
@@ -119,7 +126,8 @@ class Game:
                 c = Champ(pid=i + 1 + (0 if team == 100 else 5), team=team, role=role, node=f"{SIDE[team]}_fountain")
                 self.champs.append(c)
         jb, lb = (bot_classes or (JunglerBot, LanerBot))
-        self.bots = {c.pid: (jb(self, c) if c.role == "JUNGLE" else lb(self, c)) for c in self.champs}
+        override = jungler_override or {}
+        self.bots = {c.pid: ((override.get(c.team) or jb)(self, c) if c.role == "JUNGLE" else lb(self, c)) for c in self.champs}
 
         self.camps = {}
         for team in (100, 200):
@@ -186,18 +194,41 @@ class Game:
         victim.node = f"{SIDE[victim.team]}_fountain"
         victim.exposures = []
         victim.respawned = True
+        self.bump_info()
         self.events.append({"t": self.t, "type": "kill", "killer": killer.pid, "victim": victim.pid, "assists": [a.pid for a in assists]})
+
+    def bump_info(self, team=None):
+        for tm in ((team,) if team else (100, 200)):
+            self.info_version[tm] += 1
 
     # ------------------------------------------------------------------ 이동
     def move_to(self, c, dest):
+        if c.path and c.edge_left > 0:
+            self._reroute(c, dest)
+            return
         c.path = self.map.path(c.node, dest)
         c.edge_left = self.map.dist(c.node, c.path[0]) if c.path else 0.0
-        c.exposures = []
         if c.pull_credit and c.path and self.map.nodes[c.node]["kind"] in ("camp", "scuttle"):
             c.edge_left -= c.pull_credit * c.ms     # 직전 캠프를 이쪽으로 당기며 잡았으니 그만큼 이미 와 있음
         c.pull_credit = 0.0
         if self.map.nodes[c.node]["kind"] == "fountain" and c.path and self.t >= 20:   # 0:20부터 받음
             self._start_homeguard(c)
+
+    def _reroute(self, c, dest):
+        """엣지 중간에서 목적지를 바꿀 때 지금까지 간 거리를 버리지 않는다(5단계: 이동 중 5초마다 다시 고름).
+
+        c.node와 c.path[0] 사이에 있으므로, 앞 노드로 계속 가는 길과 뒤 노드로 돌아가는 길 중 짧은 쪽을 고른다.
+        """
+        ahead = c.path[0]
+        traveled = max(0.0, self.map.dist(c.node, ahead) - c.edge_left)
+        via_ahead = c.edge_left + self.map.dist(ahead, dest)
+        via_back = traveled + self.map.dist(c.node, dest)
+        if via_ahead <= via_back:
+            c.path = [ahead] + self.map.path(ahead, dest)
+        else:
+            c.path = [c.node] + self.map.path(c.node, dest)
+            c.edge_left = traveled
+        c.pull_credit = 0.0
 
     def _start_homeguard(self, c):
         """우물 이속 효과(wiki:Homeguard, V26.01). 정글에 들어가면 사라지고, 라인에서는 외곽 포탑 500 뒤까지 유지."""
@@ -237,9 +268,11 @@ class Game:
             return
         dwell = self.p["cognition"]["node_dwell_radius"] / c.ms
         if c.path:   # 목적지는 노출로 치지 않는다(도착하면 어차피 보임)
-            c.exposures.append(dwell)
+            c.exposures.append((self.t, dwell))
+            c.exposures = c.exposures[-8:]
         if c.role == "JUNGLE" and self.rng.random() < detect_prob([dwell], self.cog):
             self.enemy_jgl_seen[enemy_team] = (c.node, self.t + self.cog["reaction_s"])
+            self.bump_info(enemy_team)
 
     # ------------------------------------------------------------------ 정글
     def jungler_dps(self, c, epic=False):
@@ -330,6 +363,7 @@ class Game:
         pj = self.p["jungler"]
         if camp.alive:
             gold, xp = self.camp_rewards(c, camp)
+            c.monster_gold += gold
             self.give_gold(c, gold)
             self.give_xp(c, xp)
             c.jungle_cs += 4
@@ -421,6 +455,7 @@ class Game:
                 continue
             if not ob["alive"] and ob["spawn_at"] is not None and self.t >= ob["spawn_at"]:
                 ob["alive"], ob["spawn_at"] = True, None
+                self.bump_info()
         self.wards = [w for w in self.wards if w["until"] > self.t]
 
     def _economy(self, c):

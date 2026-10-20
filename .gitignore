@@ -3,3 +3,8 @@ __pycache__/
 *.pyc
 .env
 *.tmp
+models/*
+!models/stage5/
+models/stage5/*
+!models/stage5/policy_final.npz
+!models/stage5/policy_bc.npz
