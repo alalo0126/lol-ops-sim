@@ -71,6 +71,7 @@
     "jungler_gets_kill": {"value": 0.5, "level": "calibrated", "note": "1단계 1,000판 양 팀 정글러 10분 킬·데스·어시스트 평균(2.0 / 1.2 / 1.6)에 맞춤(시뮬 1.98 / 1.11 / 1.47). 이 값들 때문에 10분 KDA는 검증 지표가 아님"},
     "fail_attacker_death": {"value": 0.18, "level": "unverified"},
     "flash_cooldown_s": {"value": 300, "level": "consensus"},
+    "seen_window_s": {"value": 20, "level": "unverified", "note": "갱 대상이 진입을 미리 봤는지 판단할 때 보는 최근 노출 구간. 4단계까지는 '이번 이동의 노출'이었는데, 5단계 학습 정글러가 이동 중 행동을 바꿔 노출 기록을 지우는 일을 막으려고 시간 기준으로 바꿈"},
     "duration_s": {"value": 10, "level": "unverified"},
     "hp_cost": {"value": [0.15, 0.4], "level": "unverified"}
   },
@@ -91,6 +92,16 @@
     "epic_dps_factor": {"value": 0.8, "level": "unverified", "note": "에픽 몬스터 방어력 등으로 정글러 피해가 줄어드는 정도"},
     "helper_dps": {"value": 70, "level": "unverified", "note": "합류한 라이너 1명이 더하는 초당 피해"},
     "contest_loser_death": {"value": 0.35, "level": "unverified"}
+  },
+  "agent": {
+    "_doc": "5단계 학습 정글러가 쓰는 행동의 비용 값. 규칙 봇은 쓰지 않는다.",
+    "wait_s": {"value": 5, "level": "kk", "note": "이동·대기 행동의 대기 단위. 3단계 결정 주기(이동 중 5초)와 같게 둠"},
+    "cover_hold_s": {"value": 15, "level": "unverified", "note": "카운터 갱·합류: 라인에 도착해 이만큼 머무르며 적 갱을 받아침. 머무는 동안에도 5초마다·새 정보마다 다시 고름"},
+    "lanefarm_s": {"value": 20, "level": "unverified", "note": "라인 미니언 먹기 한 번(웨이브 하나)에 묶이는 시간. 그 동안 같은 라인 라이너(서폿 제외)는 수입 없음"},
+    "lanefarm_income_s": {"value": 20, "level": "unverified", "note": "웨이브 하나 = 그 라인 라이너 수입(params laner.income_per_s) 이만큼의 초"},
+    "pet_lane_xp_penalty": {"value": {"start": 0.7, "zero_at_s": 840}, "level": "unverified", "note": "positions.json: 정글 펫의 라인 미니언 경험치 감소 70% → 0%. 0%가 되는 시각은 위키에 없어 14분으로 가정(UNVERIFIED)"},
+    "monster_hunter": {"value": {"minion_to_monster_ratio": 0.4, "gold_per_minion": -13, "xp_mult": 0.5, "until_s": 840}, "level": "verified", "note": "positions.json monster_hunter_penalty(wiki:Gustwalker_Hatchling)"},
+    "ward": {"value": {"start_charges": 1, "max_charges": 2, "recharge_s": 120, "duration_s": 90}, "level": "unverified", "note": "장신구 와드. 라이너 봇과 같은 자리표시 값"}
   },
   "cognition": {
     "profiles": {"value": {

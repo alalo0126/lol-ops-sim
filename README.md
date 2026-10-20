@@ -12,7 +12,8 @@
 | `collect/` | 1단계: Riot API 경기 수집(`collect_matches.py`)과 분포 요약(`summarize.py`) |
 | `rules/` | 2단계: 패치 26.20 규칙 데이터, 항목마다 출처 태그. 미검증 목록은 `rules/UNVERIFIED.md` |
 | `tools/` | 규칙 생성(`build_ddragon_rules.py`, `build_map_graph.py`), 실제 경기 대조(`crosscheck_rules.py`), 4단계 기준값 추출(`stage4_targets.py`) |
-| `sim/` | 4단계: 1초 틱 최소 시뮬레이터와 규칙 봇. 모델 값은 `sim/params.json` |
+| `sim/` | 4단계: 1초 틱 최소 시뮬레이터와 규칙 봇. 모델 값은 `sim/params.json`. 5단계: 학습 정글러(`agent.py`), 승률 보상(`winprob.py`), numpy PPO(`ppo.py`, `train.py`), 모방 시작점(`teacher.py`), 판정(`evaluate.py`) |
+| `models/` | 5단계 학습된 정책(`models/stage5/*.npz`)과 학습 기록. git에 올리지 않음 |
 | `tests/` | `python -m unittest discover tests` |
 | `reports/` | 시뮬레이터와 실제 분포 비교표 |
 | `data/` | 수집 원본·Data Dragon 캐시. git에 올리지 않음 |
@@ -62,3 +63,21 @@ python -m unittest discover tests
 - `sim/targets_stage1.json`은 실제 경기의 집계값(분위수)만 담는다. 1단계 수집이 끝나면 위 두 줄로 다시 만든다.
 - 처치 시간·캠프 간 이동·우물 이속·강타 충전·간식 시각·당겨먹기·레벨/템에 따른 처치 속도는 kk 연습 모드 실측(마스터 이), 갱·교전 계수는 실제 10분 킬·데스·어시스트에 맞춘 값이다.
 - 판정(2026-10-20, 400판 vs 1,000판 양 팀 정글러): 불일치 없음, 10분 골드·정글 CS·레벨·경험치 모두 실제 p25~p75 안 → 4단계 통과. 알려진 한계: 10분 정글 CS가 중앙값보다 약 6 낮고(1풀캠 뒤 동선 판단이 단순한 규칙 봇), 15분 골드·경험치는 p10~p90 안이지만 낮은 편. 자세한 내용은 `reports/stage4_notes.md`.
+
+## 5단계: 정글러 강화학습
+
+정글러 하나만 PPO로 학습하고 나머지 9명은 규칙 봇. GPU·PyTorch 없이 numpy만 쓴다(정책망이 작아 CPU로 충분).
+
+```bat
+python tools\fit_winprob.py              :: data\raw → sim\winprob.json (분별 승률 모델, 보상)
+python tools\stage5_targets.py           :: data\raw → sim\targets_stage5.json (20분 실제 분포, 악용 점검용)
+python -m sim.teacher --games 3000        :: 규칙 봇 모방 → models\stage5\policy_bc.npz
+python -m sim.train --init models\stage5\policy_bc.npz --iters 400 --lr 1e-4 --ent-coef 0.003
+python -m sim.evaluate --games 4000       :: 규칙 봇 정글러와 같은 시드로 짝지어 비교 → reports\stage5_eval.md
+```
+
+- 보상(3단계 확정): 결정 사이 예측 승률 변화. 합은 20분 예측 승률 − 시작 승률(잠재 기반 보상이라 최적 행동은 20분 승률 기준과 같음).
+  승률 모델은 1단계 1,000판의 분별 로지스틱 회귀(골드·경험치·드래곤·유충·전령 팀 차이). 포탑·킬을 넣어도 교차검증 정확도가 거의 같아 시뮬레이터가 만드는 값만 쓴다.
+- 행동(3단계 확정): 주 행동 36개(캠프 6, 카정 6, 바위게 2, 갱 3, 카운터 갱·합류 3, 오브젝트 3, 귀환, 라인 미니언 3, 대기, 이동 8) + 와드(없음/지금/다음 노드) + 강타(사용/아낌). 결정은 행동이 끝났을 때, 이동 중 5초마다, 새 정보(적 정글러 발견·킬·오브젝트 생성) 때.
+- 학습 정글러 팀은 경기마다 블루/레드 번갈아. 학습 경기 시드는 100000부터, 판정 시드는 0부터라 겹치지 않는다.
+- 자세한 판정과 악용 점검은 `reports/stage5_eval.md`, `reports/stage5_notes.md`.

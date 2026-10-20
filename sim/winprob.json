@@ -1,0 +1,337 @@
+{
+ "features": [
+  "gold",
+  "xp",
+  "dragons",
+  "grubs",
+  "heralds"
+ ],
+ "scale": {
+  "gold": 1000.0,
+  "xp": 1000.0
+ },
+ "matches": 1000,
+ "minutes": {
+  "1": {
+   "n": 1000,
+   "blue_win_rate": 0.483,
+   "intercept": -0.07103,
+   "coef": {
+    "gold": 0.75191,
+    "xp": -0.17186,
+    "dragons": 0.0,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.518,
+   "cv_logloss": 0.6936,
+   "full_cv_accuracy": 0.524,
+   "full_cv_logloss": 0.6934
+  },
+  "2": {
+   "n": 1000,
+   "blue_win_rate": 0.483,
+   "intercept": -0.08627,
+   "coef": {
+    "gold": 0.56149,
+    "xp": 0.24218,
+    "dragons": 0.0,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.558,
+   "cv_logloss": 0.6866,
+   "full_cv_accuracy": 0.548,
+   "full_cv_logloss": 0.6871
+  },
+  "3": {
+   "n": 1000,
+   "blue_win_rate": 0.483,
+   "intercept": -0.07498,
+   "coef": {
+    "gold": 0.64899,
+    "xp": 0.38907,
+    "dragons": 0.0,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.611,
+   "cv_logloss": 0.6631,
+   "full_cv_accuracy": 0.608,
+   "full_cv_logloss": 0.6652
+  },
+  "4": {
+   "n": 999,
+   "blue_win_rate": 0.4835,
+   "intercept": -0.08891,
+   "coef": {
+    "gold": 0.63966,
+    "xp": 0.33142,
+    "dragons": 0.0,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.6266,
+   "cv_logloss": 0.6398,
+   "full_cv_accuracy": 0.6256,
+   "full_cv_logloss": 0.6401
+  },
+  "5": {
+   "n": 998,
+   "blue_win_rate": 0.483,
+   "intercept": -0.07811,
+   "coef": {
+    "gold": 0.58914,
+    "xp": 0.30894,
+    "dragons": 0.0,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.6493,
+   "cv_logloss": 0.6275,
+   "full_cv_accuracy": 0.6463,
+   "full_cv_logloss": 0.6283
+  },
+  "6": {
+   "n": 996,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.03406,
+   "coef": {
+    "gold": 0.50435,
+    "xp": 0.31588,
+    "dragons": 0.61857,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.6496,
+   "cv_logloss": 0.6087,
+   "full_cv_accuracy": 0.6506,
+   "full_cv_logloss": 0.6091
+  },
+  "7": {
+   "n": 996,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.00239,
+   "coef": {
+    "gold": 0.54405,
+    "xp": 0.21628,
+    "dragons": 0.54086,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.6898,
+   "cv_logloss": 0.5799,
+   "full_cv_accuracy": 0.6898,
+   "full_cv_logloss": 0.5804
+  },
+  "8": {
+   "n": 996,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.03557,
+   "coef": {
+    "gold": 0.46539,
+    "xp": 0.31589,
+    "dragons": 0.37193,
+    "grubs": 0.0,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.6968,
+   "cv_logloss": 0.5666,
+   "full_cv_accuracy": 0.6988,
+   "full_cv_logloss": 0.5666
+  },
+  "9": {
+   "n": 995,
+   "blue_win_rate": 0.4834,
+   "intercept": -0.0624,
+   "coef": {
+    "gold": 0.41754,
+    "xp": 0.26142,
+    "dragons": 0.36526,
+    "grubs": 0.09917,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7106,
+   "cv_logloss": 0.5537,
+   "full_cv_accuracy": 0.7116,
+   "full_cv_logloss": 0.5546
+  },
+  "10": {
+   "n": 994,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.06777,
+   "coef": {
+    "gold": 0.37696,
+    "xp": 0.30441,
+    "dragons": 0.33124,
+    "grubs": 0.09824,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7294,
+   "cv_logloss": 0.5288,
+   "full_cv_accuracy": 0.7264,
+   "full_cv_logloss": 0.5281
+  },
+  "11": {
+   "n": 994,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.0428,
+   "coef": {
+    "gold": 0.28744,
+    "xp": 0.34277,
+    "dragons": 0.29192,
+    "grubs": 0.07979,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7435,
+   "cv_logloss": 0.5128,
+   "full_cv_accuracy": 0.7404,
+   "full_cv_logloss": 0.5143
+  },
+  "12": {
+   "n": 994,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.05721,
+   "coef": {
+    "gold": 0.29067,
+    "xp": 0.23806,
+    "dragons": 0.22644,
+    "grubs": 0.07094,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7565,
+   "cv_logloss": 0.5022,
+   "full_cv_accuracy": 0.7515,
+   "full_cv_logloss": 0.502
+  },
+  "13": {
+   "n": 994,
+   "blue_win_rate": 0.4829,
+   "intercept": -0.03281,
+   "coef": {
+    "gold": 0.2321,
+    "xp": 0.30108,
+    "dragons": 0.23925,
+    "grubs": 0.06375,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7706,
+   "cv_logloss": 0.4741,
+   "full_cv_accuracy": 0.7676,
+   "full_cv_logloss": 0.4732
+  },
+  "14": {
+   "n": 993,
+   "blue_win_rate": 0.4824,
+   "intercept": -0.03785,
+   "coef": {
+    "gold": 0.19024,
+    "xp": 0.34348,
+    "dragons": 0.2097,
+    "grubs": 0.0632,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7795,
+   "cv_logloss": 0.4557,
+   "full_cv_accuracy": 0.7825,
+   "full_cv_logloss": 0.4571
+  },
+  "15": {
+   "n": 993,
+   "blue_win_rate": 0.4824,
+   "intercept": 0.00065,
+   "coef": {
+    "gold": 0.21425,
+    "xp": 0.24417,
+    "dragons": 0.23584,
+    "grubs": 0.06967,
+    "heralds": 0.0
+   },
+   "cv_accuracy": 0.7976,
+   "cv_logloss": 0.4492,
+   "full_cv_accuracy": 0.7936,
+   "full_cv_logloss": 0.4497
+  },
+  "16": {
+   "n": 850,
+   "blue_win_rate": 0.4824,
+   "intercept": 0.01552,
+   "coef": {
+    "gold": 0.20369,
+    "xp": 0.25162,
+    "dragons": 0.19536,
+    "grubs": 0.05357,
+    "heralds": -0.10434
+   },
+   "cv_accuracy": 0.7812,
+   "cv_logloss": 0.4886,
+   "full_cv_accuracy": 0.7776,
+   "full_cv_logloss": 0.4911
+  },
+  "17": {
+   "n": 829,
+   "blue_win_rate": 0.4837,
+   "intercept": 0.01699,
+   "coef": {
+    "gold": 0.18936,
+    "xp": 0.22667,
+    "dragons": 0.18437,
+    "grubs": 0.04767,
+    "heralds": 0.04732
+   },
+   "cv_accuracy": 0.7829,
+   "cv_logloss": 0.467,
+   "full_cv_accuracy": 0.7841,
+   "full_cv_logloss": 0.4705
+  },
+  "18": {
+   "n": 819,
+   "blue_win_rate": 0.4847,
+   "intercept": 0.02056,
+   "coef": {
+    "gold": 0.1785,
+    "xp": 0.22066,
+    "dragons": 0.19557,
+    "grubs": 0.05225,
+    "heralds": 0.05842
+   },
+   "cv_accuracy": 0.7912,
+   "cv_logloss": 0.4443,
+   "full_cv_accuracy": 0.7924,
+   "full_cv_logloss": 0.4451
+  },
+  "19": {
+   "n": 770,
+   "blue_win_rate": 0.4935,
+   "intercept": 0.009,
+   "coef": {
+    "gold": 0.17178,
+    "xp": 0.21229,
+    "dragons": 0.19866,
+    "grubs": 0.04556,
+    "heralds": 0.0694
+   },
+   "cv_accuracy": 0.787,
+   "cv_logloss": 0.4428,
+   "full_cv_accuracy": 0.7883,
+   "full_cv_logloss": 0.4444
+  },
+  "20": {
+   "n": 735,
+   "blue_win_rate": 0.502,
+   "intercept": 0.0094,
+   "coef": {
+    "gold": 0.21065,
+    "xp": 0.16598,
+    "dragons": 0.13428,
+    "grubs": 0.03402,
+    "heralds": 0.03829
+   },
+   "cv_accuracy": 0.7878,
+   "cv_logloss": 0.4387,
+   "full_cv_accuracy": 0.7796,
+   "full_cv_logloss": 0.4421
+  }
+ },
+ "_doc": "분 m 시점 블루 팀 승리 확률 = logistic(intercept + Σ coef·(블루−레드 차이 ÷ scale)). tools/fit_winprob.py로 1단계 경기에서 맞춤. 시뮬레이터는 m 사이를 선형 보간한다."
+}
