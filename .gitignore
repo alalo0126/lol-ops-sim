@@ -8,3 +8,6 @@ models/*
 models/stage5/*
 !models/stage5/policy_final.npz
 !models/stage5/policy_bc.npz
+!models/stage6b/
+models/stage6b/*
+!models/stage6b/policy_latest.npz
