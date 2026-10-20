@@ -195,6 +195,7 @@ class Game:
         victim.node = f"{SIDE[victim.team]}_fountain"
         victim.exposures = []
         victim.respawned = True
+        self.shop(victim)   # 죽어 있는 동안 상점 이용
         self.bump_info()
         self.events.append({"t": self.t, "type": "kill", "killer": killer.pid, "victim": victim.pid, "assists": [a.pid for a in assists],
                             "node": died_at})
@@ -433,15 +434,19 @@ class Game:
         c.busy_until = self.t + self.rules.combat["recall_channel_s"]
         c.task = {"kind": "recalling"}
 
-    def finish_recall(self, c):
-        c.node = f"{SIDE[c.team]}_fountain"
-        c.respawned = False
-        c.hp = 1.0
+    def shop(self, c):
+        """남은 골드를 모두 아이템으로. 첫 300골드 넘는 구매에 신발(정글러 이속)을 넣는다."""
         buy = c.unspent
         if c.item_gold < 300 <= c.item_gold + buy and c.role == "JUNGLE":
             c.ms += self.p["jungler"]["boots_ms"]
         c.item_gold += buy
         c.spent += buy
+
+    def finish_recall(self, c):
+        c.node = f"{SIDE[c.team]}_fountain"
+        c.respawned = False
+        c.hp = 1.0
+        self.shop(c)
         if c.role == "JUNGLE" and c.first_recall_s is None:
             c.first_recall_s = self.t
         self.events.append({"t": self.t, "type": "recall", "pid": c.pid})

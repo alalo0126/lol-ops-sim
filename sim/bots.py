@@ -99,6 +99,36 @@ class JunglerBot:
             return None
         return camp
 
+    def contest_target(self):
+        """살아 있는 오브젝트 근처에서 적 정글러를 최근에 봤으면 확률적으로 다투러 간다(6단계 이후 추가)."""
+        g, c = self.g, self.c
+        pj = g.p["jungler"]
+        ej = g.enemy(c, "JUNGLE")
+        if ej.alive(g.t) and ej.task and ej.task.get("kind") == "objective" and ej.task.get("started") \
+                and self.travel(g.objectives[ej.task["name"]]["node"]) <= ej.busy_until - g.t and g.rng.random() < pj["contest_prob"]:
+            return ej.task["name"]     # 적이 오브젝트를 치는 중(시야·라이너 핑으로 안다고 봄)
+        node, seen_t = g.enemy_jgl_seen[c.team]
+        if node is None or g.t - seen_t > pj["contest_seen_within_s"]:
+            return self.setup_target()
+        for name, ob in g.objectives.items():
+            if ob["alive"] and g.map.hops(node, ob["node"]) <= pj["contest_hops"] \
+                    and self.travel(ob["node"]) <= pj["contest_max_travel_s"] and g.rng.random() < pj["contest_prob"]:
+                return name
+        return None
+
+    def setup_target(self):
+        """드래곤 생성 직전이면 확률적으로 둥지 앞에 미리 가서 기다린다(6단계 이후 추가)."""
+        g = self.g
+        pj = g.p["jungler"]
+        ob = g.objectives["dragon"]
+        if ob["alive"] or ob["spawn_at"] is None:
+            return None
+        left = ob["spawn_at"] - g.t
+        tt = self.travel(ob["node"])
+        if tt <= left <= tt + pj["setup_before_s"] and g.rng.random() < pj["setup_prob"]:
+            return "dragon"
+        return None
+
     def gank_ready(self):
         return self.g.t - self.last_gank >= self.g.p["jungler"]["gank_cooldown_s"]
 
@@ -122,6 +152,9 @@ class JunglerBot:
 
     def still_valid(self, task):
         g = self.g
+        if task["kind"] == "objective" and not g.objectives[task["name"]]["alive"]:
+            ob = g.objectives[task["name"]]
+            return ob["spawn_at"] is not None and ob["spawn_at"] - g.t <= g.p["jungler"]["setup_before_s"] + 30
         if task["kind"] == "camp":
             camp = g.camps[task["camp"]]
             return camp.alive or camp.spawn_at - g.t <= self.travel(camp.node) + 20
@@ -172,6 +205,9 @@ class JunglerBot:
         alive_near = [k for k in self.own_camps() if k.alive and self.travel(k.node) < 15]
         if c.hp < pj["recall_hp"] or (c.unspent >= pj["recall_gold"] and not alive_near):
             return ("recall",)
+        contest = self.contest_target()
+        if contest:
+            return ("objective", g.objectives[contest]["node"], {"name": contest})
         lane = self.gank_target(pj["gank_hp_threshold"], pj["gank_max_travel_s"]) if self.gank_ready() else None
         if lane:
             return ("gank", g.lane_node(lane), {"lane": lane})
@@ -213,6 +249,9 @@ class JunglerBot:
         elif kind == "objective":
             ob = g.objectives[task["name"]]
             if not ob["alive"]:
+                if ob["spawn_at"] is not None and ob["spawn_at"] - g.t <= g.p["jungler"]["setup_before_s"] + 5:
+                    c.busy_until = ob["spawn_at"]     # 생성 직전이면 둥지 앞에서 기다림(작업은 그대로)
+                    return
                 c.task = None
                 return
             helpers = []
@@ -315,7 +354,8 @@ class LanerBot:
             return
         # kk 기준 2. 귀환 (마나 모델이 없어 체력만 봄)
         pushed = g.wave_for(c.team, lane) >= pl["pushed"]
-        if c.hp < pl["recall_hp_always"] or ((c.hp < pl["recall_hp"] or c.unspent >= pl["core_component_gold"]) and pushed):
+        if c.hp < pl["recall_hp_always"] or c.unspent >= pl["recall_gold_any"] \
+                or ((c.hp < pl["recall_hp"] or c.unspent >= pl["core_component_gold"]) and pushed):
             g.start_recall(c)
             return
         # kk 기준 9. 와드
