@@ -15,7 +15,8 @@ from .data import ROOT
 from .game import Game
 
 MINUTES = [2, 3, 4, 5, 6, 8, 10, 15]
-CALIBRATED = set()   # 2026-10-20부터 처치 시간·이동 시간·간식 시각은 kk 실측값이라 보정 지표 없음
+CALIBRATED = set()   # 처치 시간·이동 시간·간식 시각은 kk 실측값이라 분 단위 지표는 보정 대상 아님
+CALIBRATED_KDA = True  # 갱·교전 계수를 10분 킬·데스·어시스트 평균에 맞췄으므로 KDA 행은 검증 근거가 아님
 
 
 def pct(values):
@@ -81,16 +82,19 @@ def simulate(games, seed0=0, cognition="challenger"):
 
 def compare(sim, real):
     rows = []
-    rj = real["jungler_by_minute"]
+    # 시뮬레이터는 두 정글러가 같은 봇이라 양 팀 정글러 둘 다의 분포와 비교한다(시드 선수만 보면 승률 58%라 조금 높게 나옴)
+    rj = real.get("both_junglers_by_minute", real["jungler_by_minute"])
+    rk = real.get("both_junglers_kda_by_10min", real["jungler_kda_by_10min"])
+    r24 = real.get("both_first_minute_jungle_cs_ge_24", real["first_minute_jungle_cs_ge_24"])
     for m in MINUTES:
         for k in ("jungle_cs", "gold", "level", "xp"):
             r, s = rj[str(m)][k], sim["by_min"][m][k]
             rows.append({"metric": f"{m}분 {k}", "real": r, "sim": s, "verdict": verdict(s["median"], r),
                          "calibrated": (k, m) in CALIBRATED})
     for k in ("kills", "deaths", "assists"):
-        r, s = real["jungler_kda_by_10min"][k], sim["kda10"][k]
-        rows.append({"metric": f"10분 {k}", "real": r, "sim": s, "verdict": verdict(s["median"], r), "calibrated": False})
-    r, s = real["first_minute_jungle_cs_ge_24"], sim["first24"]
+        r, s = rk[k], sim["kda10"][k]
+        rows.append({"metric": f"10분 {k}", "real": r, "sim": s, "verdict": verdict(s["median"], r), "calibrated": CALIBRATED_KDA})
+    r, s = r24, sim["first24"]
     rows.append({"metric": "정글 CS 24 첫 도달(분 프레임)", "real": r, "sim": s, "verdict": verdict(s["median"], r), "calibrated": False})
     return rows
 
@@ -101,7 +105,7 @@ def write_report(rows, sim, real, path):
     lines = [
         "# 4단계 기준선: 규칙 봇 시뮬레이터 vs 1단계 실제 경기",
         "",
-        f"시뮬레이터 {sim['games']}판(정글러 {sim['games'] * 2}명, 인지 수준 {sim['cognition']}) · 실제 {real['matches']}판(16.20 KR 챌린저·GM 정글러).",
+        f"시뮬레이터 {sim['games']}판(정글러 {sim['games'] * 2}명, 인지 수준 {sim['cognition']}) · 실제 {real['matches']}판(16.20 KR 챌린저·GM 경기, 양 팀 정글러 둘 다).",
         "값은 중앙값 (p10~p90). 판정: 시뮬 중앙값이 실제 p25~p75 안이면 OK, p10~p90 안이면 주의, 밖이면 불일치.",
         "'보정'은 그 지표에 맞춰 모델 값을 정했다는 뜻이라 검증 근거가 아니다.",
         "기준값은 1단계 1,000판(tools/stage4_targets.py)에서 뽑는다.",
@@ -114,7 +118,7 @@ def write_report(rows, sim, real, path):
         lines.append(f'| {r["metric"]}{tag} | {fmt(r["real"])} | {fmt(r["sim"])} | {r["verdict"]} |')
     lines += [
         "",
-        f'정글 CS 24 첫 도달 분 분포: 실제 {real["first_minute_jungle_cs_ge_24_hist"]} / 시뮬 {sim["first24_hist"]}',
+        f'정글 CS 24 첫 도달 분 분포: 실제 {real.get("both_first_minute_jungle_cs_ge_24_hist", real["first_minute_jungle_cs_ge_24_hist"])} / 시뮬 {sim["first24_hist"]}',
         "",
         "## 시뮬레이터에서만 보는 값",
         "",
