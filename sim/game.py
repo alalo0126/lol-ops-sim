@@ -4,6 +4,7 @@
 보상, 사망, 시야)만 계산한다. 결정 시점은 3단계에서 정한 대로 행동이 끝났을 때 + 이동 중 5초마다 + 새 정보.
 """
 import random
+from types import SimpleNamespace
 from dataclasses import dataclass, field
 
 from . import events
@@ -198,7 +199,7 @@ class Game:
         """우물 이속 효과(wiki:Homeguard, V26.01). 정글에 들어가면 사라지고, 라인에서는 외곽 포탑 500 뒤까지 유지."""
         hg = self.rules.combat["homeguard"]
         if c.role == "JUNGLE":
-            c.homeguard_left = hg["jungle_exit_dist"]
+            c.homeguard_left = self.map.dist(c.node, c.path[0])   # 정글에 들어가면 사라지므로 우물에서 나가는 첫 엣지까지
         else:
             c.homeguard_left = max(0.0, self.map.dist(c.node, self.tower_node(c.lane, c.team)) - 500)
         c.homeguard_t = 0.0
@@ -256,13 +257,13 @@ class Game:
             return dmg["unleashed"]
         return dmg["smite"]
 
-    def camp_clear_time(self, c, camp, use_smite):
-        spec = self.rules.camps[camp.kind]
-        lv = camp.level
+    def _formula_clear_time(self, c, kind, lv, use_smite, first=False):
+        """체력 ÷ 초당 피해 모델. 절대값이 아니라 실측 기준 시간과의 비율로만 쓴다."""
+        spec = self.rules.camps[kind]
         aoe = self.p["jungler"]["aoe_small_unit_factor"]
         large = small = 0.0
         for u in spec["units"]:
-            hp_rng = u.get("hp_first_spawn") if (camp.kind == "scuttle" and camp.first) else u["hp"]
+            hp_rng = u.get("hp_first_spawn") if (kind == "scuttle" and first) else u["hp"]
             hp = lerp_level(hp_rng, lv) * u.get("count", 1)
             if u.get("large"):
                 large += hp
@@ -271,6 +272,26 @@ class Game:
         if use_smite:
             large = max(large * 0.1, large - self.smite_damage(c))
         return 2.0 + (large + aoe * small) / self.jungler_dps(c)
+
+    def _ref_ratio(self, kind):
+        """실측 처치 시간 ÷ 같은 조건의 공식 시간. 실측이 없는 캠프(바위게)는 실측 캠프들의 평균."""
+        cache = self.__dict__.setdefault("_ref_cache", {})
+        if kind not in cache:
+            ref = self.p["jungler"]["reference_clear"]
+            def ratio(k):
+                r = ref["camps"][k]
+                me = SimpleNamespace(level=r["level"], clear_mult=1.0, item_gold=0.0, treats=0)
+                return r["seconds"] / self._formula_clear_time(me, k, 1, r["smite"])
+            if kind in ref["camps"]:
+                cache[kind] = ratio(kind)
+            else:
+                cache[kind] = sum(ratio(k) for k in ref["camps"]) / len(ref["camps"])
+        return cache[kind]
+
+    def camp_clear_time(self, c, camp, use_smite):
+        """kk 실측(마스터 이, 연습 모드) 처치 시간을 기준으로, 레벨·아이템·챔피언 차이·몬스터 레벨은 공식 비율로 반영."""
+        t = self._formula_clear_time(c, camp.kind, camp.level, use_smite, camp.first)
+        return t * self._ref_ratio(camp.kind)
 
     def camp_rewards(self, c, camp):
         spec = self.rules.camps[camp.kind]

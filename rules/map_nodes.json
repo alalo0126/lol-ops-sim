@@ -303,22 +303,32 @@
   [
    "B_fountain",
    "B_raptors",
-   1.25
+   1.127
   ],
   [
    "R_fountain",
    "R_raptors",
-   1.25
+   1.127
   ],
   [
    "B_fountain",
    "B_red",
-   1.2
+   1.212
   ],
   [
    "R_fountain",
    "R_red",
-   1.2
+   1.212
+  ],
+  [
+   "B_fountain",
+   "B_blue",
+   1.223
+  ],
+  [
+   "R_fountain",
+   "R_blue",
+   1.223
   ],
   [
    "B_fountain",
@@ -363,12 +373,12 @@
   [
    "B_blue",
    "B_wolves",
-   1.15
+   1.38
   ],
   [
    "R_blue",
    "R_wolves",
-   1.15
+   1.38
   ],
   [
    "B_blue",
@@ -473,12 +483,12 @@
   [
    "B_red",
    "B_krugs",
-   1.15
+   1.63
   ],
   [
    "R_red",
    "R_krugs",
-   1.15
+   1.63
   ],
   [
    "B_red",

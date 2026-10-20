@@ -12,7 +12,11 @@
   (캠프를 때리는 사거리만큼 떨어져 서 있다고 보면) 어긋나지 않는다.
 - unverified: 길목·부시 노드는 대략 위치. 이동 시간에만 영향.
 
-엣지 길이 = 직선 거리 × 계수. 계수는 벽을 돌아가는 정도를 나타내는 미검증 추정값이다.
+엣지 길이 = 직선 거리 × 계수. 계수는 벽을 돌아가는 정도를 나타낸다.
+kk 연습 모드 실측(2026-10-20, 마스터 이 355, 신발 없음)으로 맞춘 구간:
+  우물→블루 17초 / 우물→레드 16초 / 우물→칼날부리 15초(우물 이속 효과 포함, 첫 엣지 전체에 적용),
+  칼날부리→레드 6초, 레드→돌거북 7초, 늑대→칼날부리 11~12초, 돌거북→아래 바위게 13초,
+  블루→칼날부리 18초(블루→늑대 구간 계수를 여기서 역산). 나머지 계수는 미검증 추정값.
 """
 import json
 import os
@@ -52,14 +56,16 @@ RED_FOUNTAIN = (14426, 14170)
 
 # 블루 진영 엣지: (a, b, 계수). 1.15 = 보통 정글 길, 1.3 = 미드 라인을 건너거나 벽을 크게 도는 길
 BLUE_EDGES = [
-    ("B_fountain", "B_wolves", 1.25), ("B_fountain", "B_raptors", 1.25), ("B_fountain", "B_red", 1.2),
+    # 우물 출발 엣지와 아래 kk_measured 표시 엣지는 kk 연습 모드 실측(마스터 이 이속 355, 2026-10-20)에서 역산
+    ("B_fountain", "B_wolves", 1.25), ("B_fountain", "B_raptors", 1.127), ("B_fountain", "B_red", 1.212),
+    ("B_fountain", "B_blue", 1.223),
     ("B_fountain", "top_B_outer", 1.05), ("B_fountain", "mid_B_outer", 1.05), ("B_fountain", "bot_B_outer", 1.05),
-    ("B_blue", "B_gromp", 1.15), ("B_blue", "B_wolves", 1.15), ("B_blue", "B_top_entrance", 1.15),
+    ("B_blue", "B_gromp", 1.15), ("B_blue", "B_wolves", 1.38), ("B_blue", "B_top_entrance", 1.15),
     ("B_blue", "river_top_scuttle", 1.2), ("B_gromp", "B_top_entrance", 1.15), ("B_gromp", "B_wolves", 1.2),
     ("B_wolves", "mid_B_outer", 1.15), ("B_wolves", "B_raptors", 1.3),
     ("B_raptors", "B_red", 1.15), ("B_raptors", "mid_B_outer", 1.15), ("B_raptors", "mid_center", 1.15),
     ("B_raptors", "river_bot_scuttle", 1.25),
-    ("B_red", "B_krugs", 1.15), ("B_red", "B_bot_entrance", 1.2), ("B_krugs", "B_bot_entrance", 1.15),
+    ("B_red", "B_krugs", 1.63), ("B_red", "B_bot_entrance", 1.2), ("B_krugs", "B_bot_entrance", 1.15),
     ("B_bot_entrance", "bot_B_outer", 1.1), ("B_bot_entrance", "river_bot_brush", 1.15),
     ("B_bot_entrance", "dragon_pit", 1.2),
     ("B_top_entrance", "top_B_outer", 1.1), ("B_top_entrance", "river_top_brush", 1.15),

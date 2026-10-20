@@ -15,7 +15,7 @@ from .data import ROOT
 from .game import Game
 
 MINUTES = [2, 3, 4, 5, 6, 8, 10, 15]
-CALIBRATED = {("jungle_cs", 3), ("gold", 2)}   # dps_level1, first_bonus_treat_s를 맞춘 지표
+CALIBRATED = set()   # 2026-10-20부터 처치 시간·이동 시간·간식 시각은 kk 실측값이라 보정 지표 없음
 
 
 def pct(values):
@@ -91,7 +91,7 @@ def compare(sim, real):
         r, s = real["jungler_kda_by_10min"][k], sim["kda10"][k]
         rows.append({"metric": f"10분 {k}", "real": r, "sim": s, "verdict": verdict(s["median"], r), "calibrated": False})
     r, s = real["first_minute_jungle_cs_ge_24"], sim["first24"]
-    rows.append({"metric": "정글 CS 24 첫 도달(분 프레임)", "real": r, "sim": s, "verdict": verdict(s["median"], r), "calibrated": True})
+    rows.append({"metric": "정글 CS 24 첫 도달(분 프레임)", "real": r, "sim": s, "verdict": verdict(s["median"], r), "calibrated": False})
     return rows
 
 

@@ -26,7 +26,7 @@ class JunglerBot:
         c.champion = game.rng.choices(list(weights), weights=list(weights.values()))[0]
         c.ms = game.rules.champions[c.champion]["stats"]["movespeed"]
         c.smite_charges = game.rules.positions["smite"]["charges"]["start"]
-        c.smite_next = game.rules.positions["smite"]["charges"]["second_charge_recharge_starts_at_s"] + game.rules.positions["smite"]["recharge_s"]
+        c.smite_next = game.rules.positions["smite"]["charges"]["second_charge_at_s"]   # kk 실측 2:20
         c.next_bonus_treat = pj["first_bonus_treat_s"]
         c.clear_mult = math.exp(game.rng.gauss(0, pj["clear_speed_sigma"]))
         weights = pj["start_camp_weights"]

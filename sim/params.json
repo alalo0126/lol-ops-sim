@@ -3,7 +3,15 @@
   "jungler": {
     "champion_weights": {"value": {"LeeSin": 200, "Qiyana": 97, "Jayce": 68, "Hecarim": 66, "Talon": 60, "Nidalee": 54, "Chogath": 52, "Rengar": 39, "Viego": 38, "JarvanIV": 36, "Vi": 31, "Khazix": 24, "Naafiri": 22, "Graves": 19, "Sylas": 17, "Kayn": 16, "Elise": 16, "Darius": 15, "Ambessa": 13, "XinZhao": 12, "Diana": 11, "Lillia": 10, "Locke": 9, "Pantheon": 8, "Skarner": 7, "RekSai": 7, "Olaf": 6, "Kindred": 6, "MonkeyKing": 5, "Taliyah": 4, "Jax": 4, "Shyvana": 4, "Camille": 3, "Maokai": 3, "Sejuani": 2, "Ekko": 2, "MasterYi": 2, "Aatrox": 2, "Yone": 2, "Poppy": 1, "Gragas": 1, "Fizz": 1, "Nocturne": 1, "DrMundo": 1, "Riven": 1, "Malphite": 1, "Zaahen": 1}, "level": "stage1", "note": "1단계 1,000판 시드 정글러 챔피언 분포. 경기마다 이 비율로 뽑고 기본 이속은 champions.json(Data Dragon)"},
     "boots_ms": {"value": 25, "level": "unverified", "note": "첫 귀환 때 신발 구매로 가정"},
-    "dps_level1": {"value": 118, "level": "calibrated", "note": "평타·스킬 합산 초당 피해(펫 제외). 첫 풀캠(3분 프레임 정글 CS 24 도달 비율)에 맞춤 → 첫 풀캠 지표는 검증 대상이 아님"},
+    "reference_clear": {"value": {"champion": "MasterYi", "camps": {
+        "blue": {"seconds": 17, "level": 1, "smite": true},
+        "red": {"seconds": 17, "level": 1, "smite": true},
+        "gromp": {"seconds": 18, "level": 2, "smite": false},
+        "wolves": {"seconds": 15, "level": 2, "smite": false},
+        "krugs": {"seconds": 19, "level": 2, "smite": false},
+        "raptors": {"seconds": 15, "level": 2, "smite": false}
+      }}, "level": "kk_measured", "note": "kk 연습 모드 실측(2026-10-20, 마스터 이, 신발 없이 정글 펫만). 다음 캠프 쪽으로 당겨먹기 포함. 처치 시간은 이 값 × (현재 공식 시간 ÷ 실측 조건 공식 시간)"},
+    "dps_level1": {"value": 118, "level": "unverified", "note": "이제 절대값은 쓰지 않고 레벨·아이템에 따른 비율만 쓴다(펫 고정 피해와의 비중에만 영향)"},
     "dps_per_level": {"value": 0.09, "level": "unverified", "note": "레벨당 +9%"},
     "dps_per_1000_item_gold": {"value": 0.18, "level": "unverified"},
     "aoe_small_unit_factor": {"value": 0.45, "level": "unverified", "note": "작은 몬스터 체력은 광역 피해로 이만큼만 따로 깎는다고 봄"},
@@ -22,7 +30,7 @@
     "invade_max_travel_s": {"value": 20, "level": "unverified"},
     "objective_go_prob": {"value": 0.25, "level": "unverified", "note": "갱 기회가 없을 때 살아 있는 오브젝트로 갈 확률(결정마다). 아니면 캠프로"},
     "smite_keep_before_objective_s": {"value": 45, "level": "unverified", "note": "오브젝트 생성이 이만큼 안으로 남았으면 마지막 충전은 아낌"},
-    "first_bonus_treat_s": {"value": 150, "level": "calibrated", "note": "보너스 간식(60초마다, 20골드)의 첫 시각. 2분 골드 중앙값(887)이 보너스 간식 골드 없이 맞아서 2분 뒤로 둠"},
+    "first_bonus_treat_s": {"value": 150, "level": "kk_measured", "note": "보너스 간식(60초마다, 20골드)의 첫 시각. kk 연습 모드 실측 2:30. 2분 골드 중앙값(887)으로 먼저 추정했던 값과 같음"},
     "start_camp_weights": {"value": {"raptors": 199, "blue": 81, "red": 70}, "level": "calibrated", "note": "1단계 1분 프레임 정글러 위치에서 가장 가까운 캠프(340판, 나머지 소수는 제외)"},
     "routes": {"value": {
         "raptors": ["raptors", "red", "krugs", "wolves", "blue", "gromp"],

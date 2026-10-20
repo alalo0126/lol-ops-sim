@@ -5,9 +5,9 @@
   "first_blood_bonus": {"value": 100, "src": "pn:26.1", "level": "verified", "note": "objectives.json first_blood_and_turret_gold와 같은 값"},
   "kill_xp": {"value": {"base": 140, "per_victim_level": 25}, "src": "estimate", "level": "unverified", "note": "처치 경험치 = base + per_victim_level × (피해자 레벨 − 1). 도움 준 사람은 절반을 나눔. 위키 표 확인 필요"},
   "death_timer_s": {"value": [10, 10, 12, 12, 14, 16, 20, 25, 28, 32.5, 35, 37.5, 40, 42.5, 45, 47.5, 50, 52.5], "src": "estimate", "level": "unverified", "note": "레벨별 부활 시간. 0~20분 시간 보정 없음"},
-  "homeguard": {"value": {"spawn_before_14": [0.8, 0.4], "spawn_after_14": [1.5, 0.65], "decay_s": 4, "respawn_before_14": 0.75, "jungle_exit_dist": 3500},
-    "src": "wiki:Homeguard", "level": "verified",
-    "note": "V26.01: 우물을 나서면 이속 +80%가 4초에 걸쳐 +40%로 줄고, 라인 끝점(외곽 포탑 500 뒤) 안에서는 유지. 정글에 들어가거나 교전하면 사라짐. 14분 전 부활 시 +75%. jungle_exit_dist(우물에서 정글 입구까지 거리)는 미검증 추정값"},
+  "homeguard": {"value": {"spawn_before_14": [1.15, 0.65], "spawn_after_14": [1.5, 0.65], "decay_s": 4, "respawn_before_14": 0.75},
+    "src": "kk_measured", "level": "verified",
+    "note": "kk 연습 모드 실측(2026-10-20, 마스터 이 기본 355): 우물 안 763(+115%), 우물을 벗어나면 줄어 라인 복귀 구간 585(+65%) 유지. 위키(V26.01)의 +80%→+40%와 다름. 감소 시간 4초는 위키 값. 정글에 들어가면 사라짐: 시뮬에서는 우물에서 나가는 첫 엣지 전체에만 적용. 14분 이후·부활 값은 위키"},
   "recall_channel_s": {"value": 8, "src": "consensus", "level": "consensus", "note": "3단계 문서에서 규칙 파일 미등록으로 표시한 값"},
   "passive_gold_per_s": {"value": 2.04, "start_s": 65, "src": "consensus", "level": "unverified", "note": "시작 65초는 minions.json ambient_gold_start_s(검증). 초당 액수는 미검증. 1단계 2분 골드(중앙 887 = 500 + 캠프 3개 274 + 55초 × 2.05)와 맞음"}
 }
