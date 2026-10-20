@@ -25,7 +25,7 @@ from .stage6 import CATS, CAT_KO, RealMatch, label, load_compact, run_sim_minute
 from .winprob import WinProb
 
 MINUTES = range(3, 18)
-POLICY = os.path.join(ROOT, "models", "stage5", "policy_final.npz")
+POLICY = os.environ.get("STAGE6_POLICY") or os.path.join(ROOT, "models", "stage5", "policy_final.npz")   # 다른 정책으로 다시 비교할 때 환경 변수로
 _S = {}
 
 
