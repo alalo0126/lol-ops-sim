@@ -38,7 +38,10 @@ class WinProb:
     def blue(self, game, t=None):
         """블루 팀 승리 확률(시각 t초 기준 모델, 기본은 지금)."""
         t = game.t if t is None else t
-        d = self.diffs(game)
+        return self.blue_from_diffs(self.diffs(game), t)
+
+    def blue_from_diffs(self, d, t):
+        """diffs() 형식의 블루 − 레드 차이와 시각(초)만으로 블루 승리 확률. 6단계에서 실제 경기 상태에 씀."""
         m = min(max(t / 60.0, self.lo), self.hi)
         a = int(math.floor(m))
         b = min(a + 1, self.hi)
