@@ -292,6 +292,12 @@ class JunglerBot:
         attackers = [c] + [a for a in g.champs if a.team == c.team and a.role != "JUNGLE" and a.lane == lane and a.alive(g.t) and a.node == center and not a.task]
         win = g.p["gank"]["seen_window_s"]
         seen = detect_prob([d for t, d in c.exposures if g.t - t <= win], g.cog)
+        # 최근 이 라인에 갱이 왔으면 라이너가 경계한다(6단계 이후 추가, 연속 갱 악용 대응)
+        last = g.gank_alert.get((300 - c.team, lane))
+        if last is not None:
+            pg = g.p["gank"]
+            seen = max(seen, pg["alert_seen"] * max(0.0, 1 - (g.t - last) / pg["alert_window_s"]))
+        g.gank_alert[(300 - c.team, lane)] = g.t
         inp = events.GankInput(attackers=attackers, defenders=defenders, target=target, seen_prob=seen,
                                target_push=g.wave_for(target.team, lane), at_tower=at_tower)
         res = events.resolve_gank(inp, g.t, g.rng, g.p["gank"])
@@ -339,7 +345,7 @@ class LanerBot:
         if c.node not in (center, tower):
             g.move_to(c, center)
             return
-        if c.node == tower and g.t >= c.retreat_until:
+        if c.node == tower and g.t >= c.retreat_until and not self.behind():
             g.move_to(c, center)
             return
         if c.team == 100 and c.role in ("TOP", "MIDDLE", "BOTTOM"):   # 라인마다 한 명만 웨이브를 움직임
@@ -347,6 +353,9 @@ class LanerBot:
             g.wave[lane] = min(1.0, max(0.0, w))
 
         # kk 기준 1. 후퇴
+        if c.node == center and self.behind():
+            g.move_to(c, tower)     # 크게 밀리면 포탑 근처에서 받아먹기(6단계 이후 추가)
+            return
         if c.node == center and self.should_retreat(center):
             c.retreat_until = g.t + 15
             g.move_to(c, tower)
@@ -371,7 +380,7 @@ class LanerBot:
             if c.role != "UTILITY" and g.t < g.lane_taken_until[lane]:
                 share = 0.0
             inc = pl["income_per_s"][c.role]
-            g.give_gold(c, inc["gold"] * share)
+            g.give_gold(c, inc["gold"] * share, gv=True)
             g.give_xp(c, inc["xp"] * share)
             c.lane_cs += pl["cs_per_s"][c.role] * share
         c.hp = min(1.0, c.hp + pl["hp_regen_per_s"])
@@ -393,6 +402,17 @@ class LanerBot:
         tower = g.tower_node(c.lane, c.team)
         if c.node != tower:
             g.move_to(c, tower)
+
+    def behind(self):
+        """맞라이너 + 적 정글러 평균보다 레벨이나 아이템 골드가 크게 뒤지면 True. 최근 그 라인에 갱이 왔을 때만 본다."""
+        g, c, pl = self.g, self.c, self.g.p["laner"]
+        last = g.gank_alert.get((c.team, c.lane))
+        if last is None or g.t - last > pl["behind_alert_s"]:
+            return False
+        foes = [e for e in g.champs if e.team != c.team and (e.role == c.role or e.role == "JUNGLE")]
+        lv = sum(e.level for e in foes) / len(foes) - c.level
+        items = (sum(e.item_gold for e in foes) / len(foes) - c.item_gold) / 1000
+        return lv >= pl["behind_level"] or items >= pl["behind_item_k"]
 
     def should_retreat(self, center):
         g, c, pl = self.g, self.c, self.g.p["laner"]

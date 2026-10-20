@@ -73,6 +73,9 @@
     "post_gank_recall_hp": {"value": 0.35, "level": "unverified", "note": "갱을 버틴 라이너가 이 체력 미만이면 웨이브 상태와 상관없이 귀환. kk 귀환 기준의 35%를 쓰되 '웨이브 밀림' 조건은 뺌(Claude 기본값, kk 검토 필요). 5단계 학습 정글러가 빈사로 남은 라이너를 10초 간격으로 다시 갱하던 문제 대응"},
     "post_gank_retreat_s": {"value": 15, "level": "unverified", "note": "갱을 버틴 라이너가 체력이 남아 있으면 이만큼 포탑으로 물러남(Claude 기본값)"},
     "recall_gold_any": {"value": 1500, "level": "calibrated", "note": "웨이브 모듈이 없어 '웨이브 밀림' 조건이 거의 안 맞으므로, 남은 골드가 이 이상이면 웨이브와 상관없이 귀환. 1단계 1,000판 라이너 10분 아이템 골드(총 골드 − 보유 골드, 평균 3,046)에 맞춤"},
+    "behind_level": {"value": 2, "level": "unverified", "note": "최근(behind_alert_s 안) 그 라인에 갱이 왔고 맞라이너·적 정글러 평균보다 레벨이 이만큼 뒤지면 포탑 근처에서 받아먹음(수입 절반). Claude 기본값, kk 검토 필요. 6단계 이후 재학습에서 학습 정글러가 크게 뒤처진 미드를 반복 갱하던 악용 대응"},
+    "behind_item_k": {"value": 1.5, "level": "unverified", "note": "같은 조건의 아이템 골드 차(천 골드)"},
+    "behind_alert_s": {"value": 180, "level": "unverified"},
     "core_component_gold": {"value": 1100, "level": "unverified", "note": "kk 귀환 기준의 '핵심 하위 아이템 가격' 자리표시"}
   },
   "gank": {
@@ -81,6 +84,8 @@
     "fail_attacker_death": {"value": 0.12, "level": "calibrated", "note": "10분 데스 평균에 맞춤"},
     "flash_cooldown_s": {"value": 300, "level": "consensus"},
     "seen_window_s": {"value": 20, "level": "unverified", "note": "갱 대상이 진입을 미리 봤는지 판단할 때 보는 최근 노출 구간. 4단계까지는 '이번 이동의 노출'이었는데, 5단계 학습 정글러가 이동 중 행동을 바꿔 노출 기록을 지우는 일을 막으려고 시간 기준으로 바꿈"},
+    "alert_seen": {"value": 1.0, "level": "unverified", "note": "직전 갱 직후 그 라인 라이너의 '진입을 미리 봤을 확률' 하한. alert_window_s 동안 0으로 줄어듦. 6단계 이후 재학습에서 학습 정글러가 미드만 경기당 26번(성공 95%, 발각 1%) 갱하던 악용 대응. 실제 라이너는 갱을 당하면 와드·포탑 근처 플레이로 경계함"},
+    "alert_window_s": {"value": 120, "level": "unverified"},
     "duration_s": {"value": 10, "level": "unverified"},
     "hp_cost": {"value": [0.15, 0.4], "level": "unverified"}
   },
