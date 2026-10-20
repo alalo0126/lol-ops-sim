@@ -22,7 +22,9 @@ class JunglerBot:
         self.checked_empty = {}   # 카정 갔다가 비어 있던 적 캠프 → 확인 시각. 일반 캠프 리스폰(135초) 동안 제외
         pj = game.p["jungler"]
         c = champ
-        c.ms = pj["base_ms"]
+        weights = pj["champion_weights"]
+        c.champion = game.rng.choices(list(weights), weights=list(weights.values()))[0]
+        c.ms = game.rules.champions[c.champion]["stats"]["movespeed"]
         c.smite_charges = game.rules.positions["smite"]["charges"]["start"]
         c.smite_next = game.rules.positions["smite"]["charges"]["second_charge_recharge_starts_at_s"] + game.rules.positions["smite"]["recharge_s"]
         c.next_bonus_treat = pj["first_bonus_treat_s"]

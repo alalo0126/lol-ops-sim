@@ -42,6 +42,10 @@ class Champ:
     dead_until: float = -1.0
     flash_at: float = 0.0        # 이 시각부터 점멸 사용 가능
     exposures: list = field(default_factory=list)   # 이번 이동에서 적 시야에 노출된 시간들
+    champion: str = ""
+    homeguard_left: float = 0.0  # 우물 이속 효과가 남은 이동 거리
+    homeguard_t: float = 0.0     # 우물을 나선 뒤 지난 초
+    respawned: bool = False      # 마지막으로 우물에 온 이유가 부활이면 True
     last_decision: float = -99.0
     # 정글러 전용
     smite_charges: int = 0
@@ -179,6 +183,7 @@ class Game:
         victim.path, victim.task, victim.hp = [], None, 1.0
         victim.node = f"{SIDE[victim.team]}_fountain"
         victim.exposures = []
+        victim.respawned = True
         self.events.append({"t": self.t, "type": "kill", "killer": killer.pid, "victim": victim.pid, "assists": [a.pid for a in assists]})
 
     # ------------------------------------------------------------------ 이동
@@ -186,11 +191,34 @@ class Game:
         c.path = self.map.path(c.node, dest)
         c.edge_left = self.map.dist(c.node, c.path[0]) if c.path else 0.0
         c.exposures = []
+        if self.map.nodes[c.node]["kind"] == "fountain" and c.path and self.t >= 20:   # 0:20부터 받음
+            self._start_homeguard(c)
+
+    def _start_homeguard(self, c):
+        """우물 이속 효과(wiki:Homeguard, V26.01). 정글에 들어가면 사라지고, 라인에서는 외곽 포탑 500 뒤까지 유지."""
+        hg = self.rules.combat["homeguard"]
+        if c.role == "JUNGLE":
+            c.homeguard_left = hg["jungle_exit_dist"]
+        else:
+            c.homeguard_left = max(0.0, self.map.dist(c.node, self.tower_node(c.lane, c.team)) - 500)
+        c.homeguard_t = 0.0
+
+    def homeguard_bonus(self, c):
+        hg = self.rules.combat["homeguard"]
+        if c.respawned and self.t < 840:
+            return hg["respawn_before_14"]
+        start, end = hg["spawn_before_14"] if self.t < 840 else hg["spawn_after_14"]
+        return max(end, start - (start - end) * c.homeguard_t / hg["decay_s"])
 
     def _advance(self, c):
         if not c.path or self.t < c.busy_until:
             return
-        c.edge_left -= c.ms
+        step = c.ms
+        if c.homeguard_left > 0:
+            step = c.ms * (1 + self.homeguard_bonus(c))
+            c.homeguard_left -= step
+            c.homeguard_t += 1
+        c.edge_left -= step
         while c.path and c.edge_left <= 0:
             c.node = c.path.pop(0)
             self._on_node(c)
@@ -345,6 +373,7 @@ class Game:
 
     def finish_recall(self, c):
         c.node = f"{SIDE[c.team]}_fountain"
+        c.respawned = False
         c.hp = 1.0
         buy = c.unspent
         if c.item_gold < 300 <= c.item_gold + buy and c.role == "JUNGLE":

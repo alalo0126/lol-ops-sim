@@ -1,7 +1,7 @@
 {
   "_doc": "시뮬레이터 모델 값. 게임 규칙(rules/*.json)이 아니라 4단계 최소 시뮬레이터가 쓰는 근사값이다. level: calibrated = 1단계 분포에 맞춘 값(그 지표는 검증에 못 씀), unverified = 추정, kk = kk가 3단계에서 정한 기준.",
   "jungler": {
-    "base_ms": {"value": 345, "level": "calibrated", "note": "1단계 정글러 2·3분 프레임 movementSpeed 중앙값 345"},
+    "champion_weights": {"value": {"LeeSin": 200, "Qiyana": 97, "Jayce": 68, "Hecarim": 66, "Talon": 60, "Nidalee": 54, "Chogath": 52, "Rengar": 39, "Viego": 38, "JarvanIV": 36, "Vi": 31, "Khazix": 24, "Naafiri": 22, "Graves": 19, "Sylas": 17, "Kayn": 16, "Elise": 16, "Darius": 15, "Ambessa": 13, "XinZhao": 12, "Diana": 11, "Lillia": 10, "Locke": 9, "Pantheon": 8, "Skarner": 7, "RekSai": 7, "Olaf": 6, "Kindred": 6, "MonkeyKing": 5, "Taliyah": 4, "Jax": 4, "Shyvana": 4, "Camille": 3, "Maokai": 3, "Sejuani": 2, "Ekko": 2, "MasterYi": 2, "Aatrox": 2, "Yone": 2, "Poppy": 1, "Gragas": 1, "Fizz": 1, "Nocturne": 1, "DrMundo": 1, "Riven": 1, "Malphite": 1, "Zaahen": 1}, "level": "stage1", "note": "1단계 1,000판 시드 정글러 챔피언 분포. 경기마다 이 비율로 뽑고 기본 이속은 champions.json(Data Dragon)"},
     "boots_ms": {"value": 25, "level": "unverified", "note": "첫 귀환 때 신발 구매로 가정"},
     "dps_level1": {"value": 118, "level": "calibrated", "note": "평타·스킬 합산 초당 피해(펫 제외). 첫 풀캠(3분 프레임 정글 CS 24 도달 비율)에 맞춤 → 첫 풀캠 지표는 검증 대상이 아님"},
     "dps_per_level": {"value": 0.09, "level": "unverified", "note": "레벨당 +9%"},

@@ -27,6 +27,7 @@ class Rules:
         self.combat = values(load_json("rules", "combat.json"))
         self.levels = values(load_json("rules", "levels.json"))["xp_to_reach"]
         self.map = load_json("rules", "map_nodes.json")
+        self.champions = load_json("rules", "champions.json")["champions"]
         self.params = values(load_json("sim", "params.json"))
         self.passive_start_s = load_json("rules", "combat.json")["passive_gold_per_s"]["start_s"]
 
