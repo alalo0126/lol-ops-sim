@@ -31,11 +31,20 @@ class JunglerBot:
         c.clear_mult = math.exp(game.rng.gauss(0, pj["clear_speed_sigma"]))
         weights = pj["start_camp_weights"]
         start = game.rng.choices(list(weights), weights=list(weights.values()))[0]
-        c.route = [f"{SIDE[c.team]}_{k}" for k in pj["routes"][start]]
+        c.route = [self.route_node(k) for k in pj["routes"][start]]
         game.give_gold(c, 0)
         c.spent = game.rules.positions["jungle_item"]["cost"]   # 시작 정글 펫 구매
 
     # -------------------------------------------------------------- 공용
+    def route_node(self, token):
+        """동선 표기 → 노드. 'recall'은 그대로, 바위게는 우리 블루 쪽/레드 쪽(점대칭이라 팀마다 위아래가 바뀜)."""
+        if token == "recall":
+            return token
+        if token.startswith("scuttle_"):
+            top = (token == "scuttle_blue_side") == (self.c.team == 100)
+            return "river_top_scuttle" if top else "river_bot_scuttle"
+        return f"{SIDE[self.c.team]}_{token}"
+
     def travel(self, node):
         return self.g.map.travel_s(self.c.node, node, self.c.ms)
 
@@ -130,6 +139,10 @@ class JunglerBot:
     def decide(self):
         g, c = self.g, self.c
         pj = g.p["jungler"]
+        if c.route and c.route[0] == "recall":
+            c.route.pop(0)
+            g.start_recall(c)
+            return
         if c.route:
             camp = g.camps[c.route[0]]
             if camp.alive or camp.spawn_at > g.t:

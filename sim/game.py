@@ -47,6 +47,7 @@ class Champ:
     homeguard_left: float = 0.0  # 우물 이속 효과가 남은 이동 거리
     homeguard_t: float = 0.0     # 우물을 나선 뒤 지난 초
     respawned: bool = False      # 마지막으로 우물에 온 이유가 부활이면 True
+    pull_credit: float = 0.0     # 직전 캠프를 다음 캠프 쪽으로 당겨 잡아 줄어드는 이동 시간(초)
     last_decision: float = -99.0
     # 정글러 전용
     smite_charges: int = 0
@@ -192,6 +193,9 @@ class Game:
         c.path = self.map.path(c.node, dest)
         c.edge_left = self.map.dist(c.node, c.path[0]) if c.path else 0.0
         c.exposures = []
+        if c.pull_credit and c.path and self.map.nodes[c.node]["kind"] in ("camp", "scuttle"):
+            c.edge_left -= c.pull_credit * c.ms     # 직전 캠프를 이쪽으로 당기며 잡았으니 그만큼 이미 와 있음
+        c.pull_credit = 0.0
         if self.map.nodes[c.node]["kind"] == "fountain" and c.path and self.t >= 20:   # 0:20부터 받음
             self._start_homeguard(c)
 
@@ -333,6 +337,7 @@ class Game:
             respawn = self.rules.camps[camp.kind]["respawn_s"]
             camp.spawn_at = self.t + respawn
             c.hp = min(1.0, c.hp - pj["hp_loss_per_clear_s"] * c.task["dur"] + pj["kill_heal"])
+            c.pull_credit = pj["pull_overlap_s"]
             self.events.append({"t": self.t, "type": "camp", "pid": c.pid, "camp": camp.cid})
         c.task = None
 
