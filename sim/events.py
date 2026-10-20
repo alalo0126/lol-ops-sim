@@ -41,7 +41,9 @@ def gank_success_prob(inp: GankInput, now, coef):
          + coef["target_flash"] * (1.0 if t.flash_ready(now) else 0.0)
          + coef["seen"] * inp.seen_prob
          + coef["target_pushed"] * (inp.target_push - 0.5)
-         + coef["at_tower"] * (1.0 if inp.at_tower else 0.0))
+         + coef["at_tower"] * (1.0 if inp.at_tower else 0.0)
+         + coef.get("item_gold_diff", 0.0) * (sum(c.item_gold for c in inp.attackers) / len(inp.attackers)
+                                              - sum(c.item_gold for c in inp.defenders) / len(inp.defenders)) / 1000)
     return logistic(x)
 
 
@@ -91,7 +93,8 @@ def resolve_skirmish(sides, now, rng, p):
     c = p["coef"]
     x = (c["num_adv"] * (len(a) - len(b))
          + c["level_diff"] * (sum(m.level for m in a) - sum(m.level for m in b)) / max(len(a), len(b))
-         + c["hp_diff"] * (sum(m.hp for m in a) - sum(m.hp for m in b)))
+         + c["hp_diff"] * (sum(m.hp for m in a) - sum(m.hp for m in b))
+         + c.get("item_gold_diff", 0.0) * (sum(m.item_gold for m in a) - sum(m.item_gold for m in b)) / max(len(a), len(b)) / 1000)
     prob = logistic(x)
     win, lose = (a, b) if rng.random() < prob else (b, a)
     res = SkirmishResult(winner=(ta if win is a else tb), duration_s=p["duration_s"], prob=prob)

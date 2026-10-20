@@ -189,13 +189,15 @@ class Game:
             self.give_gold(a, cb["assist_gold_pool"] / len(assists))
             self.give_xp(a, kxp * 0.5 / len(assists))
         victim.deaths += 1
+        died_at = victim.node
         victim.dead_until = self.t + cb["death_timer_s"][victim.level - 1]
         victim.path, victim.task, victim.hp = [], None, 1.0
         victim.node = f"{SIDE[victim.team]}_fountain"
         victim.exposures = []
         victim.respawned = True
         self.bump_info()
-        self.events.append({"t": self.t, "type": "kill", "killer": killer.pid, "victim": victim.pid, "assists": [a.pid for a in assists]})
+        self.events.append({"t": self.t, "type": "kill", "killer": killer.pid, "victim": victim.pid, "assists": [a.pid for a in assists],
+                            "node": died_at})
 
     def bump_info(self, team=None):
         for tm in ((team,) if team else (100, 200)):
@@ -442,6 +444,7 @@ class Game:
         c.spent += buy
         if c.role == "JUNGLE" and c.first_recall_s is None:
             c.first_recall_s = self.t
+        self.events.append({"t": self.t, "type": "recall", "pid": c.pid})
         c.task = None
 
     # ------------------------------------------------------------------ 틱

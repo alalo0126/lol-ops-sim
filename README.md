@@ -12,7 +12,7 @@
 | `collect/` | 1단계: Riot API 경기 수집(`collect_matches.py`)과 분포 요약(`summarize.py`) |
 | `rules/` | 2단계: 패치 26.20 규칙 데이터, 항목마다 출처 태그. 미검증 목록은 `rules/UNVERIFIED.md` |
 | `tools/` | 규칙 생성(`build_ddragon_rules.py`, `build_map_graph.py`), 실제 경기 대조(`crosscheck_rules.py`), 4단계 기준값 추출(`stage4_targets.py`) |
-| `sim/` | 4단계: 1초 틱 최소 시뮬레이터와 규칙 봇. 모델 값은 `sim/params.json`. 5단계: 학습 정글러(`agent.py`), 승률 보상(`winprob.py`), numpy PPO(`ppo.py`, `train.py`), 모방 시작점(`teacher.py`), 판정(`evaluate.py`) |
+| `sim/` | 4단계: 1초 틱 최소 시뮬레이터와 규칙 봇. 모델 값은 `sim/params.json`. 5단계: 학습 정글러(`agent.py`), 승률 보상(`winprob.py`), numpy PPO(`ppo.py`, `train.py`), 모방 시작점(`teacher.py`), 판정(`evaluate.py`). 6단계: 실제 상태 옮기기·범주(`stage6.py`), 실행(`compare.py`), 보고서(`stage6_report.py`) |
 | `models/` | 5단계 정책. git에는 최종 정책(`stage5/policy_final.npz`)과 모방 시작점(`stage5/policy_bc.npz`)만 올림 |
 | `tests/` | `python -m unittest discover tests` |
 | `reports/` | 시뮬레이터와 실제 분포 비교표 |
@@ -84,3 +84,19 @@ python -m sim.evaluate --games 4000       :: 규칙 봇 정글러와 같은 시�
   악용 점검에서 찾은 연속 갱(갱을 버틴 라이너가 빈사로 라인에 남음)은 라이너 갱 후 대응을 넣어 고치고 이어서 학습했다.
   실제 범위 밖: 정글 CS 낮음, 20분 킬·드래곤 많음, 유충·전령·카정·와드 거의 없음(규칙 봇 상대의 약점과 자리표시 갱 모델 영향).
 - 자세한 판정과 악용 점검은 `reports/stage5_eval.md`, `reports/stage5_notes.md`.
+
+## 6단계: 천상계와 비교
+
+1단계 실제 경기의 분 프레임 상태를 시뮬레이터로 옮겨, 같은 상황에서 학습 정글러가 고른 다음 1분과 실제 천상계 정글러가 한 1분을 비교한다.
+
+```bat
+python tools\stage6_compact.py              :: (PC) data\raw → data\stage6_compact.json.gz
+python -m sim.compare situations            :: 실제 상황 28,880개 × 학습 정글러·규칙 봇 1분
+python -m sim.compare counterfactual        :: 반사실: 첫 1분을 범주 6개로 묶어 20분까지
+python -m sim.compare report                :: → reports\stage6_compare.md
+```
+
+- 범주(우리 정글 / 카정 / 라인 개입 / 오브젝트 / 강가·이동 / 귀환)는 다음 1분의 위치·이벤트로 붙이고, 실제와 시뮬에 같은 함수(`sim/stage6.py`)를 쓴다.
+- 판정(2026-10-20): 학습 정글러는 라인 개입 51%(실제 25%), 귀환 2%(18%), 카정 3%(11%)로 크게 다르지만, 같은 상태에서 첫 1분을 천상계 선택으로 바꿔도 시뮬 20분 예측 승률이 −0.4%p(95% CI −0.9~+0.0)밖에 안 떨어진다.
+  원인 분류: 카정·귀환·라이너 체력은 시뮬레이터 오류, 우리 정글 덜 돎은 조건 차이(캠프 타이머 추정), 대부분의 상황 단위 차이는 시뮬 안에서도 우열 없음.
+- 자세한 내용은 `reports/stage6_notes.md`.
