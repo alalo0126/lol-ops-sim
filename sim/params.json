@@ -81,7 +81,8 @@
   "gank": {
     "coef": {"value": {"bias": 1.6, "target_low_hp": 1.0, "num_adv": 0.9, "level_diff": 0.35, "target_flash": -0.8, "seen": -1.6, "target_pushed": 1.0, "at_tower": -1.2, "item_gold_diff": 0.57}, "level": "calibrated", "note": "로지스틱 갱 성공 확률. 이벤트 계산 함수 자리표시. target_low_hp 1.0(체력 1당 로그오즈 −2.0)은 1단계 정글러 관여 킬 중 분 프레임 20초 안에 난 3,113건의 피해자 체력 분포 ÷ 전체 라이너 체력 분포 기울기(−1.9)에 맞춤(이전 2.4는 −4.8). bias는 6단계 이후 라이너 체력·귀환을 고친 뒤 10분 KDA에 다시 맞춤(시뮬 1.98 / 1.15 / 1.60). item_gold_diff(천 골드당)는 레벨 계수 × 1.62: 1단계 1,000판 킬 36,467건에서 '둘 중 누가 죽였나'를 레벨 차·아이템 골드 차(총 골드 − 보유 골드)로 회귀하면 레벨 0.245, 천 골드 0.396. bias만 1단계 1,000판 양 팀 정글러 10분 킬·데스·어시스트 평균(2.0 / 1.2 / 1.6)에 맞춤(시뮬 1.98 / 1.11 / 1.47). 이 값들 때문에 10분 KDA는 검증 지표가 아님"},
     "jungler_gets_kill": {"value": 0.5, "level": "calibrated", "note": "1단계 1,000판 양 팀 정글러 10분 킬·데스·어시스트 평균(2.0 / 1.2 / 1.6)에 맞춤(시뮬 1.98 / 1.11 / 1.47). 이 값들 때문에 10분 KDA는 검증 지표가 아님"},
-    "fail_attacker_death": {"value": 0.12, "level": "calibrated", "note": "10분 데스 평균에 맞춤"},
+    "fail_attacker_death": {"value": 0.15, "level": "calibrated", "note": "success_attacker_death와 함께 맞춤"},
+    "success_attacker_death": {"value": 0.25, "level": "calibrated", "note": "갱이 성공해도 공격한 정글러가 맞교환으로 죽을 확률. 1단계 1,000판에서 분 프레임에 정글러가 적 라이너 2,000 안에 있던 7,281번 중 30초 안에 그 라이너가 정글러 관여로 죽은 비율 26%, 정글러가 죽은 비율 24%. 같은 측정으로 학습 정글러(2차 정책)는 이 값 없이 31% / 6%여서 갱이 실제보다 훨씬 안전했음. 넣은 뒤 35% / 20%"},
     "flash_cooldown_s": {"value": 300, "level": "consensus"},
     "seen_window_s": {"value": 20, "level": "unverified", "note": "갱 대상이 진입을 미리 봤는지 판단할 때 보는 최근 노출 구간. 4단계까지는 '이번 이동의 노출'이었는데, 5단계 학습 정글러가 이동 중 행동을 바꿔 노출 기록을 지우는 일을 막으려고 시간 기준으로 바꿈"},
     "alert_seen": {"value": 1.0, "level": "unverified", "note": "직전 갱 직후 그 라인 라이너의 '진입을 미리 봤을 확률' 하한. alert_window_s 동안 0으로 줄어듦. 6단계 이후 재학습에서 학습 정글러가 미드만 경기당 26번(성공 95%, 발각 1%) 갱하던 악용 대응. 실제 라이너는 갱을 당하면 와드·포탑 근처 플레이로 경계함"},
@@ -91,7 +92,7 @@
   },
   "skirmish": {
     "encounter_range": {"value": 3500, "level": "unverified", "note": "두 정글러가 이 거리 안(현재 노드 좌표 기준)에 있으면 조우 가능"},
-    "engage_prob_per_s": {"value": 0.06, "level": "calibrated", "note": "조우 중 초당 교전 시작 확률. 정글러 10분 데스 평균(1,000판 1.2)에 맞춤. 6단계 이후 오브젝트 다툼을 넣으면서 0.1 → 0.06"},
+    "engage_prob_per_s": {"value": 0.03, "level": "calibrated", "note": "조우 중 초당 교전 시작 확률. 정글러 10분 데스 평균(1,000판 1.2)에 맞춤. 6단계 이후 오브젝트 다툼과 갱 맞교환 사망을 넣으면서 0.1 → 0.03"},
     "cooldown_s": {"value": 45, "level": "unverified"},
     "join_travel_s": {"value": 18, "level": "calibrated", "note": "이 시간 안에 올 수 있는 라이너가 합류 후보. 1단계 1,000판 양 팀 정글러 10분 킬·데스·어시스트 평균(2.0 / 1.2 / 1.6)에 맞춤(시뮬 1.98 / 1.11 / 1.47). 이 값들 때문에 10분 KDA는 검증 지표가 아님"},
     "join_prob": {"value": 0.9, "level": "calibrated"},

@@ -307,6 +307,9 @@ class JunglerBot:
             f.flash_at = g.t + g.p["gank"]["flash_cooldown_s"]
         for v in res.deaths:
             g.kill(res.killer, v, res.assists)
+        for v, k, a in res.trades:
+            if v.alive(g.t):
+                g.kill(k, v, a)
         g.events.append({"t": g.t, "type": "gank", "pid": c.pid, "lane": lane, "success": res.success, "prob": round(res.prob, 3), "seen": round(seen, 3)})
         for d in defenders:
             if d.role != "JUNGLE" and d.alive(g.t):
