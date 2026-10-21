@@ -21,6 +21,7 @@ import argparse
 import base64
 import csv
 import json
+import math
 import os
 import shutil
 import sys
@@ -267,13 +268,14 @@ def api_lock(rp, name):
 
 
 START_TIME = 10.0
+JUMP_PER_S = 1500  # 점멸·대시를 감안해도 챔피언이 1초에 이만큼 움직일 수는 없다
+FOUNTAIN = {"ORDER": (400, 400), "CHAOS": (14300, 14300)}
 GROUND_Y = 50.0  # 협곡 지면 높이 대략값. 카메라 높이에서 빼서 수평 거리를 구한다
 
 
 def to_world(cx, cy, cz, pitch_deg):
     """top 카메라는 대상보다 남쪽(-z)에서 pitch 각도로 내려다본다. 대상 위치 = 카메라 z + 높이/tan(pitch).
     결과는 Riot 타임라인과 같은 좌표계 (x, y=z)."""
-    import math
     return cx, cz + (cy - GROUND_Y) / math.tan(math.radians(pitch_deg))
 
 
@@ -285,6 +287,7 @@ def track(rp, champion, until, speed, step, lock="key"):
         return []
     rp.post("/replay/render", {"interfaceAll": True, "interfaceMinimap": True, "fogOfWar": False})
     name = player.get("riotIdGameName") or champion
+    scan = lock_key(players, player)
     if lock == "manual":
         print(f"  게임 창에서 {'1~5' if player.get('team') == 'ORDER' else 'q~t'} 중 {name}의 키를 두 번 눌러 주세요. 15초 기다립니다.")
         time.sleep(15)
@@ -293,7 +296,7 @@ def track(rp, champion, until, speed, step, lock="key"):
         rp.post("/replay/playback", {"time": START_TIME, "paused": True})
         time.sleep(2)
         if lock == "key":
-            press_twice(lock_key(players, player))
+            press_twice(scan)
         else:
             api_lock(rp, name)
         print(f"  카메라 고정({lock}): {name} ({player.get('team')})")
@@ -312,7 +315,18 @@ def track(rp, champion, until, speed, step, lock="key"):
             cam = render.get("cameraPosition") or {}
             pitch = (render.get("cameraRotation") or {}).get("y", 56.0)
             x, z = to_world(cam.get("x", 0), cam.get("y", 0), cam.get("z", 0), pitch)
-            rows.append((round(t, 2), round(x), round(z), round(cam.get("x", 0)), round(cam.get("y", 0)), round(cam.get("z", 0))))
+            jump = 0
+            if rows:
+                dt = max(t - rows[-1][0], 0.5)
+                dist = math.hypot(x - rows[-1][1], z - rows[-1][2])
+                home = FOUNTAIN[player.get("team")]
+                # 귀환·부활(우물로 순간 이동)이 아닌데 1초에 JUMP_PER_S보다 많이 움직이면 고정이 풀린 것으로 보고 다시 건다
+                if dist / dt > JUMP_PER_S and math.hypot(x - home[0], z - home[1]) > 2000:
+                    jump = 1
+                    if lock == "key":
+                        press_twice(scan)
+                        time.sleep(0.2)
+            rows.append((round(t, 2), round(x), round(z), round(cam.get("x", 0)), round(cam.get("y", 0)), round(cam.get("z", 0)), jump))
             last = t
             if len(rows) % 60 == 0:
                 print(f"  {int(t // 60)}:{int(t % 60):02d}  x={rows[-1][1]} y={rows[-1][2]}", end="\r")
@@ -330,7 +344,7 @@ def probe(rp, champion, lock):
     print("render 카메라 관련:", {k: v for k, v in render.items() if k.startswith(("camera", "selection", "interface"))})
     rows = track(rp, champion, until=90, speed=2, step=3, lock=lock)
     for r in rows:
-        print("  t=%.0f 위치 x=%d y=%d  (카메라 %d, %d, %d)" % r)
+        print("  t=%.0f 위치 x=%d y=%d  (카메라 %d, %d, %d) 튐=%d" % r)
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
         print("좌표가 움직이지 않습니다. 이 방식은 안 되고 미니맵 캡처 방식으로 바꿔야 합니다.")
 
@@ -381,7 +395,7 @@ def main():
         path = os.path.join(OUT, f"{args.match}_{champ}.csv")
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z"])
+            w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump"])
             w.writerows(rows)
         print(f"  저장 {path} ({len(rows)}행)")
 
