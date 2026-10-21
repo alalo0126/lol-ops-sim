@@ -13,6 +13,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "collect"))
 RAW = os.path.join(ROOT, "data", "raw")
 TRACKS = os.path.join(ROOT, "data", "replay_tracks")
@@ -38,7 +39,9 @@ def load_track(path):
 
 
 def nearest(rows, t):
-    return min(rows, key=lambda r: abs(r["time"] - t))
+    """같은 시각 ±3초 안의 유효한 행. 없으면 None."""
+    ok = [r for r in rows if abs(r["time"] - t) <= 3]
+    return min(ok, key=lambda r: abs(r["time"] - t)) if ok else None
 
 
 def main():
@@ -58,8 +61,15 @@ def main():
             print(f"{champ}: {path} 없음")
             continue
         rows = load_track(path)
-        print(f"\n{champ} (참가자 {p['participantId']})")
-        print("  분  타임라인(x,y)    리플레이(x,y)    거리  튐")
+        if "valid" not in rows[0]:
+            from tools.replay_track import mark_valid
+            cols = ["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump"]
+            marked = mark_valid([tuple(r.get(c, 0) for c in cols) for r in rows])
+            rows = [dict(zip(cols + ["valid"], m)) for m in marked]
+        bad = sum(1 for r in rows if not r["valid"])
+        rows = [r for r in rows if r["valid"]]
+        print(f"\n{champ} (참가자 {p['participantId']}, 무효로 뺀 행 {bad})")
+        print("  분  타임라인(x,y)    리플레이(x,y)    거리")
         dists = []
         for fr in frames[1:]:
             t = fr["timestamp"] / 1000
@@ -67,9 +77,12 @@ def main():
                 break
             pos = fr["participantFrames"][str(p["participantId"])]["position"]
             r = nearest(rows, t)
+            if r is None:
+                print(f"  {t / 60:4.0f}  ({pos['x']:5d},{pos['y']:5d})  유효한 기록 없음")
+                continue
             d = math.hypot(pos["x"] - r["x"], pos["y"] - r["y"])
             dists.append(d)
-            print(f"  {t / 60:4.0f}  ({pos['x']:5d},{pos['y']:5d})  ({r['x']:5.0f},{r['y']:5.0f})  {d:5.0f}  {int(r.get('jump', 0))}")
+            print(f"  {t / 60:4.0f}  ({pos['x']:5d},{pos['y']:5d})  ({r['x']:5.0f},{r['y']:5.0f})  {d:5.0f}")
         if dists:
             dists.sort()
             print(f"  거리 중앙값 {dists[len(dists) // 2]:.0f}, 500 이내 {sum(d <= 500 for d in dists)}/{len(dists)}분")

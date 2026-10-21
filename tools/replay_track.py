@@ -336,6 +336,23 @@ def track(rp, champion, until, speed, step, lock="key"):
     return rows
 
 
+MAX_SPEED = 1000  # 유령·질주를 감안한 챔피언 최대 이동 속도(초당). 이보다 빠르면 카메라가 다른 곳을 비춘 것
+
+
+def mark_valid(rows):
+    """마지막으로 믿을 만한 위치에서 MAX_SPEED로 갈 수 없는 곳이면 무효(0)로 표시한다.
+    우물 근처로 순간 이동한 것(귀환·부활)은 허용한다. 각 행 끝에 valid 값을 붙여 돌려준다."""
+    out, good = [], None
+    for r in rows:
+        t, x, y = r[0], r[1], r[2]
+        ok = good is None or math.hypot(x - good[1], y - good[2]) <= MAX_SPEED * (t - good[0]) + 300 \
+            or any(math.hypot(x - fx, y - fy) < 2000 for fx, fy in FOUNTAIN.values())
+        if ok:
+            good = r
+        out.append(tuple(r) + (int(ok),))
+    return out
+
+
 def probe(rp, champion, lock):
     """좌표가 챔피언을 따라가는지 90초만 보고 출력한다."""
     print("playerlist:", [(p.get("rawChampionName"), p.get("riotIdGameName") or p.get("summonerName"), p.get("team"))
@@ -392,12 +409,14 @@ def main():
         rows = track(rp, champ, args.until, args.speed, args.step, args.lock)
         if not rows:
             continue
+        rows = mark_valid(rows)
         path = os.path.join(OUT, f"{args.match}_{champ}.csv")
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump"])
+            w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump", "valid"])
             w.writerows(rows)
-        print(f"  저장 {path} ({len(rows)}행)")
+        bad = sum(1 for r in rows if not r[-1])
+        print(f"  저장 {path} ({len(rows)}행, 무효 {bad}행)")
 
 
 if __name__ == "__main__":
