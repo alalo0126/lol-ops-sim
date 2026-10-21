@@ -42,14 +42,48 @@ LCU_BODY = {"componentType": "replay-button_match-history"}
 
 # ---------- 롤 클라이언트 (LCU) ----------
 
+def client_from_process():
+    """실행 중인 LeagueClientUx 명령줄에서 설치 경로·포트·비밀번호를 읽는다 (설치 경로를 몰라도 됨)."""
+    import re
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             "(Get-CimInstance Win32_Process -Filter \"name='LeagueClientUx.exe'\").CommandLine"],
+            capture_output=True, text=True, timeout=20).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+    port = re.search(r'--app-port=(\d+)', out)
+    token = re.search(r'--remoting-auth-token=([\w-]+)', out)
+    install = re.search(r'--install-directory=([^"]+?)"?(?:\s--|$)', out)
+    if not (port and token):
+        return None
+    return port.group(1), token.group(1), install.group(1).strip() if install else None
+
+
+def find_game_dir(game_dir):
+    if os.path.exists(os.path.join(game_dir, "lockfile")):
+        return game_dir
+    found = client_from_process()
+    if found and found[2]:
+        return found[2]
+    return game_dir
+
+
 class LCU:
     def __init__(self, game_dir):
         lock = os.path.join(game_dir, "lockfile")
-        if not os.path.exists(lock):
-            sys.exit(f"롤 클라이언트가 꺼져 있거나 설치 경로가 다릅니다: {lock} 없음. "
-                     "클라이언트를 켜고 로그인한 뒤 다시 실행하거나 --game-dir로 경로를 주세요.")
-        with open(lock, encoding="utf-8") as f:
-            _, _, port, password, proto = f.read().strip().split(":")
+        if os.path.exists(lock):
+            with open(lock, encoding="utf-8") as f:
+                _, _, port, password, proto = f.read().strip().split(":")
+        else:
+            found = client_from_process()
+            if not found:
+                sys.exit(f"롤 클라이언트를 찾지 못했습니다 ({lock} 없음, 실행 중인 클라이언트도 없음). "
+                         "클라이언트를 켜고 로그인한 뒤 다시 실행하거나 --game-dir로 경로를 주세요.")
+            port, password, install = found
+            proto = "https"
+            print(f"실행 중인 클라이언트에서 찾음: 설치 경로 {install}")
         self.base = f"{proto}://127.0.0.1:{port}"
         self.s = requests.Session()
         self.s.verify = False
@@ -244,6 +278,7 @@ def main():
     ap.add_argument("--probe", action="store_true", help="좌표가 읽히는지 1분만 확인")
     ap.add_argument("--no-launch", action="store_true", help="이미 재생 중인 리플레이에 붙기만 한다")
     args = ap.parse_args()
+    args.game_dir = find_game_dir(args.game_dir)
 
     if args.enable_api:
         enable_replay_api(args.game_dir)

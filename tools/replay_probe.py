@@ -11,7 +11,9 @@ import json
 import os
 import time
 
-from tools.replay_track import DEFAULT_GAME_DIR, LCU, LCU_BODY
+import subprocess
+
+from tools.replay_track import DEFAULT_GAME_DIR, LCU, LCU_BODY, find_game_dir
 
 
 def main():
@@ -21,7 +23,15 @@ def main():
     ap.add_argument("--wait", type=float, default=120)
     args = ap.parse_args()
 
-    lcu = LCU(args.game_dir)
+    game_dir = find_game_dir(args.game_dir)
+    print("설치 경로:", game_dir)
+    exe = os.path.join(game_dir, "Game", "League of Legends.exe")
+    if os.path.exists(exe):
+        ver = subprocess.run(["powershell", "-NoProfile", "-Command", f"(Get-Item '{exe}').VersionInfo.FileVersion"],
+                             capture_output=True, text=True).stdout.strip()
+        size = sum(os.path.getsize(os.path.join(d, f)) for d, _, fs in os.walk(os.path.dirname(exe)) for f in fs)
+        print(f"게임 실행 파일 버전 {ver}, Game 폴더 {size / 1e9:.1f}GB")
+    lcu = LCU(game_dir)
     conf = lcu.get("/lol-replays/v1/configuration")
     print("configuration:", json.dumps(conf, ensure_ascii=False))
     rofl_dir = lcu.get("/lol-replays/v1/rofls/path")
