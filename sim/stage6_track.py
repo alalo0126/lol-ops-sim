@@ -11,6 +11,7 @@ import collections
 import csv
 import glob
 import json
+import math
 import os
 
 import numpy as np
@@ -22,7 +23,7 @@ from .stage6 import CATS, CAT_KO, RealMatch, label, reconstruct, sim_window, zon
 from .winprob import WinProb
 
 MINUTES = range(3, 18)
-POLICY = os.environ.get("STAGE6_POLICY") or os.path.join(ROOT, "models", "stage6b", "policy_latest.npz")
+POLICY = os.environ.get("STAGE6_POLICY") or os.path.join(ROOT, "models", "stage6c", "policy_latest.npz")
 LANE_S = 15      # 1분 중 라인에 이만큼 있으면 라인 개입(갱·합류·라인 CS)
 INVADE_S = 15    # 적 정글에 이만큼 있으면 카정
 PIT_S = 10       # 에픽 몬스터 둥지에 이만큼 있고 살아 있었으면 오브젝트(처치 못 해도 다툼·견제)
@@ -75,13 +76,31 @@ def load_real(match_id, champ, rm, team, minute):
                              for r in csv.DictReader(f) if r.get("valid", "1") == "1"}
     rows = _TRACKS[path]
     t0 = minute * 60
-    out = [(t, *rows[t]) for t in range(t0, t0 + 60) if t in rows]
+    pid = rm.jungler(team)
+    dead = set()
+    for k in rm.kills:
+        if k[2] == pid:
+            t = k[0] / 1000
+            lv = rm.pf(min(int(t // 60), len(rm.frames) - 1), pid)["level"]
+            dead.update(range(math.ceil(t), math.ceil(t + _death_timer()[lv - 1])))
+    out = [(t, None, None) if t in dead else (t, *rows[t]) for t in range(t0, t0 + 60) if t in dead or t in rows]
     if len(out) < MIN_COVER * 60:
         return None
     return out
 
 
 _TRACKS = {}
+
+
+def _death_timer():
+    from .data import Rules
+    global _DT
+    if _DT is None:
+        _DT = Rules().combat["death_timer_s"]
+    return _DT
+
+
+_DT = None
 
 
 def compact_raw(path):
