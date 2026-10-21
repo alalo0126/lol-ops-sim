@@ -9,9 +9,8 @@ import argparse
 import glob
 import json
 import os
-import time
-
 import subprocess
+import time
 
 from tools.replay_track import DEFAULT_GAME_DIR, LCU, LCU_BODY, find_game_dir
 
