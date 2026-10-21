@@ -1,5 +1,6 @@
 {
-  "_doc": "챔피언 처치·사망 보상. 현상금(연속 처치·셧다운) 체계는 v1에서 뺐다.",
+  "_doc": "챔피언 처치·사망 보상. 현상금은 bounty(6단계 이후 추가), kill_gold는 레벨 1~6 기본값 참고용.",
+  "bounty": {"value": {"base_by_level": [300, 300, 300, 300, 300, 300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410, 420], "min": 50, "shutdown_min": 100, "assist_share": 0.5, "kill_gold_per_bounty": 3, "gv_gold_per_bounty": 20, "gv_gold_per_bounty_negative": 7, "death_gold_per_bounty": 3.5}, "src": "wiki:Champion_gold_bounties (V25.09 레벨별 기본, V26.03 누적·감가 비율)", "level": "verified", "note": "6단계 이후 추가(2026-10-20 위키 확인). 처치 골드 = 레벨별 기본 + 현상금, 최소 50. 죽으면 나눠 준 골드 3.5당 1씩 깎이고(셧다운 상태면 전부 잃음), 처치·도움 골드 3당 1, 미니언·몬스터 골드 20당 1(음수 상태면 7당 1, 0까지) 쌓임. 셧다운은 기본+100 이상부터. 뺀 것: 6분 뒤 팀 우세에 따른 셧다운 감소, 초반 도움 골드 감소, 오브젝트 현상금. 연속 갱으로 같은 라이너를 계속 잡아도 300골드씩 받던 시뮬레이터 오류 대응"},
   "kill_gold": {"value": 300, "src": "consensus", "level": "consensus", "note": "기본 처치 골드. 현상금 가감 없음"},
   "assist_gold_pool": {"value": 150, "src": "consensus", "level": "consensus", "note": "처치 골드의 50%를 도움 준 사람끼리 나눔"},
   "first_blood_bonus": {"value": 100, "src": "pn:26.1", "level": "verified", "note": "objectives.json first_blood_and_turret_gold와 같은 값"},

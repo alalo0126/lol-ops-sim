@@ -159,7 +159,7 @@ class AgentJungler(JunglerBot):
             xp *= mh["xp_mult"]
         c.minion_gold += gold
         c.lane_cs += cs
-        g.give_gold(c, gold)
+        g.give_gold(c, gold, gv=True)
         g.give_xp(c, xp)
         g.events.append({"t": g.t, "type": "lanefarm", "pid": c.pid, "lane": lane, "gold": round(gold)})
 

@@ -35,6 +35,7 @@ class Champ:
     monster_gold: float = 0.0    # 정글러: 캠프에서 번 골드(몬스터 사냥꾼 패널티 판정용)
     minion_gold: float = 0.0     # 정글러: 라인 미니언에서 번 골드
     jungle_cs: int = 0
+    bounty: float = 0.0          # 현상금 골드(+면 셧다운 쌓임, −면 연속 사망으로 깎임)
     kills: int = 0
     deaths: int = 0
     assists: int = 0
@@ -143,6 +144,7 @@ class Game:
             "grubs": {"node": "baron_pit", "alive": False, "spawn_at": o["voidgrubs"]["spawn_s"], "respawn": None, "until": o["voidgrubs"]["despawn_s"]},
             "herald": {"node": "baron_pit", "alive": False, "spawn_at": o["rift_herald"]["spawn_s"], "respawn": None, "until": o["rift_herald"]["despawn_s"]},
         }
+        self.gank_alert = {}   # (지키는 팀, 라인) → 마지막 갱 시각
         self.obj_taken = {"dragon": {100: 0, 200: 0}, "grubs": {100: 0, 200: 0}, "herald": {100: 0, 200: 0}}
 
     # ------------------------------------------------------------------ 조회
@@ -173,28 +175,50 @@ class Game:
         c.xp += xp
         c.level = self.rules.level_for_xp(c.xp)
 
-    def give_gold(self, c, g):
+    def give_gold(self, c, g, gv=False):
+        """gv=True: 미니언·몬스터 수입(현상금 누적 비율이 다름, rules/combat.json bounty)."""
         c.earned += g
+        if gv and g > 0:
+            b = self.rules.combat["bounty"]
+            if c.bounty < 0:
+                c.bounty = min(0.0, c.bounty + g / b["gv_gold_per_bounty_negative"])
+            else:
+                c.bounty += g / b["gv_gold_per_bounty"]
+
+    def kill_value(self, victim):
+        """처치 골드 = 레벨별 기본 + 현상금(셧다운은 기본+100 이상일 때만), 최소값 아래로는 안 내려감."""
+        b = self.rules.combat["bounty"]
+        base = b["base_by_level"][victim.level - 1]
+        extra = victim.bounty if victim.bounty < 0 or victim.bounty >= b["shutdown_min"] else 0.0
+        return max(b["min"], base + extra)
 
     def kill(self, killer, victim, assists):
         cb = self.rules.combat
-        gold = cb["kill_gold"] + (cb["first_blood_bonus"] if not self.first_blood else 0)
+        b = cb["bounty"]
+        value = self.kill_value(victim)
+        gold = value + (cb["first_blood_bonus"] if not self.first_blood else 0)
         self.first_blood = True
         self.give_gold(killer, gold)
+        killer.bounty += value / b["kill_gold_per_bounty"]
         killer.kills += 1
         kxp = cb["kill_xp"]["base"] + cb["kill_xp"]["per_victim_level"] * (victim.level - 1)
         self.give_xp(killer, kxp)
         for a in assists:
             a.assists += 1
-            self.give_gold(a, cb["assist_gold_pool"] / len(assists))
+            share = value * b["assist_share"] / len(assists)
+            self.give_gold(a, share)
+            a.bounty += share / b["kill_gold_per_bounty"]
             self.give_xp(a, kxp * 0.5 / len(assists))
         victim.deaths += 1
+        dist = value * (1 + (b["assist_share"] if assists else 0))
+        victim.bounty = 0.0 if victim.bounty > 0 else victim.bounty - dist / b["death_gold_per_bounty"]
         died_at = victim.node
         victim.dead_until = self.t + cb["death_timer_s"][victim.level - 1]
         victim.path, victim.task, victim.hp = [], None, 1.0
         victim.node = f"{SIDE[victim.team]}_fountain"
         victim.exposures = []
         victim.respawned = True
+        self.shop(victim)   # 죽어 있는 동안 상점 이용
         self.bump_info()
         self.events.append({"t": self.t, "type": "kill", "killer": killer.pid, "victim": victim.pid, "assists": [a.pid for a in assists],
                             "node": died_at})
@@ -366,7 +390,7 @@ class Game:
         if camp.alive:
             gold, xp = self.camp_rewards(c, camp)
             c.monster_gold += gold
-            self.give_gold(c, gold)
+            self.give_gold(c, gold, gv=True)
             self.give_xp(c, xp)
             c.jungle_cs += 4
             camp.alive, camp.first = False, False
@@ -433,15 +457,19 @@ class Game:
         c.busy_until = self.t + self.rules.combat["recall_channel_s"]
         c.task = {"kind": "recalling"}
 
-    def finish_recall(self, c):
-        c.node = f"{SIDE[c.team]}_fountain"
-        c.respawned = False
-        c.hp = 1.0
+    def shop(self, c):
+        """남은 골드를 모두 아이템으로. 첫 300골드 넘는 구매에 신발(정글러 이속)을 넣는다."""
         buy = c.unspent
         if c.item_gold < 300 <= c.item_gold + buy and c.role == "JUNGLE":
             c.ms += self.p["jungler"]["boots_ms"]
         c.item_gold += buy
         c.spent += buy
+
+    def finish_recall(self, c):
+        c.node = f"{SIDE[c.team]}_fountain"
+        c.respawned = False
+        c.hp = 1.0
+        self.shop(c)
         if c.role == "JUNGLE" and c.first_recall_s is None:
             c.first_recall_s = self.t
         self.events.append({"t": self.t, "type": "recall", "pid": c.pid})

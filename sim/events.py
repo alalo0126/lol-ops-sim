@@ -28,6 +28,7 @@ class GankResult:
     hp_after: dict = field(default_factory=dict)
     duration_s: float = 0.0
     prob: float = 0.0
+    trades: list = field(default_factory=list)   # 성공했어도 공격 쪽이 잃은 사람 (피해자, 처치자, 도움)
 
 
 def gank_success_prob(inp: GankInput, now, coef):
@@ -66,6 +67,10 @@ def resolve_gank(inp: GankInput, now, rng, p):
         else:
             res.killer = rng.choice(laners)
         res.assists = [c for c in inp.attackers if c is not res.killer]
+        if rng.random() < p.get("success_attacker_death", 0.0):
+            others = [d for d in inp.defenders if d is not t]
+            k = rng.choice(others) if others else t
+            res.trades.append((jungler, k, [d for d in inp.defenders if d is not k]))
     elif rng.random() < p["fail_attacker_death"]:
         victim = inp.attackers[0]
         res.deaths.append(victim)
