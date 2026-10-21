@@ -5,7 +5,7 @@
      클라이언트 전적의 '리플레이 다운로드/보기' 버튼과 같은 동작이다.
   2. 게임 창에 선수 단축키(블루 1~5, 레드 q~t)를 두 번 눌러 카메라를 정글러에 고정하고,
      Riot이 공개한 리플레이 API(https://127.0.0.1:2999/replay/...)로 배속 재생하면서 카메라 좌표를 기록한다.
-  3. data/replay_tracks/<경기>_<챔피언>.csv 로 저장한다 (게임 시각 초, x, y, z).
+  3. data/replay_tracks/<경기>_<챔피언>.csv 로 저장한다 (게임 시각 초, 맵 좌표 x·y = 타임라인 position과 같은 좌표계, 원본 카메라 좌표).
 
 리플레이는 현재 클라이언트 빌드와 같은 빌드의 경기만 열린다 (작은 핫픽스도 다르면 안 열림).
 
@@ -261,6 +261,17 @@ def api_lock(rp, name):
     rp.post("/replay/render", {"selectionName": name, "cameraAttached": True})
 
 
+START_TIME = 10.0
+GROUND_Y = 50.0  # 협곡 지면 높이 대략값. 카메라 높이에서 빼서 수평 거리를 구한다
+
+
+def to_world(cx, cy, cz, pitch_deg):
+    """top 카메라는 대상보다 남쪽(-z)에서 pitch 각도로 내려다본다. 대상 위치 = 카메라 z + 높이/tan(pitch).
+    결과는 Riot 타임라인과 같은 좌표계 (x, y=z)."""
+    import math
+    return cx, cz + (cy - GROUND_Y) / math.tan(math.radians(pitch_deg))
+
+
 def track(rp, champion, until, speed, step, lock="key"):
     players = rp.players()
     player = find_player(players, champion)
@@ -273,8 +284,9 @@ def track(rp, champion, until, speed, step, lock="key"):
         print(f"  게임 창에서 {'1~5' if player.get('team') == 'ORDER' else 'q~t'} 중 {name}의 키를 두 번 눌러 주세요. 15초 기다립니다.")
         time.sleep(15)
     else:
-        rp.post("/replay/playback", {"time": 0.0, "paused": True})
-        time.sleep(1)
+        # 0초에는 챔피언이 소환 전이라 고정 키가 먹지 않는다. 소환된 뒤(10초)로 옮겨서 누른다 (kk PC 확인)
+        rp.post("/replay/playback", {"time": START_TIME, "paused": True})
+        time.sleep(2)
         if lock == "key":
             press_twice(lock_key(players, player))
         else:
@@ -291,11 +303,14 @@ def track(rp, champion, until, speed, step, lock="key"):
             if lock == "api":
                 api_lock(rp, name)
                 time.sleep(0.1)
-            cam = rp.get("/replay/render").get("cameraPosition") or {}
-            rows.append((round(t, 2), round(cam.get("x", 0), 1), round(cam.get("y", 0), 1), round(cam.get("z", 0), 1)))
+            render = rp.get("/replay/render")
+            cam = render.get("cameraPosition") or {}
+            pitch = (render.get("cameraRotation") or {}).get("y", 56.0)
+            x, z = to_world(cam.get("x", 0), cam.get("y", 0), cam.get("z", 0), pitch)
+            rows.append((round(t, 2), round(x), round(z), round(cam.get("x", 0)), round(cam.get("y", 0)), round(cam.get("z", 0))))
             last = t
             if len(rows) % 60 == 0:
-                print(f"  {int(t // 60)}:{int(t % 60):02d}  x={rows[-1][1]} z={rows[-1][3]}", end="\r")
+                print(f"  {int(t // 60)}:{int(t % 60):02d}  x={rows[-1][1]} y={rows[-1][2]}", end="\r")
         time.sleep(max(0.02, step / speed / 4))
     rp.post("/replay/playback", {"paused": True})
     print()
@@ -310,7 +325,7 @@ def probe(rp, champion, lock):
     print("render 카메라 관련:", {k: v for k, v in render.items() if k.startswith(("camera", "selection", "interface"))})
     rows = track(rp, champion, until=90, speed=2, step=3, lock=lock)
     for r in rows:
-        print("  t=%.0f x=%.0f y=%.0f z=%.0f" % r)
+        print("  t=%.0f 위치 x=%d y=%d  (카메라 %d, %d, %d)" % r)
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
         print("좌표가 움직이지 않습니다. 이 방식은 안 되고 미니맵 캡처 방식으로 바꿔야 합니다.")
 
@@ -361,7 +376,7 @@ def main():
         path = os.path.join(OUT, f"{args.match}_{champ}.csv")
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["time", "x", "y", "z"])
+            w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z"])
             w.writerows(rows)
         print(f"  저장 {path} ({len(rows)}행)")
 
