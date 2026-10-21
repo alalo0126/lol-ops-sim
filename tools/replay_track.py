@@ -231,8 +231,8 @@ def track(rp, champion, until, speed, step):
     player = find_player(players, champion)
     if not player:
         print(f"  주의: 선수 목록에서 {champion}를 못 찾음 (목록 {len(players)}명). 챔피언 이름으로 시도합니다.")
-    # interfaceAll을 끄면 미니맵까지 사라지므로 미니맵만 확실히 켜 둔다
-    rp.post("/replay/render", {"interfaceMinimap": True, "fogOfWar": False})
+    # interfaceAll을 끄면 미니맵까지 사라지므로 UI는 켜 둔다
+    rp.post("/replay/render", {"interfaceAll": True, "interfaceMinimap": True, "fogOfWar": False})
     rp.post("/replay/playback", {"time": 0.0, "paused": True})
     sel = attach(rp, player, champion)
     if not sel:
