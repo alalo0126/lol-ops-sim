@@ -146,8 +146,9 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     <span><i style="background:var(--red)"></i>레드 팀</span>
     <span><i style="background:transparent;border:2px solid var(--ai)"></i>AI 정글러</span>
     <span>글자: 탑·정·미·원·서</span>
-    <span>채운 점 = 살아 있는 캠프, 빈 점 = 처치됨</span>
+    <span>채운 점 = 살아 있는 캠프, 빈 점 = 처치됨 (실제 쪽은 추정)</span>
     <span>× = 최근 킬 위치</span>
+    <span>점선 = 정글러의 최근 1분 동선 (실제 쪽은 추정)</span>
   </div>
 
   <div class="maps">
@@ -240,8 +241,9 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
       `카정이 거의 없습니다. 3~17분 중 카정으로 분류된 1분: AI ${pc(invSim, nSim)}, 이 화면의 실제 경기 ${pc(invReal, nReal)}.`,
       `라인 개입(갱·합류)이 많습니다. 3~17분 중 AI ${pc(laneSim, nSim)}, 이 화면의 실제 경기 ${pc(laneReal, nReal)} (6단계 전체 비교: 55% vs 25%).`,
       "라이너 9명은 규칙 봇이고 웨이브는 없습니다. 라이너는 라인 가운데·포탑·우물 노드 사이만 오갑니다.",
-      "시뮬 위치는 33개 노드 그래프 위의 이동입니다. 실제 경기 위치는 Riot 기록이 1분 간격이라 그 사이를 직선으로 이었습니다.",
-      "실제 경기는 일반 캠프 처치 기록이 없어 캠프 상태를 그리지 않습니다. 와드 위치도 기록에 없습니다.",
+      "실제 경기 위치는 Riot 기록이 1분 간격입니다. 라이너는 그 사이를 직선으로 이었습니다.",
+      "실제 정글러 동선과 캠프 상태는 추정입니다. 1분 동안 정글 CS가 4 늘 때마다 앞뒤 위치에 가까운 캠프 하나를 잡은 것으로 보고, 킬·사망·에픽 몬스터 위치와 구매(귀환) 시각은 기록 그대로 넣었습니다. 어떤 캠프를 어떤 순서로 돌았는지는 틀릴 수 있습니다.",
+      "와드 위치는 실제 기록에 없습니다.",
     ];
     $("limits").innerHTML = items.map((s) => `<li>${s}</li>`).join("");
     $("foot").textContent = `정책: ${D.policy}. 데이터는 python -m sim.replay 로 다시 만듭니다. 시뮬 20분 승률은 AI 정글러 팀 기준, 차트의 승률은 블루 기준입니다.`;
@@ -408,7 +410,15 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   function realState(g, sec) {
     const m = Math.min(g.minutes, sec / 60), i = Math.min(g.minutes - 1, Math.floor(m)), fr = Math.min(1, m - i);
     const A = g.pos[i], B = g.pos[i + 1];
-    const xy = g.champs.map((_, k) => [A[2 * k] + (B[2 * k] - A[2 * k]) * fr, A[2 * k + 1] + (B[2 * k + 1] - A[2 * k + 1]) * fr]);
+    const xy = g.champs.map((ch, k) => ch.role === "JUNGLE" ? trackAt(g.jg_track[String(ch.team)], sec)
+      : [A[2 * k] + (B[2 * k] - A[2 * k]) * fr, A[2 * k + 1] + (B[2 * k + 1] - A[2 * k + 1]) * fr]);
+    // 캠프: 정글 CS 증가로 추정한 처치 시각 + 규칙의 첫 생성·리젠 시각
+    const alive = {};
+    Object.entries(g.camp_kills).forEach(([cid, ks]) => {
+      const [first, respawn] = g.camp_timing[cid];
+      const lastKill = ks.filter((x) => x <= sec).pop();
+      alive[cid] = sec >= first && (lastKill === undefined || sec >= lastKill + respawn);
+    });
     // 사망: 킬 이벤트 뒤 대략 부활 시간 동안(레벨별 실제 값 대신 10~30초 근사)
     const dead = g.champs.map((ch) => g.events.some((e) => e.type === "kill" && e.victim === ch.pid && e.t <= sec && sec < e.t + 10 + e.t / 60));
     const hp = g.hp[Math.min(g.minutes, Math.round(m))];
@@ -418,7 +428,17 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     const dragon = sec >= 300 && (dk.length === 0 || sec >= dk[dk.length - 1].t + 300);
     const grubs = sec >= 360 && sec < 14 * 60 + 45 && killed("grubs").length < 3;
     const herald = sec >= 15 * 60 && killed("herald").length < 1;
-    return { xy, hp, dead, obj: { dragon, grubs, herald } };
+    return { xy, hp, dead, alive, obj: { dragon, grubs, herald } };
+  }
+
+  // 추정 동선 [[초, x, y], ...]에서 sec 위치
+  function trackAt(tr, sec) {
+    if (sec <= tr[0][0]) return [tr[0][1], tr[0][2]];
+    let lo = 0, hi = tr.length - 1;
+    if (sec >= tr[hi][0]) return [tr[hi][1], tr[hi][2]];
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (tr[mid][0] <= sec) lo = mid; else hi = mid; }
+    const a = tr[lo], b = tr[hi], f = (sec - a[0]) / Math.max(1e-6, b[0] - a[0]);
+    return [a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
   }
 
   // ---------------------------------------------------------------- 카드·로그
@@ -599,10 +619,17 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 
     // 실제
     const rs = realState(r, sec);
-    drawBase(realC); drawCamps(realC, null); drawPits(realC, rs.obj);
+    drawBase(realC); drawCamps(realC, rs.alive); drawPits(realC, rs.obj);
     const rj = r.champs.findIndex((c) => c.team === realTeam && c.role === "JUNGLE");
     const rtrail = [];
-    for (let back = 60; back >= 0; back -= 5) { const ss = sec - back; if (ss >= 0) rtrail.push(realState(r, ss).xy[rj]); }
+    const rtr = r.jg_track[String(realTeam)];
+    for (let back = 60; back >= 0; back -= 2) {
+      const ss = sec - back;
+      if (ss < 0) continue;
+      const p = trackAt(rtr, ss), q = rtrail[rtrail.length - 1];
+      if (q && Math.hypot(p[0] - q[0], p[1] - q[1]) > 3000) rtrail.length = 0;   // 우물로 순간 이동한 앞부분은 버림
+      rtrail.push(p);
+    }
     drawTrail(realC, rtrail, "#ffffff");
     const realKills = r.events.filter((e) => e.type === "kill" && e.t <= sec && sec - e.t < 20 && e.x != null).map((e) => ({ x: e.x, y: e.y, age: sec - e.t, team: e.killer ? r.champs[e.killer - 1].team : 300 - r.champs[e.victim - 1].team }));
     drawKills(realC, realKills);

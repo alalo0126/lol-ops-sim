@@ -169,7 +169,115 @@ def record_real(m, wp):
             ev.append({"t": round(t / 1000), "type": "buy", "pid": remap.get(pid, 0)})
         last[pid] = t
     out["events"] = sorted(ev, key=lambda e: e["t"])
+    out["jg_track"], out["camp_kills"] = estimate_jungle(rm, nodes, n - 1)
+    out["camp_timing"] = {cid: _camp_timing(cid) for cid in out["camp_kills"]}
     return out
+
+
+def _camp_timing(cid):
+    if "camps" not in _CACHE:
+        _CACHE["camps"] = Game(seed=0).rules.camps
+    spec = _CACHE["camps"]["scuttle" if cid.startswith("river") else cid.split("_", 1)[1]]
+    return [spec["first_spawn_s"], spec["respawn_s"]]
+
+
+def estimate_jungle(rm, nodes, minutes):
+    """실제 정글러의 1분 사이 동선을 추정한다(Riot 기록은 위치가 1분 간격이라 그대로 이으면 순간 이동처럼 보임).
+
+    1분 동안 정글 CS가 4 늘 때마다 캠프 하나를 처치한 것으로 보고, 그 1분의 앞뒤 위치에 가까운(그때 살아 있다고
+    추정되는) 캠프를 고른다(6단계 _assign_camps와 같은 방식). 그 1분 안의 정확한 기록(정글러가 관여한 킬·사망,
+    에픽 몬스터 처치 위치, 구매 = 우물)은 시각이 고정된 지점으로 넣고, 캠프는 그 지점들 사이에서 가장 덜 돌아가는
+    곳에 끼운다. 구매·사망 직전에는 이동하지 않고 우물로 바로 옮긴다(귀환·부활). 캠프마다 처치에 최대 14초를 준다.
+    돌려주는 것: {팀: [[초, x, y], ...]}, {캠프: [추정 처치 초, ...]}.
+    """
+    camp_ids = sorted(cid for cid, n in nodes.items() if n["kind"] in ("camp", "scuttle"))
+    timing = {cid: _camp_timing(cid) for cid in camp_ids}
+    kills = {cid: [] for cid in camp_ids}
+    tracks = {}
+    xy = lambda cid: (nodes[cid]["x"], nodes[cid]["y"])
+    d = math.dist
+
+    def alive_at(cid, t):
+        first, respawn = timing[cid]
+        return t >= first - 10 and (not kills[cid] or t >= kills[cid][-1] + respawn)
+
+    for tm in (100, 200):
+        tracks[tm] = []
+    for k in range(1, minutes + 1):
+        t0, t1 = (k - 1) * 60, k * 60
+        for tm in (100, 200):
+            j = rm.jungler(tm)
+            fountain = (14426, 14170) if tm == 200 else (662, 285)
+            a, b = rm.pf(k - 1, j), rm.pf(k, j)
+            # 시각이 고정된 지점: (초, x, y, 앞에서 순간 이동인가)
+            fixed = [(t0, a["x"], a["y"], False)]
+            for t, killer, victim, assists, x, y in rm.kills:
+                if t0 * 1000 < t <= t1 * 1000 and x is not None and j in (killer, victim, *assists):
+                    fixed.append((t / 1000, x, y, False))
+                    if victim == j:
+                        fixed.append((t / 1000 + 1, *fountain, True))
+            for e in rm.elite:
+                if t0 * 1000 < e[0] <= t1 * 1000 and e[6] is not None and (e[4] == j or j in e[5]):
+                    fixed.append((e[0] / 1000, e[6], e[7], False))
+            for t, pid, _ in rm.buys:
+                if pid == j and t0 * 1000 < t <= t1 * 1000 and t > 60000:
+                    fixed.append((t / 1000, *fountain, True))
+                    break
+            fixed.append((t1, b["x"], b["y"], False))
+            fixed.sort(key=lambda p: p[0])
+            # 처치한 캠프 추정
+            n = max(0, round((b["jcs"] - a["jcs"]) / 4))
+            cands = [cid for cid in camp_ids if alive_at(cid, t0 + 45)]
+            cands.sort(key=lambda cid: min(d((a["x"], a["y"]), xy(cid)), d((b["x"], b["y"]), xy(cid))))
+            chosen = cands[:n]
+            # 구간마다 끼울 캠프: 덜 돌아가는 구간으로
+            segs = [[] for _ in range(len(fixed) - 1)]
+            for cid in chosen:
+                best, bi = None, 0
+                for i in range(len(fixed) - 1):
+                    P, Q = fixed[i][1:3], fixed[i + 1][1:3]
+                    if fixed[i + 1][3]:
+                        Q = P
+                    last = segs[i][-1] if segs[i] else None
+                    start = xy(last) if last else P
+                    cost = d(start, xy(cid)) + d(xy(cid), Q) - d(start, Q) + 300 * len(segs[i])
+                    if fixed[i + 1][0] - fixed[i][0] < 8:
+                        cost += 1e6
+                    if best is None or cost < best:
+                        best, bi = cost, i
+                segs[bi].append(cid)
+            pts = tracks[tm]
+            for i in range(len(fixed) - 1):
+                ta, xa, ya, _ = fixed[i]
+                tb, xb, yb, jump = fixed[i + 1]
+                if not pts or pts[-1][0] < ta:
+                    pts.append([ta, xa, ya])
+                # 가까운 캠프부터 차례로
+                order, cur, rest = [], (xa, ya), list(segs[i])
+                while rest:
+                    nxt = min(rest, key=lambda c: d(cur, xy(c)))
+                    order.append(nxt)
+                    rest.remove(nxt)
+                    cur = xy(nxt)
+                span = tb - ta
+                dwell = min(14.0, 0.6 * span / len(order)) if order else 0.0
+                way = [(xa, ya)] + [xy(c) for c in order] + ([] if jump else [(xb, yb)])
+                dist = [d(way[q], way[q + 1]) for q in range(len(way) - 1)]
+                move = max(0.0, span - dwell * len(order) - (0.5 if jump else 0.0))
+                total = sum(dist) or 1.0
+                t = ta
+                for q, cid in enumerate(order):
+                    t += move * dist[q] / total
+                    pts.append([t, *xy(cid)])
+                    t += dwell
+                    pts.append([t, *xy(cid)])
+                    kills[cid].append(t)
+                if jump:
+                    pts.append([tb - 0.5, *pts[-1][1:]])
+                pts.append([tb, xb, yb])
+    for tm in tracks:
+        tracks[tm] = [[round(t, 1), round(x), round(y)] for t, x, y in tracks[tm]]
+    return {str(tm): v for tm, v in tracks.items()}, {cid: [round(t) for t in v] for cid, v in kills.items()}
 
 
 def pick_real(matches, k, seed=0):
