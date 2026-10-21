@@ -49,16 +49,18 @@ def client_from_process():
     try:
         out = subprocess.run(
             ["powershell", "-NoProfile", "-Command",
-             "(Get-CimInstance Win32_Process -Filter \"name='LeagueClientUx.exe'\").CommandLine"],
+             "Get-CimInstance Win32_Process -Filter \"name='LeagueClientUx.exe'\" | "
+             "ForEach-Object { $_.ExecutablePath; $_.CommandLine }"],
             capture_output=True, text=True, timeout=20).stdout
     except (OSError, subprocess.SubprocessError):
         return None
     port = re.search(r'--app-port=(\d+)', out)
     token = re.search(r'--remoting-auth-token=([\w-]+)', out)
-    install = re.search(r'--install-directory=([^"]+?)"?(?:\s--|$)', out)
+    # LeagueClientUx.exe는 설치 폴더 바로 아래에 있다
+    exe = next((l.strip() for l in out.splitlines() if l.strip().lower().endswith("leagueclientux.exe")), None)
     if not (port and token):
         return None
-    return port.group(1), token.group(1), install.group(1).strip() if install else None
+    return port.group(1), token.group(1), os.path.dirname(exe) if exe else None
 
 
 def find_game_dir(game_dir):
