@@ -5,7 +5,8 @@
      클라이언트 전적의 '리플레이 다운로드/보기' 버튼과 같은 동작이다.
   2. Riot이 공개한 리플레이 API(https://127.0.0.1:2999/replay/...)로
      카메라를 정글러에 고정하고, 배속 재생하면서 카메라 좌표를 기록한다.
-  3. data/replay_tracks/<경기>_<챔피언>.csv 로 저장한다 (게임 시각 초, x, y, z).
+     (리플레이 자동 카메라가 고정을 풀기 때문에 기록할 때마다 다시 고정한다.)
+  3. data/replay_tracks/<경기>_<챔피언>.csv 로 저장한다 (게임 시각 초, x, y, z, 고정 여부).
 
 리플레이는 현재 클라이언트 빌드와 같은 빌드의 경기만 열린다 (작은 핫픽스도 다르면 안 열림).
 
@@ -230,7 +231,8 @@ def track(rp, champion, until, speed, step):
     player = find_player(players, champion)
     if not player:
         print(f"  주의: 선수 목록에서 {champion}를 못 찾음 (목록 {len(players)}명). 챔피언 이름으로 시도합니다.")
-    rp.post("/replay/render", {"interfaceAll": False, "interfaceMinimap": True, "fogOfWar": False})
+    # interfaceAll을 끄면 미니맵까지 사라지므로 미니맵만 확실히 켜 둔다
+    rp.post("/replay/render", {"interfaceMinimap": True, "fogOfWar": False})
     rp.post("/replay/playback", {"time": 0.0, "paused": True})
     sel = attach(rp, player, champion)
     if not sel:
@@ -245,8 +247,13 @@ def track(rp, champion, until, speed, step):
         if t >= until or t >= pb.get("length", 0) - 1:
             break
         if t - last >= step:
-            cam = rp.get("/replay/render").get("cameraPosition") or {}
-            rows.append((round(t, 2), round(cam.get("x", 0), 1), round(cam.get("y", 0), 1), round(cam.get("z", 0), 1)))
+            # 리플레이 자동 카메라(교전 따라가기)가 고정을 풀기 때문에 기록할 때마다 다시 고정한다
+            rp.post("/replay/render", {"selectionName": sel, "cameraAttached": True})
+            time.sleep(0.1)
+            render = rp.get("/replay/render")
+            cam = render.get("cameraPosition") or {}
+            locked = int(bool(render.get("cameraAttached")) and render.get("selectionName") == sel)
+            rows.append((round(t, 2), round(cam.get("x", 0), 1), round(cam.get("y", 0), 1), round(cam.get("z", 0), 1), locked))
             last = t
             if len(rows) % 60 == 0:
                 print(f"  {int(t // 60)}:{int(t % 60):02d}  x={rows[-1][1]} z={rows[-1][3]}", end="\r")
@@ -257,13 +264,14 @@ def track(rp, champion, until, speed, step):
 
 
 def probe(rp, champion):
-    """좌표가 실제로 움직이는지 30초만 보고 출력한다."""
+    """좌표가 챔피언을 따라가는지 90초만 보고 출력한다."""
     print("playerlist:", [(p.get("rawChampionName"), p.get("riotIdGameName") or p.get("summonerName"), p.get("team"))
                           for p in rp.players()])
-    print("render 기본값:", json.dumps(rp.get("/replay/render"), ensure_ascii=False)[:600])
-    rows = track(rp, champion, until=60, speed=2, step=5)
+    render = rp.get("/replay/render")
+    print("render 카메라 관련:", {k: v for k, v in render.items() if k.startswith(("camera", "selection", "interface"))})
+    rows = track(rp, champion, until=90, speed=2, step=3)
     for r in rows:
-        print("  t=%.0f x=%.0f y=%.0f z=%.0f" % r)
+        print("  t=%.0f x=%.0f y=%.0f z=%.0f 고정=%d" % r)
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
         print("좌표가 움직이지 않습니다. 이 방식은 안 되고 미니맵 캡처 방식으로 바꿔야 합니다.")
 
@@ -312,7 +320,7 @@ def main():
         path = os.path.join(OUT, f"{args.match}_{champ}.csv")
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["time", "x", "y", "z"])
+            w.writerow(["time", "x", "y", "z", "locked"])
             w.writerows(rows)
         print(f"  저장 {path} ({len(rows)}행)")
 
