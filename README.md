@@ -29,6 +29,7 @@ pip install -r requirements.txt
 set RIOT_API_KEY=RGAPI-여기에-새-키
 python collect\collect_matches.py --patch 26.20 --target 1000
 python collect\summarize.py
+python tools\match_index.py   :: data\match_index.csv: 경기마다 시드 정글러 Riot ID·날짜·챔피언·승패·op.gg 링크
 ```
 
 WSL이면 `cd /mnt/d/AI/lol/ops-sim` 후 `export RIOT_API_KEY=...`, 경로 구분자는 `/`.

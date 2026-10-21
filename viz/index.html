@@ -221,7 +221,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
     const j = g.champs.filter((c) => c.role === "JUNGLE").map((c) => c.champion);
     const o = document.createElement("option");
     o.value = i;
-    o.textContent = `${g.match} · ${j[0]} vs ${j[1]} · ${g.win100 ? "블루" : "레드"} 승`;
+    o.textContent = `${g.info && g.info.date_kst ? g.info.date_kst.slice(5, 10) + " · " : ""}${j[0]} vs ${j[1]} · ${g.win100 ? "블루" : "레드"} 승`;
     $("realSel").append(o);
   });
 
@@ -574,10 +574,15 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
   function loadGames() {
     const g = D.sim[simI], r = D.real[realI];
     $("simTag").textContent = `시드 ${g.seed} · AI는 ${g.agent_team === 100 ? "블루" : "레드"} · 20분 승률 ${(g.phi_end * 100).toFixed(0)}%`;
-    $("realTag").textContent = `${r.match} · ${r.win100 ? "블루" : "레드"} 승리`;
+    const esc = (x) => String(x).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch]);
+    const info = r.info || {};
+    $("realTag").innerHTML = `${esc(r.match)}${info.date_kst ? ` · ${esc(info.date_kst)}` : ""} · ${r.win100 ? "블루" : "레드"} 승리`;
     const rjCh = r.champs.find((c) => c.team === realTeam && c.role === "JUNGLE");
     $("simWho").textContent = `AI 정글러 (${g.agent_team === 100 ? "블루" : "레드"})`;
-    $("realWho").textContent = `${realTeam === 100 ? "블루" : "레드"} 정글러 ${rjCh.champion}`;
+    const side = realTeam === 100 ? "블루" : "레드";
+    const rid = info.seed_team ? (info.seed_team === side ? info.seed_riot_id : info.enemy_jungler_riot_id) : "";
+    $("realWho").innerHTML = `${side} 정글러 ${esc(rjCh.champion)}${rid ? ` <span class="tag">${esc(rid)}${info.seed_team === side ? " (수집 기준 챌린저)" : ""}</span>` : ""}`
+      + (info.seed_team === side && info.opgg_seed ? ` <a class="tag" href="${esc(info.opgg_seed)}" target="_blank" rel="noopener">op.gg</a>` : "");
     strip($("simStrip"), g.cats[String(g.agent_team)], $("simMix"));
     strip($("realStrip"), r.cats[String(realTeam)], $("realMix"));
     renderLog($("simLog"), buildSimLog(g));

@@ -9,6 +9,7 @@ stats 열: 시뮬 [골드, 경험치, 레벨, 정글 CS, 라인 CS, 킬, 데스,
 실제 경기의 캠프 처치 시각은 기록에 없어서 보여 주지 않는다. 입력: models/stage6b/policy_latest.npz, data/stage6_compact.json.gz.
 """
 import argparse
+import csv
 import json
 import math
 import os
@@ -170,8 +171,23 @@ def record_real(m, wp):
         last[pid] = t
     out["events"] = sorted(ev, key=lambda e: e["t"])
     out["jg_track"], out["camp_kills"] = estimate_jungle(rm, nodes, n - 1)
+    out["info"] = match_index().get(m["match"], {})
     out["camp_timing"] = {cid: _camp_timing(cid) for cid in out["camp_kills"]}
     return out
+
+
+def match_index():
+    """tools/match_index.py가 만든 data/match_index.csv(누구의 어떤 경기인지). 없으면 빈 dict."""
+    if "index" not in _CACHE:
+        path = os.path.join(ROOT, "data", "match_index.csv")
+        rows = {}
+        if os.path.exists(path):
+            with open(path, encoding="utf-8-sig") as f:
+                for r in csv.DictReader(f):
+                    rows[r["match"]] = {k: r[k] for k in ("date_kst", "seed_riot_id", "seed_team", "seed_champion",
+                                                          "enemy_jungler_riot_id", "opgg_seed")}
+        _CACHE["index"] = rows
+    return _CACHE["index"]
 
 
 def _camp_timing(cid):
