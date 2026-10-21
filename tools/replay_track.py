@@ -13,7 +13,7 @@
   python -m tools.replay_track --enable-api      (game.cfg에 EnableReplayApi=1, 원본은 .bak으로 백업)
 
 사용 예:
-  python -m tools.replay_track KR_8424846201                  # data/raw에 경기 JSON이 있으면 양 팀 정글러 자동
+  python -m tools.replay_track KR_8424846201                  # data/replay_raw에 경기 JSON이 있으면 양 팀 정글러 자동
   python -m tools.replay_track KR_8424846201 --champion Nidalee --until 900 --speed 4
   python -m tools.replay_track KR_8424846201 --probe          # 좌표가 읽히는지만 확인
 """
@@ -33,7 +33,8 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RAW = os.path.join(ROOT, "data", "raw")
+# 리플레이 검증용 경기(26.21~)는 1단계 1,000판(data/raw, 26.20)과 섞이지 않게 따로 둔다
+REPLAY_RAW = os.path.join(ROOT, "data", "replay_raw")
 OUT = os.path.join(ROOT, "data", "replay_tracks")
 DEFAULT_GAME_DIR = r"C:\Riot Games\League of Legends"
 REPLAY_API = "https://127.0.0.1:2999"
@@ -195,7 +196,7 @@ def enable_replay_api(game_dir):
 # ---------- 추적 ----------
 
 def junglers_from_raw(match_id):
-    path = os.path.join(RAW, f"{match_id}.json")
+    path = os.path.join(REPLAY_RAW, f"{match_id}.json")
     if not os.path.exists(path):
         return []
     with open(path, encoding="utf-8") as f:
@@ -390,7 +391,7 @@ def main():
 
     champions = args.champion or junglers_from_raw(args.match)
     if not champions:
-        sys.exit(f"data/raw/{args.match}.json이 없어 정글러를 모릅니다. --champion 으로 지정하세요.")
+        sys.exit(f"data/replay_raw/{args.match}.json이 없어 정글러를 모릅니다. --champion 으로 지정하세요.")
     game_id = args.match.split("_")[-1]
 
     if not args.no_launch:
@@ -403,20 +404,26 @@ def main():
         probe(rp, champions[0], args.lock)
         return
 
-    os.makedirs(OUT, exist_ok=True)
     for champ in champions:
-        print(f"{champ} 추적 ({args.speed}배속, {args.until / 60:.0f}분까지)")
-        rows = track(rp, champ, args.until, args.speed, args.step, args.lock)
-        if not rows:
-            continue
-        rows = mark_valid(rows)
-        path = os.path.join(OUT, f"{args.match}_{champ}.csv")
-        with open(path, "w", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump", "valid"])
-            w.writerows(rows)
-        bad = sum(1 for r in rows if not r[-1])
-        print(f"  저장 {path} ({len(rows)}행, 무효 {bad}행)")
+        record(rp, args.match, champ, args.until, args.speed, args.step, args.lock)
+
+
+def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
+    """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 경로를 돌려준다."""
+    os.makedirs(OUT, exist_ok=True)
+    print(f"{champ} 추적 ({speed}배속, {until / 60:.0f}분까지)")
+    rows = track(rp, champ, until, speed, step, lock)
+    if not rows:
+        return None
+    rows = mark_valid(rows)
+    path = os.path.join(OUT, f"{match_id}_{champ}.csv")
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump", "valid"])
+        w.writerows(rows)
+    bad = sum(1 for r in rows if not r[-1])
+    print(f"  저장 {path} ({len(rows)}행, 무효 {bad}행)")
+    return path
 
 
 if __name__ == "__main__":
