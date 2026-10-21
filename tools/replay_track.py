@@ -255,17 +255,31 @@ def press_twice(scan):
         time.sleep(0.15)
 
 
-def track(rp, champion, until, speed, step):
+def api_lock(rp, name):
+    """리플레이 API로 고정. 같은 값을 다시 보내면 무시되는 듯해서 풀었다가 다시 건다."""
+    rp.post("/replay/render", {"cameraAttached": False})
+    rp.post("/replay/render", {"selectionName": name, "cameraAttached": True})
+
+
+def track(rp, champion, until, speed, step, lock="key"):
     players = rp.players()
     player = find_player(players, champion)
     if not player:
         print(f"  선수 목록에서 {champion}를 못 찾았습니다 (목록 {len(players)}명).")
         return []
     rp.post("/replay/render", {"interfaceAll": True, "interfaceMinimap": True, "fogOfWar": False})
-    rp.post("/replay/playback", {"time": 0.0, "paused": True})
-    time.sleep(1)
-    press_twice(lock_key(players, player))
-    print(f"  카메라 고정 키 입력: {player.get('riotIdGameName') or champion} ({player.get('team')})")
+    name = player.get("riotIdGameName") or champion
+    if lock == "manual":
+        print(f"  게임 창에서 {'1~5' if player.get('team') == 'ORDER' else 'q~t'} 중 {name}의 키를 두 번 눌러 주세요. 15초 기다립니다.")
+        time.sleep(15)
+    else:
+        rp.post("/replay/playback", {"time": 0.0, "paused": True})
+        time.sleep(1)
+        if lock == "key":
+            press_twice(lock_key(players, player))
+        else:
+            api_lock(rp, name)
+        print(f"  카메라 고정({lock}): {name} ({player.get('team')})")
     rp.post("/replay/playback", {"paused": False, "speed": speed})
     rows, last = [], -step
     while True:
@@ -274,6 +288,9 @@ def track(rp, champion, until, speed, step):
         if t >= until or t >= pb.get("length", 0) - 1:
             break
         if t - last >= step:
+            if lock == "api":
+                api_lock(rp, name)
+                time.sleep(0.1)
             cam = rp.get("/replay/render").get("cameraPosition") or {}
             rows.append((round(t, 2), round(cam.get("x", 0), 1), round(cam.get("y", 0), 1), round(cam.get("z", 0), 1)))
             last = t
@@ -285,13 +302,13 @@ def track(rp, champion, until, speed, step):
     return rows
 
 
-def probe(rp, champion):
+def probe(rp, champion, lock):
     """좌표가 챔피언을 따라가는지 90초만 보고 출력한다."""
     print("playerlist:", [(p.get("rawChampionName"), p.get("riotIdGameName") or p.get("summonerName"), p.get("team"))
                           for p in rp.players()])
     render = rp.get("/replay/render")
     print("render 카메라 관련:", {k: v for k, v in render.items() if k.startswith(("camera", "selection", "interface"))})
-    rows = track(rp, champion, until=90, speed=2, step=3)
+    rows = track(rp, champion, until=90, speed=2, step=3, lock=lock)
     for r in rows:
         print("  t=%.0f x=%.0f y=%.0f z=%.0f" % r)
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
@@ -308,6 +325,8 @@ def main():
     ap.add_argument("--game-dir", default=DEFAULT_GAME_DIR)
     ap.add_argument("--enable-api", action="store_true", help="game.cfg에 EnableReplayApi=1을 넣고 끝낸다")
     ap.add_argument("--probe", action="store_true", help="좌표가 읽히는지 1분만 확인")
+    ap.add_argument("--lock", choices=["key", "api", "manual"], default="key",
+                    help="카메라 고정 방법: key=단축키 자동 입력, api=리플레이 API, manual=직접 키 입력 (기본 key)")
     ap.add_argument("--no-launch", action="store_true", help="이미 재생 중인 리플레이에 붙기만 한다")
     args = ap.parse_args()
     args.game_dir = find_game_dir(args.game_dir)
@@ -330,13 +349,13 @@ def main():
     print(f"리플레이 로딩 완료: 길이 {pb['length'] / 60:.1f}분")
 
     if args.probe:
-        probe(rp, champions[0])
+        probe(rp, champions[0], args.lock)
         return
 
     os.makedirs(OUT, exist_ok=True)
     for champ in champions:
         print(f"{champ} 추적 ({args.speed}배속, {args.until / 60:.0f}분까지)")
-        rows = track(rp, champ, args.until, args.speed, args.step)
+        rows = track(rp, champ, args.until, args.speed, args.step, args.lock)
         if not rows:
             continue
         path = os.path.join(OUT, f"{args.match}_{champ}.csv")
