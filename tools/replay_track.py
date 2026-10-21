@@ -337,6 +337,7 @@ def track(rp, champion, until, speed, step, lock="key"):
     return rows
 
 
+CAM_MIN_X, CAM_MAX_Z = 301, 13470  # 카메라가 더 갈 수 없는 맵 끝 (실측: x 300, z 13475)
 MAX_SPEED = 1000  # 유령·질주를 감안한 챔피언 최대 이동 속도(초당). 이보다 빠르면 카메라가 다른 곳을 비춘 것
 
 
@@ -345,9 +346,11 @@ def mark_valid(rows):
     우물 근처로 순간 이동한 것(귀환·부활)은 허용한다. 각 행 끝에 valid 값을 붙여 돌려준다."""
     out, good = [], None
     for r in rows:
-        t, x, y = r[0], r[1], r[2]
-        ok = good is None or math.hypot(x - good[1], y - good[2]) <= MAX_SPEED * (t - good[0]) + 300 \
-            or any(math.hypot(x - fx, y - fy) < 2000 for fx, fy in FOUNTAIN.values())
+        t, x, y, cam_x, cam_z = r[0], r[1], r[2], r[3], r[5]
+        # 카메라가 맵 가장자리에 붙어 있으면 고정이 안 된 채 마우스에 밀려간 것 (KR_8427074120에서 확인)
+        stuck = cam_x <= CAM_MIN_X or cam_z >= CAM_MAX_Z
+        ok = not stuck and (good is None or math.hypot(x - good[1], y - good[2]) <= MAX_SPEED * (t - good[0]) + 300
+                            or any(math.hypot(x - fx, y - fy) < 2000 for fx, fy in FOUNTAIN.values()))
         if ok:
             good = r
         out.append(tuple(r) + (int(ok),))
@@ -409,12 +412,12 @@ def main():
 
 
 def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
-    """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 경로를 돌려준다."""
+    """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 (경로, 유효 행 비율)을 돌려준다."""
     os.makedirs(OUT, exist_ok=True)
     print(f"{champ} 추적 ({speed}배속, {until / 60:.0f}분까지)")
     rows = track(rp, champ, until, speed, step, lock)
     if not rows:
-        return None
+        return None, 0.0
     rows = mark_valid(rows)
     path = os.path.join(OUT, f"{match_id}_{champ}.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
@@ -423,7 +426,7 @@ def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
         w.writerows(rows)
     bad = sum(1 for r in rows if not r[-1])
     print(f"  저장 {path} ({len(rows)}행, 무효 {bad}행)")
-    return path
+    return path, 1 - bad / len(rows)
 
 
 if __name__ == "__main__":

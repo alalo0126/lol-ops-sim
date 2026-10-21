@@ -30,6 +30,7 @@ from tools.replay_track import (DEFAULT_GAME_DIR, LCU, OUT, REPLAY_RAW, Replay, 
 
 SUMMARY = os.path.join(OUT, "summary.csv")
 MIN_DURATION = 20 * 60
+MIN_VALID = 0.7  # 유효 행이 이보다 적으면 카메라 고정이 실패한 것으로 보고 다시 기록한다
 
 
 def junglers(detail):
@@ -127,7 +128,10 @@ def main():
                 rp = Replay()
                 rp.wait_ready()
                 for c in todo:
-                    record(rp, mid, c, args.until, args.speed)
+                    _, ok = record(rp, mid, c, args.until, args.speed)
+                    if ok < MIN_VALID:
+                        print(f"  유효 기록 {ok:.0%}뿐이라 한 번 더 기록")
+                        record(rp, mid, c, args.until, args.speed)
             except SystemExit as e:
                 print(f"  실패: {e}")
             except Exception as e:  # 한 판 실패로 전체를 멈추지 않는다
