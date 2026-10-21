@@ -236,6 +236,11 @@ def press_twice(scan):
     user32.keybd_event(0x12, 0, 2, 0)
     user32.SetForegroundWindow(hwnd)
     time.sleep(0.3)
+    # 마우스가 화면 끝에 있으면 카메라가 그쪽으로 밀려 고정이 풀린다 (kk 확인). 창 가운데로 옮긴다
+    rect = wintypes.RECT()
+    user32.GetWindowRect(hwnd, ctypes.byref(rect))
+    user32.SetCursorPos((rect.left + rect.right) // 2, (rect.top + rect.bottom) // 2)
+    time.sleep(0.1)
 
     class KEYBDINPUT(ctypes.Structure):
         _fields_ = [("wVk", wintypes.WORD), ("wScan", wintypes.WORD), ("dwFlags", wintypes.DWORD),
