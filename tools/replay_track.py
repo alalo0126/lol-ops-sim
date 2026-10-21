@@ -3,10 +3,9 @@
 순서:
   1. 롤 클라이언트(LCU) 로컬 API로 리플레이를 받고 재생을 시작한다.
      클라이언트 전적의 '리플레이 다운로드/보기' 버튼과 같은 동작이다.
-  2. Riot이 공개한 리플레이 API(https://127.0.0.1:2999/replay/...)로
-     카메라를 정글러에 고정하고, 배속 재생하면서 카메라 좌표를 기록한다.
-     (리플레이 자동 카메라가 고정을 풀기 때문에 기록할 때마다 다시 고정한다.)
-  3. data/replay_tracks/<경기>_<챔피언>.csv 로 저장한다 (게임 시각 초, x, y, z, 고정 여부).
+  2. 게임 창에 선수 단축키(블루 1~5, 레드 q~t)를 두 번 눌러 카메라를 정글러에 고정하고,
+     Riot이 공개한 리플레이 API(https://127.0.0.1:2999/replay/...)로 배속 재생하면서 카메라 좌표를 기록한다.
+  3. data/replay_tracks/<경기>_<챔피언>.csv 로 저장한다 (게임 시각 초, x, y, z).
 
 리플레이는 현재 클라이언트 빌드와 같은 빌드의 경기만 열린다 (작은 핫픽스도 다르면 안 열림).
 
@@ -213,32 +212,60 @@ def find_player(players, champion):
     return None
 
 
-def attach(rp, player, champion):
-    """카메라를 해당 챔피언에 고정한다. selectionName 후보를 차례로 넣어 보고 받아들여진 값을 쓴다."""
-    names = [player.get(k) for k in ("riotIdGameName", "summonerName", "riotId", "championName")] if player else []
-    names = [n for n in names if n] + [champion]
-    for name in names:
-        rp.post("/replay/render", {"selectionName": name, "cameraAttached": True})
-        time.sleep(0.5)
-        got = rp.get("/replay/render")
-        if got.get("cameraAttached") and got.get("selectionName"):
-            return got["selectionName"]
-    return None
+# 리플레이 화면 단축키: 블루팀 1~5, 레드팀 q~t (탑·정글·미드·원딜·서폿 순). 두 번 누르면 계속 고정.
+# 리플레이 API의 selectionName 고정은 자동 카메라(교전 따라가기)에 밀려서 키 입력을 쓴다.
+SCAN_CODES = {"ORDER": [0x02, 0x03, 0x04, 0x05, 0x06], "CHAOS": [0x10, 0x11, 0x12, 0x13, 0x14]}
+GAME_WINDOW = "League of Legends (TM) Client"
+
+
+def lock_key(players, player):
+    team = player.get("team")
+    mates = [p for p in players if p.get("team") == team]
+    return SCAN_CODES[team][mates.index(player)]
+
+
+def press_twice(scan):
+    """게임 창을 앞으로 가져와 스캔 코드 키를 두 번 누른다 (Windows 전용)."""
+    import ctypes
+    from ctypes import wintypes
+    user32 = ctypes.windll.user32
+    hwnd = user32.FindWindowW(None, GAME_WINDOW)
+    if not hwnd:
+        sys.exit(f"게임 창({GAME_WINDOW})을 찾지 못했습니다.")
+    user32.keybd_event(0x12, 0, 0, 0)  # Alt를 눌렀다 떼야 다른 프로그램 창을 앞으로 가져올 수 있다
+    user32.keybd_event(0x12, 0, 2, 0)
+    user32.SetForegroundWindow(hwnd)
+    time.sleep(0.3)
+
+    class KEYBDINPUT(ctypes.Structure):
+        _fields_ = [("wVk", wintypes.WORD), ("wScan", wintypes.WORD), ("dwFlags", wintypes.DWORD),
+                    ("time", wintypes.DWORD), ("dwExtraInfo", ctypes.c_size_t)]
+
+    class INPUT(ctypes.Structure):
+        _fields_ = [("type", wintypes.DWORD), ("ki", KEYBDINPUT), ("pad", ctypes.c_byte * 8)]
+
+    def send(flags):
+        inp = INPUT(type=1, ki=KEYBDINPUT(0, scan, flags, 0, 0))
+        user32.SendInput(1, ctypes.byref(inp), ctypes.sizeof(INPUT))
+
+    for _ in range(2):
+        send(0x0008)           # KEYEVENTF_SCANCODE
+        time.sleep(0.05)
+        send(0x0008 | 0x0002)  # + KEYEVENTF_KEYUP
+        time.sleep(0.15)
 
 
 def track(rp, champion, until, speed, step):
     players = rp.players()
     player = find_player(players, champion)
     if not player:
-        print(f"  주의: 선수 목록에서 {champion}를 못 찾음 (목록 {len(players)}명). 챔피언 이름으로 시도합니다.")
-    # interfaceAll을 끄면 미니맵까지 사라지므로 UI는 켜 둔다
+        print(f"  선수 목록에서 {champion}를 못 찾았습니다 (목록 {len(players)}명).")
+        return []
     rp.post("/replay/render", {"interfaceAll": True, "interfaceMinimap": True, "fogOfWar": False})
     rp.post("/replay/playback", {"time": 0.0, "paused": True})
-    sel = attach(rp, player, champion)
-    if not sel:
-        print(f"  {champion}에 카메라를 고정하지 못했습니다. --probe 결과를 Claude에게 보내 주세요.")
-        return []
-    print(f"  카메라 고정: {sel}")
+    time.sleep(1)
+    press_twice(lock_key(players, player))
+    print(f"  카메라 고정 키 입력: {player.get('riotIdGameName') or champion} ({player.get('team')})")
     rp.post("/replay/playback", {"paused": False, "speed": speed})
     rows, last = [], -step
     while True:
@@ -247,13 +274,8 @@ def track(rp, champion, until, speed, step):
         if t >= until or t >= pb.get("length", 0) - 1:
             break
         if t - last >= step:
-            # 리플레이 자동 카메라(교전 따라가기)가 고정을 풀기 때문에 기록할 때마다 다시 고정한다
-            rp.post("/replay/render", {"selectionName": sel, "cameraAttached": True})
-            time.sleep(0.1)
-            render = rp.get("/replay/render")
-            cam = render.get("cameraPosition") or {}
-            locked = int(bool(render.get("cameraAttached")) and render.get("selectionName") == sel)
-            rows.append((round(t, 2), round(cam.get("x", 0), 1), round(cam.get("y", 0), 1), round(cam.get("z", 0), 1), locked))
+            cam = rp.get("/replay/render").get("cameraPosition") or {}
+            rows.append((round(t, 2), round(cam.get("x", 0), 1), round(cam.get("y", 0), 1), round(cam.get("z", 0), 1)))
             last = t
             if len(rows) % 60 == 0:
                 print(f"  {int(t // 60)}:{int(t % 60):02d}  x={rows[-1][1]} z={rows[-1][3]}", end="\r")
@@ -271,7 +293,7 @@ def probe(rp, champion):
     print("render 카메라 관련:", {k: v for k, v in render.items() if k.startswith(("camera", "selection", "interface"))})
     rows = track(rp, champion, until=90, speed=2, step=3)
     for r in rows:
-        print("  t=%.0f x=%.0f y=%.0f z=%.0f 고정=%d" % r)
+        print("  t=%.0f x=%.0f y=%.0f z=%.0f" % r)
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
         print("좌표가 움직이지 않습니다. 이 방식은 안 되고 미니맵 캡처 방식으로 바꿔야 합니다.")
 
@@ -320,7 +342,7 @@ def main():
         path = os.path.join(OUT, f"{args.match}_{champ}.csv")
         with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["time", "x", "y", "z", "locked"])
+            w.writerow(["time", "x", "y", "z"])
             w.writerows(rows)
         print(f"  저장 {path} ({len(rows)}행)")
 
