@@ -11,6 +11,12 @@ from . import events
 from .game import SIDE
 from .vision import detect_prob
 
+# 로밍 와드 자리: 라인 → (강가·바위게 노드, 정글 입구 방향 'top'/'bot'). 입구는 우리/상대 쪽을 그때 고른다
+ROAM_WARD = {"top": (["river_top_brush", "river_top_scuttle"], "top"), "bot": (["river_bot_brush", "river_bot_scuttle"], "bot"),
+             "mid": (["river_top_scuttle", "river_bot_scuttle", "river_top_brush", "river_bot_brush"], None)}
+# (팀, 맵 위/아래) → 그쪽 정글 캠프. 블루는 위쪽이 블루 버프, 레드는 위쪽이 레드 버프(점대칭)
+JUNGLE_SIDE = {(100, "top"): ["blue", "gromp", "wolves"], (100, "bot"): ["red", "krugs", "raptors"],
+               (200, "top"): ["red", "krugs", "raptors"], (200, "bot"): ["blue", "gromp", "wolves"]}
 RIVER_WARD_NODE = {"top": ["river_top_brush"], "bot": ["river_bot_brush"], "mid": ["river_top_scuttle", "river_bot_scuttle"]}
 OBJ_LANE = {"dragon": "bot", "grubs": "top", "herald": "top"}
 
@@ -323,6 +329,7 @@ class LanerBot:
     def __init__(self, game, champ):
         self.g, self.c = game, champ
         champ.ms = 335
+        champ.spent = champ.item_gold = 500.0   # 시작 아이템(1단계: 1분 보유 골드 중앙 0)
         champ.ward_charges = 1
         champ.ward_next = game.p["laner"]["ward_recharge_s"]
         lo, hi = game.p["laner"]["trade_every_s"]
@@ -332,14 +339,20 @@ class LanerBot:
         g, c, pl = self.g, self.c, self.g.p["laner"]
         lane = c.lane
         center, tower = g.lane_node(lane), g.tower_node(lane, c.team)
+        self.maybe_rotate()
         if c.task:
             k = c.task["kind"]
             if k == "helping" and g.t >= c.task["until"]:
                 c.task = None
                 g.move_to(c, center)
+            elif k == "roaming":
+                self.roam_tick(center)
             elif k == "recalling":
                 pass
             return
+        if c.role == "UTILITY":
+            pr = pl["support_ward_per_min"]
+            c.support_wards = min(pr["max_charges"], c.support_wards + (pr["early"] if g.t < 600 else pr["late"]) / 60)
         if c.ward_charges < pl["ward_max_charges"] and g.t >= c.ward_next:
             c.ward_charges += 1
             c.ward_next = g.t + pl["ward_recharge_s"]
@@ -365,6 +378,9 @@ class LanerBot:
         if c.hp < pl["recall_hp_always"] or (g.wave_for(c.team, lane) > 1 - pl["pushed"] and g.rng.random() < self.recall_hazard()):
             g.start_recall(c)
             return
+        # 로밍(와드·다른 라인). 1단계 분 프레임 위치 비율에 맞춘 확률(sim/targets_laner.json zone_by_minute)
+        if c.node == center and g.t >= pl["lane_start_s"] and self.start_roam():
+            return
         # kk 기준 9. 와드
         seen_node, seen_t = g.enemy_jgl_seen[c.team]
         if c.ward_charges > 0 and g.t - seen_t >= pl["unseen_ward_s"] and g.t >= pl["lane_start_s"]:
@@ -377,6 +393,68 @@ class LanerBot:
         c.hp = min(1.0, c.hp + pl["hp_regen_per_s"])
         if c.node == center and g.t >= c.next_trade:
             self.trade(center)
+
+    def maybe_rotate(self):
+        """원딜·서폿이 미드로, 미드가 바텀으로 라인을 바꿈. 1단계: 원딜 14분 미드 띠 34%(바텀 외곽 포탑 남음) / 56%(깨짐)."""
+        g, c, pr = self.g, self.c, self.g.p["laner"]["rotate"]
+        if c.role != "BOTTOM" or c.lane_override or not c.alive(g.t):
+            return
+        down = any(g.lanes.towers[T]["bot"][0] <= 0 for T in (100, 200))
+        rate = pr["after_bot_outer_down"] if down else (pr["after_s_rate"] if g.t >= pr["after_s"] else 0.0)
+        if g.rng.random() >= rate / 60:
+            return
+        for m in g.champs:
+            if m.team == c.team and m.role in ("BOTTOM", "UTILITY"):
+                m.lane_override = "mid"
+            elif m.team == c.team and m.role == "MIDDLE":
+                m.lane_override = "bot"
+        g.events.append({"t": g.t, "type": "rotate", "team": c.team})
+
+    def start_roam(self):
+        g, c, pr = self.g, self.c, self.g.p["laner"]["roam"]
+        rate = pr["rate_per_min"][c.role][0 if g.t < 840 else 1]
+        if c.role == "UTILITY" and c.support_wards >= 1:
+            rate *= pr["support_ward_boost"]
+        if g.rng.random() >= rate / 60:
+            return False
+        lane = c.lane
+        kind = g.rng.choices(["other_lane", "river", "jungle"], weights=pr["dest"][c.role][0 if g.t < 840 else 1])[0]
+        if kind == "other_lane":
+            others = [ln for ln in ("top", "mid", "bot") if ln != lane and (lane == "mid" or ln == "mid" or c.role == "MIDDLE")]
+            dest = g.lane_node(g.rng.choice(others))
+        elif kind == "river":
+            dest = g.rng.choice(ROAM_WARD[lane][0])
+        else:
+            side = ROAM_WARD[lane][1] or g.rng.choice(["top", "bot"])
+            team = c.team if g.rng.random() < pr["own_entrance"] else 300 - c.team
+            camps = JUNGLE_SIDE[(team, side)]
+            dest = g.rng.choice([f"{SIDE[team]}_{side}_entrance"] * 2 + [f"{SIDE[team]}_{k}" for k in camps])
+        lo, hi = pr["linger_s"]
+        c.task = {"kind": "roaming", "node": dest, "linger": g.rng.uniform(lo, hi), "until": None}
+        g.move_to(c, dest)
+        g.events.append({"t": g.t, "type": "roam", "pid": c.pid, "node": dest})
+        return True
+
+    def roam_tick(self, center):
+        g, c, pl = self.g, self.c, self.g.p["laner"]
+        task = c.task
+        if c.path:
+            return
+        if task["until"] is None:
+            task["until"] = g.t + task["linger"]
+            if g.map.nodes[c.node]["kind"] != "lane":
+                n = int(c.support_wards) if c.role == "UTILITY" else 0
+                n += 1 if c.ward_charges > 0 else 0
+                for _ in range(max(0, n)):
+                    g.wards.append({"team": c.team, "node": c.node, "until": g.t + pl["ward_duration_s"], "pid": c.pid})
+                    g.events.append({"t": g.t, "type": "ward", "pid": c.pid})
+                if c.ward_charges > 0:
+                    c.ward_charges -= 1
+                if c.role == "UTILITY":
+                    c.support_wards -= int(c.support_wards)
+        if g.t >= task["until"]:
+            c.task = None
+            g.move_to(c, center)
 
     def recall_hazard(self):
         g, c = self.g, self.c

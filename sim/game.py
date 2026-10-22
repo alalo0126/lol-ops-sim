@@ -67,6 +67,8 @@ class Champ:
     ward_charges: int = 0
     ward_next: float = 0.0
     next_trade: float = 0.0
+    lane_override: str = None    # 14분 전후 라인 바꾸기(원딜·서폿 미드, 미드 바텀)
+    support_wards: float = 0.0   # 서폿 아이템 와드 충전(실수)
 
     def alive(self, now):
         return now >= self.dead_until
@@ -84,7 +86,7 @@ class Champ:
 
     @property
     def lane(self):
-        return LANE_OF.get(self.role)
+        return self.lane_override or LANE_OF.get(self.role)
 
 
 @dataclass
@@ -289,6 +291,16 @@ class Game:
             self._on_node(c)
             if c.path:
                 c.edge_left += self.map.dist(c.node, c.path[0])
+
+    def pos(self, c):
+        """지금 좌표: 노드 사이를 걷는 중이면 간 만큼 보간(분 프레임 위치 비교용)."""
+        a = self.map.nodes[c.node]
+        if not c.path:
+            return a["x"], a["y"]
+        b = self.map.nodes[c.path[0]]
+        d = self.map.dist(c.node, c.path[0]) or 1.0
+        f = min(1.0, max(0.0, 1 - c.edge_left / d))
+        return round(a["x"] + f * (b["x"] - a["x"])), round(a["y"] + f * (b["y"] - a["y"]))
 
     def _on_node(self, c):
         """노드에 닿을 때 적 시야 노출을 기록하고, 적이 알아채면 그 팀의 '마지막으로 본 정글러'를 갱신한다."""
@@ -563,7 +575,7 @@ class Game:
             "p": {c.pid: {"role": c.role, "team": c.team, "gold": round(c.total_gold), "jungle_cs": c.jungle_cs,
                           "lane_cs": int(c.lane_cs), "level": c.level, "xp": round(c.xp),
                           "kills": c.kills, "deaths": c.deaths, "assists": c.assists,
-                          "hp": round(c.hp, 3), "node": c.node, "alive": c.alive(self.t)} for c in self.champs},
+                          "hp": round(c.hp, 3), "node": c.node, "xy": self.pos(c), "alive": c.alive(self.t)} for c in self.champs},
         })
 
     def step(self):

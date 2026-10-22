@@ -15,6 +15,8 @@ v1 라이너는 초당 고정 수입을 받았다(params laner.income_per_s). �
 """
 import math
 
+from . import events
+
 LANES = ("top", "mid", "bot")
 TIERS = ("outer", "inner", "inhib")
 
@@ -27,6 +29,7 @@ class Lanes:
         self.first_tower = False
         self.wave_no = 0
         self.next_wave = self.p["first_arrival_s"]
+        self.last_fight = {ln: -999.0 for ln in LANES}
         self.backlog = {(T, ln): 0.0 for T in (100, 200) for ln in LANES}   # 아무도 없을 때 쌓인 상대 미니언(웨이브 수)
 
     # ------------------------------------------------------------ 조회
@@ -66,9 +69,30 @@ class Lanes:
                         g.give_gold(c, self.p["support_item_gold_per_s"], gv=True)
             w = g.wave[ln] + p["rate"] * (s[100] - s[200]) + p["revert"] * (0.5 - g.wave[ln]) + g.rng.gauss(0, p["sigma"])
             g.wave[ln] = min(1.0, max(0.0, w))
+            self.lane_fight(ln, here)
             for att, w_att in ((100, g.wave[ln]), (200, 1 - g.wave[ln])):
                 if w_att >= self.p["siege_at"]:
                     self.siege(att, ln, s[att])
+
+    def lane_fight(self, ln, here):
+        """정글러 없는 라인 교전(솔로킬·2대2). 양 팀 라이너가 라인에 있을 때 초당 확률로 시작한다.
+
+        1단계 1,000판에서 14분 전 라이너 사망 중 정글러가 관여하지 않은 것: 탑 55%, 미드 46%, 원딜 60%, 서폿 48%.
+        승패·사망은 정글 조우 교전과 같은 식(events.resolve_skirmish), 시작 확률만 라인별로 맞춘다.
+        """
+        g, pf = self.g, self.p["lane_fight"]
+        sides = {T: [c for c in here[T] if c.role != "JUNGLE"] for T in (100, 200)}
+        if not sides[100] or not sides[200] or g.t - self.last_fight[ln] < pf["cooldown_s"]:
+            return
+        if g.rng.random() >= pf["rate_per_s"][ln][0 if g.t < 840 else 1]:
+            return
+        self.last_fight[ln] = g.t
+        res = events.resolve_skirmish(sides, g.t, g.rng, {**g.p["skirmish"], **pf["resolve"]})
+        for pid, hp in res.hp_after.items():
+            next(x for x in g.champs if x.pid == pid).hp = hp
+        for victim, killer, assists in res.deaths:
+            g.kill(killer, victim, assists)
+        g.events.append({"t": g.t, "type": "lane_fight", "lane": ln, "winner": res.winner, "deaths": len(res.deaths)})
 
     def interval(self, t):
         for step in self.g.rules.minions["wave_interval_s"]:

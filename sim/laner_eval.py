@@ -21,11 +21,10 @@ ZONES = ["own_lane", "other_lane", "jungle", "river", "base"]
 JUNGLE_Z = {"own_jungle", "enemy_jungle", "pit"}
 
 
-def frame_zone(node, team, role, nodes):
-    n = nodes[node]
-    z = zone(n["x"], n["y"], team, nodes)
+def frame_zone(xy, team, role, nodes):
+    z = zone(xy[0], xy[1], team, nodes)
     if z == "lane":
-        return "own_lane" if lane_band(n["x"], n["y"]) == LANE_OF[role] else "other_lane"
+        return "own_lane" if lane_band(xy[0], xy[1]) == LANE_OF[role] else "other_lane"
     return "jungle" if z in JUNGLE_Z else z
 
 
@@ -55,7 +54,7 @@ def simulate(games, seed0=0, game_kw=None):
                     vals[(r, m, k)].append(pf[k])
             for m in range(1, 21):
                 pf = frames[m]["p"][c.pid]
-                where[(r, m)][frame_zone(pf["node"], c.team, r, nodes)] += 1
+                where[(r, m)][frame_zone(pf["xy"], c.team, r, nodes)] += 1
             shops = sorted(e["t"] for e in g.events if e["type"] == "shop" and e["pid"] == c.pid and e["t"] > 60)
             vals[(r, "first_shop_s")].append(shops[0] if shops else 1200)
             vals[(r, "shops_by_20")].append(len(shops))

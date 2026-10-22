@@ -16,6 +16,10 @@
   python -m tools.replay_track KR_8424846201                  # data/replay_raw에 경기 JSON이 있으면 양 팀 정글러 자동
   python -m tools.replay_track KR_8424846201 --champion Nidalee --until 900 --speed 4
   python -m tools.replay_track KR_8424846201 --probe          # 좌표가 읽히는지만 확인
+  python -m tools.replay_track KR_8424846201 --role MIDDLE    # 양 팀 미드
+
+기록할 때마다 5초 간격으로 10명 전원의 아이템·레벨·CS·K/D/A·사망 여부를 <경기>_players.csv에 함께 남긴다
+(리플레이 API playerlist. 카메라와 무관하게 10명 모두).
 """
 import argparse
 import base64
@@ -195,13 +199,37 @@ def enable_replay_api(game_dir):
 
 # ---------- 추적 ----------
 
-def junglers_from_raw(match_id):
+def champions_from_raw(match_id, role="JUNGLE"):
+    """data/replay_raw 경기 JSON에서 그 포지션(TOP·JUNGLE·MIDDLE·BOTTOM·UTILITY) 양 팀 챔피언."""
     path = os.path.join(REPLAY_RAW, f"{match_id}.json")
     if not os.path.exists(path):
         return []
     with open(path, encoding="utf-8") as f:
         info = json.load(f)["detail"]["info"]
-    return [p["championName"] for p in info["participants"] if p.get("teamPosition") == "JUNGLE"]
+    return [p["championName"] for p in info["participants"] if p.get("teamPosition") == role]
+
+
+def junglers_from_raw(match_id):
+    return champions_from_raw(match_id, "JUNGLE")
+
+
+# ---------- 10명 상태(아이템·레벨·CS·K/D/A·사망) ----------
+STATE_EVERY = 5  # 게임 초. playerlist는 한 번에 10명을 주므로 카메라와 상관없이 전원 기록된다
+STATE_HEADER = ["time", "champion", "team", "position", "level", "kills", "deaths", "assists", "cs", "ward_score",
+                "is_dead", "respawn_timer", "items"]
+
+
+def player_state_rows(t, players):
+    """playerlist 한 번 → 10명 행. items는 '아이템id:개수'를 |로 이은 것(빈 칸 제외)."""
+    rows = []
+    for p in players:
+        sc = p.get("scores") or {}
+        raw = p.get("rawChampionName") or ""
+        items = "|".join(f"{it.get('itemID')}:{it.get('count', 1)}" for it in sorted(p.get("items") or [], key=lambda i: i.get("slot", 0)))
+        rows.append([round(t, 1), raw.split("_")[-1] or p.get("championName"), p.get("team"), p.get("position", ""),
+                     p.get("level"), sc.get("kills"), sc.get("deaths"), sc.get("assists"), sc.get("creepScore"),
+                     round(sc.get("wardScore", 0) or 0, 1), int(bool(p.get("isDead"))), round(p.get("respawnTimer", 0) or 0, 1), items])
+    return rows
 
 
 def find_player(players, champion):
@@ -303,11 +331,15 @@ def track(rp, champion, until, speed, step, lock="key"):
         print(f"  카메라 고정({lock}): {name} ({player.get('team')})")
     rp.post("/replay/playback", {"paused": False, "speed": speed})
     rows, last = [], -step
+    states, last_state = [], -STATE_EVERY
     while True:
         pb = rp.get("/replay/playback")
         t = pb.get("time", 0.0)
         if t >= until or t >= pb.get("length", 0) - 1:
             break
+        if t - last_state >= STATE_EVERY:
+            states += player_state_rows(t, rp.players())
+            last_state = t
         if t - last >= step:
             if lock == "api":
                 api_lock(rp, name)
@@ -334,6 +366,7 @@ def track(rp, champion, until, speed, step, lock="key"):
         time.sleep(max(0.02, step / speed / 4))
     rp.post("/replay/playback", {"paused": True})
     print()
+    track.states = states
     return rows
 
 
@@ -361,11 +394,19 @@ def probe(rp, champion, lock):
     """좌표가 챔피언을 따라가는지 90초만 보고 출력한다."""
     print("playerlist:", [(p.get("rawChampionName"), p.get("riotIdGameName") or p.get("summonerName"), p.get("team"))
                           for p in rp.players()])
+    pl = rp.players()
+    if pl:
+        print("playerlist 첫 선수 키:", sorted(pl[0].keys()))
+        print("  items:", pl[0].get("items"), " scores:", pl[0].get("scores"), " level:", pl[0].get("level"),
+              " isDead:", pl[0].get("isDead"), " position:", pl[0].get("position"))
     render = rp.get("/replay/render")
     print("render 카메라 관련:", {k: v for k, v in render.items() if k.startswith(("camera", "selection", "interface"))})
     rows = track(rp, champion, until=90, speed=2, step=3, lock=lock)
     for r in rows:
         print("  t=%.0f 위치 x=%d y=%d  (카메라 %d, %d, %d) 튐=%d" % r)
+    st = getattr(track, "states", [])
+    times = sorted({r[0] for r in st})
+    print(f"10명 상태 {len(times)}시점:", [r for r in st if r[0] == times[-1]][:3] if times else "없음")
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
         print("좌표가 움직이지 않습니다. 이 방식은 안 되고 미니맵 캡처 방식으로 바꿔야 합니다.")
 
@@ -373,7 +414,8 @@ def probe(rp, champion, lock):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("match", nargs="?", help="경기 번호 (예: KR_8424846201)")
-    ap.add_argument("--champion", action="append", help="따라갈 챔피언 영문 id (여러 번 가능). 없으면 data/raw에서 정글러")
+    ap.add_argument("--champion", action="append", help="따라갈 챔피언 영문 id (여러 번 가능). 없으면 data/replay_raw에서 --role의 양 팀 챔피언")
+    ap.add_argument("--role", default="JUNGLE", choices=["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"], help="따라갈 포지션 (기본 JUNGLE)")
     ap.add_argument("--until", type=float, default=1200, help="몇 초까지 기록 (기본 1200 = 20분)")
     ap.add_argument("--speed", type=float, default=4, help="재생 배속 (기본 4)")
     ap.add_argument("--step", type=float, default=1, help="기록 간격, 게임 초 (기본 1)")
@@ -392,9 +434,9 @@ def main():
     if not args.match:
         ap.error("경기 번호가 필요합니다")
 
-    champions = args.champion or junglers_from_raw(args.match)
+    champions = args.champion or champions_from_raw(args.match, args.role)
     if not champions:
-        sys.exit(f"data/replay_raw/{args.match}.json이 없어 정글러를 모릅니다. --champion 으로 지정하세요.")
+        sys.exit(f"data/replay_raw/{args.match}.json이 없어 {args.role} 챔피언을 모릅니다. --champion 으로 지정하세요.")
     game_id = args.match.split("_")[-1]
 
     if not args.no_launch:
@@ -426,6 +468,14 @@ def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
         w.writerows(rows)
     bad = sum(1 for r in rows if not r[-1])
     print(f"  저장 {path} ({len(rows)}행, 무효 {bad}행)")
+    states = getattr(track, "states", [])
+    spath = os.path.join(OUT, f"{match_id}_players.csv")
+    if states and (not os.path.exists(spath) or os.path.getsize(spath) < 1000):   # 10명 상태는 경기당 한 번만
+        with open(spath, "w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            w.writerow(STATE_HEADER)
+            w.writerows(states)
+        print(f"  10명 상태 {spath} ({len(states) // 10}시점)")
     return path, 1 - bad / len(rows)
 
 

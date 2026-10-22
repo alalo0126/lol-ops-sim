@@ -1,6 +1,7 @@
 """천상계 정글 경기를 찾아 리플레이로 양 팀 정글러 동선을 기록하고 타임라인과 맞대 본다 (kk PC).
 
   python -m tools.replay_batch --count 20
+  python -m tools.replay_batch --count 20 --role MIDDLE     # 양 팀 미드 (data/replay_raw에 있는 경기부터)
 
 필요: 롤 클라이언트 로그인, RIOT_API_KEY, game.cfg EnableReplayApi=1 (python -m tools.replay_track --enable-api).
 1. 찾기: 챌린저·그랜드마스터 상위부터 최근 --hours 시간 솔랭 중 지금 클라이언트와 같은 빌드, 20분 이상,
@@ -34,14 +35,22 @@ MIN_VALID = 0.7  # 유효 행이 이보다 적으면 카메라 고정이 실패�
 
 
 def junglers(detail):
-    return [p["championName"] for p in detail["info"]["participants"] if p.get("teamPosition") == "JUNGLE"]
+    return by_role(detail, "JUNGLE")
+
+
+def by_role(detail, role):
+    return [p["championName"] for p in detail["info"]["participants"] if p.get("teamPosition") == role]
 
 
 def find_matches(api, build, count, hours, per_player, tiers):
     """조건에 맞는 경기 번호를 count개까지 모아 data/replay_raw에 저장한다. 이미 저장된 것도 포함해 돌려준다."""
     os.makedirs(REPLAY_RAW, exist_ok=True)
-    found = sorted(n[:-5] for n in os.listdir(REPLAY_RAW) if n.endswith(".json"))
-    seen = set(found)
+    seen = {n[:-5] for n in os.listdir(REPLAY_RAW) if n.endswith(".json")}
+    found = []
+    for mid in sorted(seen):   # 이미 받아 둔 경기 중 지금 빌드와 같은 것부터 쓴다
+        with open(os.path.join(REPLAY_RAW, f"{mid}.json"), encoding="utf-8") as f:
+            if json.load(f)["detail"]["info"]["gameVersion"].startswith(build):
+                found.append(mid)
     since = time.time() - hours * 3600
     for tier in tiers:
         entries = sorted(api.apex_entries(tier), key=lambda e: -e.get("leaguePoints", 0))
@@ -94,6 +103,8 @@ def main():
     ap.add_argument("--speed", type=float, default=4)
     ap.add_argument("--game-dir", default=DEFAULT_GAME_DIR)
     ap.add_argument("--find-only", action="store_true", help="경기만 찾고 기록은 하지 않는다")
+    ap.add_argument("--role", default="JUNGLE", choices=["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"],
+                    help="기록할 포지션(양 팀). 이미 받아 둔 data/replay_raw 경기부터 쓴다 (기본 JUNGLE)")
     args = ap.parse_args()
 
     game_dir = find_game_dir(args.game_dir)
@@ -104,7 +115,8 @@ def main():
 
     api = RiotAPI(platform="kr")
     matches = find_matches(api, build, args.count, args.hours, args.per_player, args.tiers.split(","))
-    print(f"대상 {len(matches)}판")
+    matches = matches[:args.count]   # 이미 받아 둔 경기가 더 많아도 --count판까지만
+    print(f"대상 {len(matches)}판 ({args.role})")
     if args.find_only:
         return
 
@@ -116,7 +128,7 @@ def main():
     for i, mid in enumerate(matches, 1):
         with open(os.path.join(REPLAY_RAW, f"{mid}.json"), encoding="utf-8") as f:
             data = json.load(f)
-        champs = junglers(data["detail"])
+        champs = by_role(data["detail"], args.role)
         todo = [c for c in champs if not os.path.exists(os.path.join(OUT, f"{mid}_{c}.csv"))]
         print(f"\n[{i}/{len(matches)}] {mid} {' vs '.join(champs)}")
         if todo:
@@ -138,7 +150,7 @@ def main():
                 print(f"  오류: {e!r}")
             finally:
                 close_replay()
-        if mid in done:
+        if mid in done or args.role != "JUNGLE":   # 타임라인 1분 위치 비교는 정글 기록 때만 summary.csv에 쌓음
             continue
         try:
             rows = compare(mid, api)
