@@ -25,10 +25,12 @@ class Rules:
         self.objectives = values(load_json("rules", "objectives.json"))
         self.positions = values(load_json("rules", "positions.json"))
         self.combat = values(load_json("rules", "combat.json"))
+        self.minions = values(load_json("rules", "minions.json"))
         self.levels = values(load_json("rules", "levels.json"))["xp_to_reach"]
         self.map = load_json("rules", "map_nodes.json")
         self.champions = load_json("rules", "champions.json")["champions"]
         self.params = values(load_json("sim", "params.json"))
+        self.laner_recall = load_json(*self.params["laner"]["recall_model"].split("/"))
         self.passive_start_s = load_json("rules", "combat.json")["passive_gold_per_s"]["start_s"]
 
     def level_for_xp(self, xp):

@@ -108,6 +108,7 @@ class Game:
         self.map = MapGraph(self.rules.map)
         self.rng = random.Random(seed)
         self.cog = self.p["cognition"]["profiles"][cognition]
+        self.recall_model = self.rules.laner_recall
         self.t = 0
         self.frames = []
         self.events = []
@@ -144,6 +145,8 @@ class Game:
             "grubs": {"node": "baron_pit", "alive": False, "spawn_at": o["voidgrubs"]["spawn_s"], "respawn": None, "until": o["voidgrubs"]["despawn_s"]},
             "herald": {"node": "baron_pit", "alive": False, "spawn_at": o["rift_herald"]["spawn_s"], "respawn": None, "until": o["rift_herald"]["despawn_s"]},
         }
+        from .lanes import Lanes
+        self.lanes = Lanes(self)
         self.gank_alert = {}   # (지키는 팀, 라인) → 마지막 갱 시각
         self.obj_taken = {"dragon": {100: 0, 200: 0}, "grubs": {100: 0, 200: 0}, "herald": {100: 0, 200: 0}}
 
@@ -460,6 +463,7 @@ class Game:
     def shop(self, c):
         """남은 골드를 모두 아이템으로. 첫 300골드 넘는 구매에 신발(정글러 이속)을 넣는다."""
         buy = c.unspent
+        self.events.append({"t": self.t, "type": "shop", "pid": c.pid, "gold": round(buy)})
         if c.item_gold < 300 <= c.item_gold + buy and c.role == "JUNGLE":
             c.ms += self.p["jungler"]["boots_ms"]
         c.item_gold += buy
@@ -558,7 +562,8 @@ class Game:
             "t": self.t,
             "p": {c.pid: {"role": c.role, "team": c.team, "gold": round(c.total_gold), "jungle_cs": c.jungle_cs,
                           "lane_cs": int(c.lane_cs), "level": c.level, "xp": round(c.xp),
-                          "kills": c.kills, "deaths": c.deaths, "assists": c.assists} for c in self.champs},
+                          "kills": c.kills, "deaths": c.deaths, "assists": c.assists,
+                          "hp": round(c.hp, 3), "node": c.node, "alive": c.alive(self.t)} for c in self.champs},
         })
 
     def step(self):
@@ -571,6 +576,7 @@ class Game:
             self._finish_tasks(c)
             self._advance(c)
         self._skirmish()
+        self.lanes.tick()
         for c in self.champs:
             if c.alive(self.t):
                 self.bots[c.pid].tick()

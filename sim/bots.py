@@ -351,9 +351,6 @@ class LanerBot:
         if c.node == tower and g.t >= c.retreat_until and not self.behind():
             g.move_to(c, center)
             return
-        if c.team == 100 and c.role in ("TOP", "MIDDLE", "BOTTOM"):   # 라인마다 한 명만 웨이브를 움직임
-            w = g.wave[lane] + g.rng.gauss(0, pl["wave_drift_sigma"]) + 0.01 * (0.5 - g.wave[lane])
-            g.wave[lane] = min(1.0, max(0.0, w))
 
         # kk 기준 1. 후퇴
         if c.node == center and self.behind():
@@ -364,10 +361,8 @@ class LanerBot:
             g.move_to(c, tower)
             g.events.append({"t": g.t, "type": "retreat", "pid": c.pid})
             return
-        # kk 기준 2. 귀환 (마나 모델이 없어 체력만 봄)
-        pushed = g.wave_for(c.team, lane) >= pl["pushed"]
-        if c.hp < pl["recall_hp_always"] or c.unspent >= pl["recall_gold_any"] \
-                or ((c.hp < pl["recall_hp"] or c.unspent >= pl["core_component_gold"]) and pushed):
+        # kk 기준 2. 귀환: 체력 15% 미만은 무조건, 나머지는 1,000판 구매 기록으로 맞춘 확률(laner_recall.json)
+        if c.hp < pl["recall_hp_always"] or (g.wave_for(c.team, lane) > 1 - pl["pushed"] and g.rng.random() < self.recall_hazard()):
             g.start_recall(c)
             return
         # kk 기준 9. 와드
@@ -376,19 +371,19 @@ class LanerBot:
             spots = [n for n in RIVER_WARD_NODE[lane] if not any(w["team"] == c.team and w["node"] == n for w in g.wards)]
             if spots:
                 g.wards.append({"team": c.team, "node": spots[0], "until": g.t + pl["ward_duration_s"], "pid": c.pid})
+                g.events.append({"t": g.t, "type": "ward", "pid": c.pid})
                 c.ward_charges -= 1
-        # 기본: 받아먹기. 웨이브 모듈 대신 고정 수입
-        if g.t >= pl["lane_start_s"]:
-            share = 1.0 if c.node == center else 0.5
-            if c.role != "UTILITY" and g.t < g.lane_taken_until[lane]:
-                share = 0.0
-            inc = pl["income_per_s"][c.role]
-            g.give_gold(c, inc["gold"] * share, gv=True)
-            g.give_xp(c, inc["xp"] * share)
-            c.lane_cs += pl["cs_per_s"][c.role] * share
+        # 기본: 받아먹기. CS·경험치는 웨이브가 도착할 때 라인에 서 있으면 sim/lanes.py가 준다
         c.hp = min(1.0, c.hp + pl["hp_regen_per_s"])
         if c.node == center and g.t >= c.next_trade:
             self.trade(center)
+
+    def recall_hazard(self):
+        g, c = self.g, self.c
+        w = g.recall_model["roles"][c.role]["w"]
+        z = w[0] + w[1] * c.unspent / 1000 + w[2] * c.hp + w[3] * g.t / 600
+        p = 1 / (1 + math.exp(-z))
+        return 1 - (1 - p) ** (1 / 60)
 
     def after_gank(self):
         """갱을 버틴 뒤: 체력이 낮으면 바로 귀환, 아니면 잠시 포탑으로 물러남(5단계에서 찾은 연속 갱 악용 대응, Claude 기본값).
