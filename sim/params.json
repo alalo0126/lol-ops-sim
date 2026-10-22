@@ -66,8 +66,13 @@
     "push": {"value": {"rate": 0.004, "revert": 0.01, "sigma": 0.02, "per_level": 0.08, "per_1000_item_gold": 0.25,
                        "role": {"TOP": 1.0, "MIDDLE": 1.1, "BOTTOM": 1.0, "UTILITY": 0.5, "JUNGLE": 0.8}}, "level": "calibrated",
              "note": "초당 웨이브 이동 = rate × (블루 힘 − 레드 힘) + revert × (0.5 − 위치) + 잡음. 힘 = 포지션 가중 × (1 + 레벨·아이템). 포탑 방패 시각 분포에 맞춤"},
-    "tower_damage": {"value": {"minions": 0.004, "per_strength": 0.012, "tier_mult": [1.0, 0.9, 0.8]}, "level": "calibrated",
-                     "note": "공성 중 초당 깎는 방패 칸 수(포탑 하나 = 5칸) = (미니언 + 계수 × 공성 챔피언 힘) × 단계 배율. 1단계 방패 시각(외곽 중앙 13:21, 2차 20:26)·외곽 포탑 파괴(중앙 16~17분)·첫 포탑(13:26)에 맞춤"}
+    "tower_damage": {"value": {"minions": 0.004, "per_strength": 0.012, "tier_mult": [1.0, 0.9, 0.8], "full_at_s": 840, "early_power": 1.5}, "level": "calibrated",
+                     "note": "공성 중 초당 깎는 방패 칸 수(포탑 하나 = 5칸) = (미니언 + 계수 × 공성 챔피언 힘) × 단계 배율 × min(1, 시각/full_at_s)^early_power. 1단계 방패 시각(외곽 중앙 13:21, 2차 20:26)·외곽 포탑 파괴(중앙 16~17분)·첫 포탑(13:26)에 맞춤"}
+  },
+  "items": {
+    "_doc": "아이템: 골드 총액(item_gold)에 더해 완성 아이템 수(legendaries)를 교전에 쓴다. tools/item_builds.py(1단계 1,000판)",
+    "legendary_item_gold": {"value": {"TOP": [4485, 3255], "JUNGLE": [3550, 3390], "MIDDLE": [4525, 3270], "BOTTOM": [4340, 3415], "UTILITY": [3700, 2630]},
+                            "level": "verified", "note": "[첫 완성 아이템이 나오는 아이템 골드, 이후 하나당]. 1단계 600판 k번째 완성 아이템 구매 직후 분 프레임 (총 골드 − 보유 골드) 중앙값(정글은 펫 450 뺌). 1·2·3번째: 탑 4,485/7,980/10,995, 정글 4,000/7,410/10,780, 미드 4,525/7,920/11,069, 원딜 4,340/7,838/11,169, 서폿 3,700/6,710/8,955"}
   },
   "laner": {
     "lane_start_s": {"value": 90, "level": "unverified", "note": "첫 웨이브(0:30 생성)가 라인에 닿는 시각 근처"},
@@ -129,7 +134,7 @@
     "cooldown_s": {"value": 45, "level": "unverified"},
     "join_travel_s": {"value": 18, "level": "calibrated", "note": "이 시간 안에 올 수 있는 라이너가 합류 후보. 1단계 1,000판 양 팀 정글러 10분 킬·데스·어시스트 평균(2.0 / 1.2 / 1.6)에 맞춤(시뮬 1.98 / 1.11 / 1.47). 이 값들 때문에 10분 KDA는 검증 지표가 아님"},
     "join_prob": {"value": 0.9, "level": "calibrated"},
-    "coef": {"value": {"num_adv": 0.9, "level_diff": 0.45, "hp_diff": 1.2, "item_gold_diff": 0.73}, "level": "unverified", "note": "item_gold_diff는 레벨 계수 × 1.62(gank.coef 설명과 같은 1단계 킬 회귀)"},
+    "coef": {"value": {"num_adv": 0.9, "level_diff": 0.45, "hp_diff": 1.2, "item_gold_diff": 0.53, "legendary_diff": 0.26}, "level": "unverified", "note": "item_gold_diff·legendary_diff는 레벨 계수에 1단계 킬 회귀 비율을 곱함(tools/item_builds.py, 킬 48,017건: 레벨 0.233, 천 골드 0.276, 완성 아이템 0.133 [95% 0.088~0.177] → 레벨 대비 1.18배, 0.57배). 이전 1.62배는 완성 아이템을 안 넣은 회귀"},
     "loser_death": {"value": 0.7, "level": "unverified"},
     "second_death": {"value": 0.25, "level": "unverified"},
     "trade_death": {"value": 0.2, "level": "unverified"},

@@ -20,7 +20,8 @@ PARAMS = [
     ("lanes", "lane_fight", "rate_per_s", "top", 0), ("lanes", "lane_fight", "rate_per_s", "top", 1),
     ("lanes", "lane_fight", "rate_per_s", "mid", 0), ("lanes", "lane_fight", "rate_per_s", "mid", 1),
     ("lanes", "lane_fight", "rate_per_s", "bot", 0), ("lanes", "lane_fight", "rate_per_s", "bot", 1),
-    ("lanes", "tower_damage", "minions"), ("lanes", "tower_damage", "per_strength"),
+    ("lanes", "tower_damage", "minions"), ("lanes", "tower_damage", "per_strength"), ("lanes", "siege_at"), ("lanes", "tower_damage", "early_power"),
+    ("lanes", "xp_share_mult", 1), ("lanes", "push", "rate"), ("lanes", "push", "sigma"),
     ("laner", "roam", "rate_per_min", "TOP", 0), ("laner", "roam", "rate_per_min", "TOP", 1),
     ("laner", "roam", "rate_per_min", "MIDDLE", 0), ("laner", "roam", "rate_per_min", "MIDDLE", 1),
     ("laner", "roam", "rate_per_min", "BOTTOM", 0), ("laner", "roam", "rate_per_min", "BOTTOM", 1),
@@ -85,6 +86,10 @@ def loss(vals, where, t):
     b20 = t["by_20_per_game"]
     tot += ((statistics.mean(vals[("plates_by_20",)]) - b20["plates"]["mean"]) / 4) ** 2
     tot += ((statistics.mean(vals[("outer_by_20",)]) - b20["outer"]["mean"]) / 0.6) ** 2
+    tot += ((statistics.mean(vals[("inner_by_20",)]) - b20["inner"]["mean"]) / 0.3) ** 2
+    tot += ((statistics.median(vals[("first_tower",)]) - t["first_tower_s"]["p50"]) / 60) ** 2
+    if vals[("plate", "outer")]:
+        tot += ((statistics.median(vals[("plate", "outer")]) - t["plate_time_by_tier_s"]["outer"]["p50"]) / 60) ** 2
     return tot
 
 

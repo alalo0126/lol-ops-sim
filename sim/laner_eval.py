@@ -41,6 +41,7 @@ def simulate(games, seed0=0, game_kw=None):
         towers = [e["t"] for e in g.events if e["type"] == "tower"]
         vals[("first_tower",)].append(min(towers) if towers else 1200)
         vals[("outer_by_20",)].append(sum(1 for e in g.events if e["type"] == "tower" and e["tier"] == "outer"))
+        vals[("inner_by_20",)].append(sum(1 for e in g.events if e["type"] == "tower" and e["tier"] == "inner"))
         vals[("plates_by_20",)].append(sum(1 for e in g.events if e["type"] == "plate"))
         nodes = g.map.nodes
         frames = {f["t"] // 60: f for f in g.frames}
@@ -113,6 +114,7 @@ def report(vals, where, games):
     lines.append(f"| 첫 포탑 시각 중앙(초) | {statistics.median(vals[('first_tower',)])} | {t['first_tower_s']['p50']} |")
     b20 = t.get("by_20_per_game", {})
     lines.append(f"| 20분까지 외곽 포탑 파괴(양 팀 합, 평균) | {statistics.mean(vals[('outer_by_20',)]):.2f} | {b20.get('outer', {}).get('mean', '-')} (중앙 시각 " + ", ".join(f"{k} {v['p50']}" for k, v in real_outer.items()) + ") |")
+    lines.append(f"| 20분까지 2차 포탑 파괴(양 팀 합, 평균) | {statistics.mean(vals[('inner_by_20',)]):.2f} | {b20.get('inner', {}).get('mean', '-')} |")
     lines.append(f"| 20분까지 방패(양 팀 합, 평균) | {statistics.mean(vals[('plates_by_20',)]):.1f} | {b20.get('plates', {}).get('mean', '-')} |")
     lines.append("")
     lines.insert(4, "요약: " + ", ".join(f"{k} {v}" for k, v in count.most_common()) + "\n")

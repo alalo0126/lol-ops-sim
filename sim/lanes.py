@@ -128,12 +128,13 @@ class Lanes:
                 # 라인에 너무 밀려 포탑 앞에서 받아먹으면 일부를 포탑이 먹는다
                 w_own = g.wave[ln] if T == 100 else 1 - g.wave[ln]
                 loss = pv["under_tower_loss"] if w_own <= 1 - pv["siege_at"] else 0.0
-                weights = {c.pid: eff.get(c.role, eff["JUNGLE"]) for c in here}
-                total = sum(weights.values())
-                take = min(1.0, total) * (1 - loss)
+                # 막타는 비율이 높은 사람부터 가져가고 남은 미니언을 다음 사람이(원딜이 먹고 남은 것을 서폿이)
+                left = 1.0 - loss
                 xp_each = wave_xp * waves * pv["xp_share_mult"][min(len(here), 3) - 1] / len(here)
-                for c in here:
-                    share = take * weights[c.pid] / total * waves
+                for c in sorted(here, key=lambda m: -eff.get(m.role, eff["JUNGLE"])):
+                    got = min(left, eff.get(c.role, eff["JUNGLE"]) * (1 - loss))
+                    left -= got
+                    share = got * waves
                     c.lane_cs += wave_n * share
                     g.give_gold(c, wave_gold * share, gv=True)
                     if c.role == "JUNGLE":
@@ -154,6 +155,7 @@ class Lanes:
             return
         d = pv["tower_damage"]
         dmg = (d["minions"] + d["per_strength"] * champ_strength) * d["tier_mult"][i]
+        dmg *= min(1.0, g.t / d["full_at_s"]) ** d["early_power"]   # 초반 포탑은 잘 안 깨짐(방패 시각 분포에 맞춘 증가 곡선)
         before = self.towers[dfn][ln][i]
         after = max(0.0, before - dmg)
         self.towers[dfn][ln][i] = after

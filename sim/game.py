@@ -69,6 +69,7 @@ class Champ:
     next_trade: float = 0.0
     lane_override: str = None    # 14분 전후 라인 바꾸기(원딜·서폿 미드, 미드 바텀)
     support_wards: float = 0.0   # 서폿 아이템 와드 충전(실수)
+    legendaries: int = 0         # 완성 아이템 수(아이템 골드 문턱으로 셈, params items.legendary_item_gold)
 
     def alive(self, now):
         return now >= self.dead_until
@@ -480,6 +481,10 @@ class Game:
             c.ms += self.p["jungler"]["boots_ms"]
         c.item_gold += buy
         c.spent += buy
+        li = self.p.get("items", {}).get("legendary_item_gold", {}).get(c.role)
+        if li:
+            first, step = li
+            c.legendaries = 0 if c.item_gold < first else 1 + int((c.item_gold - first) // step)
 
     def finish_recall(self, c):
         c.node = f"{SIDE[c.team]}_fountain"
