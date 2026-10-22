@@ -347,6 +347,8 @@ class LanerBot:
                 g.move_to(c, center)
             elif k == "roaming":
                 self.roam_tick(center)
+            elif k == "walk_recall" and not c.path:
+                g.start_recall(c)   # 정글 입구까지 걸어 와서 귀환
             elif k == "recalling":
                 pass
             return
@@ -375,8 +377,18 @@ class LanerBot:
             g.events.append({"t": g.t, "type": "retreat", "pid": c.pid})
             return
         # kk 기준 2. 귀환: 체력 15% 미만은 무조건, 나머지는 1,000판 구매 기록으로 맞춘 확률(laner_recall.json)
-        if c.hp < pl["recall_hp_always"] or (g.wave_for(c.team, lane) > 1 - pl["pushed"] and g.rng.random() < self.recall_hazard()):
+        if c.hp < pl["recall_hp_always"]:
             g.start_recall(c)
+            return
+        if g.wave_for(c.team, lane) > 1 - pl["pushed"] and g.rng.random() < self.recall_hazard():
+            # 실제 라이너는 라인에서 바로 안 타고 우리 정글·강가 쪽으로 빠져서 귀환하는 일이 많다(리플레이: 서폿 라인→기지
+            # 사이 정글·강가 판당 34초, 탑 17초)
+            if g.rng.random() < pl["recall_walk"][c.role]:
+                side = ROAM_WARD[lane][1] or g.rng.choice(["top", "bot"])
+                c.task = {"kind": "walk_recall"}
+                g.move_to(c, f"{SIDE[c.team]}_{side}_entrance")
+            else:
+                g.start_recall(c)
             return
         # 로밍(와드·다른 라인). 1단계 분 프레임 위치 비율에 맞춘 확률(sim/targets_laner.json zone_by_minute)
         if c.node == center and g.t >= pl["lane_start_s"] and self.start_roam():

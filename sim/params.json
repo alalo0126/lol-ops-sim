@@ -108,6 +108,7 @@
     "support_ward_per_min": {"value": {"early": 0.45, "late": 2.0, "max_charges": 4}, "level": "calibrated", "note": "서폿 아이템 와드+제어 와드 충전(분당, 10분 전/후). 1단계 서폿 와드 설치 10분 6개·20분 26개에 맞춤. 서폿은 충전이 있으면 와드 로밍을 더 자주 감"},
     "recall_model": {"value": "sim/laner_recall.json", "level": "calibrated", "note": "스스로 귀환 확률(분당) = σ(w·[1, 보유 골드(천), 체력, 분/10]), 1단계 1,000판 구매 묶음 회귀(tools/laner_recall_fit.py). 초당 위험률로 바꿔 씀. kk 기준(체력 15% 미만 무조건)은 그대로, 우리 포탑 앞까지 밀린 웨이브(1 − pushed 이하)를 두고는 안 감"},
     "recall_mult": {"value": {"TOP": 1.0, "MIDDLE": 1.0, "BOTTOM": 1.0, "UTILITY": 1.0}, "level": "calibrated", "note": "recall_model 초당 위험률에 곱하는 배수. 리플레이 1초 동선의 3~18분 기지 방문 횟수와 1단계 20분까지 상점 횟수에 맞춤"},
+    "recall_walk": {"value": {"TOP": 0.0, "MIDDLE": 0.0, "BOTTOM": 0.0, "UTILITY": 0.0}, "level": "calibrated", "note": "(2026-10-23 시험: 0.5로 보정하면 서폿 20분 사망이 1로 떨어져 꺼 둠) 스스로 귀환할 때 라인에서 바로 안 타고 그쪽 우리 정글 입구까지 걸어가서 귀환할 확률. 리플레이 1초 동선(라인→기지 사이 정글·강가 체류)과 1단계 분 프레임 위치 비율에 맞춤"},
     "recall_hp": {"value": 0.35, "level": "kk"},
     "pushed": {"value": 0.8, "level": "kk"},
     "unseen_ward_s": {"value": 45, "level": "kk"},
