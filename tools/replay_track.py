@@ -209,25 +209,41 @@ def champions_from_raw(match_id, role="JUNGLE"):
     return [p["championName"] for p in info["participants"] if p.get("teamPosition") == role]
 
 
-def same_game(rp, match_id):
-    """재생 중인 리플레이의 10명 챔피언이 그 경기(data/replay_raw)와 같은지. 경기 JSON이 없으면 확인하지 않음(True).
+def champions_by_riot_id(match_id):
+    """data/replay_raw 경기의 {riotId(이름#태그, 소문자): 챔피언 영문 id}. 없으면 {}.
 
-    이전 리플레이 창이 열린 채 다음 경기를 틀면 API가 옛 경기에 붙는다(2026-10-22 KR_8426999058에서 확인).
+    playerlist의 rawChampionName은 챔피언 id와 다를 수 있어(아트록스가 들어간 4판 모두 대조 실패, 니코는 변신하면
+    변신한 챔피언 이름이 나옴) 선수는 riotId로 맞춘다.
     """
     path = os.path.join(REPLAY_RAW, f"{match_id}.json")
     if not os.path.exists(path):
-        return True
+        return {}
     with open(path, encoding="utf-8") as f:
-        want = sorted(p["championName"].lower() for p in json.load(f)["detail"]["info"]["participants"])
-    # 로딩 직후엔 playerlist가 비었거나 일부만 올 수 있어(2026-10-22 4판 연속 실패) 10명이 찰 때까지 기다린다
+        parts = json.load(f)["detail"]["info"]["participants"]
+    return {f"{p.get('riotIdGameName')}#{p.get('riotIdTagline')}".lower(): p["championName"] for p in parts}
+
+
+def champion_of(p, names):
+    return names.get((p.get("riotId") or "").lower()) or (p.get("rawChampionName") or "").split("_")[-1] or p.get("championName")
+
+
+def same_game(rp, match_id):
+    """재생 중인 리플레이의 10명이 그 경기(data/replay_raw)의 10명(riotId)과 같은지. 경기 JSON이 없으면 확인하지 않음(True).
+
+    이전 리플레이 창이 열린 채 다음 경기를 틀면 API가 옛 경기에 붙는다(2026-10-22 KR_8426999058에서 확인).
+    """
+    names = champions_by_riot_id(match_id)
+    if not names:
+        return True
+    want = sorted(names)
     got = []
-    for _ in range(30):
-        got = sorted((p.get("rawChampionName") or "").split("_")[-1].lower() for p in rp.players())
+    for _ in range(30):   # 로딩 직후엔 playerlist가 비었거나 일부만 올 수 있어 10명이 찰 때까지 기다린다
+        got = sorted((p.get("riotId") or "").lower() for p in rp.players())
         if len(got) == len(want):
             break
         time.sleep(2)
     if got != want:
-        print(f"  챔피언 대조: 경기 {want} / 재생 {got}")
+        print(f"  선수 대조: 경기 {want} / 재생 {got}")
     return got == want
 
 
@@ -241,22 +257,24 @@ STATE_HEADER = ["time", "champion", "team", "position", "level", "kills", "death
                 "is_dead", "respawn_timer", "items"]
 
 
-def player_state_rows(t, players):
-    """playerlist 한 번 → 10명 행. items는 '아이템id:개수'를 |로 이은 것(빈 칸 제외)."""
+def player_state_rows(t, players, names=None):
+    """playerlist 한 번 → 10명 행. items는 '아이템id:개수'를 |로 이은 것(빈 칸 제외). names는 champions_by_riot_id."""
     rows = []
     for p in players:
         sc = p.get("scores") or {}
-        raw = p.get("rawChampionName") or ""
         items = "|".join(f"{it.get('itemID')}:{it.get('count', 1)}" for it in sorted(p.get("items") or [], key=lambda i: i.get("slot", 0)))
-        rows.append([round(t, 1), raw.split("_")[-1] or p.get("championName"), p.get("team"), p.get("position", ""),
+        rows.append([round(t, 1), champion_of(p, names or {}), p.get("team"), p.get("position", ""),
                      p.get("level"), sc.get("kills"), sc.get("deaths"), sc.get("assists"), sc.get("creepScore"),
                      round(sc.get("wardScore", 0) or 0, 1), int(bool(p.get("isDead"))), round(p.get("respawnTimer", 0) or 0, 1), items])
     return rows
 
 
-def find_player(players, champion):
-    """playerlist에서 챔피언 영문 id로 선수를 찾는다 (한국어 클라이언트는 championName이 한글)."""
+def find_player(players, champion, names=None):
+    """playerlist에서 챔피언 영문 id로 선수를 찾는다 (한국어 클라이언트는 championName이 한글). names는 champions_by_riot_id."""
     key = champion.lower()
+    for p in players:
+        if names and (names.get((p.get("riotId") or "").lower()) or "").lower() == key:
+            return p
     for p in players:
         raw = (p.get("rawChampionName") or "").lower()
         if raw.endswith("_" + key) or (p.get("championName") or "").lower() == key:
@@ -330,9 +348,9 @@ def to_world(cx, cy, cz, pitch_deg):
     return cx, cz + (cy - GROUND_Y) / math.tan(math.radians(pitch_deg))
 
 
-def track(rp, champion, until, speed, step, lock="key"):
+def track(rp, champion, until, speed, step, lock="key", names=None):
     players = rp.players()
-    player = find_player(players, champion)
+    player = find_player(players, champion, names)
     if not player:
         print(f"  선수 목록에서 {champion}를 못 찾았습니다 (목록 {len(players)}명).")
         return []
@@ -360,7 +378,7 @@ def track(rp, champion, until, speed, step, lock="key"):
         if t >= until or t >= pb.get("length", 0) - 1:
             break
         if t - last_state >= STATE_EVERY:
-            states += player_state_rows(t, rp.players())
+            states += player_state_rows(t, rp.players(), names)
             last_state = t
         if t - last >= step:
             if lock == "api":
@@ -488,9 +506,9 @@ def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
     """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 (경로, 유효 행 비율)을 돌려준다."""
     os.makedirs(OUT, exist_ok=True)
     if not same_game(rp, match_id):
-        raise SystemExit(f"재생 중인 리플레이가 {match_id}가 아닙니다(챔피언 10명이 다름). 열린 리플레이 창을 닫고 다시 실행하세요.")
+        raise SystemExit(f"재생 중인 리플레이가 {match_id}가 아닙니다(선수 10명이 다름). 열린 리플레이 창을 닫고 다시 실행하세요.")
     print(f"{champ} 추적 ({speed}배속, {until / 60:.0f}분까지)")
-    rows = track(rp, champ, until, speed, step, lock)
+    rows = track(rp, champ, until, speed, step, lock, champions_by_riot_id(match_id))
     if not rows:
         return None, 0.0
     rows = mark_valid(rows)
