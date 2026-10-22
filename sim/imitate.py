@@ -6,7 +6,7 @@
 캠프 상태는 두 정글러의 1초 동선(캠프에 5초 이상 머문 끝 = 처치)으로 덮어쓴다(분 단위 CS 추정보다 정확).
 정답 행동 = sim/real_actions.py가 그 초에 붙인 행동(이동 중이면 다음에 머문 곳).
 (1) 모방: 경기 5개 중 1개를 시험용으로 떼고, 학습 정책·규칙 봇 모방 정책·실제 모방 정책의 첫 행동 일치율을 잰다.
-    실제 모방 정책은 models/stage6c/policy_real_bc.npz.
+    실제 모방 정책은 models/stage6c/policy_real_bc.npz, 표본은 models/stage6c/real_train.npz·real_test.npz.
 (2) 반사실: 같은 상태·같은 시드에서 첫 결정만 실제 행동으로 묶은 것과 학습 정책 그대로를 20분까지 돌려
     20분 예측 승률 차이(실제 − 학습)를 행동 묶음별로 낸다. 크게 음수인 묶음 = 시뮬이 그 행동 가치를 낮게 보는 곳.
 결과는 reports/imitate.md.
@@ -204,6 +204,9 @@ def main():
         M = np.array([np.concatenate([s["m"], s["mw"], s["ms"]]) for s in ss])
         A = np.array([[ACTION_INDEX[s["action"]], 0, 0] for s in ss])
         return X, M, A
+    for name, ss in (("train", tr), ("test", te)):   # sim/train.py --real 용 표본
+        X, M, A = arr(ss)
+        np.savez(os.path.join(ROOT, "models", "stage6c", f"real_{name}.npz"), X=X, M=M, A=A)
     real_bc = train_bc(*arr(tr), init=os.path.join(ROOT, "models", "stage5", "policy_bc.npz"))
     real_bc.save(os.path.join(ROOT, "models", "stage6c", "policy_real_bc.npz"))
     pols = {"학습 정글러(stage6c)": Policy.from_file(args.policy),
