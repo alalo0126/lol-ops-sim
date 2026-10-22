@@ -86,13 +86,22 @@ class Lanes:
             return
         if g.rng.random() >= pf["rate_per_s"][ln][0 if g.t < 840 else 1]:
             return
+        self.fight(ln, here)
+
+    def fight(self, ln, here, kind="lane_fight", resolve=None):
+        """그 라인에 선 양 팀 라이너끼리 교전(정글러 제외). 한쪽이 비어 있으면 안 함. 로밍 도착(bots.LanerBot.roam_tick)도
+        씀(resolve = 로밍 교전용 사망 확률)."""
+        g, pf = self.g, self.p["lane_fight"]
+        sides = {T: [c for c in here[T] if c.role != "JUNGLE"] for T in (100, 200)}
+        if not sides[100] or not sides[200]:
+            return
         self.last_fight[ln] = g.t
-        res = events.resolve_skirmish(sides, g.t, g.rng, {**g.p["skirmish"], **pf["resolve"]})
+        res = events.resolve_skirmish(sides, g.t, g.rng, {**g.p["skirmish"], **(resolve or pf["resolve"])})
         for pid, hp in res.hp_after.items():
             next(x for x in g.champs if x.pid == pid).hp = hp
         for victim, killer, assists in res.deaths:
             g.kill(killer, victim, assists)
-        g.events.append({"t": g.t, "type": "lane_fight", "lane": ln, "winner": res.winner, "deaths": len(res.deaths)})
+        g.events.append({"t": g.t, "type": kind, "lane": ln, "winner": res.winner, "deaths": len(res.deaths)})
 
     def interval(self, t):
         for step in self.g.rules.minions["wave_interval_s"]:

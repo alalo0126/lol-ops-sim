@@ -14,10 +14,10 @@
    "base_visits": 4.722222222222222,
    "respawn": 2.6666666666666665,
    "base_s": 9.0,
-   "roams": 0.5,
-   "roam_len": 39.5,
-   "roam_kill": 0.5,
-   "roam_death": 0.3333333333333333,
+   "roams": 0.19444444444444445,
+   "roam_len": 44.0,
+   "roam_kill": 0.42857142857142855,
+   "roam_death": 0.42857142857142855,
    "trips": 0.7777777777777778
   },
   "MIDDLE": {
@@ -34,10 +34,10 @@
    "base_visits": 5.861111111111111,
    "respawn": 2.3055555555555554,
    "base_s": 11.0,
-   "roams": 1.5555555555555556,
-   "roam_len": 51.0,
-   "roam_kill": 0.6428571428571429,
-   "roam_death": 0.17857142857142858,
+   "roams": 0.8611111111111112,
+   "roam_len": 47.0,
+   "roam_kill": 0.7096774193548387,
+   "roam_death": 0.12903225806451613,
    "trips": 2.0833333333333335
   },
   "BOTTOM": {
@@ -54,10 +54,10 @@
    "base_visits": 4.975,
    "respawn": 2.675,
    "base_s": 10.0,
-   "roams": 0.4,
-   "roam_len": 69.5,
-   "roam_kill": 0.6875,
-   "roam_death": 0.0625,
+   "roams": 0.225,
+   "roam_len": 76.0,
+   "roam_kill": 0.6666666666666666,
+   "roam_death": 0.1111111111111111,
    "trips": 0.8
   },
   "UTILITY": {
@@ -74,10 +74,10 @@
    "base_visits": 5.825,
    "respawn": 2.525,
    "base_s": 10.0,
-   "roams": 0.65,
-   "roam_len": 60.0,
-   "roam_kill": 0.38461538461538464,
-   "roam_death": 0.2692307692307692,
+   "roams": 0.5,
+   "roam_len": 58.0,
+   "roam_kill": 0.35,
+   "roam_death": 0.3,
    "trips": 1.725
   }
  },
@@ -85,82 +85,82 @@
   "TOP": {
    "n": 400,
    "share": {
-    "own_lane": 0.7310333333333334,
-    "other_lane": 0.01795,
-    "own_jungle": 0.04015833333333333,
-    "enemy_jungle": 0.02379722222222222,
-    "river": 0.09456388888888888,
-    "base": 0.04528055555555555,
-    "dead": 0.04721666666666666
+    "own_lane": 0.7300944444444444,
+    "other_lane": 0.008222222222222221,
+    "own_jungle": 0.04070555555555555,
+    "enemy_jungle": 0.023019444444444447,
+    "river": 0.09099722222222223,
+    "base": 0.055002777777777775,
+    "dead": 0.05195833333333333
    },
-   "base_visits": 4.0475,
-   "respawn": 1.78,
+   "base_visits": 5.0475,
+   "respawn": 2.015,
    "base_s": 7.0,
-   "roams": 0.72,
-   "roam_len": 56.0,
-   "roam_kill": 0.09722222222222222,
-   "roam_death": 0.041666666666666664,
-   "trips": 3.12
+   "roams": 0.0475,
+   "roam_len": 58.0,
+   "roam_kill": 0.3684210526315789,
+   "roam_death": 0.10526315789473684,
+   "trips": 3.41
   },
   "MIDDLE": {
    "n": 400,
    "share": {
-    "own_lane": 0.5786722222222223,
-    "other_lane": 0.12335555555555555,
-    "own_jungle": 0.044736111111111115,
-    "enemy_jungle": 0.031469444444444446,
-    "river": 0.08816944444444445,
-    "base": 0.06571111111111111,
-    "dead": 0.0678861111111111
+    "own_lane": 0.5294833333333333,
+    "other_lane": 0.15109999999999998,
+    "own_jungle": 0.05091111111111111,
+    "enemy_jungle": 0.03635555555555556,
+    "river": 0.10235277777777778,
+    "base": 0.07476666666666666,
+    "dead": 0.055030555555555555
    },
-   "base_visits": 4.17,
-   "respawn": 2.6175,
+   "base_visits": 5.6475,
+   "respawn": 2.265,
    "base_s": 9.0,
-   "roams": 1.55,
-   "roam_len": 62.0,
-   "roam_kill": 0.15,
-   "roam_death": 0.06774193548387097,
-   "trips": 1.575
+   "roams": 0.63,
+   "roam_len": 58.0,
+   "roam_kill": 0.42857142857142855,
+   "roam_death": 0.17063492063492064,
+   "trips": 2.01
   },
   "BOTTOM": {
    "n": 400,
    "share": {
-    "own_lane": 0.6201888888888889,
-    "other_lane": 0.11424166666666669,
-    "own_jungle": 0.04720833333333333,
-    "enemy_jungle": 0.026949999999999998,
-    "river": 0.09469444444444446,
-    "base": 0.047086111111111106,
-    "dead": 0.04963055555555555
+    "own_lane": 0.6191361111111111,
+    "other_lane": 0.13953888888888888,
+    "own_jungle": 0.03569722222222223,
+    "enemy_jungle": 0.019305555555555555,
+    "river": 0.07045,
+    "base": 0.055772222222222216,
+    "dead": 0.0601
    },
-   "base_visits": 4.2,
-   "respawn": 2.16,
+   "base_visits": 4.88,
+   "respawn": 2.5575,
    "base_s": 6.0,
-   "roams": 1.015,
-   "roam_len": 65.0,
-   "roam_kill": 0.312807881773399,
-   "roam_death": 0.2315270935960591,
-   "trips": 2.8775
+   "roams": 0.205,
+   "roam_len": 62.5,
+   "roam_kill": 0.3780487804878049,
+   "roam_death": 0.3902439024390244,
+   "trips": 1.8
   },
   "UTILITY": {
    "n": 400,
    "share": {
-    "own_lane": 0.5037527777777778,
-    "other_lane": 0.10861944444444445,
-    "own_jungle": 0.08646944444444443,
-    "enemy_jungle": 0.05680277777777778,
-    "river": 0.18079444444444445,
-    "base": 0.04065833333333334,
-    "dead": 0.02290277777777778
+    "own_lane": 0.5198222222222222,
+    "other_lane": 0.11693333333333332,
+    "own_jungle": 0.07590833333333333,
+    "enemy_jungle": 0.049463888888888884,
+    "river": 0.15718055555555555,
+    "base": 0.05627499999999999,
+    "dead": 0.024416666666666663
    },
-   "base_visits": 4.3,
-   "respawn": 1.225,
+   "base_visits": 6.2625,
+   "respawn": 1.35,
    "base_s": 6.0,
-   "roams": 1.5675,
-   "roam_len": 60.0,
-   "roam_kill": 0.1594896331738437,
-   "roam_death": 0.10845295055821372,
-   "trips": 5.375
+   "roams": 0.4275,
+   "roam_len": 57.0,
+   "roam_kill": 0.32748538011695905,
+   "roam_death": 0.13450292397660818,
+   "trips": 4.4025
   }
  },
  "real_rows": {
@@ -215,14 +215,7 @@
     "trips": 0,
     "match": "KR_8426999058",
     "champion": "Urgot",
-    "roams": [
-     {
-      "start": 914,
-      "len": 28,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8022222222222222,
@@ -389,12 +382,6 @@
       "len": 97,
       "kill": true,
       "death": true
-     },
-     {
-      "start": 870,
-      "len": 58,
-      "kill": true,
-      "death": false
      }
     ]
    },
@@ -486,14 +473,7 @@
     "trips": 1,
     "match": "KR_8427068023",
     "champion": "Sett",
-    "roams": [
-     {
-      "start": 1015,
-      "len": 27,
-      "kill": false,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8388888888888889,
@@ -700,14 +680,7 @@
     "trips": 1,
     "match": "KR_8427110811",
     "champion": "Rumble",
-    "roams": [
-     {
-      "start": 1051,
-      "len": 29,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8277777777777777,
@@ -753,14 +726,7 @@
     "trips": 0,
     "match": "KR_8427112235",
     "champion": "Rumble",
-    "roams": [
-     {
-      "start": 896,
-      "len": 97,
-      "kill": false,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8211111111111111,
@@ -784,14 +750,7 @@
     "trips": 1,
     "match": "KR_8427117343",
     "champion": "Gnar",
-    "roams": [
-     {
-      "start": 929,
-      "len": 28,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8011111111111111,
@@ -843,14 +802,7 @@
     "trips": 2,
     "match": "KR_8427126824",
     "champion": "Darius",
-    "roams": [
-     {
-      "start": 987,
-      "len": 51,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8055555555555556,
@@ -875,14 +827,7 @@
     "trips": 1,
     "match": "KR_8427126824",
     "champion": "Zac",
-    "roams": [
-     {
-      "start": 881,
-      "len": 64,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8288888888888889,
@@ -906,14 +851,7 @@
     "trips": 3,
     "match": "KR_8427142382",
     "champion": "Jayce",
-    "roams": [
-     {
-      "start": 1033,
-      "len": 35,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8355555555555556,
@@ -1079,14 +1017,7 @@
     "trips": 1,
     "match": "KR_8427158122",
     "champion": "Jayce",
-    "roams": [
-     {
-      "start": 954,
-      "len": 24,
-      "kill": true,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8155555555555556,
@@ -1137,14 +1068,7 @@
     "trips": 2,
     "match": "KR_8427176534",
     "champion": "Renekton",
-    "roams": [
-     {
-      "start": 873,
-      "len": 91,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8211111111111111,
@@ -1210,18 +1134,6 @@
       "start": 352,
       "len": 71,
       "kill": false,
-      "death": false
-     },
-     {
-      "start": 850,
-      "len": 109,
-      "kill": false,
-      "death": false
-     },
-     {
-      "start": 1012,
-      "len": 68,
-      "kill": true,
       "death": false
      }
     ]
@@ -1328,18 +1240,6 @@
       "len": 47,
       "kill": false,
       "death": false
-     },
-     {
-      "start": 963,
-      "len": 36,
-      "kill": false,
-      "death": false
-     },
-     {
-      "start": 1060,
-      "len": 20,
-      "kill": false,
-      "death": false
      }
     ]
    },
@@ -1367,14 +1267,7 @@
     "trips": 4,
     "match": "KR_8427029935",
     "champion": "AurelionSol",
-    "roams": [
-     {
-      "start": 875,
-      "len": 69,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8344444444444444,
@@ -1400,14 +1293,7 @@
     "trips": 4,
     "match": "KR_8427044839",
     "champion": "Syndra",
-    "roams": [
-     {
-      "start": 925,
-      "len": 77,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8433333333333334,
@@ -1471,18 +1357,6 @@
       "len": 29,
       "kill": false,
       "death": false
-     },
-     {
-      "start": 846,
-      "len": 46,
-      "kill": true,
-      "death": true
-     },
-     {
-      "start": 950,
-      "len": 81,
-      "kill": false,
-      "death": false
      }
     ]
    },
@@ -1507,14 +1381,7 @@
     "trips": 4,
     "match": "KR_8427067003",
     "champion": "Vladimir",
-    "roams": [
-     {
-      "start": 1017,
-      "len": 58,
-      "kill": false,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8133333333333334,
@@ -1542,14 +1409,7 @@
     "trips": 2,
     "match": "KR_8427068023",
     "champion": "Galio",
-    "roams": [
-     {
-      "start": 878,
-      "len": 34,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.81,
@@ -1605,14 +1465,7 @@
     "trips": 0,
     "match": "KR_8427074120",
     "champion": "Mel",
-    "roams": [
-     {
-      "start": 940,
-      "len": 51,
-      "kill": true,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8122222222222222,
@@ -1641,12 +1494,6 @@
      {
       "start": 407,
       "len": 44,
-      "kill": true,
-      "death": false
-     },
-     {
-      "start": 972,
-      "len": 66,
       "kill": true,
       "death": false
      }
@@ -1679,12 +1526,6 @@
      {
       "start": 339,
       "len": 48,
-      "kill": true,
-      "death": false
-     },
-     {
-      "start": 1001,
-      "len": 58,
       "kill": true,
       "death": false
      }
@@ -1747,14 +1588,7 @@
     "trips": 0,
     "match": "KR_8427095161",
     "champion": "Yone",
-    "roams": [
-     {
-      "start": 1011,
-      "len": 27,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8488888888888889,
@@ -1888,18 +1722,6 @@
       "len": 58,
       "kill": true,
       "death": false
-     },
-     {
-      "start": 850,
-      "len": 54,
-      "kill": true,
-      "death": false
-     },
-     {
-      "start": 942,
-      "len": 47,
-      "kill": true,
-      "death": false
      }
     ]
    },
@@ -1982,14 +1804,7 @@
     "trips": 1,
     "match": "KR_8427117343",
     "champion": "Taliyah",
-    "roams": [
-     {
-      "start": 848,
-      "len": 40,
-      "kill": true,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8222222222222222,
@@ -2037,14 +1852,7 @@
     "trips": 4,
     "match": "KR_8427126824",
     "champion": "Vladimir",
-    "roams": [
-     {
-      "start": 1023,
-      "len": 57,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8333333333333334,
@@ -2079,12 +1887,6 @@
       "start": 803,
       "len": 48,
       "kill": false,
-      "death": false
-     },
-     {
-      "start": 1014,
-      "len": 53,
-      "kill": true,
       "death": false
      }
     ]
@@ -2162,12 +1964,6 @@
       "len": 71,
       "kill": true,
       "death": false
-     },
-     {
-      "start": 985,
-      "len": 74,
-      "kill": false,
-      "death": false
      }
     ]
    },
@@ -2235,12 +2031,6 @@
       "len": 33,
       "kill": false,
       "death": false
-     },
-     {
-      "start": 994,
-      "len": 67,
-      "kill": true,
-      "death": true
      }
     ]
    },
@@ -2325,12 +2115,6 @@
       "len": 48,
       "kill": true,
       "death": false
-     },
-     {
-      "start": 960,
-      "len": 45,
-      "kill": false,
-      "death": true
      }
     ]
    },
@@ -2356,14 +2140,7 @@
     "trips": 2,
     "match": "KR_8427158122",
     "champion": "Taliyah",
-    "roams": [
-     {
-      "start": 938,
-      "len": 68,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8177777777777778,
@@ -2393,12 +2170,6 @@
       "start": 606,
       "len": 38,
       "kill": true,
-      "death": false
-     },
-     {
-      "start": 969,
-      "len": 111,
-      "kill": false,
       "death": false
      }
     ]
@@ -2431,12 +2202,6 @@
      {
       "start": 744,
       "len": 52,
-      "kill": true,
-      "death": false
-     },
-     {
-      "start": 984,
-      "len": 61,
       "kill": true,
       "death": false
      }
@@ -2553,14 +2318,7 @@
     "trips": 1,
     "match": "KR_8426999177",
     "champion": "Jinx",
-    "roams": [
-     {
-      "start": 861,
-      "len": 140,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8277777777777777,
@@ -2613,14 +2371,7 @@
     "trips": 2,
     "match": "KR_8427029935",
     "champion": "Tristana",
-    "roams": [
-     {
-      "start": 1038,
-      "len": 39,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8377777777777777,
@@ -2649,12 +2400,6 @@
       "len": 33,
       "kill": true,
       "death": true
-     },
-     {
-      "start": 1019,
-      "len": 61,
-      "kill": false,
-      "death": false
      }
     ]
    },
@@ -2759,12 +2504,6 @@
       "len": 63,
       "kill": true,
       "death": false
-     },
-     {
-      "start": 939,
-      "len": 45,
-      "kill": true,
-      "death": false
      }
     ]
    },
@@ -2815,14 +2554,7 @@
     "trips": 3,
     "match": "KR_8427068023",
     "champion": "Varus",
-    "roams": [
-     {
-      "start": 957,
-      "len": 123,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8244444444444444,
@@ -3139,14 +2871,7 @@
     "trips": 1,
     "match": "KR_8427112235",
     "champion": "Yunara",
-    "roams": [
-     {
-      "start": 1036,
-      "len": 44,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8444444444444444,
@@ -3555,14 +3280,7 @@
     "trips": 1,
     "match": "KR_8427176534",
     "champion": "Ziggs",
-    "roams": [
-     {
-      "start": 858,
-      "len": 124,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8344444444444444,
@@ -3723,12 +3441,6 @@
       "start": 396,
       "len": 48,
       "kill": false,
-      "death": false
-     },
-     {
-      "start": 1023,
-      "len": 57,
-      "kill": true,
       "death": false
      }
     ]
@@ -3922,14 +3634,7 @@
     "trips": 3,
     "match": "KR_8427068023",
     "champion": "Thresh",
-    "roams": [
-     {
-      "start": 858,
-      "len": 131,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8355555555555556,
@@ -4017,14 +3722,7 @@
     "trips": 2,
     "match": "KR_8427087043",
     "champion": "Poppy",
-    "roams": [
-     {
-      "start": 911,
-      "len": 72,
-      "kill": false,
-      "death": true
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8177777777777778,
@@ -4324,14 +4022,7 @@
     "trips": 1,
     "match": "KR_8427117343",
     "champion": "Thresh",
-    "roams": [
-     {
-      "start": 990,
-      "len": 90,
-      "kill": true,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.8444444444444444,
@@ -4370,12 +4061,6 @@
       "start": 812,
       "len": 56,
       "kill": true,
-      "death": false
-     },
-     {
-      "start": 986,
-      "len": 49,
-      "kill": false,
       "death": false
      }
     ]
@@ -4542,14 +4227,7 @@
     "trips": 1,
     "match": "KR_8427156060",
     "champion": "Neeko",
-    "roams": [
-     {
-      "start": 901,
-      "len": 61,
-      "kill": false,
-      "death": false
-     }
-    ]
+    "roams": []
    },
    {
     "cover": 0.83,

@@ -400,7 +400,10 @@ class LanerBot:
         if c.role != "BOTTOM" or c.lane_override or not c.alive(g.t):
             return
         down = any(g.lanes.towers[T]["bot"][0] <= 0 for T in (100, 200))
-        rate = pr["after_bot_outer_down"] if down else (pr["after_s_rate"] if g.t >= pr["after_s"] else 0.0)
+        if down:   # 14분 전에는 바텀 외곽이 깨져도 잘 안 바꿈(1단계 12분 깨짐: 원딜 미드 띠 28%, 미드 바텀 띠 8%)
+            rate = pr["after_bot_outer_down"] if g.t >= pr["after_s"] else pr["after_bot_outer_down_early"]
+        else:
+            rate = pr["after_s_rate"] if g.t >= pr["after_s"] else 0.0
         if g.rng.random() >= rate / 60:
             return
         for m in g.champs:
@@ -421,7 +424,14 @@ class LanerBot:
         kind = g.rng.choices(["other_lane", "river", "jungle"], weights=pr["dest"][c.role][0 if g.t < 840 else 1])[0]
         if kind == "other_lane":
             others = [ln for ln in ("top", "mid", "bot") if ln != lane and (lane == "mid" or ln == "mid" or c.role == "MIDDLE")]
-            dest = g.lane_node(g.rng.choice(others))
+            # 실제 로밍은 갱처럼 싸울 상대가 있는 라인으로 간다(리플레이 미드 로밍당 킬 관여 64%). 적 라이너가 서 있는 라인만,
+            # 아군이 많은 쪽을 더 자주. 없으면 강가로
+            score = {ln: len(g.lanes.present(300 - c.team, ln)) and 1 + len(g.lanes.present(c.team, ln)) for ln in others}
+            targets = [ln for ln in others if score[ln]]
+            if targets:
+                dest = g.lane_node(g.rng.choices(targets, weights=[score[ln] for ln in targets])[0])
+            else:
+                dest = g.rng.choice(ROAM_WARD[lane][0])
         elif kind == "river":
             dest = g.rng.choice(ROAM_WARD[lane][0])
         else:
@@ -440,9 +450,20 @@ class LanerBot:
         task = c.task
         if c.path:
             return
+        node = g.map.nodes[c.node]
+        if node["kind"] == "lane" and task.get("fight") is None:
+            task["fight"] = g.rng.random() < pl["roam"]["fight_on_arrival"][c.role]
+        if task.get("fight"):
+            # 다른 라인 = 갱처럼 그 라인 적과 붙는다(실제 미드 로밍당 킬 관여 64%, sim/laner_tracks.py).
+            # 도착했을 때 적이 없으면 머무는 동안 적이 오면 붙는다
+            ln = next(l for l in ("top", "mid", "bot") if g.lane_node(l) == c.node)
+            here = {T: g.lanes.present(T, ln) for T in (100, 200)}
+            if here[300 - c.team]:
+                task["fight"] = False
+                g.lanes.fight(ln, here, kind="roam_fight", resolve=pl["roam"]["resolve"])
         if task["until"] is None:
             task["until"] = g.t + task["linger"]
-            if g.map.nodes[c.node]["kind"] != "lane":
+            if node["kind"] != "lane":
                 n = int(c.support_wards) if c.role == "UTILITY" else 0
                 n += 1 if c.ward_charges > 0 else 0
                 for _ in range(max(0, n)):
@@ -461,7 +482,7 @@ class LanerBot:
         w = g.recall_model["roles"][c.role]["w"]
         z = w[0] + w[1] * c.unspent / 1000 + w[2] * c.hp + w[3] * g.t / 600
         p = 1 / (1 + math.exp(-z))
-        return 1 - (1 - p) ** (1 / 60)
+        return (1 - (1 - p) ** (1 / 60)) * g.p["laner"]["recall_mult"][c.role]
 
     def after_gank(self):
         """갱을 버틴 뒤: 체력이 낮으면 바로 귀환, 아니면 잠시 포탑으로 물러남(5단계에서 찾은 연속 갱 악용 대응, Claude 기본값).

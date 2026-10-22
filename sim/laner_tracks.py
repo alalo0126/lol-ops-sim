@@ -9,7 +9,8 @@
   (탑=top, 미드=mid, 원딜·서폿=bot; 14분 이후 미드 전환도 '다른 라인'으로 잡힌다).
 - 기지 방문: 살아서 기지 구역에 연속 3초 이상(부활 직후 기지는 '부활'로 따로 셈)과 체류 시간. 라인 띠가 기지 바로 앞에서
   시작해서 '라인 복귀 시간'은 구역으로 잴 수 없다(웨이브 위치가 필요).
-- 로밍: 자기 라인을 떠나 기지·사망 없이 다른 라인 띠에 연속 5초 이상 머문 것. 로밍 중~끝+10초 안 킬 관여.
+- 로밍: 자기 라인을 떠나 기지·사망 없이 다른 라인 띠에 연속 5초 이상 머문 것(14분 전 시작만; 이후는 라인 바꾸기와
+  구별이 안 됨). 로밍 중~끝+10초 안 킬 관여.
 - 강가·정글 나들이: 자기 라인을 떠나 다른 라인에 가지 않고 강가·정글에 연속 10초 이상 머물다 라인으로 돌아온 것.
 
 실제 사망 = <경기>_players.csv(5초 간격 is_dead, 팀·포지션으로 선수 매김)와 킬 이벤트. 무효(카메라 풀림) 초는 모름.
@@ -31,6 +32,7 @@ from .lane_visits import lane_of
 T0, T1 = 180, 1080
 MIN_COVER = 0.8
 BASE_S, ROAM_S, TRIP_S, AFTER = 3, 5, 10, 10
+ROAM_T1 = 840   # 로밍은 14분 전에 시작한 것만
 ROLES = ("TOP", "MIDDLE", "BOTTOM", "UTILITY")
 ROLE_KO = {"TOP": "탑", "MIDDLE": "미드", "BOTTOM": "원딜", "UTILITY": "서폿"}
 ROLE_LANE = {"TOP": "top", "MIDDLE": "mid", "BOTTOM": "bot", "UTILITY": "bot"}
@@ -88,7 +90,9 @@ def behaviour(track, kills, pid, team_pids):
         away = segs[i + 1:j]
         if away:
             other = [s for s in away if s[0] == "other_lane" and s[2] - s[1] + 1 >= ROAM_S]
-            if other:
+            if other and away[0][1] >= ROAM_T1:
+                pass   # 14분 이후 라인 바꾸기(원딜·서폿 미드, 미드 바텀)와 구별이 안 돼 로밍으로 안 셈
+            elif other:
                 s0, e0 = away[0][1], away[-1][2]
                 kill = any(s0 <= k["t"] <= e0 + AFTER and k["victim"] not in team_pids
                            and (k["killer"] == pid or pid in k["assists"]) for k in kills)
@@ -200,7 +204,7 @@ def report(rs, ss, games):
              f"- 실제: 리플레이 1초 동선(같은 빌드 천상계 {len({x['match'] for v in rs.values() for x in v})}판), "
              f"시뮬: 규칙 봇 라이너 {games}판. 3~18분, 유효 위치 {MIN_COVER:.0%} 이상인 라이너만.",
              "- 기지 방문 = 살아서 기지에 3초 이상(부활 제외). "
-             "로밍 = 자기 라인을 떠나 다른 라인에 5초 이상(기지·사망 없이). 나들이 = 다른 라인 없이 강가·정글 10초 이상 갔다 옴.",
+             "로밍 = 3~14분에 자기 라인을 떠나 다른 라인에 5초 이상(기지·사망 없이). 나들이 = 다른 라인 없이 강가·정글 10초 이상 갔다 옴.",
              "- 판정: 구역 비율 ±5%p OK, 횟수 ±0.5(로밍·나들이 ±1) OK, 체류 ±10초 OK, 두 배까지 주의.", ""]
     for role in ROLES:
         r, s = summary(rs.get(role, [])), summary(ss.get(role, []))
@@ -235,6 +239,10 @@ def main():
         json.dump({"real": {k: summary(v) for k, v in rs.items()}, "sim": {k: summary(v) for k, v in ss.items()},
                    "real_rows": {k: [{kk: vv for kk, vv in x.items() if kk != "roams"} | {"roams": x["roams"]} for x in v]
                                  for k, v in rs.items()}}, f, ensure_ascii=False, indent=1)
+    # 라이너 보정(sim/laner_calibrate.py)과 검수(sim/laner_eval.py)가 쓰는 실제 목표값
+    with open(os.path.join(ROOT, "sim", "targets_laner_replay.json"), "w", encoding="utf-8") as f:
+        json.dump({"_doc": f"sim/laner_tracks.py: 리플레이 1초 동선 {len({x['match'] for v in rs.values() for x in v})}판, 3~18분",
+                   "roles": {k: summary(v) for k, v in rs.items()}}, f, ensure_ascii=False, indent=1)
     print(md)
 
 

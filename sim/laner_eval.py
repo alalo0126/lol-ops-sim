@@ -31,8 +31,27 @@ def frame_zone(xy, team, role, nodes):
 def simulate(games, seed0=0, game_kw=None):
     vals = collections.defaultdict(list)
     where = collections.defaultdict(collections.Counter)
+    from .laner_tracks import T0, T1, behaviour, place
+    from .stage6_track import _xy
     for s in range(seed0, seed0 + games):
-        g = Game(seed=s, **(game_kw or {})).run()
+        g = Game(seed=s, **(game_kw or {}))
+        g.record_frame()
+        laners = [c for c in g.champs if c.role in LANERS]
+        tracks = {c.pid: {} for c in laners}
+        while g.t < 1200:
+            g.step()
+            if T0 <= g.t < T1:
+                for c in laners:
+                    x, y = _xy(g, c)
+                    tracks[c.pid][g.t] = "dead" if x is None else place(x, y, c.team, c.role, g.map.nodes)
+        kills = [e for e in g.events if e["type"] == "kill"]
+        for c in laners:
+            b = behaviour(tracks[c.pid], kills, c.pid, {x.pid for x in g.champs if x.team == c.team})
+            vals[(c.role, "rp_base_visits")].append(b["base_visits"])
+            vals[(c.role, "rp_roams")].append(len(b["roams"]))
+            vals[(c.role, "rp_roam_kill")] += [r["kill"] for r in b["roams"]]
+            vals[(c.role, "rp_own_lane")].append(b["share"]["own_lane"])
+            vals[(c.role, "rp_trips")].append(b["trips"])
         for e in g.events:
             if e["type"] == "plate":
                 vals[("plate", e["tier"])].append(e["t"])
@@ -81,6 +100,29 @@ def real_zone(tz, r, m):
             "jungle": sum(z.get(k, 0) for k in JUNGLE_Z), "river": z.get("river", 0), "base": z.get("base", 0)}
 
 
+REPLAY_KEYS = (("rp_base_visits", "base_visits", 0.5, "{:.1f}"), ("rp_roams", "roams", 0.5, "{:.1f}"),
+               ("rp_roam_kill", "roam_kill", 0.1, "{:.0%}"), ("rp_own_lane", "own_lane", 0.05, "{:.0%}"),
+               ("rp_trips", "trips", 0.75, "{:.1f}"))
+
+
+def rp_value(vals, r, key):
+    v = vals[(r, key)]
+    return statistics.mean(v) if v else 0.0
+
+
+def replay_rows(vals, rp, r):
+    """(시뮬 키, 실제 값, 허용 범위, 형식). 실제 = sim/targets_laner_replay.json(sim/laner_tracks.py가 씀)."""
+    real = rp["roles"][r]
+    out = []
+    for k, rk, tol, fmt in REPLAY_KEYS:
+        v = real["share"]["own_lane"] if rk == "own_lane" else real[rk]
+        if rk == "roam_kill":   # 로밍 표본이 적은 포지션(탑 7번)은 허용 범위를 표본 오차 두 배로 넓힘
+            n = max(1.0, real["roams"] * real["n"])
+            tol = max(tol, 2 * (v * (1 - v) / n) ** 0.5)
+        out.append((k, v, tol, fmt))
+    return out
+
+
 def report(vals, where, games):
     t = json.load(open(os.path.join(ROOT, "sim", "targets_laner.json"), encoding="utf-8"))
     lines = [f"# 라이너 검수 (시뮬 {games}판 vs 실제 {t['games']}판)", "",
@@ -103,6 +145,20 @@ def report(vals, where, games):
             tot = sum(where[(r, m)].values()) or 1
             rz = real_zone(t["zone_by_minute"], r, m)
             lines.append(f"| {m} | " + " | ".join(f"{where[(r, m)][z] / tot:.2f} / {rz[z]:.2f}" for z in ZONES) + " |")
+        lines.append("")
+    rp_path = os.path.join(ROOT, "sim", "targets_laner_replay.json")
+    if os.path.exists(rp_path):
+        rp = json.load(open(rp_path, encoding="utf-8"))
+        lines += ["## 리플레이 1초 동선(3~18분)", "", f"실제는 {rp['_doc']}. 판정: 아래 허용 범위 안 OK, 두 배 안 주의.", "",
+                  "| 포지션 | 기지 방문 시뮬 / 실제 | 로밍 시뮬 / 실제 | 로밍당 킬 관여 시뮬 / 실제 | 자기 라인 비율 시뮬 / 실제 | 강가·정글 나들이 시뮬 / 실제 |", "|---|---|---|---|---|---|"]
+        for r in LANERS:
+            row = []
+            for key, real, tol, fmt in replay_rows(vals, rp, r):
+                sv = rp_value(vals, r, key)
+                v = "OK" if abs(sv - real) <= tol else ("주의" if abs(sv - real) <= 2 * tol else "불일치")
+                count[v] += 1
+                row.append(f"{fmt.format(sv)} / {fmt.format(real)} {v}")
+            lines.append(f"| {r} | " + " | ".join(row) + " |")
         lines.append("")
     lines += ["## 포탑", "", "실제 시각은 경기 전체(20분 이후 포함) 분포라, 20분에서 끝나는 시뮬과는 20분 안 비율로 같이 본다.", "",
               "| 지표 | 시뮬 | 실제 |", "|---|---|---|"]
