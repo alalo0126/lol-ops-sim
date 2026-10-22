@@ -410,7 +410,7 @@ def track(rp, champion, until, speed, step, lock="key", names=None):
     return rows
 
 
-CAM_MIN_X, CAM_MAX_Z = 301, 13470  # 카메라가 더 갈 수 없는 맵 끝 (실측: x 300, z 13475)
+CAM_MIN_X, CAM_MAX_X, CAM_MAX_Z = 301, 14399, 13470  # 카메라가 더 갈 수 없는 맵 끝 (실측: x 300·14400, z 13475)
 MAX_SPEED = 1000  # 유령·질주를 감안한 챔피언 최대 이동 속도(초당). 이보다 빠르면 카메라가 다른 곳을 비춘 것
 
 
@@ -421,7 +421,7 @@ def mark_valid(rows):
     for r in rows:
         t, x, y, cam_x, cam_z = r[0], r[1], r[2], r[3], r[5]
         # 카메라가 맵 가장자리에 붙어 있으면 고정이 안 된 채 마우스에 밀려간 것 (KR_8427074120에서 확인)
-        stuck = cam_x <= CAM_MIN_X or cam_z >= CAM_MAX_Z
+        stuck = cam_x <= CAM_MIN_X or cam_x >= CAM_MAX_X or cam_z >= CAM_MAX_Z   # 오른쪽 끝: KR_8427156885 바루스 7:36~16:20
         ok = not stuck and (good is None or math.hypot(x - good[1], y - good[2]) <= MAX_SPEED * (t - good[0]) + 300
                             or any(math.hypot(x - fx, y - fy) < 2000 for fx, fy in FOUNTAIN.values()))
         if ok:
