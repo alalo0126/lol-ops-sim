@@ -209,6 +209,20 @@ def champions_from_raw(match_id, role="JUNGLE"):
     return [p["championName"] for p in info["participants"] if p.get("teamPosition") == role]
 
 
+def same_game(rp, match_id):
+    """재생 중인 리플레이의 10명 챔피언이 그 경기(data/replay_raw)와 같은지. 경기 JSON이 없으면 확인하지 않음(True).
+
+    이전 리플레이 창이 열린 채 다음 경기를 틀면 API가 옛 경기에 붙는다(2026-10-22 KR_8426999058에서 확인).
+    """
+    path = os.path.join(REPLAY_RAW, f"{match_id}.json")
+    if not os.path.exists(path):
+        return True
+    with open(path, encoding="utf-8") as f:
+        want = sorted(p["championName"].lower() for p in json.load(f)["detail"]["info"]["participants"])
+    got = sorted((p.get("rawChampionName") or "").split("_")[-1].lower() for p in rp.players())
+    return got == want
+
+
 def junglers_from_raw(match_id):
     return champions_from_raw(match_id, "JUNGLE")
 
@@ -407,6 +421,15 @@ def probe(rp, champion, lock):
     st = getattr(track, "states", [])
     times = sorted({r[0] for r in st})
     print(f"10명 상태 {len(times)}시점:", [r for r in st if r[0] == times[-1]][:3] if times else "없음")
+    # 결과를 파일로도 남긴다(클라우드에서 PC 폴더를 읽어 확인)
+    os.makedirs(OUT, exist_ok=True)
+    with open(os.path.join(OUT, "probe_players.csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(STATE_HEADER)
+        w.writerows(st)
+    with open(os.path.join(OUT, "probe_raw.json"), "w", encoding="utf-8") as f:
+        json.dump({"playerlist": pl, "track": rows}, f, ensure_ascii=False, indent=1)
+    print(f"저장: {OUT}\\probe_players.csv, probe_raw.json")
     if len(rows) >= 2 and len({(r[1], r[3]) for r in rows}) == 1:
         print("좌표가 움직이지 않습니다. 이 방식은 안 되고 미니맵 캡처 방식으로 바꿔야 합니다.")
 
@@ -456,6 +479,8 @@ def main():
 def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
     """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 (경로, 유효 행 비율)을 돌려준다."""
     os.makedirs(OUT, exist_ok=True)
+    if not same_game(rp, match_id):
+        raise SystemExit(f"재생 중인 리플레이가 {match_id}가 아닙니다(챔피언 10명이 다름). 열린 리플레이 창을 닫고 다시 실행하세요.")
     print(f"{champ} 추적 ({speed}배속, {until / 60:.0f}분까지)")
     rows = track(rp, champ, until, speed, step, lock)
     if not rows:

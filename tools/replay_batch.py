@@ -136,6 +136,7 @@ def main():
                 print("  빌드가 달라져 재생 불가, 건너뜀")
                 continue
             try:
+                close_replay()   # 열려 있던 리플레이 창이 있으면 API가 그 경기에 붙으므로 먼저 닫는다
                 download_and_watch(lcu, mid.split("_")[-1])
                 rp = Replay()
                 rp.wait_ready()
