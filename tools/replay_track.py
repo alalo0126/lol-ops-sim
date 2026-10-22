@@ -219,7 +219,15 @@ def same_game(rp, match_id):
         return True
     with open(path, encoding="utf-8") as f:
         want = sorted(p["championName"].lower() for p in json.load(f)["detail"]["info"]["participants"])
-    got = sorted((p.get("rawChampionName") or "").split("_")[-1].lower() for p in rp.players())
+    # 로딩 직후엔 playerlist가 비었거나 일부만 올 수 있어(2026-10-22 4판 연속 실패) 10명이 찰 때까지 기다린다
+    got = []
+    for _ in range(30):
+        got = sorted((p.get("rawChampionName") or "").split("_")[-1].lower() for p in rp.players())
+        if len(got) == len(want):
+            break
+        time.sleep(2)
+    if got != want:
+        print(f"  챔피언 대조: 경기 {want} / 재생 {got}")
     return got == want
 
 
