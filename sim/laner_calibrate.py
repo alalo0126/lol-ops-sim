@@ -12,7 +12,7 @@ import os
 import statistics
 
 from .data import ROOT, Rules
-from .laner_eval import simulate, real_zone, replay_rows, rp_value, ZONES, MINUTES
+from .laner_eval import simulate, real_zone, replay_rows, rp_value, kill_rows, ZONES, MINUTES
 
 PARAMS = [
     ("lanes", "last_hit", "TOP"), ("lanes", "last_hit", "MIDDLE"), ("lanes", "last_hit", "BOTTOM"), ("lanes", "last_hit", "UTILITY"),
@@ -33,6 +33,8 @@ PARAMS = [
     ("laner", "roam", "fight_on_arrival", "BOTTOM"), ("laner", "roam", "fight_on_arrival", "UTILITY"),
     ("laner", "roam", "resolve", "loser_death"), ("laner", "roam", "resolve", "trade_death"),
     ("laner", "roam", "encounter", "prob_per_s"),
+    ("group_fight", "rate_per_s", 0), ("group_fight", "rate_per_s", 1), ("group_fight", "resolve", "lose_death"), ("group_fight", "join_prob"), ("group_fight", "join_travel_s"),
+    ("objective", "rally", "respond_prob", 1), ("skirmish", "assist_near", "prob"),
     ("laner", "top_group", "rate_per_min"), ("laner", "top_group", "stay_s", 1),
     ("laner", "recall_walk", "TOP"), ("laner", "recall_walk", "UTILITY"),
     ("laner", "roam", "detour", "UTILITY", 0), ("laner", "roam", "detour", "UTILITY", 1), ("laner", "roam", "detour", "MIDDLE", 1),
@@ -99,6 +101,8 @@ def loss(vals, where, t):
         # 리플레이 1초 동선(3~18분) 목표: 기지 방문·로밍 수·로밍당 킬·자기 라인 비율
         for key, real, tol, _ in replay_rows(vals, rp, r):
             tot += ((rp_value(vals, r, key) - real) / tol) ** 2
+    for key, _, real, tol in kill_rows(vals, rp):
+        tot += ((statistics.mean(vals[key]) - real) / tol) ** 2
     b20 = t["by_20_per_game"]
     tot += ((statistics.mean(vals[("plates_by_20",)]) - b20["plates"]["mean"]) / 4) ** 2
     tot += ((statistics.mean(vals[("outer_by_20",)]) - b20["outer"]["mean"]) / 0.6) ** 2

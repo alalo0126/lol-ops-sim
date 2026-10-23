@@ -69,6 +69,7 @@ class Champ:
     next_trade: float = 0.0
     lane_override: str = None    # 14분 전후 라인 바꾸기(원딜·서폿 미드, 미드 바텀)
     group_until: float = 0       # 탑이 14분 이후 잠깐 다른 라인으로 합류(이 시각까지 lane_override)
+    last_group: float = -999.0   # 마지막 무리 교전 시각
     support_wards: float = 0.0   # 서폿 아이템 와드 충전(실수)
     legendaries: int = 0         # 완성 아이템 수(아이템 골드 문턱으로 셈, params items.legendary_item_gold)
 
@@ -201,6 +202,12 @@ class Game:
 
     def kill(self, killer, victim, assists):
         cb = self.rules.combat
+        # 근처에 있던 킬러 팀원도 어시스트(실제 어시스트는 10초 안 피해·보조). 교전 결과 식은 살아남은 교전 참가자만 넣음
+        pa = self.p["skirmish"]["assist_near"]
+        vn, have = self.map.nodes[victim.node], {killer.pid} | {a.pid for a in assists}
+        assists = list(assists) + [m for m in self.champs if m.team == killer.team and m.pid not in have and m.alive(self.t)
+                                   and (self.map.nodes[m.node]["x"] - vn["x"]) ** 2 + (self.map.nodes[m.node]["y"] - vn["y"]) ** 2
+                                   <= pa["radius"] ** 2 and self.rng.random() < pa["prob"]]
         b = cb["bounty"]
         value = self.kill_value(victim)
         gold = value + (cb["first_blood_bonus"] if not self.first_blood else 0)
@@ -575,6 +582,50 @@ class Game:
         self.events.append({"t": self.t, "type": "skirmish", "node": j1.node, "winner": res.winner,
                             "sizes": [len(sides[100]), len(sides[200])], "deaths": len(res.deaths)})
 
+    def _group_fight(self):
+        """여러 명이 모인 교전: 양 팀 합쳐 min_size명 이상이 radius 안(노드 좌표)에 모이면 초당 rate로 교전.
+        리플레이 70판 10~20분 킬 판당 24번(3명 이상 관여 11번)인데 정글러·라인 교전만으로는 14번(1.7번)이었다."""
+        pg = self.p["group_fight"]
+        rate = pg["rate_per_s"][0 if self.t < 840 else 1]
+        if self.t < pg["after_s"]:
+            return
+        nodes = self.map.nodes
+        ok = [c for c in self.champs if c.alive(self.t) and nodes[c.node]["kind"] != "fountain"
+              and not (c.task and c.task.get("kind") == "recalling") and self.t - c.last_group >= pg["cooldown_s"]]
+        self.rng.shuffle(ok)
+        used = set()
+        for seed in ok:
+            if seed.pid in used:
+                continue
+            n0 = nodes[seed.node]
+            near = [c for c in ok if c.pid not in used
+                    and (nodes[c.node]["x"] - n0["x"]) ** 2 + (nodes[c.node]["y"] - n0["y"]) ** 2 <= pg["radius"] ** 2]
+            sides = {T: [c for c in near if c.team == T] for T in (100, 200)}
+            if not sides[100] or not sides[200] or len(near) < pg["min_size"]:
+                continue
+            used.update(c.pid for c in near)
+            if self.rng.random() >= rate * (len(near) - pg["min_size"] + 1):
+                continue
+            # 근처(join_travel_s 안)에서 달려오는 팀원도 낀다(한타는 여럿이 합류하며 커짐)
+            for c in ok:
+                if c.pid not in used and self.map.travel_s(c.node, seed.node, c.ms) <= pg["join_travel_s"] \
+                        and self.rng.random() < pg["join_prob"]:
+                    sides[c.team].append(c)
+                    near.append(c)
+                    used.add(c.pid)
+            res = events.resolve_group(sides, self.t, self.rng, {**self.p["skirmish"], **pg["resolve"]})
+            for pid, hp in res.hp_after.items():
+                next(x for x in self.champs if x.pid == pid).hp = hp
+            for m in near:
+                m.last_group = self.t
+                m.busy_until = max(m.busy_until, self.t) + res.duration_s
+                if m.task and m.task.get("kind") == "clearing":
+                    m.task["until"] = m.busy_until
+            for victim, killer, assists in res.deaths:
+                self.kill(killer, victim, assists)
+            self.events.append({"t": self.t, "type": "group_fight", "node": seed.node, "winner": res.winner,
+                                "sizes": [len(sides[100]), len(sides[200])], "deaths": len(res.deaths)})
+
     def record_frame(self):
         self.frames.append({
             "t": self.t,
@@ -594,6 +645,7 @@ class Game:
             self._finish_tasks(c)
             self._advance(c)
         self._skirmish()
+        self._group_fight()
         self.lanes.tick()
         for c in self.champs:
             if c.alive(self.t):

@@ -122,3 +122,35 @@ def resolve_skirmish(sides, now, rng, p):
         if win_left and lose_left and rng.random() < p["trade_death"]:
             take(win_left, lose_left)
     return res
+
+
+def resolve_group(sides, now, rng, p):
+    """여러 명이 모인 교전(한타·오브젝트 싸움). 이기는 확률은 resolve_skirmish와 같은 식, 진 쪽은 한 명씩 p["lose_death"],
+    이긴 쪽은 p["win_death"] 확률로 죽는다(인원이 많을수록 사망도 많음). 킬 관여 = 그 교전의 살아남은 상대 전원."""
+    (ta, a), (tb, b) = sides.items()
+    c = p["coef"]
+    x = (c["num_adv"] * (len(a) - len(b))
+         + c["level_diff"] * (sum(m.level for m in a) - sum(m.level for m in b)) / max(len(a), len(b))
+         + c["hp_diff"] * (sum(m.hp for m in a) - sum(m.hp for m in b))
+         + c.get("item_gold_diff", 0.0) * (sum(m.item_gold for m in a) - sum(m.item_gold for m in b)) / max(len(a), len(b)) / 1000
+         + c.get("legendary_diff", 0.0) * (sum(m.legendaries for m in a) - sum(m.legendaries for m in b)) / max(len(a), len(b)))
+    prob = logistic(x)
+    win, lose = (a, b) if rng.random() < prob else (b, a)
+    res = SkirmishResult(winner=(ta if win is a else tb), duration_s=p["duration_s"], prob=prob)
+    lo, hi = p["hp_cost"]
+    for m in a + b:
+        res.hp_after[m.pid] = max(0.05, m.hp - rng.uniform(lo, hi))
+    dead_l = [m for m in lose if rng.random() < p["lose_death"]]
+    dead_w = [m for m in win if rng.random() < p["win_death"]]
+    if len(dead_w) >= len(win):
+        dead_w = dead_w[:-1]
+    alive_w = [m for m in win if m not in dead_w]
+    alive_l = [m for m in lose if m not in dead_l]
+    for v in dead_l:
+        k = rng.choice(alive_w)
+        res.deaths.append((v, k, [m for m in alive_w if m is not k]))
+    for v in dead_w:
+        killers = alive_l or [m for m in lose if m is not v] or lose
+        k = rng.choice(killers)
+        res.deaths.append((v, k, [m for m in killers if m is not k]))
+    return res

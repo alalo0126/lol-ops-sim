@@ -33,6 +33,7 @@ MINUTES = range(3, 18)
 CAMP_DWELL = 5
 SIDE = {100: "B", 200: "R"}
 ACTION_INDEX = {a: i for i, a in enumerate(ACTION_NAMES)}
+WITHIN = True   # 분 시작만(False) / 그 1분의 모든 결정 시각(True). 2026-10-22 기준점(stage6d)은 분 시작만
 
 
 def camp_kills(seg, team):
@@ -104,16 +105,25 @@ def _samples(args):
             a = seg.get(minute * 60)
             if a not in ACTION_INDEX:
                 continue
-            got = {}
+            got = []
+            box = {}
 
             def grab(o, m, mw, ms):
-                got.update(obs=o.copy(), m=m.copy(), mw=mw.copy(), ms=ms.copy())
+                # 그 초의 실제 행동을 정답으로 기록하고, 그 행동을 그대로 따라 해서 상태가 실제 동선을 따라가게 한다.
+                # WITHIN이면 분 시작뿐 아니라 그 1분 동안의 모든 결정 시각(이동 중 5초마다·새 정보)을 표본으로 씀
+                lab = seg.get(box["g"].t) if "g" in box else a
+                if lab in ACTION_INDEX and m[ACTION_INDEX[lab]]:
+                    got.append({"obs": o.copy(), "m": m.copy(), "mw": mw.copy(), "ms": ms.copy(), "action": lab,
+                                "t": box["g"].t if "g" in box else minute * 60})
+                    return ACTION_INDEX[lab], 0, 0, None
                 return int(np.flatnonzero(m)[0]), 0, 0, None
             g, _ = _state(rm, team, minute, kills, grab, 0)
-            g.step()
-            if "obs" not in got or not got["m"][ACTION_INDEX[a]]:
-                continue
-            out.append({"match": os.path.basename(path)[:-5], "team": team, "minute": minute, "action": a, **got})
+            box["g"] = g
+            end = minute * 60 + (60 if WITHIN else 1)
+            while g.t < end and (WITHIN or not got):
+                g.step()
+            for x in got[:(None if WITHIN else 1)]:
+                out.append({"match": os.path.basename(path)[:-5], "team": team, "minute": minute, **x})
     return out
 
 
@@ -163,7 +173,7 @@ def train_bc(X, M, A, init, epochs=200, lr=1e-3, seed=0):
         idx = rng.permutation(len(X))
         for b in range(0, len(X), 256):
             i = idx[b:b + 256]
-            grads, _, _ = bc_grads(pol, X[i], M[i], A[i])
+            grads, _, _ = bc_grads(pol, X[i], M[i], A[i], heads=(0,))
             opt.step(pol.pi, grads)
     return pol
 
@@ -190,7 +200,11 @@ def main():
     ap.add_argument("--seeds", type=int, default=2)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default=os.path.join(ROOT, "reports", "imitate.md"))
+    ap.add_argument("--minute-start-only", action="store_true", help="표본을 분 시작 시각만(2026-10-22 방식)")
+    ap.add_argument("--save-dir", default=os.path.join(ROOT, "models", "stage6c"), help="real_train/test.npz·policy_real_bc.npz 저장 위치")
     args = ap.parse_args()
+    global WITHIN
+    WITHIN = not args.minute_start_only
     inputs = match_inputs()
     with Pool(args.workers) as pool:
         S = [s for ss in pool.map(_samples, inputs) for s in ss]
@@ -206,14 +220,15 @@ def main():
         return X, M, A
     for name, ss in (("train", tr), ("test", te)):   # sim/train.py --real 용 표본
         X, M, A = arr(ss)
-        np.savez(os.path.join(ROOT, "models", "stage6c", f"real_{name}.npz"), X=X, M=M, A=A)
+        np.savez(os.path.join(args.save_dir, f"real_{name}.npz"), X=X, M=M, A=A)
     real_bc = train_bc(*arr(tr), init=os.path.join(ROOT, "models", "stage5", "policy_bc.npz"))
-    real_bc.save(os.path.join(ROOT, "models", "stage6c", "policy_real_bc.npz"))
+    real_bc.save(os.path.join(args.save_dir, "policy_real_bc.npz"))
     pols = {"학습 정글러(stage6c)": Policy.from_file(args.policy),
             "규칙 봇 모방(stage5 bc)": Policy.from_file(os.path.join(ROOT, "models", "stage5", "policy_bc.npz")),
             "실제 모방(이번)": real_bc}
 
-    jobs = [(s["match"], s["team"], s["minute"], s["action"], 1000 * k + i) for i, s in enumerate(S) for k in range(args.seeds)]
+    first = [s for s in S if s["t"] == s["minute"] * 60]   # 반사실은 분 시작 표본만(그 상태가 실제 그대로)
+    jobs = [(s["match"], s["team"], s["minute"], s["action"], 1000 * k + i) for i, s in enumerate(first) for k in range(args.seeds)]
     with Pool(args.workers, initializer=_cf_init, initargs=(args.policy, inputs)) as pool:
         d = pool.map(_cf_job, jobs, chunksize=8)
     by = collections.defaultdict(list)

@@ -78,7 +78,7 @@ def update(policy, opt_pi, opt_vf, games, cfg):
                 # 갈래 B: 실제 천상계 정글러가 그 상태에서 한 행동을 따라 하는 손실을 함께 줄인다(실제 표본 상태에서만)
                 Xr, Mr, Ar = cfg.real
                 r = rng.integers(0, len(Xr), min(256, len(Xr)))
-                gbc, bc_loss, bc_acc = bc_grads(policy, Xr[r], Mr[r], Ar[r])
+                gbc, bc_loss, bc_acc = bc_grads(policy, Xr[r], Mr[r], Ar[r], heads=(0,))   # 와드·강타 선택은 정답 없음
                 gpi = [g + cfg.real_coef * h for g, h in zip(gpi, gbc)]
                 info = info | {"bc_loss": bc_loss, "bc_acc": bc_acc}
             gpi, _ = clip_grads(gpi, cfg.max_grad_norm)
