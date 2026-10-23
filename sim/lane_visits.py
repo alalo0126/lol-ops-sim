@@ -145,6 +145,7 @@ def _sim_one(seed):
     ai = holder["bot"].c
     rule = next(x for x in g.champs if x.team != team and x.role == "JUNGLE")
     zones = {ai.pid: {}, rule.pid: {}}
+    xys = {ai.pid: {}, rule.pid: {}}
     while g.t < 1200:
         g.step()
         if T0 <= g.t < T1:
@@ -152,12 +153,13 @@ def _sim_one(seed):
                 x, y = _xy(g, c)
                 if x is not None:
                     zones[c.pid][g.t] = zone(x, y, c.team, g.map.nodes)
+                    xys[c.pid][g.t] = (x, y)
     kills = [{"t": e["t"], "killer": e["killer"], "victim": e["victim"], "assists": e["assists"]}
              for e in g.events if e["type"] == "kill"]
     res = {}
     for k, c in (("ai", ai), ("rule", rule)):
         tp = {x.pid for x in g.champs if x.team == c.team}
-        res[k] = [outcome(s, kills, c.pid, tp) for s in visits(zones[c.pid])]
+        res[k] = [outcome(s, kills, c.pid, tp) | {"lane": lane_of(*xys[c.pid][s[0]])} for s in visits(zones[c.pid])]
     return res
 
 
@@ -175,6 +177,8 @@ def simulate(policy, games, workers=4):
 def summary(games):
     v = [x for gm in games for x in gm]
     n = max(1, len(games))
+    if not v:
+        return {"games": len(games), "visits": 0.0, "len": 0.0, "kill": 0.0, "death": 0.0, "kills": 0.0}
     return {"games": len(games), "visits": len(v) / n, "len": float(np.mean([x["len"] for x in v])),
             "kill": float(np.mean([x["kill"] for x in v])), "death": float(np.mean([x["death"] for x in v])),
             "kills": sum(x["kill"] for x in v) / n}
@@ -199,6 +203,11 @@ def main():
              "| | 정글러 수 | 경기당 방문 | 평균 길이(초) | 방문당 킬 | 방문당 사망 | 경기당 방문 킬 |", "|---|---|---|---|---|---|---|"]
     for name, s in rows:
         lines.append(f"| {name} | {s['games']} | {s['visits']:.1f} | {s['len']:.1f} | {s['kill']:.0%} | {s['death']:.0%} | {s['kills']:.1f} |")
+    lines += ["", "## 라인별", "", "| | 라인 | 경기당 방문 | 방문당 킬 | 방문당 사망 |", "|---|---|---|---|---|"]
+    for name, gs in (("실제", rg), ("학습", ai), ("규칙 봇", rule)):
+        for ln in ("top", "mid", "bot"):
+            s = summary([[x for x in gm if x["lane"] == ln] for gm in gs])
+            lines.append(f"| {name} | {ln} | {s['visits']:.1f} | {s['kill']:.0%} | {s['death']:.0%} |")
     lines += ["", f"실제 방문당 킬을 앞선 정도(레벨 차 + {ITEM_PER_LEVEL} × 천 골드 아이템 차)로 로지스틱 회귀: "
               f"절편 {a:+.2f}, 기울기 {b:+.2f} (95% {ci[0]:+.2f}~{ci[1]:+.2f}, 방문 {len(rv)}번)."]
     with open(args.out, "w", encoding="utf-8") as f:

@@ -31,6 +31,9 @@ class GankResult:
     trades: list = field(default_factory=list)   # 성공했어도 공격 쪽이 잃은 사람 (피해자, 처치자, 도움)
 
 
+LANE_OF_ROLE = {"TOP": "top", "MIDDLE": "mid", "BOTTOM": "bot", "UTILITY": "bot"}
+
+
 def gank_success_prob(inp: GankInput, now, coef):
     t = inp.target
     lvl_att = sum(c.level for c in inp.attackers) / len(inp.attackers)
@@ -43,6 +46,7 @@ def gank_success_prob(inp: GankInput, now, coef):
          + coef["seen"] * inp.seen_prob
          + coef["target_pushed"] * (inp.target_push - 0.5)
          + coef["at_tower"] * (1.0 if inp.at_tower else 0.0)
+         + coef.get("lane_bias", {}).get(LANE_OF_ROLE.get(t.role), 0.0)
          + coef.get("item_gold_diff", 0.0) * (sum(c.item_gold for c in inp.attackers) / len(inp.attackers)
                                               - sum(c.item_gold for c in inp.defenders) / len(inp.defenders)) / 1000)
     return logistic(x)
