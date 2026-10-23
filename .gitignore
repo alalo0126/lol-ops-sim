@@ -26,3 +26,6 @@ models/stage7_a/*
 !models/stage7_b/
 models/stage7_b/*
 !models/stage7_b/policy_latest.npz
+!models/stage8_a/
+models/stage8_a/*
+!models/stage8_a/policy_latest.npz

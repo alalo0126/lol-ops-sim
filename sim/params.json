@@ -67,6 +67,9 @@
     "push": {"value": {"rate": 0.004, "revert": 0.01, "sigma": 0.02, "per_level": 0.08, "per_1000_item_gold": 0.25,
                        "role": {"TOP": 1.0, "MIDDLE": 1.1, "BOTTOM": 1.0, "UTILITY": 0.5, "JUNGLE": 0.8}}, "level": "calibrated",
              "note": "초당 웨이브 이동 = rate × (블루 힘 − 레드 힘) + revert × (0.5 − 위치) + 잡음. 힘 = 포지션 가중 × (1 + 레벨·아이템). 포탑 방패 시각 분포에 맞춤"},
+    "upper": {"value": {"grub_per_stack": 0.094, "herald": {"window_s": 180, "own": {"top": 1.15, "mid": 1.375, "bot": 0.712}, "opp": {"top": 0.727, "mid": 0.395, "bot": 0.907}}},
+              "level": "calibrated",
+              "note": "유충·전령 공성 배율(로그). 1,000판 팀-분(8~20분) 방패·포탑 수 푸아송 회귀(tools/upper_value_fit.py → sim/upper_value.json, 골드·경험치·용 차와 분 고정효과 통제): 유충 1스택 +0.042, 전령 창 처치 팀 탑0.43·미드0.65·바텀0.31, 상대 0.26·0.14·0.47. 시뮬에서 같은 회귀를 했을 때 계수가 같아지게 sim/upper_check.py --calibrate로 다시 맞춘 값(공성 배율은 포탑 파괴·웨이브 초기화로 일부만 방패 수에 나타나 실측 계수보다 큼). 기본 공성 피해도 같이 낮춤(laner_calibrated.json)"},
     "tower_damage": {"value": {"minions": 0.004, "per_strength": 0.012, "tier_mult": [1.0, 0.9, 0.8], "full_at_s": 840, "early_power": 1.5}, "level": "calibrated",
                      "note": "공성 중 초당 깎는 방패 칸 수(포탑 하나 = 5칸) = (미니언 + 계수 × 공성 챔피언 힘) × 단계 배율 × min(1, 시각/full_at_s)^early_power. 1단계 방패 시각(외곽 중앙 13:21, 2차 20:26)·외곽 포탑 파괴(중앙 16~17분)·첫 포탑(13:26)에 맞춤"}
   },

@@ -169,6 +169,7 @@ class Lanes:
         d = pv["tower_damage"]
         dmg = (d["minions"] + d["per_strength"] * champ_strength) * d["tier_mult"][i]
         dmg *= min(1.0, g.t / d["full_at_s"]) ** d["early_power"]   # 초반 포탑은 잘 안 깨짐(방패 시각 분포에 맞춘 증가 곡선)
+        dmg *= self.upper_mult(att, ln)
         before = self.towers[dfn][ln][i]
         after = max(0.0, before - dmg)
         self.towers[dfn][ln][i] = after
@@ -178,6 +179,17 @@ class Lanes:
             self.plate(att, dfn, ln, i, here)
         if after <= 0 < before:
             self.destroy(att, dfn, ln, i, here)
+
+    def upper_mult(self, att, ln):
+        """유충·전령의 공성 배율. 유충: 스택마다 exp(grub_per_stack)(공허의 손길·진드기).
+        전령: 처치 뒤 window_s 동안 처치 팀 exp(own[라인]), 상대 팀 exp(opp[라인]) — 1,000판 팀-분 회귀(sim/upper_value.json)에 맞춤.
+        상대 팀도 늘어나는 것은 전령 팀이 한 라인에 모일 때 반대 라인을 미는 맞교환."""
+        g, u = self.g, self.p["upper"]
+        k = u["grub_per_stack"] * g.grub_stacks[att]
+        h = g.herald_at
+        if h is not None and g.t - h[0] <= u["herald"]["window_s"]:
+            k += u["herald"]["own" if h[1] == att else "opp"][ln]
+        return math.exp(k)
 
     def plate(self, att, dfn, ln, i, here):
         g = self.g
