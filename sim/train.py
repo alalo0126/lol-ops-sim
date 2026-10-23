@@ -17,7 +17,7 @@ import numpy as np
 
 from .agent import N_MAIN, ACTION_NAMES, obs_size
 from .data import ROOT
-from .ppo import Policy, Adam, clip_grads, gae
+from .ppo import Policy, Adam, clip_grads, gae, masked_log_softmax, mlp_forward
 from .rollout import play
 from .teacher import bc_grads
 
@@ -91,6 +91,27 @@ def update(policy, opt_pi, opt_vf, games, cfg):
     return {k: float(np.mean([i[k] for i in infos])) for k in infos[0]}, n
 
 
+def revive_rare(policy, games, min_legal=0.05, max_shift=10.0, sample=20000):
+    """굳은 행동 방지: 이번 반복 표본에서 주 행동마다 고를 수 있을 때의 평균 확률을 재고,
+    policy.floor보다 낮으면 그 행동의 출력 편향만 log(floor / 평균)만큼 올린다(다른 행동 로짓은 그대로).
+    상태마다 바닥을 두는 손실은 상황에 따라 드문 행동(먼 캠프 등)까지 올려 분포 전체를 평평하게 만들어 쓰지 않음."""
+    X = np.concatenate([g["obs"] for g in games]).astype(np.float64)
+    M = np.concatenate([g["m"] for g in games])[:, :N_MAIN]
+    if len(X) > sample:
+        i = np.random.default_rng(len(X)).choice(len(X), sample, replace=False)
+        X, M = X[i], M[i]
+    z, _ = mlp_forward(policy.pi, X)
+    _, p = masked_log_softmax(z[:, :N_MAIN], M)
+    legal = M.mean(0)
+    mean_p = (p * M).sum(0) / np.maximum(M.sum(0), 1)
+    n = 0
+    for a in range(N_MAIN):
+        if legal[a] >= min_legal and mean_p[a] < policy.floor:
+            policy.pi[-1][a] += min(max_shift, float(np.log(policy.floor / max(mean_p[a], 1e-12))))
+            n += 1
+    return n
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--iters", type=int, default=300)
@@ -107,6 +128,8 @@ def main():
     ap.add_argument("--max-grad-norm", dest="max_grad_norm", type=float, default=0.5)
     ap.add_argument("--target-kl", dest="target_kl", type=float, default=0.03)
     ap.add_argument("--seed0", type=int, default=100000, help="학습 경기 시드 시작(평가 시드 0~9999와 겹치지 않게)")
+    ap.add_argument("--floor", type=float, default=None,
+                    help="주 행동 평균 확률 바닥(예: 0.002). 반복마다 고를 수 있을 때 평균 확률이 이보다 낮은 행동의 출력 편향을 올려 바닥에 맞춘다(굳은 행동 방지)")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--init", help="시작 정책(예: models/stage5/policy_bc.npz, sim/teacher.py 모방 학습 결과)")
     ap.add_argument("--out", default=OUT)
@@ -122,6 +145,8 @@ def main():
     log_path = os.path.join(cfg.out, "train_log.csv")
     obs_dim = obs_size()
     policy = Policy.from_file(cfg.init) if cfg.init else Policy(obs_dim, seed=0)
+    if cfg.floor is not None:
+        policy.floor = cfg.floor
     start_it = 0
     if cfg.resume and os.path.exists(latest):
         policy = Policy.from_file(latest)
@@ -133,7 +158,7 @@ def main():
     new_log = not (cfg.resume and os.path.exists(log_path))
     logf = open(log_path, "w" if new_log else "a", newline="", encoding="utf-8")
     fields = ["iter", "games", "samples", "phi_mean", "cs10", "gold10", "k10", "d10", "dragons", "ganks", "invade_camps",
-              "lanefarm", "pg_loss", "v_loss", "entropy", "approx_kl", "clipfrac", "bc_loss", "bc_acc", "sec"]
+              "lanefarm", "pg_loss", "v_loss", "entropy", "approx_kl", "clipfrac", "bc_loss", "bc_acc", "revived", "sec"]
     w = csv.DictWriter(logf, fieldnames=fields)
     if new_log:
         w.writeheader()
@@ -143,6 +168,8 @@ def main():
             seeds = range(cfg.seed0 + it * cfg.games, cfg.seed0 + (it + 1) * cfg.games)
             games = collect(pool, policy, seeds, cfg.workers, it)
             info, n = update(policy, opt_pi, opt_vf, games, cfg)
+            if policy.floor > 0:
+                info["revived"] = revive_rare(policy, games)
             st = lambda k: float(np.mean([g["stats"][k] for g in games]))
             row = {"iter": it, "games": len(games), "samples": n, "phi_mean": round(float(np.mean([g["phi"] for g in games])), 4),
                    "cs10": st("cs10"), "gold10": round(st("gold10")), "k10": round(st("k10"), 2), "d10": round(st("d10"), 2),
@@ -156,7 +183,7 @@ def main():
             counts = np.sum([g["counts"] for g in games], axis=0)
             top = ", ".join(f"{ACTION_NAMES[i]} {c}" for i, c in sorted(enumerate(counts), key=lambda x: -x[1])[:6])
             print(f"[{it}] Φ {row['phi_mean']:.3f} CS10 {row['cs10']:.1f} 골드10 {row['gold10']} K/D10 {row['k10']}/{row['d10']} "
-                  f"드래곤 {row['dragons']} 엔트로피 {row['entropy']:.2f} kl {row['approx_kl']:.3f} {row['sec']}s | {top}", flush=True)
+                  f"드래곤 {row['dragons']} 되살림 {row.get('revived', 0)} 엔트로피 {row['entropy']:.2f} kl {row['approx_kl']:.3f} {row['sec']}s | {top}", flush=True)
     logf.close()
 
 
