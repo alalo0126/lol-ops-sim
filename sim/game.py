@@ -154,6 +154,8 @@ class Game:
         self.lanes = Lanes(self)
         self.gank_alert = {}   # (지키는 팀, 라인) → 마지막 갱 시각
         self.obj_taken = {"dragon": {100: 0, 200: 0}, "grubs": {100: 0, 200: 0}, "herald": {100: 0, 200: 0}}
+        self.grub_stacks = {100: 0, 200: 0}   # 시뮬은 유충 3마리를 한 번에 잡는다
+        self.herald_at = None                  # (처치 시각, 팀)
 
     # ------------------------------------------------------------------ 조회
     def ally(self, c, role):
@@ -470,6 +472,10 @@ class Game:
             for m in group:
                 self.give_xp(m, r["xp"])
         self.obj_taken[name][c.team] += 1
+        if name == "grubs":
+            self.grub_stacks[c.team] += 3
+        elif name == "herald":
+            self.herald_at = (self.t, c.team)
         ob["alive"] = False
         ob["spawn_at"] = self.t + ob["respawn"] if ob["respawn"] else None
         self.events.append({"t": self.t, "type": "objective", "name": name, "team": c.team, "pid": c.pid})
