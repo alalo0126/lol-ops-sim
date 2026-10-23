@@ -1,0 +1,6589 @@
+{
+ "real": {
+  "TOP": {
+   "n": 36,
+   "share": {
+    "own_lane": 0.6241814022257778,
+    "other_lane": 0.0681834053948748,
+    "own_jungle": 0.04095509502370345,
+    "enemy_jungle": 0.026190637780171375,
+    "river": 0.04860870018753074,
+    "base": 0.0619952547416602,
+    "dead": 0.12988550464628165
+   },
+   "base_visits": 4.722222222222222,
+   "respawn": 2.6666666666666665,
+   "base_s": 9.0,
+   "roams": 0.19444444444444445,
+   "roam_len": 44.0,
+   "roam_kill": 0.42857142857142855,
+   "roam_death": 0.42857142857142855,
+   "trips": 0.7777777777777778
+  },
+  "MIDDLE": {
+   "n": 36,
+   "share": {
+    "own_lane": 0.4603525375861307,
+    "other_lane": 0.13884902706757413,
+    "own_jungle": 0.09301041617958421,
+    "enemy_jungle": 0.05963504013850485,
+    "river": 0.06605923912710526,
+    "base": 0.08250580629850038,
+    "dead": 0.09958793360260045
+   },
+   "base_visits": 5.861111111111111,
+   "respawn": 2.3055555555555554,
+   "base_s": 11.0,
+   "roams": 0.8611111111111112,
+   "roam_len": 47.0,
+   "roam_kill": 0.7096774193548387,
+   "roam_death": 0.12903225806451613,
+   "trips": 2.0833333333333335
+  },
+  "BOTTOM": {
+   "n": 40,
+   "share": {
+    "own_lane": 0.5527744166193934,
+    "other_lane": 0.1407224676948769,
+    "own_jungle": 0.06447880778358037,
+    "enemy_jungle": 0.028698001575257332,
+    "river": 0.04349456495728944,
+    "base": 0.07416745368686908,
+    "dead": 0.09566428768273352
+   },
+   "base_visits": 4.975,
+   "respawn": 2.675,
+   "base_s": 10.0,
+   "roams": 0.225,
+   "roam_len": 76.0,
+   "roam_kill": 0.6666666666666666,
+   "roam_death": 0.1111111111111111,
+   "trips": 0.8
+  },
+  "UTILITY": {
+   "n": 40,
+   "share": {
+    "own_lane": 0.3374108962652113,
+    "other_lane": 0.12795611350177488,
+    "own_jungle": 0.15744263723835844,
+    "enemy_jungle": 0.09088377564411301,
+    "river": 0.12358495625950092,
+    "base": 0.08554995371007659,
+    "dead": 0.07717166738096484
+   },
+   "base_visits": 5.825,
+   "respawn": 2.525,
+   "base_s": 10.0,
+   "roams": 0.5,
+   "roam_len": 58.0,
+   "roam_kill": 0.35,
+   "roam_death": 0.3,
+   "trips": 1.725
+  }
+ },
+ "sim": {
+  "TOP": {
+   "n": 400,
+   "share": {
+    "own_lane": 0.7510333333333334,
+    "other_lane": 0.004458333333333333,
+    "own_jungle": 0.051769444444444444,
+    "enemy_jungle": 0.011394444444444445,
+    "river": 0.07005555555555555,
+    "base": 0.057572222222222226,
+    "dead": 0.05371666666666666
+   },
+   "base_visits": 5.44,
+   "respawn": 1.95,
+   "base_s": 7.0,
+   "roams": 0.0275,
+   "roam_len": 51.0,
+   "roam_kill": 0.2727272727272727,
+   "roam_death": 0.18181818181818182,
+   "trips": 2.0125
+  },
+  "MIDDLE": {
+   "n": 400,
+   "share": {
+    "own_lane": 0.48104166666666665,
+    "other_lane": 0.17363611111111113,
+    "own_jungle": 0.06871944444444444,
+    "enemy_jungle": 0.03514444444444445,
+    "river": 0.11535000000000001,
+    "base": 0.07146666666666668,
+    "dead": 0.05464166666666667
+   },
+   "base_visits": 5.4075,
+   "respawn": 2.2575,
+   "base_s": 9.0,
+   "roams": 0.7275,
+   "roam_len": 60.0,
+   "roam_kill": 0.436426116838488,
+   "roam_death": 0.1958762886597938,
+   "trips": 1.7475
+  },
+  "BOTTOM": {
+   "n": 400,
+   "share": {
+    "own_lane": 0.5851416666666667,
+    "other_lane": 0.17137500000000003,
+    "own_jungle": 0.042050000000000004,
+    "enemy_jungle": 0.01561111111111111,
+    "river": 0.06867222222222223,
+    "base": 0.057558333333333336,
+    "dead": 0.05959166666666667
+   },
+   "base_visits": 4.96,
+   "respawn": 2.5775,
+   "base_s": 6.0,
+   "roams": 0.3825,
+   "roam_len": 70.0,
+   "roam_kill": 0.33986928104575165,
+   "roam_death": 0.29411764705882354,
+   "trips": 1.23
+  },
+  "UTILITY": {
+   "n": 400,
+   "share": {
+    "own_lane": 0.442975,
+    "other_lane": 0.11761388888888888,
+    "own_jungle": 0.13951388888888888,
+    "enemy_jungle": 0.05005833333333334,
+    "river": 0.16580555555555557,
+    "base": 0.05773333333333333,
+    "dead": 0.0263
+   },
+   "base_visits": 5.8575,
+   "respawn": 1.48,
+   "base_s": 6.0,
+   "roams": 0.47,
+   "roam_len": 77.0,
+   "roam_kill": 0.3404255319148936,
+   "roam_death": 0.1595744680851064,
+   "trips": 3.055
+  }
+ },
+ "real_rows": {
+  "TOP": [
+   {
+    "jr_src": {
+     "pre_base": 37,
+     "pre_own_lane": 13,
+     "pre_other_lane": 51,
+     "post_base": 14,
+     "post_other_lane": 56
+    },
+    "cover": 0.8144444444444444,
+    "share": {
+     "own_lane": 0.567530695770805,
+     "other_lane": 0.06548431105047749,
+     "own_jungle": 0.045020463847203276,
+     "enemy_jungle": 0.027285129604365622,
+     "river": 0.11596180081855388,
+     "base": 0.07094133697135062,
+     "dead": 0.1077762619372442
+    },
+    "base_visits": 6,
+    "base_s": [
+     8,
+     7,
+     7,
+     15,
+     11,
+     9
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8426999058",
+    "champion": "Pantheon",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 9,
+     "pre_own_lane": 39,
+     "pre_other_lane": 25,
+     "post_base": 1,
+     "post_other_lane": 64
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.5973333333333334,
+     "other_lane": 0.029333333333333333,
+     "own_jungle": 0.03866666666666667,
+     "enemy_jungle": 0.034666666666666665,
+     "river": 0.084,
+     "base": 0.06266666666666666,
+     "dead": 0.15333333333333332
+    },
+    "base_visits": 6,
+    "base_s": [
+     9,
+     10,
+     7,
+     6,
+     7,
+     8
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8426999058",
+    "champion": "Urgot",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 4,
+     "pre_own_lane": 29,
+     "post_own_lane": 4,
+     "post_other_lane": 25
+    },
+    "cover": 0.8022222222222222,
+    "share": {
+     "own_lane": 0.6329639889196675,
+     "other_lane": 0.10664819944598337,
+     "own_jungle": 0.01662049861495845,
+     "enemy_jungle": 0.006925207756232687,
+     "river": 0.045706371191135735,
+     "base": 0.038781163434903045,
+     "dead": 0.1523545706371191
+    },
+    "base_visits": 2,
+    "base_s": [
+     8,
+     7
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8426999177",
+    "champion": "Urgot",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 40,
+     "post_base": 12
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.7622282608695652,
+     "other_lane": 0.001358695652173913,
+     "own_jungle": 0.012228260869565218,
+     "enemy_jungle": 0.004076086956521739,
+     "river": 0.042119565217391304,
+     "base": 0.07608695652173914,
+     "dead": 0.10190217391304347
+    },
+    "base_visits": 7,
+    "base_s": [
+     8,
+     10,
+     9,
+     10,
+     9,
+     9,
+     9
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      497,
+      30
+     ]
+    ],
+    "match": "KR_8426999177",
+    "champion": "Singed",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 23,
+     "pre_base": 1,
+     "pre_other_lane": 46,
+     "post_other_lane": 6,
+     "post_own_lane": 11,
+     "post_base": 3
+    },
+    "cover": 0.8288888888888889,
+    "share": {
+     "own_lane": 0.5160857908847185,
+     "other_lane": 0.1581769436997319,
+     "own_jungle": 0.05093833780160858,
+     "enemy_jungle": 0.005361930294906166,
+     "river": 0.04423592493297587,
+     "base": 0.07104557640750671,
+     "dead": 0.15415549597855227
+    },
+    "base_visits": 3,
+    "base_s": [
+     6,
+     9,
+     9
+    ],
+    "respawn": 6,
+    "trips": 1,
+    "trip_s": [
+     [
+      873,
+      11
+     ]
+    ],
+    "match": "KR_8427029935",
+    "champion": "Warwick",
+    "roams": [
+     {
+      "start": 664,
+      "len": 30,
+      "kill": false,
+      "death": false
+     },
+     {
+      "start": 767,
+      "len": 18,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 6,
+     "pre_own_lane": 28,
+     "post_base": 5,
+     "post_own_lane": 16
+    },
+    "cover": 0.8011111111111111,
+    "share": {
+     "own_lane": 0.7170596393897365,
+     "other_lane": 0.016643550624133148,
+     "own_jungle": 0.013869625520110958,
+     "enemy_jungle": 0.026352288488210817,
+     "river": 0.024965325936199722,
+     "base": 0.06241331484049931,
+     "dead": 0.13869625520110956
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     9,
+     24,
+     5,
+     6
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427029935",
+    "champion": "Udyr",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 22,
+     "pre_own_lane": 14,
+     "post_own_lane": 4,
+     "post_base": 1
+    },
+    "cover": 0.8233333333333334,
+    "share": {
+     "own_lane": 0.865047233468286,
+     "other_lane": 0.0,
+     "own_jungle": 0.032388663967611336,
+     "enemy_jungle": 0.0,
+     "river": 0.012145748987854251,
+     "base": 0.043184885290148446,
+     "dead": 0.04723346828609987
+    },
+    "base_visits": 4,
+    "base_s": [
+     11,
+     8,
+     7,
+     7
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427044839",
+    "champion": "Zac",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 9,
+     "pre_own_lane": 85,
+     "pre_other_lane": 39,
+     "post_own_lane": 33,
+     "post_base": 1,
+     "post_other_lane": 5
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.46875,
+     "other_lane": 0.13858695652173914,
+     "own_jungle": 0.05434782608695652,
+     "enemy_jungle": 0.05570652173913043,
+     "river": 0.08016304347826086,
+     "base": 0.09375,
+     "dead": 0.10869565217391304
+    },
+    "base_visits": 7,
+    "base_s": [
+     6,
+     9,
+     9,
+     15,
+     9,
+     12,
+     11
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      410,
+      20
+     ]
+    ],
+    "match": "KR_8427067003",
+    "champion": "Anivia",
+    "roams": [
+     {
+      "start": 431,
+      "len": 97,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 111,
+     "pre_base": 7,
+     "pre_other_lane": 10,
+     "post_base": 17,
+     "post_own_lane": 9,
+     "post_other_lane": 53
+    },
+    "cover": 0.8044444444444444,
+    "share": {
+     "own_lane": 0.5732044198895028,
+     "other_lane": 0.031767955801104975,
+     "own_jungle": 0.08149171270718232,
+     "enemy_jungle": 0.04696132596685083,
+     "river": 0.10082872928176796,
+     "base": 0.07596685082872928,
+     "dead": 0.08977900552486189
+    },
+    "base_visits": 7,
+    "base_s": [
+     12,
+     7,
+     7,
+     8,
+     10,
+     10,
+     9
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427067003",
+    "champion": "Aatrox",
+    "roams": [
+     {
+      "start": 410,
+      "len": 92,
+      "kill": false,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 22,
+     "pre_base": 9,
+     "pre_other_lane": 21,
+     "post_own_lane": 35,
+     "post_other_lane": 37,
+     "post_base": 22
+    },
+    "cover": 0.8088888888888889,
+    "share": {
+     "own_lane": 0.6016483516483516,
+     "other_lane": 0.08791208791208792,
+     "own_jungle": 0.06043956043956044,
+     "enemy_jungle": 0.013736263736263736,
+     "river": 0.10027472527472528,
+     "base": 0.061813186813186816,
+     "dead": 0.07417582417582418
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     7,
+     8,
+     9,
+     12
+    ],
+    "respawn": 3,
+    "trips": 1,
+    "trip_s": [
+     [
+      904,
+      29
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Aatrox",
+    "roams": [
+     {
+      "start": 504,
+      "len": 44,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 35,
+     "pre_other_lane": 21,
+     "post_own_lane": 9,
+     "post_base": 10,
+     "post_other_lane": 16
+    },
+    "cover": 0.8233333333333334,
+    "share": {
+     "own_lane": 0.6842105263157895,
+     "other_lane": 0.018893387314439947,
+     "own_jungle": 0.03913630229419703,
+     "enemy_jungle": 0.010796221322537112,
+     "river": 0.0553306342780027,
+     "base": 0.058029689608636977,
+     "dead": 0.13360323886639677
+    },
+    "base_visits": 4,
+    "base_s": [
+     9,
+     10,
+     10,
+     13
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      506,
+      41
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Sett",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 8,
+     "pre_own_lane": 4
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.6503311258278146,
+     "other_lane": 0.0026490066225165563,
+     "own_jungle": 0.010596026490066225,
+     "enemy_jungle": 0.0,
+     "river": 0.0026490066225165563,
+     "base": 0.08874172185430464,
+     "dead": 0.24503311258278146
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     7,
+     7,
+     8,
+     6
+    ],
+    "respawn": 6,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427074120",
+    "champion": "Yone",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 2,
+     "pre_base": 9,
+     "pre_own_lane": 23,
+     "pre_other_lane": 4,
+     "post_other_lane": 11,
+     "post_base": 1,
+     "post_own_lane": 9
+    },
+    "cover": 0.8055555555555556,
+    "share": {
+     "own_lane": 0.5834482758620689,
+     "other_lane": 0.16,
+     "own_jungle": 0.01793103448275862,
+     "enemy_jungle": 0.020689655172413793,
+     "river": 0.027586206896551724,
+     "base": 0.08689655172413793,
+     "dead": 0.10344827586206896
+    },
+    "base_visits": 8,
+    "base_s": [
+     9,
+     7,
+     10,
+     10,
+     8,
+     8,
+     13,
+     10
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427074120",
+    "champion": "Jax",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 6,
+     "pre_own_lane": 3,
+     "post_base": 12
+    },
+    "cover": 0.8044444444444444,
+    "share": {
+     "own_lane": 0.5662983425414365,
+     "other_lane": 0.15469613259668508,
+     "own_jungle": 0.019337016574585635,
+     "enemy_jungle": 0.0,
+     "river": 0.0055248618784530384,
+     "base": 0.05386740331491713,
+     "dead": 0.20027624309392264
+    },
+    "base_visits": 4,
+    "base_s": [
+     6,
+     7,
+     5,
+     13
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427087043",
+    "champion": "Rumble",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 51,
+     "pre_base": 2,
+     "post_base": 17,
+     "post_other_lane": 2
+    },
+    "cover": 0.8255555555555556,
+    "share": {
+     "own_lane": 0.6339165545087483,
+     "other_lane": 0.02826379542395693,
+     "own_jungle": 0.03633916554508748,
+     "enemy_jungle": 0.016150740242261104,
+     "river": 0.02826379542395693,
+     "base": 0.04845222072678331,
+     "dead": 0.20861372812920592
+    },
+    "base_visits": 4,
+    "base_s": [
+     9,
+     9,
+     10,
+     14
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      352,
+      13
+     ]
+    ],
+    "match": "KR_8427095161",
+    "champion": "Gnar",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 10,
+     "pre_own_lane": 34,
+     "post_base": 1,
+     "post_own_lane": 41,
+     "post_other_lane": 19
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.6373333333333333,
+     "other_lane": 0.013333333333333334,
+     "own_jungle": 0.03333333333333333,
+     "enemy_jungle": 0.04933333333333333,
+     "river": 0.032,
+     "base": 0.06266666666666666,
+     "dead": 0.172
+    },
+    "base_visits": 5,
+    "base_s": [
+     5,
+     8,
+     9,
+     8,
+     7
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      929,
+      14
+     ]
+    ],
+    "match": "KR_8427095161",
+    "champion": "Varus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 52,
+     "pre_base": 17,
+     "pre_other_lane": 57,
+     "post_own_lane": 11,
+     "post_base": 39,
+     "post_other_lane": 22
+    },
+    "cover": 0.81,
+    "share": {
+     "own_lane": 0.4156378600823045,
+     "other_lane": 0.14814814814814814,
+     "own_jungle": 0.11659807956104253,
+     "enemy_jungle": 0.023319615912208505,
+     "river": 0.06858710562414266,
+     "base": 0.06310013717421124,
+     "dead": 0.1646090534979424
+    },
+    "base_visits": 6,
+    "base_s": [
+     9,
+     8,
+     7,
+     6,
+     8,
+     7
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427099636",
+    "champion": "Quinn",
+    "roams": [
+     {
+      "start": 776,
+      "len": 47,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 57,
+     "post_base": 75
+    },
+    "cover": 0.8288888888888889,
+    "share": {
+     "own_lane": 0.5924932975871313,
+     "other_lane": 0.0013404825737265416,
+     "own_jungle": 0.04155495978552279,
+     "enemy_jungle": 0.06300268096514745,
+     "river": 0.05361930294906166,
+     "base": 0.06032171581769437,
+     "dead": 0.1876675603217158
+    },
+    "base_visits": 3,
+    "base_s": [
+     8,
+     9,
+     10
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427099636",
+    "champion": "Varus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 4,
+     "pre_own_lane": 25,
+     "post_own_lane": 41,
+     "post_base": 3,
+     "post_other_lane": 2
+    },
+    "cover": 0.8111111111111111,
+    "share": {
+     "own_lane": 0.689041095890411,
+     "other_lane": 0.01643835616438356,
+     "own_jungle": 0.005479452054794521,
+     "enemy_jungle": 0.03287671232876712,
+     "river": 0.03561643835616438,
+     "base": 0.056164383561643834,
+     "dead": 0.1643835616438356
+    },
+    "base_visits": 5,
+    "base_s": [
+     17,
+     9,
+     8,
+     15,
+     7
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      560,
+      14
+     ]
+    ],
+    "match": "KR_8427110811",
+    "champion": "Rumble",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 3,
+     "pre_other_lane": 46,
+     "pre_own_lane": 9,
+     "post_other_lane": 59,
+     "post_base": 5,
+     "post_own_lane": 2
+    },
+    "cover": 0.8277777777777777,
+    "share": {
+     "own_lane": 0.47248322147651006,
+     "other_lane": 0.13691275167785236,
+     "own_jungle": 0.07248322147651007,
+     "enemy_jungle": 0.025503355704697986,
+     "river": 0.03758389261744966,
+     "base": 0.04697986577181208,
+     "dead": 0.2080536912751678
+    },
+    "base_visits": 3,
+    "base_s": [
+     9,
+     10,
+     7
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427110811",
+    "champion": "Ambessa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 45,
+     "pre_other_lane": 14,
+     "post_own_lane": 14,
+     "post_other_lane": 71,
+     "post_base": 2
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.5978260869565217,
+     "other_lane": 0.06385869565217392,
+     "own_jungle": 0.08288043478260869,
+     "enemy_jungle": 0.02309782608695652,
+     "river": 0.058423913043478264,
+     "base": 0.06521739130434782,
+     "dead": 0.10869565217391304
+    },
+    "base_visits": 3,
+    "base_s": [
+     14,
+     12,
+     9
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427112235",
+    "champion": "Rumble",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 35,
+     "post_other_lane": 12,
+     "post_base": 2,
+     "post_own_lane": 15
+    },
+    "cover": 0.8211111111111111,
+    "share": {
+     "own_lane": 0.7604871447902571,
+     "other_lane": 0.02706359945872801,
+     "own_jungle": 0.017591339648173207,
+     "enemy_jungle": 0.005412719891745603,
+     "river": 0.05412719891745602,
+     "base": 0.03382949932341001,
+     "dead": 0.10148849797023005
+    },
+    "base_visits": 4,
+    "base_s": [
+     15,
+     8,
+     11,
+     7
+    ],
+    "respawn": 0,
+    "trips": 1,
+    "trip_s": [
+     [
+      445,
+      16
+     ]
+    ],
+    "match": "KR_8427117343",
+    "champion": "Gnar",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 2,
+     "pre_own_lane": 16,
+     "post_own_lane": 9,
+     "post_base": 2,
+     "post_other_lane": 25
+    },
+    "cover": 0.8011111111111111,
+    "share": {
+     "own_lane": 0.811373092926491,
+     "other_lane": 0.011095700416088766,
+     "own_jungle": 0.026352288488210817,
+     "enemy_jungle": 0.030513176144244106,
+     "river": 0.006934812760055479,
+     "base": 0.0651872399445215,
+     "dead": 0.04854368932038835
+    },
+    "base_visits": 6,
+    "base_s": [
+     14,
+     10,
+     19,
+     10,
+     14,
+     13
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427117343",
+    "champion": "KSante",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 80,
+     "pre_base": 2,
+     "pre_other_lane": 24,
+     "post_own_lane": 38,
+     "post_other_lane": 12,
+     "post_base": 7
+    },
+    "cover": 0.8222222222222222,
+    "share": {
+     "own_lane": 0.6,
+     "other_lane": 0.1,
+     "own_jungle": 0.07567567567567568,
+     "enemy_jungle": 0.02702702702702703,
+     "river": 0.08378378378378379,
+     "base": 0.06756756756756757,
+     "dead": 0.04594594594594595
+    },
+    "base_visits": 6,
+    "base_s": [
+     9,
+     8,
+     11,
+     10,
+     9,
+     7
+    ],
+    "respawn": 1,
+    "trips": 2,
+    "trip_s": [
+     [
+      464,
+      33
+     ],
+     [
+      501,
+      22
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Darius",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 2,
+     "pre_own_lane": 37,
+     "post_base": 1,
+     "post_own_lane": 16,
+     "post_other_lane": 51
+    },
+    "cover": 0.8055555555555556,
+    "share": {
+     "own_lane": 0.7227586206896551,
+     "other_lane": 0.09241379310344827,
+     "own_jungle": 0.0496551724137931,
+     "enemy_jungle": 0.027586206896551724,
+     "river": 0.04827586206896552,
+     "base": 0.038620689655172416,
+     "dead": 0.020689655172413793
+    },
+    "base_visits": 5,
+    "base_s": [
+     15,
+     6,
+     13,
+     6,
+     6
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      373,
+      13
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Zac",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 19,
+     "pre_own_lane": 56,
+     "post_own_lane": 37,
+     "post_other_lane": 22,
+     "post_base": 1
+    },
+    "cover": 0.8288888888888889,
+    "share": {
+     "own_lane": 0.5857908847184986,
+     "other_lane": 0.012064343163538873,
+     "own_jungle": 0.1126005361930295,
+     "enemy_jungle": 0.00938337801608579,
+     "river": 0.029490616621983913,
+     "base": 0.07640750670241286,
+     "dead": 0.1742627345844504
+    },
+    "base_visits": 4,
+    "base_s": [
+     20,
+     7,
+     7,
+     7
+    ],
+    "respawn": 5,
+    "trips": 3,
+    "trip_s": [
+     [
+      408,
+      17
+     ],
+     [
+      945,
+      12
+     ],
+     [
+      975,
+      21
+     ]
+    ],
+    "match": "KR_8427142382",
+    "champion": "Jayce",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 8,
+     "pre_own_lane": 48,
+     "pre_other_lane": 22,
+     "post_other_lane": 49
+    },
+    "cover": 0.8355555555555556,
+    "share": {
+     "own_lane": 0.4627659574468085,
+     "other_lane": 0.22074468085106383,
+     "own_jungle": 0.006648936170212766,
+     "enemy_jungle": 0.08909574468085106,
+     "river": 0.05053191489361702,
+     "base": 0.05585106382978723,
+     "dead": 0.11436170212765957
+    },
+    "base_visits": 5,
+    "base_s": [
+     8,
+     9,
+     7,
+     6,
+     14
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      406,
+      21
+     ]
+    ],
+    "match": "KR_8427142382",
+    "champion": "Urgot",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 5,
+     "pre_own_lane": 69,
+     "post_own_lane": 1,
+     "post_base": 3,
+     "post_other_lane": 2
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.552317880794702,
+     "other_lane": 0.08344370860927153,
+     "own_jungle": 0.02119205298013245,
+     "enemy_jungle": 0.04768211920529802,
+     "river": 0.02119205298013245,
+     "base": 0.04900662251655629,
+     "dead": 0.2251655629139073
+    },
+    "base_visits": 2,
+    "base_s": [
+     10,
+     10
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427156060",
+    "champion": "Udyr",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 50,
+     "pre_base": 4,
+     "post_other_lane": 13
+    },
+    "cover": 0.8033333333333333,
+    "share": {
+     "own_lane": 0.5753803596127247,
+     "other_lane": 0.10511756569847856,
+     "own_jungle": 0.059474412171507604,
+     "enemy_jungle": 0.012448132780082987,
+     "river": 0.005532503457814661,
+     "base": 0.04149377593360996,
+     "dead": 0.20055325034578148
+    },
+    "base_visits": 2,
+    "base_s": [
+     9,
+     8
+    ],
+    "respawn": 5,
+    "trips": 2,
+    "trip_s": [
+     [
+      345,
+      14
+     ],
+     [
+      362,
+      12
+     ]
+    ],
+    "match": "KR_8427156060",
+    "champion": "Aatrox",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 20,
+     "pre_base": 2,
+     "post_base": 4,
+     "post_own_lane": 18
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.6649006622516557,
+     "other_lane": 0.03576158940397351,
+     "own_jungle": 0.003973509933774834,
+     "enemy_jungle": 0.0013245033112582781,
+     "river": 0.04370860927152318,
+     "base": 0.06754966887417219,
+     "dead": 0.1827814569536424
+    },
+    "base_visits": 4,
+    "base_s": [
+     10,
+     12,
+     12,
+     12
+    ],
+    "respawn": 3,
+    "trips": 2,
+    "trip_s": [
+     [
+      628,
+      11
+     ],
+     [
+      907,
+      16
+     ]
+    ],
+    "match": "KR_8427156885",
+    "champion": "Varus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 76,
+     "post_base": 5,
+     "post_own_lane": 2,
+     "post_other_lane": 3
+    },
+    "cover": 0.8288888888888889,
+    "share": {
+     "own_lane": 0.5924932975871313,
+     "other_lane": 0.13270777479892762,
+     "own_jungle": 0.01876675603217158,
+     "enemy_jungle": 0.04289544235924933,
+     "river": 0.045576407506702415,
+     "base": 0.06166219839142091,
+     "dead": 0.10589812332439678
+    },
+    "base_visits": 5,
+    "base_s": [
+     8,
+     8,
+     11,
+     10,
+     14
+    ],
+    "respawn": 1,
+    "trips": 2,
+    "trip_s": [
+     [
+      318,
+      15
+     ],
+     [
+      771,
+      16
+     ]
+    ],
+    "match": "KR_8427156885",
+    "champion": "Naafiri",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 2,
+     "pre_own_lane": 66,
+     "post_base": 3,
+     "post_own_lane": 6,
+     "post_other_lane": 11
+    },
+    "cover": 0.8211111111111111,
+    "share": {
+     "own_lane": 0.6441136671177267,
+     "other_lane": 0.10284167794316644,
+     "own_jungle": 0.02435723951285521,
+     "enemy_jungle": 0.02029769959404601,
+     "river": 0.05277401894451962,
+     "base": 0.06089309878213803,
+     "dead": 0.09472259810554803
+    },
+    "base_visits": 4,
+    "base_s": [
+     10,
+     9,
+     16,
+     9
+    ],
+    "respawn": 3,
+    "trips": 1,
+    "trip_s": [
+     [
+      376,
+      19
+     ]
+    ],
+    "match": "KR_8427158122",
+    "champion": "Sion",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 13,
+     "pre_own_lane": 3,
+     "post_base": 21,
+     "post_own_lane": 22,
+     "post_other_lane": 13
+    },
+    "cover": 0.8022222222222222,
+    "share": {
+     "own_lane": 0.6842105263157895,
+     "other_lane": 0.008310249307479225,
+     "own_jungle": 0.0664819944598338,
+     "enemy_jungle": 0.0,
+     "river": 0.012465373961218837,
+     "base": 0.0664819944598338,
+     "dead": 0.16204986149584488
+    },
+    "base_visits": 4,
+    "base_s": [
+     8,
+     7,
+     7,
+     8
+    ],
+    "respawn": 5,
+    "trips": 1,
+    "trip_s": [
+     [
+      866,
+      16
+     ]
+    ],
+    "match": "KR_8427158122",
+    "champion": "Jayce",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 105,
+     "pre_base": 3,
+     "post_other_lane": 50,
+     "post_base": 2,
+     "post_own_lane": 2
+    },
+    "cover": 0.8155555555555556,
+    "share": {
+     "own_lane": 0.6525885558583107,
+     "other_lane": 0.05040871934604905,
+     "own_jungle": 0.025885558583106268,
+     "enemy_jungle": 0.05722070844686648,
+     "river": 0.0994550408719346,
+     "base": 0.05994550408719346,
+     "dead": 0.05449591280653951
+    },
+    "base_visits": 4,
+    "base_s": [
+     12,
+     11,
+     10,
+     9
+    ],
+    "respawn": 2,
+    "trips": 2,
+    "trip_s": [
+     [
+      346,
+      23
+     ],
+     [
+      403,
+      12
+     ]
+    ],
+    "match": "KR_8427164915",
+    "champion": "Malphite",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 49,
+     "pre_base": 9,
+     "post_own_lane": 57,
+     "post_other_lane": 35,
+     "post_base": 3
+    },
+    "cover": 0.8111111111111111,
+    "share": {
+     "own_lane": 0.7397260273972602,
+     "other_lane": 0.0136986301369863,
+     "own_jungle": 0.012328767123287671,
+     "enemy_jungle": 0.07260273972602739,
+     "river": 0.09041095890410959,
+     "base": 0.07123287671232877,
+     "dead": 0.0
+    },
+    "base_visits": 7,
+    "base_s": [
+     8,
+     16,
+     9,
+     10,
+     10,
+     6,
+     15
+    ],
+    "respawn": 0,
+    "trips": 2,
+    "trip_s": [
+     [
+      740,
+      21
+     ],
+     [
+      773,
+      22
+     ]
+    ],
+    "match": "KR_8427176534",
+    "champion": "Renekton",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 24,
+     "post_base": 4,
+     "post_own_lane": 25,
+     "post_other_lane": 60
+    },
+    "cover": 0.8211111111111111,
+    "share": {
+     "own_lane": 0.5967523680649527,
+     "other_lane": 0.07848443843031123,
+     "own_jungle": 0.07171853856562922,
+     "enemy_jungle": 0.013531799729364006,
+     "river": 0.05006765899864682,
+     "base": 0.06901217861975643,
+     "dead": 0.12043301759133965
+    },
+    "base_visits": 6,
+    "base_s": [
+     9,
+     9,
+     9,
+     7,
+     6,
+     7
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427176534",
+    "champion": "Ambessa",
+    "roams": [
+     {
+      "start": 836,
+      "len": 23,
+      "kill": false,
+      "death": false
+     }
+    ]
+   }
+  ],
+  "MIDDLE": [
+   {
+    "jr_src": {
+     "pre_own_lane": 49,
+     "pre_other_lane": 32,
+     "pre_base": 1,
+     "post_own_lane": 58,
+     "post_other_lane": 16
+    },
+    "cover": 0.8266666666666667,
+    "share": {
+     "own_lane": 0.5443548387096774,
+     "other_lane": 0.21370967741935484,
+     "own_jungle": 0.07526881720430108,
+     "enemy_jungle": 0.020161290322580645,
+     "river": 0.08198924731182795,
+     "base": 0.06451612903225806,
+     "dead": 0.0
+    },
+    "base_visits": 6,
+    "base_s": [
+     12,
+     14,
+     11,
+     18,
+     10,
+     10
+    ],
+    "respawn": 0,
+    "trips": 1,
+    "trip_s": [
+     [
+      254,
+      12
+     ]
+    ],
+    "match": "KR_8426999058",
+    "champion": "Orianna",
+    "roams": [
+     {
+      "start": 352,
+      "len": 71,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 116,
+     "pre_other_lane": 14,
+     "post_other_lane": 43
+    },
+    "cover": 0.8122222222222222,
+    "share": {
+     "own_lane": 0.4473324213406293,
+     "other_lane": 0.2051983584131327,
+     "own_jungle": 0.03419972640218878,
+     "enemy_jungle": 0.08618331053351573,
+     "river": 0.07934336525307797,
+     "base": 0.07523939808481532,
+     "dead": 0.07250341997264022
+    },
+    "base_visits": 7,
+    "base_s": [
+     11,
+     11,
+     15,
+     10,
+     9,
+     14,
+     6
+    ],
+    "respawn": 1,
+    "trips": 2,
+    "trip_s": [
+     [
+      449,
+      11
+     ],
+     [
+      751,
+      11
+     ]
+    ],
+    "match": "KR_8426999058",
+    "champion": "Ekko",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 56,
+     "pre_other_lane": 1,
+     "post_base": 1,
+     "post_other_lane": 52
+    },
+    "cover": 0.8244444444444444,
+    "share": {
+     "own_lane": 0.47035040431266845,
+     "other_lane": 0.2183288409703504,
+     "own_jungle": 0.08086253369272237,
+     "enemy_jungle": 0.022911051212938006,
+     "river": 0.01752021563342318,
+     "base": 0.10242587601078167,
+     "dead": 0.0876010781671159
+    },
+    "base_visits": 5,
+    "base_s": [
+     12,
+     10,
+     11,
+     10,
+     7
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8426999177",
+    "champion": "Yone",
+    "roams": [
+     {
+      "start": 804,
+      "len": 76,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 123,
+     "pre_other_lane": 6,
+     "pre_base": 8,
+     "post_other_lane": 19,
+     "post_base": 4,
+     "post_own_lane": 28
+    },
+    "cover": 0.8166666666666667,
+    "share": {
+     "own_lane": 0.3360544217687075,
+     "other_lane": 0.24489795918367346,
+     "own_jungle": 0.11428571428571428,
+     "enemy_jungle": 0.02857142857142857,
+     "river": 0.06666666666666667,
+     "base": 0.08707482993197278,
+     "dead": 0.12244897959183673
+    },
+    "base_visits": 7,
+    "base_s": [
+     12,
+     13,
+     10,
+     5,
+     9,
+     6,
+     6
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427029935",
+    "champion": "Swain",
+    "roams": [
+     {
+      "start": 342,
+      "len": 69,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 509,
+      "len": 65,
+      "kill": true,
+      "death": true
+     },
+     {
+      "start": 699,
+      "len": 47,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 150,
+     "pre_base": 4,
+     "post_other_lane": 44,
+     "post_own_lane": 28,
+     "post_base": 10
+    },
+    "cover": 0.8144444444444444,
+    "share": {
+     "own_lane": 0.4638472032742155,
+     "other_lane": 0.10368349249658936,
+     "own_jungle": 0.12551159618008187,
+     "enemy_jungle": 0.08458390177353342,
+     "river": 0.0572987721691678,
+     "base": 0.07639836289222374,
+     "dead": 0.08867667121418826
+    },
+    "base_visits": 6,
+    "base_s": [
+     7,
+     13,
+     12,
+     13,
+     15,
+     11
+    ],
+    "respawn": 1,
+    "trips": 4,
+    "trip_s": [
+     [
+      490,
+      15
+     ],
+     [
+      552,
+      13
+     ],
+     [
+      623,
+      32
+     ],
+     [
+      661,
+      11
+     ]
+    ],
+    "match": "KR_8427029935",
+    "champion": "AurelionSol",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 139,
+     "pre_base": 18,
+     "post_own_lane": 38,
+     "post_other_lane": 32
+    },
+    "cover": 0.8344444444444444,
+    "share": {
+     "own_lane": 0.46870838881491345,
+     "other_lane": 0.10785619174434088,
+     "own_jungle": 0.11584553928095873,
+     "enemy_jungle": 0.041278295605858856,
+     "river": 0.09587217043941411,
+     "base": 0.10386151797603196,
+     "dead": 0.06657789613848203
+    },
+    "base_visits": 6,
+    "base_s": [
+     12,
+     9,
+     12,
+     19,
+     11,
+     8
+    ],
+    "respawn": 2,
+    "trips": 4,
+    "trip_s": [
+     [
+      377,
+      30
+     ],
+     [
+      546,
+      26
+     ],
+     [
+      670,
+      37
+     ],
+     [
+      867,
+      18
+     ]
+    ],
+    "match": "KR_8427044839",
+    "champion": "Syndra",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 204,
+     "pre_other_lane": 28,
+     "post_own_lane": 42,
+     "post_base": 2,
+     "post_other_lane": 27
+    },
+    "cover": 0.8433333333333334,
+    "share": {
+     "own_lane": 0.3939393939393939,
+     "other_lane": 0.08563899868247694,
+     "own_jungle": 0.152832674571805,
+     "enemy_jungle": 0.09090909090909091,
+     "river": 0.08695652173913043,
+     "base": 0.07246376811594203,
+     "dead": 0.11725955204216074
+    },
+    "base_visits": 4,
+    "base_s": [
+     11,
+     13,
+     10,
+     11
+    ],
+    "respawn": 3,
+    "trips": 5,
+    "trip_s": [
+     [
+      250,
+      20
+     ],
+     [
+      375,
+      35
+     ],
+     [
+      442,
+      11
+     ],
+     [
+      550,
+      23
+     ],
+     [
+      641,
+      11
+     ]
+    ],
+    "match": "KR_8427044839",
+    "champion": "Qiyana",
+    "roams": [
+     {
+      "start": 728,
+      "len": 51,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 154,
+     "pre_base": 1,
+     "pre_other_lane": 10,
+     "post_own_lane": 45,
+     "post_other_lane": 29,
+     "post_base": 10
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.4279891304347826,
+     "other_lane": 0.10190217391304347,
+     "own_jungle": 0.14945652173913043,
+     "enemy_jungle": 0.04619565217391304,
+     "river": 0.08423913043478261,
+     "base": 0.08831521739130435,
+     "dead": 0.10190217391304347
+    },
+    "base_visits": 7,
+    "base_s": [
+     12,
+     9,
+     10,
+     11,
+     11,
+     9,
+     8
+    ],
+    "respawn": 2,
+    "trips": 3,
+    "trip_s": [
+     [
+      234,
+      17
+     ],
+     [
+      404,
+      27
+     ],
+     [
+      441,
+      34
+     ]
+    ],
+    "match": "KR_8427067003",
+    "champion": "Talon",
+    "roams": [
+     {
+      "start": 728,
+      "len": 29,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 108,
+     "pre_base": 1,
+     "post_own_lane": 103,
+     "post_base": 4,
+     "post_other_lane": 2
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.5377483443708609,
+     "other_lane": 0.0423841059602649,
+     "own_jungle": 0.07682119205298013,
+     "enemy_jungle": 0.07682119205298013,
+     "river": 0.0913907284768212,
+     "base": 0.05562913907284768,
+     "dead": 0.11920529801324503
+    },
+    "base_visits": 3,
+    "base_s": [
+     6,
+     9,
+     9
+    ],
+    "respawn": 3,
+    "trips": 4,
+    "trip_s": [
+     [
+      458,
+      18
+     ],
+     [
+      490,
+      27
+     ],
+     [
+      634,
+      25
+     ],
+     [
+      969,
+      38
+     ]
+    ],
+    "match": "KR_8427067003",
+    "champion": "Vladimir",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 154,
+     "post_own_lane": 26,
+     "post_base": 4,
+     "post_other_lane": 61
+    },
+    "cover": 0.8133333333333334,
+    "share": {
+     "own_lane": 0.5355191256830601,
+     "other_lane": 0.08060109289617487,
+     "own_jungle": 0.0942622950819672,
+     "enemy_jungle": 0.050546448087431695,
+     "river": 0.13524590163934427,
+     "base": 0.08743169398907104,
+     "dead": 0.01639344262295082
+    },
+    "base_visits": 8,
+    "base_s": [
+     11,
+     14,
+     10,
+     17,
+     12,
+     14,
+     9,
+     8
+    ],
+    "respawn": 0,
+    "trips": 2,
+    "trip_s": [
+     [
+      368,
+      14
+     ],
+     [
+      491,
+      32
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Galio",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 154,
+     "pre_other_lane": 17,
+     "pre_base": 1,
+     "post_own_lane": 57,
+     "post_base": 33
+    },
+    "cover": 0.81,
+    "share": {
+     "own_lane": 0.5555555555555556,
+     "other_lane": 0.006858710562414266,
+     "own_jungle": 0.09465020576131687,
+     "enemy_jungle": 0.07818930041152264,
+     "river": 0.12345679012345678,
+     "base": 0.056241426611796985,
+     "dead": 0.0850480109739369
+    },
+    "base_visits": 4,
+    "base_s": [
+     16,
+     13,
+     14,
+     18
+    ],
+    "respawn": 2,
+    "trips": 5,
+    "trip_s": [
+     [
+      201,
+      16
+     ],
+     [
+      498,
+      25
+     ],
+     [
+      686,
+      34
+     ],
+     [
+      724,
+      31
+     ],
+     [
+      922,
+      16
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Ahri",
+    "roams": [
+     {
+      "start": 453,
+      "len": 37,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_None": 14,
+     "pre_own_lane": 52,
+     "pre_base": 7,
+     "post_base": 9,
+     "post_own_lane": 13
+    },
+    "cover": 0.81,
+    "share": {
+     "own_lane": 0.4842249657064472,
+     "other_lane": 0.19204389574759945,
+     "own_jungle": 0.05898491083676269,
+     "enemy_jungle": 0.02194787379972565,
+     "river": 0.013717421124828532,
+     "base": 0.08916323731138547,
+     "dead": 0.13991769547325103
+    },
+    "base_visits": 5,
+    "base_s": [
+     12,
+     15,
+     11,
+     13,
+     8
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427074120",
+    "champion": "Mel",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 33,
+     "pre_own_lane": 112,
+     "pre_other_lane": 53,
+     "pre_base": 1,
+     "post_other_lane": 17,
+     "post_own_lane": 14
+    },
+    "cover": 0.8122222222222222,
+    "share": {
+     "own_lane": 0.45690834473324216,
+     "other_lane": 0.19288645690834474,
+     "own_jungle": 0.08207934336525308,
+     "enemy_jungle": 0.09712722298221614,
+     "river": 0.07934336525307797,
+     "base": 0.06429548563611491,
+     "dead": 0.027359781121751026
+    },
+    "base_visits": 5,
+    "base_s": [
+     14,
+     12,
+     11,
+     7,
+     11
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      543,
+      42
+     ],
+     [
+      608,
+      23
+     ],
+     [
+      650,
+      16
+     ]
+    ],
+    "match": "KR_8427074120",
+    "champion": "Jayce",
+    "roams": [
+     {
+      "start": 407,
+      "len": 44,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 121,
+     "pre_other_lane": 18,
+     "post_own_lane": 32,
+     "post_base": 13
+    },
+    "cover": 0.8244444444444444,
+    "share": {
+     "own_lane": 0.4946091644204852,
+     "other_lane": 0.09299191374663072,
+     "own_jungle": 0.08355795148247978,
+     "enemy_jungle": 0.04716981132075472,
+     "river": 0.07412398921832884,
+     "base": 0.09299191374663072,
+     "dead": 0.11455525606469003
+    },
+    "base_visits": 5,
+    "base_s": [
+     13,
+     11,
+     12,
+     8,
+     8
+    ],
+    "respawn": 4,
+    "trips": 3,
+    "trip_s": [
+     [
+      495,
+      38
+     ],
+     [
+      726,
+      16
+     ],
+     [
+      898,
+      10
+     ]
+    ],
+    "match": "KR_8427087043",
+    "champion": "Sylas",
+    "roams": [
+     {
+      "start": 339,
+      "len": 48,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 133,
+     "pre_base": 34,
+     "pre_other_lane": 4,
+     "post_base": 1,
+     "post_other_lane": 35,
+     "post_own_lane": 16
+    },
+    "cover": 0.8133333333333334,
+    "share": {
+     "own_lane": 0.31420765027322406,
+     "other_lane": 0.13797814207650272,
+     "own_jungle": 0.13114754098360656,
+     "enemy_jungle": 0.036885245901639344,
+     "river": 0.08333333333333333,
+     "base": 0.11885245901639344,
+     "dead": 0.17759562841530055
+    },
+    "base_visits": 6,
+    "base_s": [
+     12,
+     10,
+     14,
+     17,
+     11,
+     10
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      434,
+      11
+     ]
+    ],
+    "match": "KR_8427087043",
+    "champion": "Talon",
+    "roams": [
+     {
+      "start": 333,
+      "len": 30,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 18,
+     "pre_base": 1,
+     "pre_other_lane": 21,
+     "post_other_lane": 16,
+     "post_base": 1,
+     "post_own_lane": 19
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.5244565217391305,
+     "other_lane": 0.16032608695652173,
+     "own_jungle": 0.07065217391304347,
+     "enemy_jungle": 0.012228260869565218,
+     "river": 0.004076086956521739,
+     "base": 0.09239130434782608,
+     "dead": 0.1358695652173913
+    },
+    "base_visits": 6,
+    "base_s": [
+     13,
+     8,
+     11,
+     9,
+     9,
+     6
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427095161",
+    "champion": "Yone",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 92,
+     "pre_other_lane": 26,
+     "pre_base": 1,
+     "post_other_lane": 22,
+     "post_own_lane": 56,
+     "post_base": 1
+    },
+    "cover": 0.8488888888888889,
+    "share": {
+     "own_lane": 0.4476439790575916,
+     "other_lane": 0.07853403141361257,
+     "own_jungle": 0.05759162303664921,
+     "enemy_jungle": 0.11125654450261781,
+     "river": 0.049738219895287955,
+     "base": 0.06544502617801047,
+     "dead": 0.18979057591623036
+    },
+    "base_visits": 3,
+    "base_s": [
+     9,
+     12,
+     11
+    ],
+    "respawn": 5,
+    "trips": 4,
+    "trip_s": [
+     [
+      214,
+      20
+     ],
+     [
+      926,
+      19
+     ],
+     [
+      951,
+      26
+     ],
+     [
+      990,
+      10
+     ]
+    ],
+    "match": "KR_8427095161",
+    "champion": "Locke",
+    "roams": [
+     {
+      "start": 426,
+      "len": 36,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 59,
+     "pre_other_lane": 12,
+     "pre_base": 3,
+     "post_other_lane": 42,
+     "post_base": 2
+    },
+    "cover": 0.8166666666666667,
+    "share": {
+     "own_lane": 0.3523809523809524,
+     "other_lane": 0.16054421768707483,
+     "own_jungle": 0.03945578231292517,
+     "enemy_jungle": 0.04081632653061224,
+     "river": 0.04353741496598639,
+     "base": 0.07755102040816327,
+     "dead": 0.2857142857142857
+    },
+    "base_visits": 3,
+    "base_s": [
+     6,
+     8,
+     3
+    ],
+    "respawn": 8,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427099636",
+    "champion": "Yone",
+    "roams": [
+     {
+      "start": 248,
+      "len": 31,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 121,
+     "pre_other_lane": 23,
+     "pre_base": 1,
+     "post_own_lane": 18,
+     "post_base": 2,
+     "post_other_lane": 23
+    },
+    "cover": 0.8144444444444444,
+    "share": {
+     "own_lane": 0.33560709413369716,
+     "other_lane": 0.3069577080491132,
+     "own_jungle": 0.11869031377899045,
+     "enemy_jungle": 0.019099590723055934,
+     "river": 0.07094133697135062,
+     "base": 0.08731241473396999,
+     "dead": 0.061391541609822645
+    },
+    "base_visits": 7,
+    "base_s": [
+     11,
+     12,
+     13,
+     13,
+     11,
+     5,
+     8
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      564,
+      22
+     ]
+    ],
+    "match": "KR_8427110811",
+    "champion": "Yone",
+    "roams": [
+     {
+      "start": 483,
+      "len": 35,
+      "kill": true,
+      "death": true
+     },
+     {
+      "start": 781,
+      "len": 55,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 68,
+     "pre_base": 45,
+     "pre_other_lane": 39,
+     "post_own_lane": 37,
+     "post_other_lane": 67,
+     "post_base": 1
+    },
+    "cover": 0.8055555555555556,
+    "share": {
+     "own_lane": 0.2993103448275862,
+     "other_lane": 0.3296551724137931,
+     "own_jungle": 0.06620689655172414,
+     "enemy_jungle": 0.16413793103448276,
+     "river": 0.060689655172413794,
+     "base": 0.08,
+     "dead": 0.0
+    },
+    "base_visits": 8,
+    "base_s": [
+     11,
+     10,
+     11,
+     20,
+     8,
+     9,
+     10,
+     7
+    ],
+    "respawn": 0,
+    "trips": 2,
+    "trip_s": [
+     [
+      186,
+      11
+     ],
+     [
+      213,
+      18
+     ]
+    ],
+    "match": "KR_8427110811",
+    "champion": "Ekko",
+    "roams": [
+     {
+      "start": 497,
+      "len": 58,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 102,
+     "pre_base": 56,
+     "post_own_lane": 33,
+     "post_other_lane": 38
+    },
+    "cover": 0.8166666666666667,
+    "share": {
+     "own_lane": 0.4435374149659864,
+     "other_lane": 0.0380952380952381,
+     "own_jungle": 0.14829931972789115,
+     "enemy_jungle": 0.053061224489795916,
+     "river": 0.047619047619047616,
+     "base": 0.10204081632653061,
+     "dead": 0.1673469387755102
+    },
+    "base_visits": 5,
+    "base_s": [
+     14,
+     10,
+     11,
+     10,
+     10
+    ],
+    "respawn": 4,
+    "trips": 3,
+    "trip_s": [
+     [
+      275,
+      13
+     ],
+     [
+      698,
+      10
+     ],
+     [
+      1025,
+      22
+     ]
+    ],
+    "match": "KR_8427112235",
+    "champion": "Qiyana",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 131,
+     "post_own_lane": 66,
+     "post_base": 17
+    },
+    "cover": 0.8322222222222222,
+    "share": {
+     "own_lane": 0.5714285714285714,
+     "other_lane": 0.012016021361815754,
+     "own_jungle": 0.12817089452603472,
+     "enemy_jungle": 0.06942590120160214,
+     "river": 0.037383177570093455,
+     "base": 0.10146862483311081,
+     "dead": 0.0801068090787717
+    },
+    "base_visits": 8,
+    "base_s": [
+     10,
+     10,
+     11,
+     12,
+     10,
+     11,
+     11,
+     10
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      555,
+      29
+     ],
+     [
+      625,
+      35
+     ],
+     [
+      897,
+      10
+     ]
+    ],
+    "match": "KR_8427112235",
+    "champion": "Syndra",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 89,
+     "pre_base": 1,
+     "pre_other_lane": 11,
+     "post_own_lane": 15,
+     "post_other_lane": 20,
+     "post_base": 1
+    },
+    "cover": 0.8088888888888889,
+    "share": {
+     "own_lane": 0.510989010989011,
+     "other_lane": 0.11950549450549451,
+     "own_jungle": 0.05631868131868132,
+     "enemy_jungle": 0.059065934065934064,
+     "river": 0.04120879120879121,
+     "base": 0.08928571428571429,
+     "dead": 0.12362637362637363
+    },
+    "base_visits": 8,
+    "base_s": [
+     11,
+     10,
+     10,
+     11,
+     13,
+     10,
+     12,
+     15
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      487,
+      18
+     ]
+    ],
+    "match": "KR_8427117343",
+    "champion": "Taliyah",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 84,
+     "post_own_lane": 2,
+     "post_other_lane": 2
+    },
+    "cover": 0.8222222222222222,
+    "share": {
+     "own_lane": 0.5297297297297298,
+     "other_lane": 0.21891891891891893,
+     "own_jungle": 0.043243243243243246,
+     "enemy_jungle": 0.01756756756756757,
+     "river": 0.033783783783783786,
+     "base": 0.062162162162162166,
+     "dead": 0.0945945945945946
+    },
+    "base_visits": 4,
+    "base_s": [
+     12,
+     12,
+     13,
+     9
+    ],
+    "respawn": 3,
+    "trips": 2,
+    "trip_s": [
+     [
+      517,
+      32
+     ],
+     [
+      817,
+      14
+     ]
+    ],
+    "match": "KR_8427117343",
+    "champion": "Yone",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 96,
+     "pre_base": 1,
+     "post_own_lane": 55
+    },
+    "cover": 0.82,
+    "share": {
+     "own_lane": 0.5948509485094851,
+     "other_lane": 0.08401084010840108,
+     "own_jungle": 0.12059620596205962,
+     "enemy_jungle": 0.009485094850948509,
+     "river": 0.04065040650406504,
+     "base": 0.06910569105691057,
+     "dead": 0.08130081300813008
+    },
+    "base_visits": 4,
+    "base_s": [
+     10,
+     10,
+     9,
+     10
+    ],
+    "respawn": 3,
+    "trips": 4,
+    "trip_s": [
+     [
+      729,
+      25
+     ],
+     [
+      779,
+      16
+     ],
+     [
+      908,
+      18
+     ],
+     [
+      978,
+      10
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Vladimir",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 167,
+     "pre_other_lane": 31,
+     "post_own_lane": 32,
+     "post_base": 1,
+     "post_other_lane": 52
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.384,
+     "other_lane": 0.13733333333333334,
+     "own_jungle": 0.07466666666666667,
+     "enemy_jungle": 0.128,
+     "river": 0.11733333333333333,
+     "base": 0.072,
+     "dead": 0.08666666666666667
+    },
+    "base_visits": 4,
+    "base_s": [
+     11,
+     10,
+     11,
+     8
+    ],
+    "respawn": 3,
+    "trips": 5,
+    "trip_s": [
+     [
+      291,
+      13
+     ],
+     [
+      429,
+      23
+     ],
+     [
+      545,
+      16
+     ],
+     [
+      606,
+      24
+     ],
+     [
+      866,
+      17
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Zed",
+    "roams": [
+     {
+      "start": 726,
+      "len": 69,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 803,
+      "len": 48,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 115,
+     "pre_base": 3,
+     "pre_other_lane": 25,
+     "post_base": 6,
+     "post_other_lane": 35,
+     "post_own_lane": 21
+    },
+    "cover": 0.8222222222222222,
+    "share": {
+     "own_lane": 0.40540540540540543,
+     "other_lane": 0.1783783783783784,
+     "own_jungle": 0.13648648648648648,
+     "enemy_jungle": 0.03648648648648649,
+     "river": 0.051351351351351354,
+     "base": 0.10405405405405406,
+     "dead": 0.08783783783783784
+    },
+    "base_visits": 8,
+    "base_s": [
+     3,
+     11,
+     10,
+     10,
+     10,
+     10,
+     10,
+     9
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427142382",
+    "champion": "Talon",
+    "roams": [
+     {
+      "start": 707,
+      "len": 61,
+      "kill": false,
+      "death": false
+     },
+     {
+      "start": 781,
+      "len": 29,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 60,
+     "pre_other_lane": 36,
+     "pre_base": 2,
+     "post_base": 2,
+     "post_other_lane": 47,
+     "post_own_lane": 38
+    },
+    "cover": 0.8266666666666667,
+    "share": {
+     "own_lane": 0.4946236559139785,
+     "other_lane": 0.15725806451612903,
+     "own_jungle": 0.01478494623655914,
+     "enemy_jungle": 0.06720430107526881,
+     "river": 0.11827956989247312,
+     "base": 0.08736559139784947,
+     "dead": 0.06048387096774194
+    },
+    "base_visits": 8,
+    "base_s": [
+     13,
+     12,
+     12,
+     9,
+     7,
+     4,
+     6,
+     6
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427142382",
+    "champion": "Cassiopeia",
+    "roams": [
+     {
+      "start": 707,
+      "len": 71,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 52,
+     "post_own_lane": 7,
+     "post_base": 31,
+     "post_other_lane": 10
+    },
+    "cover": 0.8055555555555556,
+    "share": {
+     "own_lane": 0.6372413793103449,
+     "other_lane": 0.0993103448275862,
+     "own_jungle": 0.06896551724137931,
+     "enemy_jungle": 0.02620689655172414,
+     "river": 0.015172413793103448,
+     "base": 0.07448275862068965,
+     "dead": 0.07862068965517241
+    },
+    "base_visits": 8,
+    "base_s": [
+     12,
+     11,
+     12,
+     8,
+     10,
+     6,
+     11,
+     7
+    ],
+    "respawn": 0,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427156060",
+    "champion": "Azir",
+    "roams": [
+     {
+      "start": 836,
+      "len": 34,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 57,
+     "post_base": 3,
+     "post_other_lane": 11,
+     "post_own_lane": 13
+    },
+    "cover": 0.8344444444444444,
+    "share": {
+     "own_lane": 0.48468708388814913,
+     "other_lane": 0.1744340878828229,
+     "own_jungle": 0.05992010652463382,
+     "enemy_jungle": 0.018641810918774968,
+     "river": 0.014647137150466045,
+     "base": 0.07856191744340879,
+     "dead": 0.16910785619174434
+    },
+    "base_visits": 5,
+    "base_s": [
+     16,
+     14,
+     12,
+     11,
+     11
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427156060",
+    "champion": "Syndra",
+    "roams": [
+     {
+      "start": 729,
+      "len": 33,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 142,
+     "pre_base": 2,
+     "post_base": 43,
+     "post_other_lane": 11
+    },
+    "cover": 0.8077777777777778,
+    "share": {
+     "own_lane": 0.4167812929848693,
+     "other_lane": 0.22145804676753783,
+     "own_jungle": 0.055020632737276476,
+     "enemy_jungle": 0.09491059147180192,
+     "river": 0.06602475928473177,
+     "base": 0.10041265474552957,
+     "dead": 0.0453920220082531
+    },
+    "base_visits": 10,
+    "base_s": [
+     10,
+     10,
+     10,
+     11,
+     13,
+     11,
+     10,
+     7,
+     8,
+     6
+    ],
+    "respawn": 0,
+    "trips": 2,
+    "trip_s": [
+     [
+      252,
+      10
+     ],
+     [
+      634,
+      33
+     ]
+    ],
+    "match": "KR_8427156885",
+    "champion": "Ryze",
+    "roams": [
+     {
+      "start": 365,
+      "len": 30,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 425,
+      "len": 34,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 123,
+     "pre_other_lane": 17,
+     "post_other_lane": 29,
+     "post_own_lane": 36
+    },
+    "cover": 0.8088888888888889,
+    "share": {
+     "own_lane": 0.4848901098901099,
+     "other_lane": 0.14285714285714285,
+     "own_jungle": 0.10714285714285714,
+     "enemy_jungle": 0.03159340659340659,
+     "river": 0.09615384615384616,
+     "base": 0.08379120879120878,
+     "dead": 0.05357142857142857
+    },
+    "base_visits": 8,
+    "base_s": [
+     7,
+     11,
+     10,
+     12,
+     11,
+     10,
+     21,
+     10
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      227,
+      20
+     ]
+    ],
+    "match": "KR_8427156885",
+    "champion": "Orianna",
+    "roams": [
+     {
+      "start": 635,
+      "len": 66,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 809,
+      "len": 48,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_None": 1,
+     "pre_own_lane": 106,
+     "pre_other_lane": 22,
+     "pre_base": 50,
+     "post_base": 3,
+     "post_other_lane": 42,
+     "post_own_lane": 45
+    },
+    "cover": 0.83,
+    "share": {
+     "own_lane": 0.3453815261044177,
+     "other_lane": 0.10040160642570281,
+     "own_jungle": 0.11914323962516733,
+     "enemy_jungle": 0.13654618473895583,
+     "river": 0.04417670682730924,
+     "base": 0.06693440428380187,
+     "dead": 0.18741633199464525
+    },
+    "base_visits": 4,
+    "base_s": [
+     11,
+     8,
+     11,
+     13
+    ],
+    "respawn": 5,
+    "trips": 2,
+    "trip_s": [
+     [
+      439,
+      13
+     ],
+     [
+      584,
+      11
+     ]
+    ],
+    "match": "KR_8427158122",
+    "champion": "Taliyah",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 139,
+     "post_own_lane": 35,
+     "post_base": 1,
+     "post_other_lane": 41
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.5339673913043478,
+     "other_lane": 0.125,
+     "own_jungle": 0.15760869565217392,
+     "enemy_jungle": 0.028532608695652172,
+     "river": 0.057065217391304345,
+     "base": 0.07744565217391304,
+     "dead": 0.020380434782608696
+    },
+    "base_visits": 5,
+    "base_s": [
+     12,
+     11,
+     19,
+     13,
+     7
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      452,
+      17
+     ],
+     [
+      752,
+      16
+     ],
+     [
+      855,
+      10
+     ]
+    ],
+    "match": "KR_8427164915",
+    "champion": "Aurora",
+    "roams": [
+     {
+      "start": 606,
+      "len": 38,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 165,
+     "pre_base": 15,
+     "pre_other_lane": 24,
+     "post_own_lane": 51,
+     "post_base": 3,
+     "post_other_lane": 27
+    },
+    "cover": 0.8144444444444444,
+    "share": {
+     "own_lane": 0.43383356070941337,
+     "other_lane": 0.0723055934515689,
+     "own_jungle": 0.13233287858117326,
+     "enemy_jungle": 0.08185538881309687,
+     "river": 0.10641200545702592,
+     "base": 0.06548431105047749,
+     "dead": 0.1077762619372442
+    },
+    "base_visits": 6,
+    "base_s": [
+     12,
+     7,
+     10,
+     9,
+     6,
+     7
+    ],
+    "respawn": 1,
+    "trips": 2,
+    "trip_s": [
+     [
+      491,
+      19
+     ],
+     [
+      883,
+      12
+     ]
+    ],
+    "match": "KR_8427176534",
+    "champion": "Sylas",
+    "roams": [
+     {
+      "start": 744,
+      "len": 52,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 152,
+     "pre_other_lane": 35,
+     "pre_base": 3,
+     "post_own_lane": 90
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.4105960264900662,
+     "other_lane": 0.054304635761589407,
+     "own_jungle": 0.10331125827814569,
+     "enemy_jungle": 0.11125827814569536,
+     "river": 0.0913907284768212,
+     "base": 0.09801324503311258,
+     "dead": 0.13112582781456952
+    },
+    "base_visits": 5,
+    "base_s": [
+     11,
+     13,
+     13,
+     10,
+     6
+    ],
+    "respawn": 3,
+    "trips": 3,
+    "trip_s": [
+     [
+      344,
+      10
+     ],
+     [
+      580,
+      46
+     ],
+     [
+      956,
+      31
+     ]
+    ],
+    "match": "KR_8427176534",
+    "champion": "Katarina",
+    "roams": [
+     {
+      "start": 509,
+      "len": 32,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 677,
+      "len": 44,
+      "kill": true,
+      "death": false
+     }
+    ]
+   }
+  ],
+  "BOTTOM": [
+   {
+    "jr_src": {
+     "pre_base": 11,
+     "pre_own_lane": 55,
+     "post_other_lane": 32
+    },
+    "cover": 0.8488888888888889,
+    "share": {
+     "own_lane": 0.4803664921465969,
+     "other_lane": 0.13350785340314136,
+     "own_jungle": 0.04450261780104712,
+     "enemy_jungle": 0.011780104712041885,
+     "river": 0.051047120418848166,
+     "base": 0.09554973821989529,
+     "dead": 0.18324607329842932
+    },
+    "base_visits": 3,
+    "base_s": [
+     11,
+     9,
+     13
+    ],
+    "respawn": 6,
+    "trips": 1,
+    "trip_s": [
+     [
+      351,
+      30
+     ]
+    ],
+    "match": "KR_8426999058",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 4,
+     "pre_own_lane": 42,
+     "pre_other_lane": 2,
+     "post_other_lane": 37,
+     "post_base": 4
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.5509933774834437,
+     "other_lane": 0.152317880794702,
+     "own_jungle": 0.046357615894039736,
+     "enemy_jungle": 0.019867549668874173,
+     "river": 0.03576158940397351,
+     "base": 0.07152317880794702,
+     "dead": 0.12317880794701987
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     8,
+     9,
+     7,
+     9
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8426999058",
+    "champion": "Jinx",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 11,
+     "pre_own_lane": 72,
+     "post_own_lane": 17,
+     "post_other_lane": 36
+    },
+    "cover": 0.8288888888888889,
+    "share": {
+     "own_lane": 0.5804289544235925,
+     "other_lane": 0.17292225201072386,
+     "own_jungle": 0.03753351206434316,
+     "enemy_jungle": 0.014745308310991957,
+     "river": 0.09919571045576407,
+     "base": 0.06836461126005362,
+     "dead": 0.02680965147453083
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     10,
+     8,
+     13,
+     13
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      728,
+      42
+     ]
+    ],
+    "match": "KR_8426999177",
+    "champion": "Jinx",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 4,
+     "pre_own_lane": 77,
+     "post_other_lane": 52
+    },
+    "cover": 0.8277777777777777,
+    "share": {
+     "own_lane": 0.512751677852349,
+     "other_lane": 0.15167785234899328,
+     "own_jungle": 0.12080536912751678,
+     "enemy_jungle": 0.0013422818791946308,
+     "river": 0.025503355704697986,
+     "base": 0.08053691275167785,
+     "dead": 0.10738255033557047
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     8,
+     7,
+     10,
+     9,
+     10
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      633,
+      28
+     ]
+    ],
+    "match": "KR_8426999177",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 13,
+     "pre_other_lane": 14,
+     "pre_own_lane": 55,
+     "post_other_lane": 72,
+     "post_base": 4,
+     "post_own_lane": 30
+    },
+    "cover": 0.8211111111111111,
+    "share": {
+     "own_lane": 0.5087956698240866,
+     "other_lane": 0.15426251691474965,
+     "own_jungle": 0.11637347767253045,
+     "enemy_jungle": 0.014884979702300407,
+     "river": 0.07307171853856563,
+     "base": 0.07848443843031123,
+     "dead": 0.05412719891745602
+    },
+    "base_visits": 7,
+    "base_s": [
+     8,
+     8,
+     8,
+     9,
+     11,
+     8,
+     3
+    ],
+    "respawn": 2,
+    "trips": 2,
+    "trip_s": [
+     [
+      612,
+      20
+     ],
+     [
+      1021,
+      11
+     ]
+    ],
+    "match": "KR_8427029935",
+    "champion": "Tristana",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 53,
+     "pre_base": 1,
+     "post_own_lane": 26,
+     "post_other_lane": 48
+    },
+    "cover": 0.8377777777777777,
+    "share": {
+     "own_lane": 0.5517241379310345,
+     "other_lane": 0.11405835543766578,
+     "own_jungle": 0.09946949602122016,
+     "enemy_jungle": 0.003978779840848806,
+     "river": 0.042440318302387266,
+     "base": 0.05570291777188329,
+     "dead": 0.13262599469496023
+    },
+    "base_visits": 3,
+    "base_s": [
+     9,
+     7,
+     7
+    ],
+    "respawn": 4,
+    "trips": 2,
+    "trip_s": [
+     [
+      471,
+      16
+     ],
+     [
+      855,
+      14
+     ]
+    ],
+    "match": "KR_8427029935",
+    "champion": "Varus",
+    "roams": [
+     {
+      "start": 747,
+      "len": 33,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 6,
+     "pre_own_lane": 71,
+     "post_other_lane": 66
+    },
+    "cover": 0.8355555555555556,
+    "share": {
+     "own_lane": 0.6542553191489362,
+     "other_lane": 0.08377659574468085,
+     "own_jungle": 0.06648936170212766,
+     "enemy_jungle": 0.007978723404255319,
+     "river": 0.08909574468085106,
+     "base": 0.09840425531914894,
+     "dead": 0.0
+    },
+    "base_visits": 7,
+    "base_s": [
+     10,
+     10,
+     13,
+     14,
+     12,
+     17,
+     15
+    ],
+    "respawn": 0,
+    "trips": 3,
+    "trip_s": [
+     [
+      381,
+      11
+     ],
+     [
+      678,
+      31
+     ],
+     [
+      791,
+      11
+     ]
+    ],
+    "match": "KR_8427044839",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 5,
+     "pre_own_lane": 21,
+     "post_base": 1,
+     "post_other_lane": 22
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.6211920529801325,
+     "other_lane": 0.16158940397350993,
+     "own_jungle": 0.03443708609271523,
+     "enemy_jungle": 0.0013245033112582781,
+     "river": 0.01456953642384106,
+     "base": 0.060927152317880796,
+     "dead": 0.10596026490066225
+    },
+    "base_visits": 3,
+    "base_s": [
+     10,
+     10,
+     11
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427044839",
+    "champion": "Ezreal",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 9,
+     "pre_own_lane": 18,
+     "post_own_lane": 33,
+     "post_other_lane": 63
+    },
+    "cover": 0.8366666666666667,
+    "share": {
+     "own_lane": 0.548472775564409,
+     "other_lane": 0.06374501992031872,
+     "own_jungle": 0.07171314741035857,
+     "enemy_jungle": 0.03187250996015936,
+     "river": 0.034528552456839307,
+     "base": 0.08366533864541832,
+     "dead": 0.16600265604249667
+    },
+    "base_visits": 3,
+    "base_s": [
+     12,
+     8,
+     9
+    ],
+    "respawn": 6,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427067003",
+    "champion": "Xayah",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 50,
+     "pre_other_lane": 25,
+     "pre_base": 3,
+     "post_base": 18,
+     "post_own_lane": 39,
+     "post_other_lane": 26
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.5618421052631579,
+     "other_lane": 0.05,
+     "own_jungle": 0.06447368421052632,
+     "enemy_jungle": 0.034210526315789476,
+     "river": 0.08552631578947369,
+     "base": 0.06578947368421052,
+     "dead": 0.13815789473684212
+    },
+    "base_visits": 4,
+    "base_s": [
+     9,
+     9,
+     8,
+     7
+    ],
+    "respawn": 3,
+    "trips": 1,
+    "trip_s": [
+     [
+      996,
+      21
+     ]
+    ],
+    "match": "KR_8427067003",
+    "champion": "Kalista",
+    "roams": [
+     {
+      "start": 505,
+      "len": 63,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 6,
+     "pre_own_lane": 69,
+     "post_other_lane": 54
+    },
+    "cover": 0.8411111111111111,
+    "share": {
+     "own_lane": 0.5310435931307794,
+     "other_lane": 0.12681638044914134,
+     "own_jungle": 0.059445178335535004,
+     "enemy_jungle": 0.002642007926023778,
+     "river": 0.0845442536327609,
+     "base": 0.07001321003963012,
+     "dead": 0.12549537648612946
+    },
+    "base_visits": 3,
+    "base_s": [
+     12,
+     9,
+     10
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      796,
+      18
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Draven",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 150,
+     "pre_base": 6,
+     "post_base": 1,
+     "post_own_lane": 30,
+     "post_other_lane": 50
+    },
+    "cover": 0.8366666666666667,
+    "share": {
+     "own_lane": 0.5285524568393094,
+     "other_lane": 0.057104913678618856,
+     "own_jungle": 0.16201859229747675,
+     "enemy_jungle": 0.006640106241699867,
+     "river": 0.1049136786188579,
+     "base": 0.06108897742363878,
+     "dead": 0.0796812749003984
+    },
+    "base_visits": 6,
+    "base_s": [
+     7,
+     5,
+     9,
+     7,
+     8,
+     8
+    ],
+    "respawn": 2,
+    "trips": 3,
+    "trip_s": [
+     [
+      379,
+      24
+     ],
+     [
+      565,
+      11
+     ],
+     [
+      581,
+      35
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Varus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 11,
+     "pre_own_lane": 25,
+     "post_other_lane": 5
+    },
+    "cover": 0.8244444444444444,
+    "share": {
+     "own_lane": 0.5053908355795148,
+     "other_lane": 0.19811320754716982,
+     "own_jungle": 0.02830188679245283,
+     "enemy_jungle": 0.0,
+     "river": 0.014824797843665768,
+     "base": 0.09433962264150944,
+     "dead": 0.15902964959568733
+    },
+    "base_visits": 4,
+    "base_s": [
+     10,
+     12,
+     12,
+     8
+    ],
+    "respawn": 7,
+    "trips": 1,
+    "trip_s": [
+     [
+      588,
+      21
+     ]
+    ],
+    "match": "KR_8427074120",
+    "champion": "Varus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 2,
+     "pre_own_lane": 47,
+     "pre_other_lane": 14,
+     "post_own_lane": 9,
+     "post_other_lane": 101
+    },
+    "cover": 0.8277777777777777,
+    "share": {
+     "own_lane": 0.5624161073825503,
+     "other_lane": 0.1704697986577181,
+     "own_jungle": 0.036241610738255034,
+     "enemy_jungle": 0.12348993288590604,
+     "river": 0.040268456375838924,
+     "base": 0.06308724832214765,
+     "dead": 0.004026845637583893
+    },
+    "base_visits": 5,
+    "base_s": [
+     11,
+     11,
+     8,
+     11,
+     9
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      717,
+      15
+     ]
+    ],
+    "match": "KR_8427074120",
+    "champion": "Kalista",
+    "roams": [
+     {
+      "start": 838,
+      "len": 129,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 10,
+     "pre_own_lane": 38,
+     "post_other_lane": 1
+    },
+    "cover": 0.8277777777777777,
+    "share": {
+     "own_lane": 0.6241610738255033,
+     "other_lane": 0.1087248322147651,
+     "own_jungle": 0.03758389261744966,
+     "enemy_jungle": 0.0,
+     "river": 0.016107382550335572,
+     "base": 0.07919463087248323,
+     "dead": 0.1342281879194631
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     8,
+     7,
+     9,
+     11,
+     10
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427087043",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 49,
+     "pre_base": 2,
+     "post_other_lane": 11,
+     "post_base": 6
+    },
+    "cover": 0.8033333333333333,
+    "share": {
+     "own_lane": 0.6113416320885201,
+     "other_lane": 0.11479944674965421,
+     "own_jungle": 0.029045643153526972,
+     "enemy_jungle": 0.02627939142461964,
+     "river": 0.02351313969571231,
+     "base": 0.0636237897648686,
+     "dead": 0.1313969571230982
+    },
+    "base_visits": 6,
+    "base_s": [
+     10,
+     18,
+     8,
+     13,
+     9,
+     13
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      770,
+      41
+     ]
+    ],
+    "match": "KR_8427087043",
+    "champion": "Varus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 6,
+     "pre_own_lane": 13,
+     "pre_other_lane": 6,
+     "post_other_lane": 36
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.5473684210526316,
+     "other_lane": 0.19473684210526315,
+     "own_jungle": 0.06842105263157895,
+     "enemy_jungle": 0.0,
+     "river": 0.002631578947368421,
+     "base": 0.0881578947368421,
+     "dead": 0.09868421052631579
+    },
+    "base_visits": 4,
+    "base_s": [
+     17,
+     8,
+     11,
+     11
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427095161",
+    "champion": "Jhin",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 37,
+     "pre_other_lane": 25,
+     "post_other_lane": 41,
+     "post_own_lane": 12,
+     "post_base": 1
+    },
+    "cover": 0.8455555555555555,
+    "share": {
+     "own_lane": 0.5611038107752957,
+     "other_lane": 0.164257555847569,
+     "own_jungle": 0.01971090670170828,
+     "enemy_jungle": 0.051248357424441525,
+     "river": 0.06438896189224705,
+     "base": 0.0735873850197109,
+     "dead": 0.0657030223390276
+    },
+    "base_visits": 7,
+    "base_s": [
+     8,
+     10,
+     11,
+     10,
+     12,
+     11,
+     3
+    ],
+    "respawn": 1,
+    "trips": 2,
+    "trip_s": [
+     [
+      586,
+      25
+     ],
+     [
+      993,
+      11
+     ]
+    ],
+    "match": "KR_8427095161",
+    "champion": "Xayah",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 35,
+     "pre_base": 17,
+     "post_other_lane": 115,
+     "post_base": 1
+    },
+    "cover": 0.8255555555555556,
+    "share": {
+     "own_lane": 0.5343203230148048,
+     "other_lane": 0.15208613728129206,
+     "own_jungle": 0.10228802153432032,
+     "enemy_jungle": 0.026917900403768506,
+     "river": 0.06594885598923284,
+     "base": 0.05114401076716016,
+     "dead": 0.06729475100942127
+    },
+    "base_visits": 4,
+    "base_s": [
+     6,
+     10,
+     9,
+     7
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      697,
+      24
+     ]
+    ],
+    "match": "KR_8427099636",
+    "champion": "Aphelios",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 33,
+     "pre_own_lane": 16,
+     "post_base": 43,
+     "post_other_lane": 41
+    },
+    "cover": 0.8111111111111111,
+    "share": {
+     "own_lane": 0.5328767123287671,
+     "other_lane": 0.07671232876712329,
+     "own_jungle": 0.10273972602739725,
+     "enemy_jungle": 0.01643835616438356,
+     "river": 0.028767123287671233,
+     "base": 0.08493150684931507,
+     "dead": 0.15753424657534246
+    },
+    "base_visits": 6,
+    "base_s": [
+     17,
+     9,
+     8,
+     8,
+     12,
+     13
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427099636",
+    "champion": "Katarina",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 19,
+     "pre_other_lane": 16,
+     "post_own_lane": 3,
+     "post_base": 2
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.6026666666666667,
+     "other_lane": 0.12933333333333333,
+     "own_jungle": 0.03333333333333333,
+     "enemy_jungle": 0.004,
+     "river": 0.014666666666666666,
+     "base": 0.08266666666666667,
+     "dead": 0.13333333333333333
+    },
+    "base_visits": 7,
+    "base_s": [
+     9,
+     8,
+     12,
+     11,
+     10,
+     8,
+     4
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427110811",
+    "champion": "Tristana",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 67,
+     "pre_base": 2,
+     "pre_other_lane": 35,
+     "post_base": 1,
+     "post_other_lane": 36
+    },
+    "cover": 0.83,
+    "share": {
+     "own_lane": 0.500669344042838,
+     "other_lane": 0.19678714859437751,
+     "own_jungle": 0.038821954484605084,
+     "enemy_jungle": 0.06961178045515395,
+     "river": 0.04685408299866131,
+     "base": 0.06693440428380187,
+     "dead": 0.08032128514056225
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     8,
+     9,
+     9,
+     9
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427110811",
+    "champion": "Ezreal",
+    "roams": [
+     {
+      "start": 694,
+      "len": 90,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 10,
+     "pre_own_lane": 51,
+     "post_base": 2,
+     "post_own_lane": 4,
+     "post_other_lane": 22
+    },
+    "cover": 0.8377777777777777,
+    "share": {
+     "own_lane": 0.6087533156498673,
+     "other_lane": 0.05968169761273209,
+     "own_jungle": 0.029177718832891247,
+     "enemy_jungle": 0.025198938992042442,
+     "river": 0.038461538461538464,
+     "base": 0.09018567639257294,
+     "dead": 0.14854111405835543
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     10,
+     8,
+     10,
+     7
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      632,
+      22
+     ]
+    ],
+    "match": "KR_8427112235",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 49,
+     "pre_base": 3,
+     "post_base": 1,
+     "post_own_lane": 46,
+     "post_other_lane": 15
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.632,
+     "other_lane": 0.037333333333333336,
+     "own_jungle": 0.06933333333333333,
+     "enemy_jungle": 0.02,
+     "river": 0.03866666666666667,
+     "base": 0.07733333333333334,
+     "dead": 0.12533333333333332
+    },
+    "base_visits": 4,
+    "base_s": [
+     10,
+     14,
+     8,
+     14
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      568,
+      32
+     ]
+    ],
+    "match": "KR_8427112235",
+    "champion": "Yunara",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 5,
+     "pre_own_lane": 39,
+     "post_other_lane": 37,
+     "post_base": 2,
+     "post_own_lane": 16
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.6342105263157894,
+     "other_lane": 0.14473684210526316,
+     "own_jungle": 0.05526315789473684,
+     "enemy_jungle": 0.04736842105263158,
+     "river": 0.007894736842105263,
+     "base": 0.07763157894736843,
+     "dead": 0.03289473684210526
+    },
+    "base_visits": 6,
+    "base_s": [
+     8,
+     11,
+     10,
+     10,
+     11,
+     10
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      957,
+      16
+     ]
+    ],
+    "match": "KR_8427117343",
+    "champion": "Xayah",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 3,
+     "pre_own_lane": 16,
+     "post_other_lane": 23
+    },
+    "cover": 0.8455555555555555,
+    "share": {
+     "own_lane": 0.6057818659658344,
+     "other_lane": 0.17082785808147175,
+     "own_jungle": 0.01576872536136662,
+     "enemy_jungle": 0.010512483574244415,
+     "river": 0.023653088042049936,
+     "base": 0.08804204993429698,
+     "dead": 0.08541392904073587
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     8,
+     8,
+     7,
+     11,
+     10
+    ],
+    "respawn": 3,
+    "trips": 1,
+    "trip_s": [
+     [
+      534,
+      15
+     ]
+    ],
+    "match": "KR_8427117343",
+    "champion": "Ezreal",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 46,
+     "pre_base": 8,
+     "pre_other_lane": 16,
+     "post_other_lane": 40,
+     "post_base": 2,
+     "post_own_lane": 8
+    },
+    "cover": 0.8366666666666667,
+    "share": {
+     "own_lane": 0.5059760956175299,
+     "other_lane": 0.14475431606905712,
+     "own_jungle": 0.05976095617529881,
+     "enemy_jungle": 0.013280212483399735,
+     "river": 0.057104913678618856,
+     "base": 0.0796812749003984,
+     "dead": 0.1394422310756972
+    },
+    "base_visits": 4,
+    "base_s": [
+     12,
+     9,
+     11,
+     6
+    ],
+    "respawn": 5,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427126824",
+    "champion": "Kalista",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 66,
+     "pre_base": 4,
+     "pre_other_lane": 2,
+     "post_other_lane": 54,
+     "post_base": 13
+    },
+    "cover": 0.8477777777777777,
+    "share": {
+     "own_lane": 0.5111402359108781,
+     "other_lane": 0.21756225425950196,
+     "own_jungle": 0.06028833551769332,
+     "enemy_jungle": 0.020969855832241154,
+     "river": 0.07339449541284404,
+     "base": 0.08387942332896461,
+     "dead": 0.0327653997378768
+    },
+    "base_visits": 7,
+    "base_s": [
+     9,
+     9,
+     10,
+     10,
+     12,
+     9,
+     8
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      200,
+      31
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Aphelios",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 27,
+     "pre_base": 8,
+     "pre_other_lane": 45,
+     "post_other_lane": 31
+    },
+    "cover": 0.8433333333333334,
+    "share": {
+     "own_lane": 0.3675889328063241,
+     "other_lane": 0.31620553359683795,
+     "own_jungle": 0.08959156785243742,
+     "enemy_jungle": 0.010540184453227932,
+     "river": 0.022397891963109356,
+     "base": 0.07509881422924901,
+     "dead": 0.11857707509881422
+    },
+    "base_visits": 4,
+    "base_s": [
+     9,
+     8,
+     11,
+     12
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427142382",
+    "champion": "Jhin",
+    "roams": [
+     {
+      "start": 496,
+      "len": 76,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 3,
+     "pre_own_lane": 14,
+     "pre_other_lane": 16,
+     "post_other_lane": 46
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.4618421052631579,
+     "other_lane": 0.2,
+     "own_jungle": 0.013157894736842105,
+     "enemy_jungle": 0.06578947368421052,
+     "river": 0.007894736842105263,
+     "base": 0.0868421052631579,
+     "dead": 0.16447368421052633
+    },
+    "base_visits": 3,
+    "base_s": [
+     12,
+     27,
+     10
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      584,
+      14
+     ]
+    ],
+    "match": "KR_8427142382",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 16,
+     "pre_own_lane": 18,
+     "post_own_lane": 12,
+     "post_other_lane": 71
+    },
+    "cover": 0.8377777777777777,
+    "share": {
+     "own_lane": 0.6724137931034483,
+     "other_lane": 0.09549071618037135,
+     "own_jungle": 0.0649867374005305,
+     "enemy_jungle": 0.04509283819628647,
+     "river": 0.017241379310344827,
+     "base": 0.05570291777188329,
+     "dead": 0.04907161803713528
+    },
+    "base_visits": 4,
+    "base_s": [
+     10,
+     11,
+     12,
+     11
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      585,
+      14
+     ]
+    ],
+    "match": "KR_8427156060",
+    "champion": "Corki",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 45,
+     "pre_base": 3,
+     "post_other_lane": 38
+    },
+    "cover": 0.8477777777777777,
+    "share": {
+     "own_lane": 0.5897771952817824,
+     "other_lane": 0.13892529488859764,
+     "own_jungle": 0.057667103538663174,
+     "enemy_jungle": 0.001310615989515072,
+     "river": 0.039318479685452164,
+     "base": 0.07470511140235911,
+     "dead": 0.0982961992136304
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     11,
+     11,
+     11,
+     9
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      839,
+      11
+     ]
+    ],
+    "match": "KR_8427156060",
+    "champion": "Ezreal",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 65,
+     "pre_base": 8,
+     "post_other_lane": 102
+    },
+    "cover": 0.8233333333333334,
+    "share": {
+     "own_lane": 0.5357624831309041,
+     "other_lane": 0.1417004048582996,
+     "own_jungle": 0.11740890688259109,
+     "enemy_jungle": 0.02699055330634278,
+     "river": 0.048582995951417005,
+     "base": 0.08502024291497975,
+     "dead": 0.044534412955465584
+    },
+    "base_visits": 8,
+    "base_s": [
+     8,
+     10,
+     9,
+     8,
+     9,
+     13,
+     10,
+     8
+    ],
+    "respawn": 0,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427156885",
+    "champion": "Kaisa",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 117,
+     "pre_other_lane": 17,
+     "pre_base": 2,
+     "post_other_lane": 58
+    },
+    "cover": 0.8233333333333334,
+    "share": {
+     "own_lane": 0.3333333333333333,
+     "other_lane": 0.3265856950067476,
+     "own_jungle": 0.10256410256410256,
+     "enemy_jungle": 0.005398110661268556,
+     "river": 0.10661268556005399,
+     "base": 0.07827260458839407,
+     "dead": 0.04723346828609987
+    },
+    "base_visits": 6,
+    "base_s": [
+     14,
+     9,
+     10,
+     9,
+     8,
+     8
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427156885",
+    "champion": "Akshan",
+    "roams": [
+     {
+      "start": 495,
+      "len": 104,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 648,
+      "len": 57,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_None": 1,
+     "pre_own_lane": 47,
+     "pre_base": 5,
+     "pre_other_lane": 5,
+     "post_other_lane": 69
+    },
+    "cover": 0.82,
+    "share": {
+     "own_lane": 0.6016260162601627,
+     "other_lane": 0.17615176151761516,
+     "own_jungle": 0.06368563685636856,
+     "enemy_jungle": 0.03387533875338753,
+     "river": 0.044715447154471545,
+     "base": 0.06910569105691057,
+     "dead": 0.01084010840108401
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     10,
+     7,
+     12,
+     11,
+     11
+    ],
+    "respawn": 0,
+    "trips": 1,
+    "trip_s": [
+     [
+      663,
+      17
+     ]
+    ],
+    "match": "KR_8427158122",
+    "champion": "Kaisa",
+    "roams": [
+     {
+      "start": 797,
+      "len": 58,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 68,
+     "pre_base": 2,
+     "post_other_lane": 65,
+     "post_base": 2
+    },
+    "cover": 0.8355555555555556,
+    "share": {
+     "own_lane": 0.5731382978723404,
+     "other_lane": 0.15558510638297873,
+     "own_jungle": 0.041223404255319146,
+     "enemy_jungle": 0.08643617021276596,
+     "river": 0.022606382978723406,
+     "base": 0.047872340425531915,
+     "dead": 0.07313829787234043
+    },
+    "base_visits": 4,
+    "base_s": [
+     11,
+     11,
+     10,
+     8
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427158122",
+    "champion": "Sivir",
+    "roams": [
+     {
+      "start": 780,
+      "len": 79,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 21,
+     "pre_base": 7,
+     "post_own_lane": 13,
+     "post_other_lane": 60,
+     "post_base": 28
+    },
+    "cover": 0.8077777777777778,
+    "share": {
+     "own_lane": 0.6547455295735901,
+     "other_lane": 0.06327372764786796,
+     "own_jungle": 0.026134800550206328,
+     "enemy_jungle": 0.07977991746905089,
+     "river": 0.04126547455295736,
+     "base": 0.06602475928473177,
+     "dead": 0.0687757909215956
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     9,
+     9,
+     10,
+     14
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427164915",
+    "champion": "Cassiopeia",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 72,
+     "pre_base": 3,
+     "post_own_lane": 18,
+     "post_other_lane": 39,
+     "post_base": 9
+    },
+    "cover": 0.8166666666666667,
+    "share": {
+     "own_lane": 0.5482993197278911,
+     "other_lane": 0.09931972789115646,
+     "own_jungle": 0.13741496598639455,
+     "enemy_jungle": 0.0013605442176870747,
+     "river": 0.02312925170068027,
+     "base": 0.07482993197278912,
+     "dead": 0.11564625850340136
+    },
+    "base_visits": 4,
+    "base_s": [
+     16,
+     11,
+     11,
+     6
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      709,
+      21
+     ]
+    ],
+    "match": "KR_8427164915",
+    "champion": "Syndra",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 56,
+     "pre_other_lane": 20,
+     "post_own_lane": 31,
+     "post_other_lane": 55,
+     "post_base": 1
+    },
+    "cover": 0.8055555555555556,
+    "share": {
+     "own_lane": 0.5558620689655173,
+     "other_lane": 0.07448275862068965,
+     "own_jungle": 0.1103448275862069,
+     "enemy_jungle": 0.06758620689655172,
+     "river": 0.022068965517241378,
+     "base": 0.04551724137931035,
+     "dead": 0.12413793103448276
+    },
+    "base_visits": 3,
+    "base_s": [
+     8,
+     8,
+     14
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      593,
+      17
+     ]
+    ],
+    "match": "KR_8427176534",
+    "champion": "Ziggs",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 19,
+     "pre_own_lane": 28,
+     "pre_other_lane": 43,
+     "pre_base": 1,
+     "post_other_lane": 95
+    },
+    "cover": 0.8344444444444444,
+    "share": {
+     "own_lane": 0.5059920106524634,
+     "other_lane": 0.1384820239680426,
+     "own_jungle": 0.045272969374167776,
+     "enemy_jungle": 0.11717709720372836,
+     "river": 0.04660452729693742,
+     "base": 0.07323568575233022,
+     "dead": 0.07323568575233022
+    },
+    "base_visits": 6,
+    "base_s": [
+     12,
+     11,
+     10,
+     12,
+     9,
+     6
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427176534",
+    "champion": "Jhin",
+    "roams": []
+   }
+  ],
+  "UTILITY": [
+   {
+    "jr_src": {
+     "pre_own_lane": 49,
+     "pre_other_lane": 136,
+     "pre_base": 1,
+     "post_other_lane": 92
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.268,
+     "other_lane": 0.30933333333333335,
+     "own_jungle": 0.14,
+     "enemy_jungle": 0.06133333333333333,
+     "river": 0.104,
+     "base": 0.084,
+     "dead": 0.03333333333333333
+    },
+    "base_visits": 6,
+    "base_s": [
+     10,
+     9,
+     9,
+     10,
+     9,
+     11
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      353,
+      18
+     ]
+    ],
+    "match": "KR_8426999058",
+    "champion": "Neeko",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 152,
+     "pre_other_lane": 108,
+     "post_other_lane": 124
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.3019867549668874,
+     "other_lane": 0.12980132450331125,
+     "own_jungle": 0.10331125827814569,
+     "enemy_jungle": 0.14172185430463577,
+     "river": 0.18543046357615894,
+     "base": 0.08741721854304636,
+     "dead": 0.05033112582781457
+    },
+    "base_visits": 7,
+    "base_s": [
+     12,
+     17,
+     7,
+     7,
+     12,
+     10,
+     8
+    ],
+    "respawn": 1,
+    "trips": 4,
+    "trip_s": [
+     [
+      350,
+      43
+     ],
+     [
+      531,
+      37
+     ],
+     [
+      628,
+      16
+     ],
+     [
+      754,
+      15
+     ]
+    ],
+    "match": "KR_8426999058",
+    "champion": "Thresh",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 36,
+     "pre_base": 3,
+     "pre_own_lane": 143,
+     "pre_other_lane": 50,
+     "post_other_lane": 129
+    },
+    "cover": 0.8322222222222222,
+    "share": {
+     "own_lane": 0.3925233644859813,
+     "other_lane": 0.08945260347129506,
+     "own_jungle": 0.09212283044058744,
+     "enemy_jungle": 0.08945260347129506,
+     "river": 0.21762349799732977,
+     "base": 0.05874499332443257,
+     "dead": 0.06008010680907877
+    },
+    "base_visits": 5,
+    "base_s": [
+     8,
+     9,
+     10,
+     9,
+     8
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      348,
+      22
+     ],
+     [
+      415,
+      16
+     ],
+     [
+      727,
+      42
+     ]
+    ],
+    "match": "KR_8426999177",
+    "champion": "Thresh",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 88,
+     "pre_other_lane": 1,
+     "post_base": 3,
+     "post_other_lane": 45
+    },
+    "cover": 0.8411111111111111,
+    "share": {
+     "own_lane": 0.43989431968295906,
+     "other_lane": 0.15852047556142668,
+     "own_jungle": 0.12285336856010567,
+     "enemy_jungle": 0.003963011889035667,
+     "river": 0.026420079260237782,
+     "base": 0.083223249669749,
+     "dead": 0.16512549537648613
+    },
+    "base_visits": 3,
+    "base_s": [
+     10,
+     10,
+     9
+    ],
+    "respawn": 6,
+    "trips": 1,
+    "trip_s": [
+     [
+      629,
+      32
+     ]
+    ],
+    "match": "KR_8426999177",
+    "champion": "Senna",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 46,
+     "pre_own_lane": 74,
+     "pre_other_lane": 47,
+     "post_other_lane": 101,
+     "post_base": 36,
+     "post_own_lane": 31
+    },
+    "cover": 0.83,
+    "share": {
+     "own_lane": 0.4029451137884873,
+     "other_lane": 0.06961178045515395,
+     "own_jungle": 0.24364123159303883,
+     "enemy_jungle": 0.024096385542168676,
+     "river": 0.10441767068273092,
+     "base": 0.08835341365461848,
+     "dead": 0.06693440428380187
+    },
+    "base_visits": 7,
+    "base_s": [
+     12,
+     8,
+     10,
+     7,
+     12,
+     10,
+     6
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      613,
+      16
+     ]
+    ],
+    "match": "KR_8427029935",
+    "champion": "Lulu",
+    "roams": [
+     {
+      "start": 396,
+      "len": 48,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 8,
+     "pre_other_lane": 119,
+     "pre_own_lane": 19,
+     "post_other_lane": 102,
+     "post_base": 14,
+     "post_own_lane": 8
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.44473684210526315,
+     "other_lane": 0.06973684210526315,
+     "own_jungle": 0.06973684210526315,
+     "enemy_jungle": 0.060526315789473685,
+     "river": 0.16973684210526316,
+     "base": 0.0868421052631579,
+     "dead": 0.09868421052631579
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     11,
+     11,
+     10,
+     8
+    ],
+    "respawn": 3,
+    "trips": 1,
+    "trip_s": [
+     [
+      638,
+      11
+     ]
+    ],
+    "match": "KR_8427029935",
+    "champion": "Nautilus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 98,
+     "pre_own_lane": 205,
+     "pre_other_lane": 38,
+     "post_base": 12,
+     "post_other_lane": 148
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.20394736842105263,
+     "other_lane": 0.10921052631578948,
+     "own_jungle": 0.33157894736842103,
+     "enemy_jungle": 0.02894736842105263,
+     "river": 0.2013157894736842,
+     "base": 0.07894736842105263,
+     "dead": 0.046052631578947366
+    },
+    "base_visits": 7,
+    "base_s": [
+     9,
+     11,
+     9,
+     9,
+     11,
+     7,
+     10
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      260,
+      42
+     ]
+    ],
+    "match": "KR_8427044839",
+    "champion": "Neeko",
+    "roams": [
+     {
+      "start": 379,
+      "len": 74,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_other_lane": 110,
+     "pre_own_lane": 90,
+     "pre_base": 211,
+     "post_other_lane": 71,
+     "post_base": 47
+    },
+    "cover": 0.8333333333333334,
+    "share": {
+     "own_lane": 0.06133333333333333,
+     "other_lane": 0.13866666666666666,
+     "own_jungle": 0.30666666666666664,
+     "enemy_jungle": 0.092,
+     "river": 0.188,
+     "base": 0.11333333333333333,
+     "dead": 0.1
+    },
+    "base_visits": 7,
+    "base_s": [
+     11,
+     8,
+     10,
+     7,
+     8,
+     13,
+     7
+    ],
+    "respawn": 3,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427044839",
+    "champion": "Katarina",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 1,
+     "pre_base": 10,
+     "pre_other_lane": 160,
+     "pre_own_lane": 93,
+     "post_other_lane": 115,
+     "post_own_lane": 37,
+     "post_base": 2
+    },
+    "cover": 0.8422222222222222,
+    "share": {
+     "own_lane": 0.24142480211081793,
+     "other_lane": 0.10026385224274406,
+     "own_jungle": 0.20844327176781002,
+     "enemy_jungle": 0.09762532981530343,
+     "river": 0.15435356200527706,
+     "base": 0.10026385224274406,
+     "dead": 0.09762532981530343
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     10,
+     13,
+     8,
+     10
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      596,
+      19
+     ]
+    ],
+    "match": "KR_8427067003",
+    "champion": "Rakan",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 103,
+     "pre_other_lane": 125,
+     "pre_base": 86,
+     "post_other_lane": 167,
+     "post_own_lane": 14
+    },
+    "cover": 0.8322222222222222,
+    "share": {
+     "own_lane": 0.2857142857142857,
+     "other_lane": 0.05874499332443257,
+     "own_jungle": 0.24699599465954605,
+     "enemy_jungle": 0.11348464619492657,
+     "river": 0.19225634178905207,
+     "base": 0.102803738317757,
+     "dead": 0.0
+    },
+    "base_visits": 8,
+    "base_s": [
+     15,
+     10,
+     9,
+     12,
+     17,
+     12,
+     9,
+     10
+    ],
+    "respawn": 0,
+    "trips": 3,
+    "trip_s": [
+     [
+      187,
+      11
+     ],
+     [
+      599,
+      16
+     ],
+     [
+      629,
+      34
+     ]
+    ],
+    "match": "KR_8427067003",
+    "champion": "Leona",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_other_lane": 139,
+     "pre_own_lane": 35,
+     "pre_base": 79,
+     "post_other_lane": 58,
+     "post_base": 50
+    },
+    "cover": 0.8566666666666667,
+    "share": {
+     "own_lane": 0.245136186770428,
+     "other_lane": 0.14785992217898833,
+     "own_jungle": 0.15953307392996108,
+     "enemy_jungle": 0.03631647211413749,
+     "river": 0.20492866407263294,
+     "base": 0.08949416342412451,
+     "dead": 0.11673151750972763
+    },
+    "base_visits": 6,
+    "base_s": [
+     8,
+     11,
+     11,
+     11,
+     16,
+     7
+    ],
+    "respawn": 2,
+    "trips": 1,
+    "trip_s": [
+     [
+      652,
+      18
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Nautilus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 195,
+     "pre_base": 120,
+     "pre_other_lane": 45,
+     "post_own_lane": 42,
+     "post_other_lane": 71,
+     "post_base": 12
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.25,
+     "other_lane": 0.08289473684210526,
+     "own_jungle": 0.2631578947368421,
+     "enemy_jungle": 0.046052631578947366,
+     "river": 0.23157894736842105,
+     "base": 0.06710526315789474,
+     "dead": 0.05921052631578947
+    },
+    "base_visits": 6,
+    "base_s": [
+     9,
+     9,
+     7,
+     7,
+     10,
+     10
+    ],
+    "respawn": 2,
+    "trips": 3,
+    "trip_s": [
+     [
+      284,
+      38
+     ],
+     [
+      428,
+      34
+     ],
+     [
+      780,
+      19
+     ]
+    ],
+    "match": "KR_8427068023",
+    "champion": "Thresh",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 114,
+     "pre_own_lane": 90,
+     "post_other_lane": 108
+    },
+    "cover": 0.8355555555555556,
+    "share": {
+     "own_lane": 0.39893617021276595,
+     "other_lane": 0.11170212765957446,
+     "own_jungle": 0.22606382978723405,
+     "enemy_jungle": 0.031914893617021274,
+     "river": 0.0797872340425532,
+     "base": 0.07845744680851063,
+     "dead": 0.07313829787234043
+    },
+    "base_visits": 6,
+    "base_s": [
+     4,
+     9,
+     10,
+     8,
+     10,
+     10
+    ],
+    "respawn": 2,
+    "trips": 3,
+    "trip_s": [
+     [
+      192,
+      14
+     ],
+     [
+      486,
+      19
+     ],
+     [
+      590,
+      29
+     ]
+    ],
+    "match": "KR_8427074120",
+    "champion": "Elise",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 187,
+     "pre_other_lane": 101,
+     "pre_base": 2,
+     "post_other_lane": 123
+    },
+    "cover": 0.8466666666666667,
+    "share": {
+     "own_lane": 0.25984251968503935,
+     "other_lane": 0.14698162729658792,
+     "own_jungle": 0.06299212598425197,
+     "enemy_jungle": 0.2900262467191601,
+     "river": 0.10498687664041995,
+     "base": 0.06299212598425197,
+     "dead": 0.07217847769028872
+    },
+    "base_visits": 5,
+    "base_s": [
+     10,
+     10,
+     8,
+     7,
+     9
+    ],
+    "respawn": 2,
+    "trips": 3,
+    "trip_s": [
+     [
+      235,
+      22
+     ],
+     [
+      660,
+      29
+     ],
+     [
+      708,
+      23
+     ]
+    ],
+    "match": "KR_8427074120",
+    "champion": "Rell",
+    "roams": [
+     {
+      "start": 476,
+      "len": 61,
+      "kill": false,
+      "death": false
+     },
+     {
+      "start": 773,
+      "len": 80,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_None": 5,
+     "pre_other_lane": 99,
+     "pre_own_lane": 60,
+     "pre_base": 80,
+     "post_other_lane": 63,
+     "post_base": 1,
+     "post_own_lane": 12
+    },
+    "cover": 0.83,
+    "share": {
+     "own_lane": 0.2757697456492637,
+     "other_lane": 0.18875502008032127,
+     "own_jungle": 0.13788487282463185,
+     "enemy_jungle": 0.12048192771084337,
+     "river": 0.09370816599732262,
+     "base": 0.08299866131191433,
+     "dead": 0.10040160642570281
+    },
+    "base_visits": 4,
+    "base_s": [
+     9,
+     14,
+     10,
+     12
+    ],
+    "respawn": 2,
+    "trips": 2,
+    "trip_s": [
+     [
+      230,
+      38
+     ],
+     [
+      449,
+      19
+     ]
+    ],
+    "match": "KR_8427087043",
+    "champion": "Poppy",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 142,
+     "pre_other_lane": 36,
+     "pre_base": 20,
+     "post_base": 30,
+     "post_other_lane": 70
+    },
+    "cover": 0.8177777777777778,
+    "share": {
+     "own_lane": 0.4048913043478261,
+     "other_lane": 0.12228260869565218,
+     "own_jungle": 0.13722826086956522,
+     "enemy_jungle": 0.11277173913043478,
+     "river": 0.08152173913043478,
+     "base": 0.10054347826086957,
+     "dead": 0.04076086956521739
+    },
+    "base_visits": 8,
+    "base_s": [
+     11,
+     9,
+     12,
+     10,
+     13,
+     10,
+     9,
+     10
+    ],
+    "respawn": 1,
+    "trips": 2,
+    "trip_s": [
+     [
+      449,
+      15
+     ],
+     [
+      628,
+      41
+     ]
+    ],
+    "match": "KR_8427087043",
+    "champion": "Rakan",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 27,
+     "pre_own_lane": 30,
+     "pre_other_lane": 54,
+     "post_other_lane": 41,
+     "post_base": 1,
+     "post_own_lane": 6
+    },
+    "cover": 0.8555555555555555,
+    "share": {
+     "own_lane": 0.4636363636363636,
+     "other_lane": 0.10519480519480519,
+     "own_jungle": 0.11818181818181818,
+     "enemy_jungle": 0.011688311688311689,
+     "river": 0.048051948051948054,
+     "base": 0.09090909090909091,
+     "dead": 0.16233766233766234
+    },
+    "base_visits": 3,
+    "base_s": [
+     7,
+     10,
+     11
+    ],
+    "respawn": 6,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427095161",
+    "champion": "Viktor",
+    "roams": [
+     {
+      "start": 635,
+      "len": 31,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 93,
+     "pre_base": 29,
+     "pre_other_lane": 75,
+     "post_other_lane": 57,
+     "post_base": 24,
+     "post_own_lane": 36
+    },
+    "cover": 0.8344444444444444,
+    "share": {
+     "own_lane": 0.43541944074567246,
+     "other_lane": 0.09720372836218376,
+     "own_jungle": 0.06391478029294274,
+     "enemy_jungle": 0.19440745672436752,
+     "river": 0.09054593874833555,
+     "base": 0.09187749667110519,
+     "dead": 0.02663115845539281
+    },
+    "base_visits": 7,
+    "base_s": [
+     10,
+     10,
+     10,
+     9,
+     11,
+     12,
+     16
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      367,
+      10
+     ],
+     [
+      725,
+      13
+     ],
+     [
+      993,
+      17
+     ]
+    ],
+    "match": "KR_8427095161",
+    "champion": "Rakan",
+    "roams": [
+     {
+      "start": 587,
+      "len": 74,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_None": 10,
+     "pre_own_lane": 37,
+     "pre_base": 5,
+     "pre_other_lane": 194,
+     "post_other_lane": 54,
+     "post_base": 62
+    },
+    "cover": 0.8344444444444444,
+    "share": {
+     "own_lane": 0.1478029294274301,
+     "other_lane": 0.1877496671105193,
+     "own_jungle": 0.14647137150466044,
+     "enemy_jungle": 0.09454061251664447,
+     "river": 0.15978695073235685,
+     "base": 0.09720372836218376,
+     "dead": 0.16644474034620507
+    },
+    "base_visits": 6,
+    "base_s": [
+     8,
+     13,
+     9,
+     10,
+     12,
+     8
+    ],
+    "respawn": 4,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427099636",
+    "champion": "Karma",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 89,
+     "pre_other_lane": 132,
+     "pre_base": 4,
+     "post_base": 114,
+     "post_other_lane": 31
+    },
+    "cover": 0.8244444444444444,
+    "share": {
+     "own_lane": 0.19946091644204852,
+     "other_lane": 0.11994609164420485,
+     "own_jungle": 0.14824797843665768,
+     "enemy_jungle": 0.13746630727762804,
+     "river": 0.11994609164420485,
+     "base": 0.09299191374663072,
+     "dead": 0.18194070080862534
+    },
+    "base_visits": 5,
+    "base_s": [
+     6,
+     11,
+     12,
+     6,
+     7
+    ],
+    "respawn": 6,
+    "trips": 1,
+    "trip_s": [
+     [
+      258,
+      29
+     ]
+    ],
+    "match": "KR_8427099636",
+    "champion": "Camille",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_other_lane": 85,
+     "pre_base": 5,
+     "pre_own_lane": 34,
+     "post_own_lane": 4,
+     "post_other_lane": 25
+    },
+    "cover": 0.8377777777777777,
+    "share": {
+     "own_lane": 0.46153846153846156,
+     "other_lane": 0.1989389920424403,
+     "own_jungle": 0.09283819628647215,
+     "enemy_jungle": 0.003978779840848806,
+     "river": 0.07161803713527852,
+     "base": 0.08488063660477453,
+     "dead": 0.08620689655172414
+    },
+    "base_visits": 4,
+    "base_s": [
+     15,
+     7,
+     14,
+     12
+    ],
+    "respawn": 4,
+    "trips": 1,
+    "trip_s": [
+     [
+      408,
+      12
+     ]
+    ],
+    "match": "KR_8427110811",
+    "champion": "Lulu",
+    "roams": [
+     {
+      "start": 469,
+      "len": 59,
+      "kill": true,
+      "death": true
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 113,
+     "pre_base": 3,
+     "pre_other_lane": 131,
+     "post_own_lane": 17,
+     "post_other_lane": 135
+    },
+    "cover": 0.8322222222222222,
+    "share": {
+     "own_lane": 0.22963951935914553,
+     "other_lane": 0.22830440587449932,
+     "own_jungle": 0.11882510013351134,
+     "enemy_jungle": 0.17356475300400534,
+     "river": 0.14953271028037382,
+     "base": 0.07343124165554073,
+     "dead": 0.0267022696929239
+    },
+    "base_visits": 7,
+    "base_s": [
+     8,
+     8,
+     11,
+     10,
+     8,
+     10,
+     8
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      707,
+      18
+     ]
+    ],
+    "match": "KR_8427110811",
+    "champion": "Karma",
+    "roams": [
+     {
+      "start": 365,
+      "len": 73,
+      "kill": false,
+      "death": false
+     },
+     {
+      "start": 757,
+      "len": 42,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 7,
+     "pre_own_lane": 198,
+     "pre_other_lane": 9,
+     "post_own_lane": 9,
+     "post_base": 49,
+     "post_other_lane": 17
+    },
+    "cover": 0.8355555555555556,
+    "share": {
+     "own_lane": 0.5066489361702128,
+     "other_lane": 0.07313829787234043,
+     "own_jungle": 0.12898936170212766,
+     "enemy_jungle": 0.07180851063829788,
+     "river": 0.1276595744680851,
+     "base": 0.07180851063829788,
+     "dead": 0.0199468085106383
+    },
+    "base_visits": 6,
+    "base_s": [
+     10,
+     10,
+     10,
+     9,
+     9,
+     9
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      521,
+      13
+     ],
+     [
+      571,
+      27
+     ],
+     [
+      789,
+      61
+     ]
+    ],
+    "match": "KR_8427112235",
+    "champion": "Nautilus",
+    "roams": [
+     {
+      "start": 452,
+      "len": 46,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 43,
+     "pre_own_lane": 134,
+     "post_own_lane": 32,
+     "post_base": 15,
+     "post_other_lane": 56
+    },
+    "cover": 0.8255555555555556,
+    "share": {
+     "own_lane": 0.5100942126514132,
+     "other_lane": 0.06056527590847914,
+     "own_jungle": 0.1641991924629879,
+     "enemy_jungle": 0.04576043068640646,
+     "river": 0.10228802153432032,
+     "base": 0.07671601615074024,
+     "dead": 0.040376850605652756
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     7,
+     8,
+     8,
+     10,
+     9
+    ],
+    "respawn": 2,
+    "trips": 5,
+    "trip_s": [
+     [
+      568,
+      42
+     ],
+     [
+      714,
+      21
+     ],
+     [
+      756,
+      20
+     ],
+     [
+      834,
+      14
+     ],
+     [
+      890,
+      15
+     ]
+    ],
+    "match": "KR_8427112235",
+    "champion": "Lulu",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 77,
+     "pre_own_lane": 114,
+     "pre_other_lane": 34,
+     "post_other_lane": 109,
+     "post_base": 13,
+     "post_own_lane": 10
+    },
+    "cover": 0.85,
+    "share": {
+     "own_lane": 0.39869281045751637,
+     "other_lane": 0.12941176470588237,
+     "own_jungle": 0.1477124183006536,
+     "enemy_jungle": 0.15947712418300652,
+     "river": 0.09019607843137255,
+     "base": 0.07450980392156863,
+     "dead": 0.0
+    },
+    "base_visits": 7,
+    "base_s": [
+     10,
+     9,
+     12,
+     10,
+     10,
+     9,
+     8
+    ],
+    "respawn": 0,
+    "trips": 1,
+    "trip_s": [
+     [
+      306,
+      20
+     ]
+    ],
+    "match": "KR_8427117343",
+    "champion": "Thresh",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 49,
+     "pre_other_lane": 164,
+     "pre_own_lane": 66,
+     "post_other_lane": 103,
+     "post_own_lane": 21,
+     "post_base": 2
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.31842105263157894,
+     "other_lane": 0.10394736842105264,
+     "own_jungle": 0.21842105263157896,
+     "enemy_jungle": 0.09342105263157895,
+     "river": 0.1394736842105263,
+     "base": 0.09342105263157895,
+     "dead": 0.03289473684210526
+    },
+    "base_visits": 8,
+    "base_s": [
+     10,
+     9,
+     10,
+     9,
+     10,
+     7,
+     11,
+     7
+    ],
+    "respawn": 1,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427117343",
+    "champion": "Rakan",
+    "roams": [
+     {
+      "start": 523,
+      "len": 68,
+      "kill": false,
+      "death": false
+     },
+     {
+      "start": 812,
+      "len": 56,
+      "kill": true,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 71,
+     "pre_base": 68,
+     "pre_other_lane": 54,
+     "post_other_lane": 31,
+     "post_base": 42,
+     "post_own_lane": 33
+    },
+    "cover": 0.8477777777777777,
+    "share": {
+     "own_lane": 0.35910878112712974,
+     "other_lane": 0.12450851900393185,
+     "own_jungle": 0.17038007863695936,
+     "enemy_jungle": 0.0327653997378768,
+     "river": 0.13237221494102228,
+     "base": 0.07732634338138926,
+     "dead": 0.10353866317169069
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     14,
+     11,
+     10,
+     6
+    ],
+    "respawn": 3,
+    "trips": 1,
+    "trip_s": [
+     [
+      615,
+      14
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Renata",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 116,
+     "pre_base": 18,
+     "pre_other_lane": 43,
+     "post_other_lane": 68,
+     "post_own_lane": 20
+    },
+    "cover": 0.8388888888888889,
+    "share": {
+     "own_lane": 0.4410596026490066,
+     "other_lane": 0.17350993377483442,
+     "own_jungle": 0.10066225165562914,
+     "enemy_jungle": 0.07417218543046358,
+     "river": 0.1205298013245033,
+     "base": 0.051655629139072845,
+     "dead": 0.038410596026490065
+    },
+    "base_visits": 4,
+    "base_s": [
+     9,
+     8,
+     11,
+     11
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      187,
+      54
+     ],
+     [
+      350,
+      19
+     ],
+     [
+      612,
+      22
+     ]
+    ],
+    "match": "KR_8427126824",
+    "champion": "Lulu",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_base": 10,
+     "pre_own_lane": 36,
+     "pre_other_lane": 28,
+     "post_other_lane": 51,
+     "post_base": 22
+    },
+    "cover": 0.8444444444444444,
+    "share": {
+     "own_lane": 0.4105263157894737,
+     "other_lane": 0.19605263157894737,
+     "own_jungle": 0.11710526315789474,
+     "enemy_jungle": 0.018421052631578946,
+     "river": 0.02763157894736842,
+     "base": 0.11710526315789474,
+     "dead": 0.11315789473684211
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     11,
+     8,
+     12,
+     12,
+     5
+    ],
+    "respawn": 5,
+    "trips": 1,
+    "trip_s": [
+     [
+      620,
+      16
+     ]
+    ],
+    "match": "KR_8427142382",
+    "champion": "Velkoz",
+    "roams": [
+     {
+      "start": 496,
+      "len": 41,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_base": 71,
+     "pre_own_lane": 36,
+     "pre_other_lane": 10,
+     "post_other_lane": 50
+    },
+    "cover": 0.8511111111111112,
+    "share": {
+     "own_lane": 0.391644908616188,
+     "other_lane": 0.1906005221932115,
+     "own_jungle": 0.02349869451697128,
+     "enemy_jungle": 0.09660574412532637,
+     "river": 0.0639686684073107,
+     "base": 0.13577023498694518,
+     "dead": 0.097911227154047
+    },
+    "base_visits": 10,
+    "base_s": [
+     10,
+     12,
+     7,
+     8,
+     10,
+     9,
+     8,
+     17,
+     9,
+     17
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427142382",
+    "champion": "Neeko",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 1,
+     "pre_own_lane": 103,
+     "pre_base": 20,
+     "pre_other_lane": 75,
+     "post_other_lane": 105,
+     "post_base": 59
+    },
+    "cover": 0.8411111111111111,
+    "share": {
+     "own_lane": 0.4200792602377807,
+     "other_lane": 0.10568031704095113,
+     "own_jungle": 0.05812417437252312,
+     "enemy_jungle": 0.16248348745046234,
+     "river": 0.190224570673712,
+     "base": 0.06340819022457067,
+     "dead": 0.0
+    },
+    "base_visits": 7,
+    "base_s": [
+     7,
+     12,
+     8,
+     6,
+     9,
+     7,
+     13
+    ],
+    "respawn": 0,
+    "trips": 2,
+    "trip_s": [
+     [
+      400,
+      10
+     ],
+     [
+      717,
+      15
+     ]
+    ],
+    "match": "KR_8427156060",
+    "champion": "Pyke",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 82,
+     "pre_base": 1,
+     "pre_other_lane": 46,
+     "post_other_lane": 58,
+     "post_own_lane": 9
+    },
+    "cover": 0.84,
+    "share": {
+     "own_lane": 0.5304232804232805,
+     "other_lane": 0.1455026455026455,
+     "own_jungle": 0.16666666666666666,
+     "enemy_jungle": 0.0013227513227513227,
+     "river": 0.05291005291005291,
+     "base": 0.06349206349206349,
+     "dead": 0.03968253968253968
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     9,
+     8,
+     8,
+     12
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      424,
+      40
+     ]
+    ],
+    "match": "KR_8427156060",
+    "champion": "Neeko",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 182,
+     "pre_base": 76,
+     "pre_other_lane": 29,
+     "post_other_lane": 90,
+     "post_base": 37
+    },
+    "cover": 0.83,
+    "share": {
+     "own_lane": 0.17670682730923695,
+     "other_lane": 0.14859437751004015,
+     "own_jungle": 0.2998661311914324,
+     "enemy_jungle": 0.0214190093708166,
+     "river": 0.13654618473895583,
+     "base": 0.09906291834002677,
+     "dead": 0.11780455153949129
+    },
+    "base_visits": 5,
+    "base_s": [
+     9,
+     10,
+     8,
+     11,
+     9
+    ],
+    "respawn": 5,
+    "trips": 2,
+    "trip_s": [
+     [
+      257,
+      42
+     ],
+     [
+      395,
+      40
+     ]
+    ],
+    "match": "KR_8427156885",
+    "champion": "Pantheon",
+    "roams": [
+     {
+      "start": 542,
+      "len": 29,
+      "kill": false,
+      "death": true
+     },
+     {
+      "start": 642,
+      "len": 55,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_None": 20,
+     "pre_own_lane": 204,
+     "pre_base": 24,
+     "pre_other_lane": 75,
+     "post_other_lane": 142
+    },
+    "cover": 0.8311111111111111,
+    "share": {
+     "own_lane": 0.14705882352941177,
+     "other_lane": 0.2393048128342246,
+     "own_jungle": 0.19919786096256684,
+     "enemy_jungle": 0.11497326203208556,
+     "river": 0.19919786096256684,
+     "base": 0.07352941176470588,
+     "dead": 0.026737967914438502
+    },
+    "base_visits": 7,
+    "base_s": [
+     12,
+     8,
+     8,
+     9,
+     8,
+     9,
+     3
+    ],
+    "respawn": 1,
+    "trips": 1,
+    "trip_s": [
+     [
+      618,
+      25
+     ]
+    ],
+    "match": "KR_8427156885",
+    "champion": "Nautilus",
+    "roams": [
+     {
+      "start": 455,
+      "len": 146,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 648,
+      "len": 57,
+      "kill": true,
+      "death": false
+     },
+     {
+      "start": 793,
+      "len": 100,
+      "kill": false,
+      "death": false
+     }
+    ]
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 91,
+     "pre_base": 67,
+     "pre_other_lane": 19,
+     "post_other_lane": 98,
+     "post_base": 2
+    },
+    "cover": 0.8366666666666667,
+    "share": {
+     "own_lane": 0.3891102257636122,
+     "other_lane": 0.09296148738379814,
+     "own_jungle": 0.1407702523240372,
+     "enemy_jungle": 0.10624169986719788,
+     "river": 0.06241699867197875,
+     "base": 0.08897742363877822,
+     "dead": 0.11952191235059761
+    },
+    "base_visits": 7,
+    "base_s": [
+     13,
+     10,
+     8,
+     6,
+     9,
+     10,
+     11
+    ],
+    "respawn": 2,
+    "trips": 0,
+    "trip_s": [],
+    "match": "KR_8427158122",
+    "champion": "Sylas",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 170,
+     "pre_other_lane": 23,
+     "post_other_lane": 75,
+     "post_base": 25
+    },
+    "cover": 0.8311111111111111,
+    "share": {
+     "own_lane": 0.4385026737967914,
+     "other_lane": 0.09491978609625669,
+     "own_jungle": 0.0962566844919786,
+     "enemy_jungle": 0.16844919786096257,
+     "river": 0.06818181818181818,
+     "base": 0.06016042780748663,
+     "dead": 0.07352941176470588
+    },
+    "base_visits": 5,
+    "base_s": [
+     7,
+     11,
+     11,
+     13,
+     10
+    ],
+    "respawn": 1,
+    "trips": 3,
+    "trip_s": [
+     [
+      625,
+      15
+     ],
+     [
+      648,
+      31
+     ],
+     [
+      722,
+      37
+     ]
+    ],
+    "match": "KR_8427158122",
+    "champion": "Braum",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 4,
+     "pre_base": 7,
+     "pre_own_lane": 144,
+     "post_own_lane": 51,
+     "post_other_lane": 99
+    },
+    "cover": 0.8433333333333334,
+    "share": {
+     "own_lane": 0.45586297760210803,
+     "other_lane": 0.04084321475625823,
+     "own_jungle": 0.048748353096179184,
+     "enemy_jungle": 0.20421607378129117,
+     "river": 0.09354413702239789,
+     "base": 0.07905138339920949,
+     "dead": 0.077733860342556
+    },
+    "base_visits": 4,
+    "base_s": [
+     15,
+     9,
+     11,
+     12
+    ],
+    "respawn": 4,
+    "trips": 3,
+    "trip_s": [
+     [
+      567,
+      20
+     ],
+     [
+      757,
+      25
+     ],
+     [
+      850,
+      33
+     ]
+    ],
+    "match": "KR_8427164915",
+    "champion": "Nautilus",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 141,
+     "pre_base": 35,
+     "pre_other_lane": 45,
+     "post_base": 48,
+     "post_own_lane": 9,
+     "post_other_lane": 53
+    },
+    "cover": 0.8422222222222222,
+    "share": {
+     "own_lane": 0.38786279683377306,
+     "other_lane": 0.04221635883905013,
+     "own_jungle": 0.3007915567282322,
+     "enemy_jungle": 0.002638522427440633,
+     "river": 0.06068601583113457,
+     "base": 0.07651715039577836,
+     "dead": 0.12928759894459102
+    },
+    "base_visits": 3,
+    "base_s": [
+     14,
+     9,
+     8
+    ],
+    "respawn": 5,
+    "trips": 2,
+    "trip_s": [
+     [
+      262,
+      33
+     ],
+     [
+      705,
+      36
+     ]
+    ],
+    "match": "KR_8427164915",
+    "champion": "Thresh",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_None": 3,
+     "pre_base": 120,
+     "pre_other_lane": 114,
+     "pre_own_lane": 91,
+     "post_other_lane": 132,
+     "post_base": 11
+    },
+    "cover": 0.8355555555555556,
+    "share": {
+     "own_lane": 0.1901595744680851,
+     "other_lane": 0.09308510638297872,
+     "own_jungle": 0.2579787234042553,
+     "enemy_jungle": 0.1196808510638298,
+     "river": 0.14361702127659576,
+     "base": 0.11037234042553191,
+     "dead": 0.0851063829787234
+    },
+    "base_visits": 6,
+    "base_s": [
+     11,
+     9,
+     9,
+     9,
+     11,
+     8
+    ],
+    "respawn": 5,
+    "trips": 3,
+    "trip_s": [
+     [
+      343,
+      53
+     ],
+     [
+      655,
+      18
+     ],
+     [
+      679,
+      14
+     ]
+    ],
+    "match": "KR_8427176534",
+    "champion": "Leona",
+    "roams": []
+   },
+   {
+    "jr_src": {
+     "pre_own_lane": 139,
+     "pre_base": 6,
+     "pre_other_lane": 177,
+     "post_own_lane": 11,
+     "post_other_lane": 68,
+     "post_base": 6
+    },
+    "cover": 0.8311111111111111,
+    "share": {
+     "own_lane": 0.20989304812834225,
+     "other_lane": 0.09224598930481283,
+     "own_jungle": 0.11764705882352941,
+     "enemy_jungle": 0.1751336898395722,
+     "river": 0.15240641711229946,
+     "base": 0.11229946524064172,
+     "dead": 0.14037433155080214
+    },
+    "base_visits": 5,
+    "base_s": [
+     12,
+     14,
+     7,
+     3,
+     9
+    ],
+    "respawn": 6,
+    "trips": 2,
+    "trip_s": [
+     [
+      339,
+      49
+     ],
+     [
+      679,
+      21
+     ]
+    ],
+    "match": "KR_8427176534",
+    "champion": "Nautilus",
+    "roams": [
+     {
+      "start": 183,
+      "len": 46,
+      "kill": false,
+      "death": true
+     },
+     {
+      "start": 828,
+      "len": 78,
+      "kill": true,
+      "death": true
+     }
+    ]
+   }
+  ]
+ }
+}

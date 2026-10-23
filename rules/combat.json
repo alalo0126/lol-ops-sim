@@ -5,7 +5,7 @@
   "assist_gold_pool": {"value": 150, "src": "consensus", "level": "consensus", "note": "처치 골드의 50%를 도움 준 사람끼리 나눔"},
   "first_blood_bonus": {"value": 100, "src": "pn:26.1", "level": "verified", "note": "objectives.json first_blood_and_turret_gold와 같은 값"},
   "kill_xp": {"value": {"base": 140, "per_victim_level": 25}, "src": "estimate", "level": "unverified", "note": "처치 경험치 = base + per_victim_level × (피해자 레벨 − 1). 도움 준 사람은 절반을 나눔. 위키 표 확인 필요"},
-  "death_timer_s": {"value": [10, 10, 12, 12, 14, 16, 20, 25, 28, 32.5, 35, 37.5, 40, 42.5, 45, 47.5, 50, 52.5], "src": "estimate", "level": "unverified", "note": "레벨별 부활 시간. 0~20분 시간 보정 없음"},
+  "death_timer_s": {"value": [10, 10, 12, 12, 14, 16, 20, 25, 28, 32.5, 35, 37.5, 40, 42.5, 45, 47.5, 50, 52.5], "src": "estimate", "level": "verified", "note": "레벨별 부활 시간. 0~20분 시간 보정 없음. 2026-10-22 리플레이 20판 respawnTimer와 대조: 레벨 1~14 평균 9.2/10.1/11.6/11.6/13.8/15.6/19.4/24.3/27.6/32.4/35.0/37.7/40.4/43.5초(사망 직후 첫 5초 표본 + 2.5초)로 거의 같음"},
   "homeguard": {"value": {"spawn_before_14": [1.15, 0.65], "spawn_after_14": [1.5, 0.65], "decay_s": 4, "respawn_before_14": 0.75},
     "src": "kk_measured", "level": "verified",
     "note": "kk 연습 모드 실측(2026-10-20, 마스터 이 기본 355): 우물 안 763(+115%), 우물을 벗어나면 줄어 라인 복귀 구간 585(+65%) 유지. 위키(V26.01)의 +80%→+40%와 다름. 감소 시간 4초는 위키 값. 정글에 들어가면 사라짐: 시뮬에서는 우물에서 나가는 첫 엣지 전체에만 적용. 14분 이후·부활 값은 위키"},

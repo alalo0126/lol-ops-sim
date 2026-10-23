@@ -99,7 +99,8 @@ def resolve_skirmish(sides, now, rng, p):
     x = (c["num_adv"] * (len(a) - len(b))
          + c["level_diff"] * (sum(m.level for m in a) - sum(m.level for m in b)) / max(len(a), len(b))
          + c["hp_diff"] * (sum(m.hp for m in a) - sum(m.hp for m in b))
-         + c.get("item_gold_diff", 0.0) * (sum(m.item_gold for m in a) - sum(m.item_gold for m in b)) / max(len(a), len(b)) / 1000)
+         + c.get("item_gold_diff", 0.0) * (sum(m.item_gold for m in a) - sum(m.item_gold for m in b)) / max(len(a), len(b)) / 1000
+         + c.get("legendary_diff", 0.0) * (sum(m.legendaries for m in a) - sum(m.legendaries for m in b)) / max(len(a), len(b)))
     prob = logistic(x)
     win, lose = (a, b) if rng.random() < prob else (b, a)
     res = SkirmishResult(winner=(ta if win is a else tb), duration_s=p["duration_s"], prob=prob)

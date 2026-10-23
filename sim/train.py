@@ -19,6 +19,7 @@ from .agent import N_MAIN, ACTION_NAMES, obs_size
 from .data import ROOT
 from .ppo import Policy, Adam, clip_grads, gae
 from .rollout import play
+from .teacher import bc_grads
 
 OUT = os.path.join(ROOT, "models", "stage5")
 
@@ -73,6 +74,13 @@ def update(policy, opt_pi, opt_vf, games, cfg):
         for s in range(0, n, cfg.minibatch):
             b = idx[s:s + cfg.minibatch]
             gpi, gvf, info = policy.loss_grads(X[b], M[b], A[b], LP[b], ADV[b], RET[b], clip=cfg.clip, ent_coef=cfg.ent_coef)
+            if cfg.real is not None:
+                # 갈래 B: 실제 천상계 정글러가 그 상태에서 한 행동을 따라 하는 손실을 함께 줄인다(실제 표본 상태에서만)
+                Xr, Mr, Ar = cfg.real
+                r = rng.integers(0, len(Xr), min(256, len(Xr)))
+                gbc, bc_loss, bc_acc = bc_grads(policy, Xr[r], Mr[r], Ar[r])
+                gpi = [g + cfg.real_coef * h for g, h in zip(gpi, gbc)]
+                info = info | {"bc_loss": bc_loss, "bc_acc": bc_acc}
             gpi, _ = clip_grads(gpi, cfg.max_grad_norm)
             gvf, _ = clip_grads(gvf, cfg.max_grad_norm)
             opt_pi.step(policy.pi, gpi)
@@ -102,8 +110,14 @@ def main():
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--init", help="시작 정책(예: models/stage5/policy_bc.npz, sim/teacher.py 모방 학습 결과)")
     ap.add_argument("--out", default=OUT)
+    ap.add_argument("--real", help="실제 정글러 행동 표본(sim/imitate.py가 만든 npz: X, M, A). 주면 PPO와 함께 모방 손실을 줄인다")
+    ap.add_argument("--real-coef", dest="real_coef", type=float, default=1.0, help="모방 손실 기울기 배율")
     cfg = ap.parse_args()
     os.makedirs(cfg.out, exist_ok=True)
+    real_path = cfg.real
+    if cfg.real:
+        d = np.load(cfg.real)
+        cfg.real = (d["X"].astype(np.float64), d["M"], d["A"])
     latest = os.path.join(cfg.out, "policy_latest.npz")
     log_path = os.path.join(cfg.out, "train_log.csv")
     obs_dim = obs_size()
@@ -115,11 +129,11 @@ def main():
             start_it = sum(1 for _ in f) - 1
     opt_pi, opt_vf = Adam(policy.pi, cfg.lr), Adam(policy.vf, cfg.lr)
     with open(os.path.join(cfg.out, "config.json"), "w", encoding="utf-8") as f:
-        json.dump(vars(cfg) | {"obs_dim": obs_dim, "actions": ACTION_NAMES}, f, ensure_ascii=False, indent=1)
+        json.dump(vars(cfg) | {"real": real_path, "obs_dim": obs_dim, "actions": ACTION_NAMES}, f, ensure_ascii=False, indent=1)
     new_log = not (cfg.resume and os.path.exists(log_path))
     logf = open(log_path, "w" if new_log else "a", newline="", encoding="utf-8")
     fields = ["iter", "games", "samples", "phi_mean", "cs10", "gold10", "k10", "d10", "dragons", "ganks", "invade_camps",
-              "lanefarm", "pg_loss", "v_loss", "entropy", "approx_kl", "clipfrac", "sec"]
+              "lanefarm", "pg_loss", "v_loss", "entropy", "approx_kl", "clipfrac", "bc_loss", "bc_acc", "sec"]
     w = csv.DictWriter(logf, fieldnames=fields)
     if new_log:
         w.writeheader()
