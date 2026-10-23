@@ -20,3 +20,9 @@ models/stage6d_a/*
 !models/stage6d_b/
 models/stage6d_b/*
 !models/stage6d_b/policy_latest.npz
+!models/stage7_a/
+models/stage7_a/*
+!models/stage7_a/policy_latest.npz
+!models/stage7_b/
+models/stage7_b/*
+!models/stage7_b/policy_latest.npz

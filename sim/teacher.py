@@ -80,13 +80,16 @@ def _job(args):
     return play_teacher(*args)
 
 
-def bc_grads(policy, X, M, A):
+def bc_grads(policy, X, M, A, heads=None):
+    """모방 손실 기울기. heads = 쓸 출력 머리 번호(None = 전부). 실제 천상계 표본은 주 행동만 정답이 있어 (0,)."""
     z, acts = mlp_forward(policy.pi, X)
     n = len(X)
     gz = np.zeros_like(z)
     loss, correct = 0.0, 0
     use_smite = (A[:, 0] < A_GANK).astype(float)
     for k, (a, b) in enumerate(HEADS):
+        if heads is not None and k not in heads:
+            continue
         lp, p = masked_log_softmax(z[:, a:b], M[:, a:b])
         w = use_smite if k == 2 else np.ones(n)
         onehot = np.zeros_like(p)
