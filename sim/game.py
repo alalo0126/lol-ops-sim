@@ -68,6 +68,7 @@ class Champ:
     ward_next: float = 0.0
     next_trade: float = 0.0
     lane_override: str = None    # 14분 전후 라인 바꾸기(원딜·서폿 미드, 미드 바텀)
+    group_until: float = 0       # 탑이 14분 이후 잠깐 다른 라인으로 합류(이 시각까지 lane_override)
     support_wards: float = 0.0   # 서폿 아이템 와드 충전(실수)
     legendaries: int = 0         # 완성 아이템 수(아이템 골드 문턱으로 셈, params items.legendary_item_gold)
 

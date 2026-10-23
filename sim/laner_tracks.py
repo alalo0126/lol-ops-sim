@@ -71,6 +71,8 @@ def behaviour(track, kills, pid, team_pids):
     """한 라이너의 3~18분 {초: 구역} → 지표 dict."""
     known = [t for t in range(T0, T1) if t in track]
     share = collections.Counter(track[t] for t in known)
+    pre = collections.Counter(track[t] for t in known if t < ROAM_T1)
+    post = collections.Counter(track[t] for t in known if t >= ROAM_T1)
     segs = segments(track)
     base, respawn, roams, trips, trip_s = [], 0, [], 0, []
     for i, (z, s, e) in enumerate(segs):
@@ -111,7 +113,9 @@ def behaviour(track, kills, pid, team_pids):
             jr_src[f"{'pre' if s < ROAM_T1 else 'post'}_{prev}"] += e - s + 1
         else:
             prev = "base" if z == "dead" else z
-    return {"jr_src": dict(jr_src), "cover": len(known) / (T1 - T0), "share": {z: share[z] / max(1, len(known)) for z in ZONES},
+    return {"jr_src": dict(jr_src),
+            "share_pre": {z: pre[z] / max(1, sum(pre.values())) for z in ZONES},
+            "share_post": {z: post[z] / max(1, sum(post.values())) for z in ZONES}, "cover": len(known) / (T1 - T0), "share": {z: share[z] / max(1, len(known)) for z in ZONES},
             "base_visits": len(base), "base_s": base, "respawn": respawn,
             "roams": roams, "trips": trips, "trip_s": trip_s}
 
