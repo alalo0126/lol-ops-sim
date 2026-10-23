@@ -32,6 +32,13 @@ PARAMS = [
     ("laner", "roam", "fight_on_arrival", "TOP"), ("laner", "roam", "fight_on_arrival", "MIDDLE"),
     ("laner", "roam", "fight_on_arrival", "BOTTOM"), ("laner", "roam", "fight_on_arrival", "UTILITY"),
     ("laner", "roam", "resolve", "loser_death"), ("laner", "roam", "resolve", "trade_death"),
+    ("laner", "roam", "encounter", "prob_per_s"),
+    ("laner", "recall_walk", "TOP"), ("laner", "recall_walk", "UTILITY"),
+    ("laner", "roam", "detour", "UTILITY", 0), ("laner", "roam", "detour", "UTILITY", 1), ("laner", "roam", "detour", "MIDDLE", 1),
+    ("laner", "roam", "linger_mult", "TOP", 0), ("laner", "roam", "linger_mult", "TOP", 1),
+    ("laner", "roam", "linger_mult", "MIDDLE", 0), ("laner", "roam", "linger_mult", "MIDDLE", 1),
+    ("laner", "roam", "linger_mult", "BOTTOM", 0), ("laner", "roam", "linger_mult", "BOTTOM", 1),
+    ("laner", "roam", "linger_mult", "UTILITY", 0), ("laner", "roam", "linger_mult", "UTILITY", 1),
 ]
 
 

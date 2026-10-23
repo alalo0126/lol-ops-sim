@@ -32,6 +32,7 @@ from .lane_visits import lane_of
 T0, T1 = 180, 1080
 MIN_COVER = 0.8
 BASE_S, ROAM_S, TRIP_S, AFTER = 3, 5, 10, 10
+JR = ("river", "own_jungle", "enemy_jungle")
 ROAM_T1 = 840   # 로밍은 14분 전에 시작한 것만
 ROLES = ("TOP", "MIDDLE", "BOTTOM", "UTILITY")
 ROLE_KO = {"TOP": "탑", "MIDDLE": "미드", "BOTTOM": "원딜", "UTILITY": "서폿"}
@@ -71,7 +72,7 @@ def behaviour(track, kills, pid, team_pids):
     known = [t for t in range(T0, T1) if t in track]
     share = collections.Counter(track[t] for t in known)
     segs = segments(track)
-    base, respawn, roams, trips = [], 0, [], 0
+    base, respawn, roams, trips, trip_s = [], 0, [], 0, []
     for i, (z, s, e) in enumerate(segs):
         if z == "base" and e - s + 1 >= BASE_S:
             if i > 0 and segs[i - 1][0] == "dead":
@@ -101,10 +102,18 @@ def behaviour(track, kills, pid, team_pids):
             elif j < len(segs) and segs[j][0] == "own_lane" and any(s[2] - s[1] + 1 >= TRIP_S for s in away
                                                                       if s[0] in ("river", "own_jungle", "enemy_jungle")):
                 trips += 1
+                trip_s.append((away[0][1], away[-1][2] - away[0][1] + 1))
         i = j
-    return {"cover": len(known) / (T1 - T0), "share": {z: share[z] / max(1, len(known)) for z in ZONES},
+    # 정글·강가 시간이 어디서 나왔나: 그 나들이 직전 구역(자기 라인·기지·부활·다른 라인) × 14분 전/후
+    jr_src, prev = collections.Counter(), None
+    for z, s, e in segs:
+        if z in JR:
+            jr_src[f"{'pre' if s < ROAM_T1 else 'post'}_{prev}"] += e - s + 1
+        else:
+            prev = "base" if z == "dead" else z
+    return {"jr_src": dict(jr_src), "cover": len(known) / (T1 - T0), "share": {z: share[z] / max(1, len(known)) for z in ZONES},
             "base_visits": len(base), "base_s": base, "respawn": respawn,
-            "roams": roams, "trips": trips}
+            "roams": roams, "trips": trips, "trip_s": trip_s}
 
 
 # ---------------------------------------------------------------------- 실제
