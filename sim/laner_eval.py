@@ -31,7 +31,7 @@ def frame_zone(xy, team, role, nodes):
 def simulate(games, seed0=0, game_kw=None):
     vals = collections.defaultdict(list)
     where = collections.defaultdict(collections.Counter)
-    from .laner_tracks import T0, T1, behaviour, place
+    from .laner_tracks import T0, T1, behaviour, place, kill_sizes
     from .stage6_track import _xy
     for s in range(seed0, seed0 + games):
         g = Game(seed=s, **(game_kw or {}))
@@ -45,6 +45,9 @@ def simulate(games, seed0=0, game_kw=None):
                     x, y = _xy(g, c)
                     tracks[c.pid][g.t] = "dead" if x is None else place(x, y, c.team, c.role, g.map.nodes)
         kills = [e for e in g.events if e["type"] == "kill"]
+        for w, ks in kill_sizes(kills).items():
+            vals[("kills", w)].append(ks["kills"])
+            vals[("kills_big", w)].append(ks["big"])
         for c in laners:
             b = behaviour(tracks[c.pid], kills, c.pid, {x.pid for x in g.champs if x.team == c.team})
             vals[(c.role, "rp_base_visits")].append(b["base_visits"])
@@ -123,6 +126,17 @@ def replay_rows(vals, rp, r):
     return out
 
 
+KILL_TOL = {"kills": 2.0, "kills_big": 1.5}   # 판당 킬 수 허용 범위
+
+
+def kill_rows(vals, rp):
+    """(시뮬 키, 창, 실제 값, 허용 범위). 실제 = 리플레이 70판 10~14분·14~20분 킬 수(3명 이상 관여 포함)."""
+    real = rp.get("kills_10_20")
+    if not real:
+        return []
+    return [((k, w), w, real[w]["kills" if k == "kills" else "big"], KILL_TOL[k]) for w in ("early", "late") for k in ("kills", "kills_big")]
+
+
 def report(vals, where, games):
     t = json.load(open(os.path.join(ROOT, "sim", "targets_laner.json"), encoding="utf-8"))
     lines = [f"# 라이너 검수 (시뮬 {games}판 vs 실제 {t['games']}판)", "",
@@ -160,6 +174,18 @@ def report(vals, where, games):
                 row.append(f"{fmt.format(sv)} / {fmt.format(real)} {v}")
             lines.append(f"| {r} | " + " | ".join(row) + " |")
         lines.append("")
+        rows = kill_rows(vals, rp)
+        if rows:
+            lines += ["## 10~20분 교전(리플레이 70판 킬 이벤트)", "", "판정: 허용 범위(킬 2, 3명 이상 관여 킬 1.5) 안 OK, 두 배 안 주의.", "",
+                      "| 지표 | 시뮬 | 실제 | 판정 |", "|---|---|---|---|"]
+            ko = {("kills", "early"): "10~14분 킬(판당)", ("kills_big", "early"): "10~14분 3명 이상 관여 킬",
+                  ("kills", "late"): "14~20분 킬(판당)", ("kills_big", "late"): "14~20분 3명 이상 관여 킬"}
+            for key, w, real, tol in rows:
+                sv = statistics.mean(vals[key])
+                v = "OK" if abs(sv - real) <= tol else ("주의" if abs(sv - real) <= 2 * tol else "불일치")
+                count[v] += 1
+                lines.append(f"| {ko[key]} | {sv:.1f} | {real:.1f} | {v} |")
+            lines.append("")
     lines += ["## 포탑", "", "실제 시각은 경기 전체(20분 이후 포함) 분포라, 20분에서 끝나는 시뮬과는 20분 안 비율로 같이 본다.", "",
               "| 지표 | 시뮬 | 실제 |", "|---|---|---|"]
     for tier in ("outer", "inner", "inhib"):

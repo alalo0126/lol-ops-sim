@@ -159,6 +159,26 @@ def real(nodes):
     return out
 
 
+KILL_WINDOWS = (("early", 600, 840), ("late", 840, 1200))   # 10~14분, 14~20분
+
+
+def kill_sizes(kills):
+    """10~20분 킬 수와 그중 3명 이상(킬러+어시스트) 관여한 킬 수. kills = [{t, killer, victim, assists}]."""
+    out = {}
+    for name, a, b in KILL_WINDOWS:
+        ks = [k for k in kills if a <= k["t"] < b]
+        out[name] = {"kills": len(ks), "big": sum(1 for k in ks if 1 + len(k["assists"]) >= 3)}
+    return out
+
+
+def real_kill_sizes():
+    with open(os.path.join(ROOT, "data", "replay_compact.json"), encoding="utf-8") as f:
+        compact = json.load(f)
+    rows = [kill_sizes(m["kills"]) for m in compact.values()]
+    return {w: {k: float(np.mean([r[w][k] for r in rows])) for k in ("kills", "big")} | {"n": len(rows)}
+            for w, _, _ in KILL_WINDOWS}
+
+
 # ---------------------------------------------------------------------- 시뮬
 def _sim_one(seed):
     from .stage6_track import _xy
@@ -255,7 +275,8 @@ def main():
     # 라이너 보정(sim/laner_calibrate.py)과 검수(sim/laner_eval.py)가 쓰는 실제 목표값
     with open(os.path.join(ROOT, "sim", "targets_laner_replay.json"), "w", encoding="utf-8") as f:
         json.dump({"_doc": f"sim/laner_tracks.py: 리플레이 1초 동선 {len({x['match'] for v in rs.values() for x in v})}판, 3~18분",
-                   "roles": {k: summary(v) for k, v in rs.items()}}, f, ensure_ascii=False, indent=1)
+                   "roles": {k: summary(v) for k, v in rs.items()},
+                   "kills_10_20": real_kill_sizes()}, f, ensure_ascii=False, indent=1)
     print(md)
 
 

@@ -138,7 +138,11 @@
     "duration_s": {"value": 10, "level": "unverified"},
     "hp_cost": {"value": [0.15, 0.4], "level": "unverified"}
   },
+  "group_fight": {"value": {"after_s": 300, "radius": 2000, "min_size": 3, "rate_per_s": [0.01, 0.03], "cooldown_s": 30, "join_travel_s": 20, "join_prob": 0.6,
+                             "resolve": {"lose_death": 0.45, "win_death": 0.12}},
+                   "level": "calibrated", "note": "여러 명이 모인 교전. 양 팀 합쳐 min_size명 이상이 radius 안(노드 좌표, 미검증)에 있으면 초당 rate_per_s[14분 전, 후] × (인원 − min_size + 1)로 교전, 진 쪽은 한 명씩 lose_death, 이긴 쪽은 win_death 확률로 사망. 교전이 나면 join_travel_s초 안에 올 수 있는 다른 챔피언도 join_prob로 낌. 리플레이 70판 10~20분 킬 관여 인원 분포와 1단계 1,000판 라이너·정글러 사망 수에 맞춤"},
   "skirmish": {
+    "assist_near": {"value": {"radius": 2500, "prob": 0.8}, "level": "calibrated", "note": "킬이 날 때 죽은 자리(노드 좌표) radius 안 킬러 팀원이 prob로 어시스트를 받음(미검증 범위). 리플레이 70판 10~20분 킬 관여 인원 분포에 맞춤"},
     "encounter_range": {"value": 3500, "level": "unverified", "note": "두 정글러가 이 거리 안(현재 노드 좌표 기준)에 있으면 조우 가능"},
     "engage_prob_per_s": {"value": 0.03, "level": "calibrated", "note": "조우 중 초당 교전 시작 확률. 정글러 10분 데스 평균(1,000판 1.2)에 맞춤. 6단계 이후 오브젝트 다툼과 갱 맞교환 사망을 넣으면서 0.1 → 0.03"},
     "cooldown_s": {"value": 45, "level": "unverified"},
@@ -154,7 +158,8 @@
   "objective": {
     "epic_dps_factor": {"value": 0.8, "level": "unverified", "note": "에픽 몬스터 방어력 등으로 정글러 피해가 줄어드는 정도"},
     "helper_dps": {"value": 70, "level": "unverified", "note": "합류한 라이너 1명이 더하는 초당 피해"},
-    "contest_loser_death": {"value": 0.35, "level": "unverified"}
+    "contest_loser_death": {"value": 0.35, "level": "unverified"},
+    "rally": {"value": {"travel_s": 45, "join_prob": [0.4, 0.9], "respond_prob": [0.3, 0.8], "respond_hold_s": 10}, "level": "calibrated", "note": "정글러가 오브젝트를 시작할 때 travel_s초 안에 올 수 있는 아군 라이너가 join_prob[14분 전, 후]로 합류, 적 라이너는 respond_prob로 모여 respond_hold_s 더 머묾(그 둥지에서 group_fight). 리플레이 10~20분 킬 관여 인원 분포에 맞춤"}
   },
   "agent": {
     "_doc": "5단계 학습 정글러가 쓰는 행동의 비용 값. 규칙 봇은 쓰지 않는다.",

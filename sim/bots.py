@@ -262,13 +262,26 @@ class JunglerBot:
                 return
             helpers = []
             lane = OBJ_LANE[task["name"]]
+            pr = g.p["objective"]["rally"]
+            late = 0 if g.t < 840 else 1
+            free = lambda a: a.alive(g.t) and a.role != "JUNGLE" and (not a.task or a.task.get("kind") == "roaming") \
+                and g.map.nodes[a.node]["kind"] != "fountain"
             for a in g.champs:
-                if a.team == c.team and a.role != "JUNGLE" and a.lane == lane and a.alive(g.t) and a.node == g.lane_node(lane) and not a.task:
+                if a.team != c.team or not free(a):
+                    continue
+                if (a.lane == lane and a.node == g.lane_node(lane)) or \
+                        (g.map.travel_s(a.node, ob["node"], a.ms) <= pr["travel_s"] and g.rng.random() < pr["join_prob"][late]):
                     helpers.append(a)
             dur = g.objective_time(c, task["name"], helpers)
             for h in helpers:
                 h.task = {"kind": "helping", "until": g.t + dur}
                 g.move_to(h, ob["node"])
+            # 적도 오브젝트를 보고 모인다(리플레이 10~20분 3명 이상 관여 킬 판당 11번, sim/game.py _group_fight가 교전)
+            for a in g.champs:
+                if a.team != c.team and free(a) and g.map.travel_s(a.node, ob["node"], a.ms) <= pr["travel_s"] \
+                        and g.rng.random() < pr["respond_prob"][late]:
+                    a.task = {"kind": "helping", "until": g.t + dur + pr["respond_hold_s"]}
+                    g.move_to(a, ob["node"])
             task.update(started=True, helpers=helpers)
             c.busy_until = g.t + dur
         elif kind == "gank":
