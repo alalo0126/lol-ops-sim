@@ -1,0 +1,685 @@
+<title>협곡 운영 리플레이</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Do+Hyeon&display=swap">
+<style>
+/* 레이아웃: 위 조작 막대 → 두 미니맵(시뮬 | 실제)을 나란히 → 아래 시간축 차트. 미니맵은 두 테마 모두 같은 협곡색을 쓴다. */
+:root {
+  --bg: #f3f5f2;
+  --panel: #ffffff;
+  --ink: #18221d;
+  --muted: #5d6b63;
+  --line: #d5ddd7;
+  --soft: #e8eee9;
+  --blue: #2f6fb3;
+  --red: #c24a3f;
+  --ai: #b88512;
+  --warn-bg: #fbf3df;
+  --warn-ink: #6b4d06;
+  --band-outer: rgba(47, 111, 179, 0.10);
+  --band-inner: rgba(47, 111, 179, 0.20);
+  --c-farm: #3f8f5c;
+  --c-invade: #8a63c2;
+  --c-lane: #d27a22;
+  --c-objective: #1f8a96;
+  --c-river: #8b98a8;
+  --c-recall: #b9a46a;
+  --rift: #1d2b25;
+  --rift-lane: #3b4a40;
+  --rift-river: #1f3a47;
+  --rift-edge: rgba(220, 235, 225, 0.12);
+  --font-display: "Do Hyeon", "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111613; --panel: #18201b; --ink: #e4ebe6; --muted: #98a69d; --line: #2c3730; --soft: #1f2822;
+    --blue: #6aa6e6; --red: #ee7a6e; --ai: #e2b23f; --warn-bg: #2d2615; --warn-ink: #ecd08c;
+    --band-outer: rgba(106, 166, 230, 0.10); --band-inner: rgba(106, 166, 230, 0.22);
+    --c-farm: #5fb57d; --c-invade: #a888dc; --c-lane: #ec9a4a; --c-objective: #3fb2bf; --c-river: #8d9aab; --c-recall: #cdb97c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111613; --panel: #18201b; --ink: #e4ebe6; --muted: #98a69d; --line: #2c3730; --soft: #1f2822;
+  --blue: #6aa6e6; --red: #ee7a6e; --ai: #e2b23f; --warn-bg: #2d2615; --warn-ink: #ecd08c;
+  --band-outer: rgba(106, 166, 230, 0.10); --band-inner: rgba(106, 166, 230, 0.22);
+  --c-farm: #5fb57d; --c-invade: #a888dc; --c-lane: #ec9a4a; --c-objective: #3fb2bf; --c-river: #8d9aab; --c-recall: #cdb97c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 14px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 40px;
+}
+.wrap { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: 2rem; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; margin: 0; }
+.lede { color: var(--muted); max-width: 70ch; margin: 4px 0 0; }
+.mono, .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.limits { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 12px 16px; }
+.limits b { font-weight: 700; }
+.limits ul { margin: 6px 0 0; padding-left: 1.2em; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px 24px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.controls label { display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--muted); min-width: 0; }
+select, button { font: inherit; color: var(--ink); background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; max-width: 100%; }
+button { cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+#play { min-width: 74px; font-weight: 700; background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.timebox { flex: 1 1 320px; display: flex; align-items: center; gap: 10px; min-width: 0; }
+#clock { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 600; min-width: 4.2ch; }
+#scrub { flex: 1; min-width: 0; accent-color: var(--ai); }
+
+.maps { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .maps { grid-template-columns: 1fr; } }
+.side { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.side-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.tag { font-size: 12px; color: var(--muted); }
+.canvas-box { position: relative; width: 100%; max-width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; overflow: hidden; background: var(--rift); }
+.canvas-box canvas { width: 100%; height: 100%; display: block; }
+
+.jcard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.jcard div { background: var(--soft); border-radius: 6px; padding: 6px 8px; min-width: 0; }
+.jcard .k { font-size: 11px; color: var(--muted); letter-spacing: 0.02em; }
+.jcard .v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 600; white-space: nowrap; }
+.doing { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.chip { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #fff; background: var(--c-river); }
+.who { font-weight: 700; }
+
+.strip-title { font-size: 12px; color: var(--muted); }
+.strip { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; }
+.strip button { height: 22px; padding: 0; border: none; border-radius: 3px; opacity: 0.9; }
+.strip button.now { outline: 2px solid var(--ink); outline-offset: 1px; opacity: 1; }
+.strip-axis { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+.mix { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--muted); }
+.mix span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; background: var(--sw); vertical-align: -1px; }
+
+.log { list-style: none; margin: 0; padding: 0; max-height: 196px; overflow-y: auto; border-top: 1px solid var(--line); }
+.log li { display: grid; grid-template-columns: 3.6em 1fr; gap: 8px; padding: 4px 2px; border-bottom: 1px solid var(--soft); cursor: pointer; font-size: 13px; }
+.log li:hover { background: var(--soft); }
+.log li.future { opacity: 0.38; }
+.log .t { font-family: var(--font-mono); color: var(--muted); }
+.log .ai { color: var(--ai); font-weight: 700; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+
+.charts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 1000px) { .charts { grid-template-columns: 1fr; } }
+.chart { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.chart p { margin: 2px 0 6px; font-size: 12px; color: var(--muted); }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+.foot { font-size: 12px; color: var(--muted); max-width: 90ch; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>협곡 운영 리플레이</h1>
+    <p class="lede">왼쪽은 시뮬레이터 한 판(학습한 AI 정글러 1명 + 규칙 봇 9명), 오른쪽은 실제 챌린저·그랜드마스터 경기 한 판입니다. 0~20분을 같은 시계로 재생합니다. 금색 테두리가 AI 정글러입니다.</p>
+  </header>
+
+  <section class="limits" aria-label="알려진 한계">
+    <b>알려진 한계 (화면을 볼 때 감안할 점)</b>
+    <ul id="limits"></ul>
+  </section>
+
+  <section class="controls" aria-label="재생 조작">
+    <label for="simSel">시뮬 경기<select id="simSel"></select></label>
+    <label for="realSel">실제 경기<select id="realSel"></select></label>
+    <label for="realTeam">실제 쪽 볼 정글러<select id="realTeam"><option value="100">블루 정글러</option><option value="200">레드 정글러</option></select></label>
+    <label for="speed">속도<select id="speed"><option value="10">10배</option><option value="20" selected>20배</option><option value="40">40배</option><option value="80">80배</option></select></label>
+    <div class="timebox">
+      <button id="play" type="button">재생</button>
+      <span id="clock">0:00</span>
+      <input id="scrub" type="range" min="0" max="1200" step="1" value="0" aria-label="경기 시각">
+    </div>
+  </section>
+
+  <div class="legend" aria-label="맵 범례">
+    <span><i style="background:var(--blue)"></i>블루 팀</span>
+    <span><i style="background:var(--red)"></i>레드 팀</span>
+    <span><i style="background:transparent;border:2px solid var(--ai)"></i>AI 정글러</span>
+    <span>글자: 탑·정·미·원·서</span>
+    <span>채운 점 = 살아 있는 캠프, 빈 점 = 처치됨 (실제 쪽은 추정)</span>
+    <span>× = 최근 킬 위치</span>
+    <span>점선 = 정글러의 최근 1분 동선 (실제 쪽은 추정)</span>
+  </div>
+
+  <div class="maps">
+    <section class="side" aria-label="시뮬레이터 경기">
+      <div class="side-head"><h2>시뮬레이터</h2><span class="tag" id="simTag"></span></div>
+      <div class="canvas-box"><canvas id="simMap" width="720" height="720" aria-label="시뮬레이터 미니맵"></canvas></div>
+      <div class="doing"><span class="who" id="simWho">AI 정글러</span><span class="chip" id="simDoing">-</span></div>
+      <div class="jcard" id="simCard"></div>
+      <div>
+        <div class="strip-title">1분마다 정글러가 한 일 (6단계와 같은 분류 함수)</div>
+        <div class="strip" id="simStrip"></div>
+        <div class="strip-axis"><span>0분</span><span>10분</span><span>20분</span></div>
+      </div>
+      <div class="mix" id="simMix"></div>
+      <ul class="log" id="simLog"></ul>
+    </section>
+    <section class="side" aria-label="실제 경기">
+      <div class="side-head"><h2>실제 천상계 경기</h2><span class="tag" id="realTag"></span></div>
+      <div class="canvas-box"><canvas id="realMap" width="720" height="720" aria-label="실제 경기 미니맵"></canvas></div>
+      <div class="doing"><span class="who" id="realWho">정글러</span><span class="chip" id="realDoing">-</span></div>
+      <div class="jcard" id="realCard"></div>
+      <div>
+        <div class="strip-title">1분마다 정글러가 한 일</div>
+        <div class="strip" id="realStrip"></div>
+        <div class="strip-axis"><span>0분</span><span>10분</span><span>20분</span></div>
+      </div>
+      <div class="mix" id="realMix"></div>
+      <ul class="log" id="realLog"></ul>
+    </section>
+  </div>
+
+  <section class="charts" aria-label="시간에 따른 지표">
+    <div class="chart"><h2>블루 팀 예측 승률</h2><p>1,000판으로 맞춘 분별 승률 모델(골드·경험치·드래곤·유충·전령 차이)</p><svg id="chWp" viewBox="0 0 360 180"></svg></div>
+    <div class="chart"><h2>정글러 골드</h2><p>띠: 실제 1,000판 양 팀 정글러 p10~p90, 진한 띠 p25~p75</p><svg id="chGold" viewBox="0 0 360 180"></svg></div>
+    <div class="chart"><h2>정글러 정글 CS</h2><p>띠: 실제 1,000판 양 팀 정글러 p10~p90, 진한 띠 p25~p75</p><svg id="chCs" viewBox="0 0 360 180"></svg></div>
+  </section>
+  <div class="legend">
+    <span><i style="background:var(--ai)"></i>시뮬레이터 경기 (정글 지표는 AI 정글러)</span>
+    <span><i style="background:var(--ink)"></i>실제 경기 (정글 지표는 고른 정글러)</span>
+  </div>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script src="replay_data.js"></script>
+<script>
+(function () {
+  const D = window.REPLAY_DATA;
+  const MAP = 14870;
+  const ROLE_KO = { TOP: "탑", JUNGLE: "정", MIDDLE: "미", BOTTOM: "원", UTILITY: "서" };
+  const CAT_KO = D.cat_ko;
+  const CAT_SHORT = { farm: "우리 정글", invade: "카정", lane: "라인 개입", objective: "오브젝트", river: "강가·이동", recall: "귀환" };
+  const OBJ_KO = { dragon: "드래곤", grubs: "공허 유충", herald: "전령" };
+  const LANE_KO = { top: "탑", mid: "미드", bot: "봇" };
+  const $ = (id) => document.getElementById(id);
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const fmt = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+  const nodes = D.map.nodes;
+
+  let simI = 0, realI = 0, realTeam = 100, t = 0, playing = false, last = null;
+
+  // ---------------------------------------------------------------- 선택 상자
+  D.sim.forEach((g, i) => {
+    const o = document.createElement("option");
+    o.value = i;
+    o.textContent = `시드 ${g.seed} · AI ${g.agent_team === 100 ? "블루" : "레드"} · 20분 승률 ${(g.phi_end * 100).toFixed(0)}%`;
+    $("simSel").append(o);
+  });
+  D.real.forEach((g, i) => {
+    const j = g.champs.filter((c) => c.role === "JUNGLE").map((c) => c.champion);
+    const o = document.createElement("option");
+    o.value = i;
+    o.textContent = `${g.info && g.info.date_kst ? g.info.date_kst.slice(5, 10) + " · " : ""}${j[0]} vs ${j[1]} · ${g.win100 ? "블루" : "레드"} 승`;
+    $("realSel").append(o);
+  });
+
+  // ---------------------------------------------------------------- 알려진 한계(데이터에서 계산)
+  function agentPid(g) { return g.agent_team === 100 ? 2 : 7; }
+  function simAt(g, key, sec) { return g[key][Math.min(g[key].length - 1, Math.round(sec / g.step_s))]; }
+  (function limits() {
+    const b10 = D.bands["10"];
+    const cs = D.sim.map((g) => simAt(g, "stats", 600)[agentPid(g) - 1][3]);
+    const avgCs = cs.reduce((a, b) => a + b, 0) / cs.length;
+    let laneSim = 0, nSim = 0, laneReal = 0, nReal = 0, invSim = 0, invReal = 0;
+    D.sim.forEach((g) => g.cats[String(g.agent_team)].slice(3, 18).forEach((c) => { nSim++; laneSim += c === "lane"; invSim += c === "invade"; }));
+    D.real.forEach((g) => ["100", "200"].forEach((tm) => g.cats[tm].slice(3, 18).forEach((c) => { nReal++; laneReal += c === "lane"; invReal += c === "invade"; })));
+    const pc = (a, n) => `${Math.round((100 * a) / n)}%`;
+    const items = [
+      `정글 CS가 적습니다. 이 화면의 AI 정글러 10분 정글 CS 평균 ${avgCs.toFixed(0)}, 실제 1,000판 중앙값 ${b10.jungle_cs[2]} (p25 ${b10.jungle_cs[1]}).`,
+      `카정이 거의 없습니다. 3~17분 중 카정으로 분류된 1분: AI ${pc(invSim, nSim)}, 이 화면의 실제 경기 ${pc(invReal, nReal)}.`,
+      `라인 개입(갱·합류)이 많습니다. 3~17분 중 AI ${pc(laneSim, nSim)}, 이 화면의 실제 경기 ${pc(laneReal, nReal)} (6단계 전체 비교: 55% vs 25%).`,
+      "라이너 9명은 규칙 봇이고 웨이브는 없습니다. 라이너는 라인 가운데·포탑·우물 노드 사이만 오갑니다.",
+      "실제 경기 위치는 Riot 기록이 1분 간격입니다. 라이너는 그 사이를 직선으로 이었습니다.",
+      "실제 정글러 동선과 캠프 상태는 추정입니다. 1분 동안 정글 CS가 4 늘 때마다 앞뒤 위치에 가까운 캠프 하나를 잡은 것으로 보고, 킬·사망·에픽 몬스터 위치와 구매(귀환) 시각은 기록 그대로 넣었습니다. 어떤 캠프를 어떤 순서로 돌았는지는 틀릴 수 있습니다.",
+      "와드 위치는 실제 기록에 없습니다.",
+    ];
+    $("limits").innerHTML = items.map((s) => `<li>${s}</li>`).join("");
+    $("foot").textContent = `정책: ${D.policy}. 데이터는 python -m sim.replay 로 다시 만듭니다. 시뮬 20분 승률은 AI 정글러 팀 기준, 차트의 승률은 블루 기준입니다.`;
+  })();
+
+  // ---------------------------------------------------------------- 미니맵 그리기
+  function setupCanvas(cv) {
+    const ctx = cv.getContext("2d");
+    return { cv, ctx };
+  }
+  const simC = setupCanvas($("simMap")), realC = setupCanvas($("realMap"));
+  const P = (x, y, W) => [(x / MAP) * W, W - (y / MAP) * W];
+
+  function drawBase(c) {
+    const { cv, ctx } = c, W = cv.width;
+    ctx.fillStyle = css("--rift");
+    ctx.fillRect(0, 0, W, W);
+    // 강: 위 라인 강 입구 → 바론 → 가운데 → 드래곤 → 아래 라인 강 입구
+    ctx.strokeStyle = css("--rift-river");
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.lineWidth = W * 0.045;
+    ctx.beginPath();
+    [[1800, 13000], [5000, 10400], [7435, 7435], [9850, 4450], [13000, 1800]].forEach(([x, y], i) => { const [a, b] = P(x, y, W); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); });
+    ctx.stroke();
+    // 라인
+    ctx.strokeStyle = css("--rift-lane");
+    ctx.lineWidth = W * 0.035;
+    const lanes = [[[1000, 3500], [1000, 13850], [11300, 13850]], [[3500, 1000], [13850, 1000], [13850, 11300]], [[2500, 2500], [12400, 12400]]];
+    lanes.forEach((pts) => { ctx.beginPath(); pts.forEach(([x, y], i) => { const [a, b] = P(x, y, W); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }); ctx.stroke(); });
+    // 본진
+    [[100, 1000, 1000], [200, 13870, 13870]].forEach(([tm, x, y]) => {
+      const [a, b] = P(x, y, W);
+      ctx.fillStyle = tm === 100 ? css("--blue") : css("--red");
+      ctx.globalAlpha = 0.28;
+      ctx.beginPath(); ctx.arc(a, b, W * 0.11, 0, 7); ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+    // 노드 그래프
+    ctx.strokeStyle = css("--rift-edge");
+    ctx.lineWidth = 1;
+    D.map.edges.forEach(([u, v]) => {
+      const [a, b] = P(nodes[u][0], nodes[u][1], W), [c2, d] = P(nodes[v][0], nodes[v][1], W);
+      ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(c2, d); ctx.stroke();
+    });
+    // 포탑
+    Object.entries(nodes).forEach(([id, n]) => {
+      if (n[2] !== "tower") return;
+      const [a, b] = P(n[0], n[1], W);
+      ctx.fillStyle = id.includes("_B_") ? css("--blue") : css("--red");
+      ctx.fillRect(a - 5, b - 5, 10, 10);
+    });
+  }
+
+  function drawCamps(c, alive) {
+    const { ctx, cv } = c, W = cv.width;
+    Object.entries(nodes).forEach(([id, n]) => {
+      if (n[2] !== "camp" && n[2] !== "scuttle") return;
+      const [a, b] = P(n[0], n[1], W);
+      const big = /blue|red/.test(id) && n[2] === "camp";
+      const r = big ? 8 : 6;
+      const col = id.startsWith("B_") ? "#7fb4e8" : id.startsWith("R_") ? "#f0a196" : "#9fd6c0";
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = col;
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(a, b, r, 0, 7);
+      if (alive === null) { ctx.globalAlpha = 0.35; ctx.stroke(); ctx.globalAlpha = 1; }
+      else if (alive[id]) ctx.fill();
+      else { ctx.globalAlpha = 0.55; ctx.stroke(); ctx.globalAlpha = 1; }
+    });
+  }
+
+  function drawPits(c, state) {
+    const { ctx, cv } = c, W = cv.width;
+    [["dragon_pit", "용", state.dragon], ["baron_pit", state.grubs ? "유충" : state.herald ? "전령" : "둥지", state.grubs || state.herald]].forEach(([id, txt, on]) => {
+      const n = nodes[id];
+      const [a, b] = P(n[0], n[1], W);
+      ctx.fillStyle = on ? "#e7c25a" : "rgba(231,194,90,0.18)";
+      ctx.strokeStyle = "#e7c25a";
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(a, b - 13); ctx.lineTo(a + 13, b); ctx.lineTo(a, b + 13); ctx.lineTo(a - 13, b); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = on ? "#1d2b25" : "#e7c25a";
+      ctx.font = "600 11px 'IBM Plex Sans KR', sans-serif";
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(on === undefined ? "" : txt, a, b + (on ? 0 : 24));
+    });
+  }
+
+  function drawTrail(c, pts, color) {
+    const { ctx, cv } = c, W = cv.width;
+    if (pts.length < 2) return;
+    ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.setLineDash([2, 6]); ctx.globalAlpha = 0.85;
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => { const [a, b] = P(x, y, W); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); });
+    ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+  }
+
+  function drawKills(c, kills) {
+    const { ctx, cv } = c, W = cv.width;
+    kills.forEach(({ x, y, age, team }) => {
+      const [a, b] = P(x, y, W);
+      ctx.globalAlpha = Math.max(0.15, 1 - age / 20);
+      ctx.strokeStyle = team === 100 ? css("--blue") : css("--red");
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(a - 9, b - 9); ctx.lineTo(a + 9, b + 9); ctx.moveTo(a + 9, b - 9); ctx.lineTo(a - 9, b + 9); ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function drawChamps(c, champs, xy, hp, dead, focusPid, aiPid) {
+    const { ctx, cv } = c, W = cv.width;
+    const order = champs.map((ch, k) => k).sort((a, b) => (champs[a].role === "JUNGLE") - (champs[b].role === "JUNGLE"));
+    order.forEach((k) => {
+      const ch = champs[k];
+      const [a, b] = P(xy[k][0], xy[k][1], W);
+      const jg = ch.role === "JUNGLE";
+      const r = jg ? 15 : 12;
+      ctx.globalAlpha = dead[k] ? 0.35 : 1;
+      ctx.fillStyle = ch.team === 100 ? css("--blue") : css("--red");
+      ctx.beginPath(); ctx.arc(a, b, r, 0, 7); ctx.fill();
+      if (hp && hp[k] > 0) {   // 체력 고리
+        ctx.strokeStyle = "rgba(255,255,255,0.85)"; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(a, b, r - 2.5, -Math.PI / 2, -Math.PI / 2 + (2 * Math.PI * hp[k]) / 100); ctx.stroke();
+      }
+      if (ch.pid === aiPid || ch.pid === focusPid) {
+        ctx.strokeStyle = ch.pid === aiPid ? "#e7b53a" : "#ffffff"; ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.arc(a, b, r + 4, 0, 7); ctx.stroke();
+      }
+      ctx.fillStyle = "#fff";
+      ctx.font = `700 ${jg ? 14 : 12}px 'IBM Plex Sans KR', sans-serif`;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(dead[k] ? "✕" : ROLE_KO[ch.role], a, b + 1);
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function drawClock(c, label) {
+    const { ctx, cv } = c, W = cv.width;
+    ctx.fillStyle = "rgba(0,0,0,0.45)";
+    ctx.fillRect(W - 170, 10, 160, 30);
+    ctx.fillStyle = "#fff"; ctx.font = "600 14px 'JetBrains Mono', monospace"; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+    ctx.fillText(label, W - 20, 25);
+  }
+
+  // ---------------------------------------------------------------- 시뮬 상태
+  function simState(g, sec) {
+    const f = sec / g.step_s, i = Math.min(g.pos.length - 1, Math.floor(f)), j = Math.min(g.pos.length - 1, i + 1), fr = f - i;
+    const A = g.pos[i], B = g.pos[j];
+    const xy = g.champs.map((_, k) => {
+      const ax = A[2 * k], ay = A[2 * k + 1], bx = B[2 * k], by = B[2 * k + 1];
+      // 죽어서 우물로 순간 이동한 칸은 보간하지 않음
+      if (Math.hypot(bx - ax, by - ay) > 2500) return [fr < 0.5 ? ax : bx, fr < 0.5 ? ay : by];
+      return [ax + (bx - ax) * fr, ay + (by - ay) * fr];
+    });
+    const k = Math.min(g.pos.length - 1, Math.round(f));
+    const hp = g.hp[k];
+    const dead = g.task[k].map((x) => g.labels[x] === "사망");
+    const alive = {};
+    g.camp_ids.forEach((id, n) => (alive[id] = g.camps[k][n] === "1"));
+    const ob = g.obj[k];
+    return { xy, hp, dead, alive, obj: { dragon: ob[0] === "1", grubs: ob[1] === "1", herald: ob[2] === "1" }, k };
+  }
+
+  function realState(g, sec) {
+    const m = Math.min(g.minutes, sec / 60), i = Math.min(g.minutes - 1, Math.floor(m)), fr = Math.min(1, m - i);
+    const A = g.pos[i], B = g.pos[i + 1];
+    const xy = g.champs.map((ch, k) => ch.role === "JUNGLE" ? trackAt(g.jg_track[String(ch.team)], sec)
+      : [A[2 * k] + (B[2 * k] - A[2 * k]) * fr, A[2 * k + 1] + (B[2 * k + 1] - A[2 * k + 1]) * fr]);
+    // 캠프: 정글 CS 증가로 추정한 처치 시각 + 규칙의 첫 생성·리젠 시각
+    const alive = {};
+    Object.entries(g.camp_kills).forEach(([cid, ks]) => {
+      const [first, respawn] = g.camp_timing[cid];
+      const lastKill = ks.filter((x) => x <= sec).pop();
+      alive[cid] = sec >= first && (lastKill === undefined || sec >= lastKill + respawn);
+    });
+    // 사망: 킬 이벤트 뒤 대략 부활 시간 동안(레벨별 실제 값 대신 10~30초 근사)
+    const dead = g.champs.map((ch) => g.events.some((e) => e.type === "kill" && e.victim === ch.pid && e.t <= sec && sec < e.t + 10 + e.t / 60));
+    const hp = g.hp[Math.min(g.minutes, Math.round(m))];
+    // 에픽 몬스터 상태: 규칙 시각(드래곤 5:00·리젠 5분, 유충 6:00~, 전령 14:00~)과 실제 처치 기록
+    const killed = (name) => g.events.filter((e) => e.type === "objective" && e.name === name && e.t <= sec);
+    const dk = killed("dragon");
+    const dragon = sec >= 300 && (dk.length === 0 || sec >= dk[dk.length - 1].t + 300);
+    const grubs = sec >= 360 && sec < 14 * 60 + 45 && killed("grubs").length < 3;
+    const herald = sec >= 15 * 60 && killed("herald").length < 1;
+    return { xy, hp, dead, alive, obj: { dragon, grubs, herald } };
+  }
+
+  // 추정 동선 [[초, x, y], ...]에서 sec 위치
+  function trackAt(tr, sec) {
+    if (sec <= tr[0][0]) return [tr[0][1], tr[0][2]];
+    let lo = 0, hi = tr.length - 1;
+    if (sec >= tr[hi][0]) return [tr[hi][1], tr[hi][2]];
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (tr[mid][0] <= sec) lo = mid; else hi = mid; }
+    const a = tr[lo], b = tr[hi], f = (sec - a[0]) / Math.max(1e-6, b[0] - a[0]);
+    return [a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+  }
+
+  // ---------------------------------------------------------------- 카드·로그
+  function card(el, items) {
+    el.innerHTML = items.map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+  }
+  function setChip(el, cat, text) {
+    el.textContent = text;
+    el.style.background = `var(--c-${cat || "river"})`;
+  }
+  const actionCat = (name) => ({ camp: "farm", scuttle: "farm", invade: "invade", gank: "lane", cover: "lane", lanefarm: "lane", obj: "objective", recall: "recall", wait: "river", move: "river" })[name.split("_")[0]];
+
+  function strip(el, cats, mixEl) {
+    el.innerHTML = "";
+    cats.forEach((c, m) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.style.background = `var(--c-${c})`;
+      b.title = `${m}~${m + 1}분: ${CAT_KO[c]}`;
+      b.setAttribute("aria-label", b.title);
+      b.addEventListener("click", () => seek(m * 60 + 1));
+      el.append(b);
+    });
+    const counts = {};
+    cats.slice(3, 18).forEach((c) => (counts[c] = (counts[c] || 0) + 1));
+    mixEl.innerHTML = "3~17분: " + Object.keys(CAT_SHORT).filter((c) => counts[c]).map((c) => `<span style="--sw:var(--c-${c})">${CAT_SHORT[c]} ${counts[c]}</span>`).join("");
+  }
+  function markStrip(el, sec) {
+    const m = Math.min(19, Math.floor(sec / 60));
+    [...el.children].forEach((b, i) => b.classList.toggle("now", i === m));
+  }
+
+  const roleName = (ch, champ) => `${ch.team === 100 ? "블루" : "레드"} ${ROLE_KO[ch.role] === "정" ? "정글" : { TOP: "탑", MIDDLE: "미드", BOTTOM: "원딜", UTILITY: "서폿" }[ch.role]}${champ ? ` ${champ}` : ""}`;
+
+  function buildSimLog(g) {
+    const champ = (pid) => g.champs[pid - 1];
+    const ai = agentPid(g);
+    const rows = [];
+    g.agent_actions.forEach(([t2, , ko]) => rows.push([t2, `<span class="ai">AI 결정</span> ${ko}`]));
+    g.events.forEach((e) => {
+      if (e.type === "kill" && [e.killer, e.victim, ...e.assists].includes(ai)) rows.push([e.t, `킬: ${roleName(champ(e.killer))} → ${roleName(champ(e.victim))}`]);
+      else if (e.type === "kill") rows.push([e.t, `<span style="opacity:.7">킬: ${roleName(champ(e.killer))} → ${roleName(champ(e.victim))}</span>`]);
+      else if (e.type === "objective") rows.push([e.t, `${OBJ_KO[e.name]} 처치 (${e.team === 100 ? "블루" : "레드"})`]);
+      else if (e.type === "gank") rows.push([e.t, `${roleName(champ(e.pid))} ${LANE_KO[e.lane]} 갱 ${e.success ? "성공" : "실패"} (확률 ${Math.round(e.prob * 100)}%)`]);
+      else if (e.type === "skirmish") rows.push([e.t, `정글러 조우 교전 ${e.sizes[0]}:${e.sizes[1]}, 사망 ${e.deaths}`]);
+      else if (e.type === "recall" && champ(e.pid).role === "JUNGLE") rows.push([e.t, `${roleName(champ(e.pid))} 귀환`]);
+    });
+    return rows.sort((a, b) => a[0] - b[0]);
+  }
+  function buildRealLog(g) {
+    const champ = (pid) => g.champs[pid - 1];
+    const rows = [];
+    g.events.forEach((e) => {
+      if (e.type === "kill") rows.push([e.t, `킬: ${e.killer ? roleName(champ(e.killer), champ(e.killer).champion) : "포탑·몬스터"} → ${roleName(champ(e.victim), champ(e.victim).champion)}`]);
+      else if (e.type === "objective") rows.push([e.t, `${OBJ_KO[e.name]} 처치 (${e.team === 100 ? "블루" : "레드"})`]);
+      else if (e.type === "buy" && champ(e.pid) && champ(e.pid).role === "JUNGLE") rows.push([e.t, `${roleName(champ(e.pid), champ(e.pid).champion)} 구매(귀환 또는 부활)`]);
+    });
+    return rows.sort((a, b) => a[0] - b[0]);
+  }
+  function renderLog(el, rows) {
+    el.innerHTML = rows.map(([t2, s]) => `<li data-t="${t2}"><span class="t">${fmt(t2)}</span><span>${s}</span></li>`).join("");
+    [...el.children].forEach((li) => li.addEventListener("click", () => seek(+li.dataset.t)));
+  }
+  function markLog(el, sec) {
+    let lastPast = null;
+    [...el.children].forEach((li) => { const fut = +li.dataset.t > sec; li.classList.toggle("future", fut); if (!fut) lastPast = li; });
+    if (lastPast && playing) el.scrollTop = Math.max(0, lastPast.offsetTop - el.offsetTop - el.clientHeight + lastPast.offsetHeight + 4);
+  }
+
+  // ---------------------------------------------------------------- 차트
+  const CW = 360, CH = 180, PAD = { l: 40, r: 10, t: 8, b: 22 };
+  const sx = (sec) => PAD.l + (sec / 1200) * (CW - PAD.l - PAD.r);
+  function chart(svg, { yMax, yMin = 0, ticks, fmtY, band, series }) {
+    const sy = (v) => CH - PAD.b - ((v - yMin) / (yMax - yMin)) * (CH - PAD.t - PAD.b);
+    let h = "";
+    ticks.forEach((v) => { h += `<line x1="${PAD.l}" x2="${CW - PAD.r}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--line)" stroke-width="1"/><text x="${PAD.l - 5}" y="${sy(v) + 3}" text-anchor="end">${fmtY(v)}</text>`; });
+    [0, 5, 10, 15, 20].forEach((m) => (h += `<text x="${sx(m * 60)}" y="${CH - 6}" text-anchor="middle">${m}분</text>`));
+    if (band) {
+      const ms = Object.keys(band).map(Number).filter((m) => m <= 20).sort((a, b) => a - b);
+      const area = (lo, hi, fill) => {
+        const top = ms.map((m) => `${sx(m * 60)},${sy(band[m][hi])}`).join(" ");
+        const bot = ms.slice().reverse().map((m) => `${sx(m * 60)},${sy(band[m][lo])}`).join(" ");
+        return `<polygon points="${top} ${bot}" fill="${fill}"/>`;
+      };
+      h += area(0, 4, "var(--band-outer)") + area(1, 3, "var(--band-inner)");
+      h += `<polyline points="${ms.map((m) => `${sx(m * 60)},${sy(band[m][2])}`).join(" ")}" fill="none" stroke="var(--blue)" stroke-width="1" stroke-dasharray="3 3"/>`;
+    }
+    series.forEach(({ pts, color, w }) => {
+      h += `<polyline points="${pts.map(([s, v]) => `${sx(s).toFixed(1)},${sy(v).toFixed(1)}`).join(" ")}" fill="none" stroke="${color}" stroke-width="${w || 2}" stroke-linejoin="round"/>`;
+    });
+    h += `<line class="cursor" x1="0" x2="0" y1="${PAD.t}" y2="${CH - PAD.b}" stroke="var(--ink)" stroke-width="1"/>`;
+    series.forEach(({ color }, i) => (h += `<circle class="dot${i}" r="3.5" fill="${color}" stroke="var(--panel)" stroke-width="1.5"/>`));
+    svg.innerHTML = h;
+    svg._sy = sy; svg._series = series;
+  }
+  function cursor(svg, sec) {
+    const x = sx(sec);
+    const l = svg.querySelector(".cursor");
+    l.setAttribute("x1", x); l.setAttribute("x2", x);
+    svg._series.forEach(({ pts }, i) => {
+      let v = pts[0][1];
+      for (const [s, val] of pts) { if (s <= sec) v = val; else break; }
+      const d = svg.querySelector(`.dot${i}`);
+      d.setAttribute("cx", x); d.setAttribute("cy", svg._sy(v));
+    });
+  }
+  function buildCharts() {
+    const g = D.sim[simI], r = D.real[realI];
+    const ai = agentPid(g) - 1;
+    const rj = r.champs.findIndex((c) => c.team === realTeam && c.role === "JUNGLE");
+    const simPts = (fn) => g.stats.map((row, i) => [i * g.step_s, fn(row, i)]).filter((_, i) => i % 5 === 0 || i === g.stats.length - 1);
+    const realPts = (fn) => r.stats.map((row, m) => [m * 60, fn(row, m)]);
+    const ink = "var(--ink)", ai_c = "var(--ai)";
+    chart($("chWp"), {
+      yMax: 1, ticks: [0, 0.25, 0.5, 0.75, 1], fmtY: (v) => `${v * 100}%`,
+      series: [{ pts: g.wp.map((v, i) => [i * g.step_s, v]).filter((_, i) => i % 5 === 0), color: ai_c }, { pts: r.wp.map((v, m) => [m * 60, v]), color: ink }],
+    });
+    const gb = {}, cb = {};
+    Object.entries(D.bands).forEach(([m, v]) => { gb[m] = v.gold; cb[m] = v.jungle_cs; });
+    const gmax = Math.max(9000, ...g.stats.map((r2) => r2[ai][0]), ...r.stats.map((r2) => r2[rj][0]));
+    chart($("chGold"), {
+      yMax: Math.ceil(gmax / 2000) * 2000, ticks: [0, 2000, 4000, 6000, 8000, 10000, 12000].filter((v) => v <= Math.ceil(gmax / 2000) * 2000), fmtY: (v) => `${v / 1000}k`, band: gb,
+      series: [{ pts: simPts((row) => row[ai][0]), color: ai_c }, { pts: realPts((row) => row[rj][0]), color: ink }],
+    });
+    const cmax = Math.max(140, ...r.stats.map((r2) => r2[rj][3]));
+    chart($("chCs"), {
+      yMax: Math.ceil(cmax / 40) * 40, ticks: [0, 40, 80, 120, 160].filter((v) => v <= Math.ceil(cmax / 40) * 40), fmtY: (v) => v, band: cb,
+      series: [{ pts: simPts((row) => row[ai][3]), color: ai_c }, { pts: realPts((row) => row[rj][3]), color: ink }],
+    });
+  }
+
+  // ---------------------------------------------------------------- 경기 고르기
+  function loadGames() {
+    const g = D.sim[simI], r = D.real[realI];
+    $("simTag").textContent = `시드 ${g.seed} · AI는 ${g.agent_team === 100 ? "블루" : "레드"} · 20분 승률 ${(g.phi_end * 100).toFixed(0)}%`;
+    const esc = (x) => String(x).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch]);
+    const info = r.info || {};
+    $("realTag").innerHTML = `${esc(r.match)}${info.date_kst ? ` · ${esc(info.date_kst)}` : ""} · ${r.win100 ? "블루" : "레드"} 승리`;
+    const rjCh = r.champs.find((c) => c.team === realTeam && c.role === "JUNGLE");
+    $("simWho").textContent = `AI 정글러 (${g.agent_team === 100 ? "블루" : "레드"})`;
+    const side = realTeam === 100 ? "블루" : "레드";
+    const rid = info.seed_team ? (info.seed_team === side ? info.seed_riot_id : info.enemy_jungler_riot_id) : "";
+    $("realWho").innerHTML = `${side} 정글러 ${esc(rjCh.champion)}${rid ? ` <span class="tag">${esc(rid)}${info.seed_team === side ? " (수집 기준 챌린저)" : ""}</span>` : ""}`
+      + (info.seed_team === side && info.opgg_seed ? ` <a class="tag" href="${esc(info.opgg_seed)}" target="_blank" rel="noopener">op.gg</a>` : "");
+    strip($("simStrip"), g.cats[String(g.agent_team)], $("simMix"));
+    strip($("realStrip"), r.cats[String(realTeam)], $("realMix"));
+    renderLog($("simLog"), buildSimLog(g));
+    renderLog($("realLog"), buildRealLog(r));
+    buildCharts();
+    render();
+  }
+
+  // ---------------------------------------------------------------- 한 프레임
+  function render() {
+    const g = D.sim[simI], r = D.real[realI];
+    const sec = t;
+    $("clock").textContent = fmt(sec);
+    $("scrub").value = Math.round(sec);
+
+    // 시뮬
+    const s = simState(g, sec);
+    const ai = agentPid(g);
+    drawBase(simC); drawCamps(simC, s.alive); drawPits(simC, s.obj);
+    const trail = [];
+    for (let back = 60; back >= 0; back -= g.step_s) {
+      const ss = sec - back;
+      if (ss < 0) continue;
+      const row = g.pos[Math.min(g.pos.length - 1, Math.round(ss / g.step_s))];
+      trail.push([row[2 * (ai - 1)], row[2 * (ai - 1) + 1]]);
+    }
+    drawTrail(simC, trail, "#e7b53a");
+    const simKills = g.events.filter((e) => e.type === "kill" && e.t <= sec && sec - e.t < 20).map((e) => ({ x: nodes[e.node][0], y: nodes[e.node][1], age: sec - e.t, team: g.champs[e.killer - 1].team }));
+    drawKills(simC, simKills);
+    drawChamps(simC, g.champs, s.xy, s.hp, s.dead, null, ai);
+    drawClock(simC, `블루 승률 ${(g.wp[s.k] * 100).toFixed(0)}%`);
+    const st = g.stats[s.k][ai - 1];
+    const lab = g.labels[g.task[s.k][ai - 1]];
+    const recent = g.agent_actions.filter((a) => a[0] <= sec).pop();
+    setChip($("simDoing"), recent ? actionCat(recent[1]) : "farm", lab === "사망" ? "사망" : lab);
+    card($("simCard"), [["골드", st[0].toLocaleString()], ["정글 CS", st[3]], ["레벨", st[2]], ["K/D/A", `${st[5]}/${st[6]}/${st[7]}`]]);
+    markStrip($("simStrip"), sec);
+    markLog($("simLog"), sec);
+
+    // 실제
+    const rs = realState(r, sec);
+    drawBase(realC); drawCamps(realC, rs.alive); drawPits(realC, rs.obj);
+    const rj = r.champs.findIndex((c) => c.team === realTeam && c.role === "JUNGLE");
+    const rtrail = [];
+    const rtr = r.jg_track[String(realTeam)];
+    for (let back = 60; back >= 0; back -= 2) {
+      const ss = sec - back;
+      if (ss < 0) continue;
+      const p = trackAt(rtr, ss), q = rtrail[rtrail.length - 1];
+      if (q && Math.hypot(p[0] - q[0], p[1] - q[1]) > 3000) rtrail.length = 0;   // 우물로 순간 이동한 앞부분은 버림
+      rtrail.push(p);
+    }
+    drawTrail(realC, rtrail, "#ffffff");
+    const realKills = r.events.filter((e) => e.type === "kill" && e.t <= sec && sec - e.t < 20 && e.x != null).map((e) => ({ x: e.x, y: e.y, age: sec - e.t, team: e.killer ? r.champs[e.killer - 1].team : 300 - r.champs[e.victim - 1].team }));
+    drawKills(realC, realKills);
+    drawChamps(realC, r.champs, rs.xy, rs.hp, rs.dead, r.champs[rj].pid, null);
+    const mi = Math.min(r.minutes, Math.floor(sec / 60));
+    drawClock(realC, `블루 승률 ${(r.wp[mi] * 100).toFixed(0)}%`);
+    const rst = r.stats[mi][rj];
+    const pid = r.champs[rj].pid;
+    const k = r.events.filter((e) => e.type === "kill" && e.t <= sec);
+    const kda = [k.filter((e) => e.killer === pid).length, k.filter((e) => e.victim === pid).length, k.filter((e) => e.assists.includes(pid)).length];
+    const cat = r.cats[String(realTeam)][Math.min(19, Math.floor(sec / 60))];
+    setChip($("realDoing"), cat, `이번 1분: ${CAT_KO[cat]}`);
+    card($("realCard"), [["골드", `${rst[0].toLocaleString()}`], ["정글 CS", rst[3]], ["레벨", rst[2]], ["K/D/A", kda.join("/")]]);
+    markStrip($("realStrip"), sec);
+    markLog($("realLog"), sec);
+
+    ["chWp", "chGold", "chCs"].forEach((id) => cursor($(id), sec));
+  }
+
+  // ---------------------------------------------------------------- 재생
+  function seek(sec) { t = Math.max(0, Math.min(1200, sec)); render(); }
+  function frame(ts) {
+    if (!playing) return;
+    if (last !== null) t = Math.min(1200, t + ((ts - last) / 1000) * +$("speed").value);
+    last = ts;
+    render();
+    if (t >= 1200) { playing = false; $("play").textContent = "재생"; return; }
+    requestAnimationFrame(frame);
+  }
+  $("play").addEventListener("click", () => {
+    playing = !playing;
+    $("play").textContent = playing ? "멈춤" : "재생";
+    if (playing) { if (t >= 1200) t = 0; last = null; requestAnimationFrame(frame); }
+  });
+  $("scrub").addEventListener("input", (e) => seek(+e.target.value));
+  $("simSel").addEventListener("change", (e) => { simI = +e.target.value; loadGames(); });
+  $("realSel").addEventListener("change", (e) => { realI = +e.target.value; loadGames(); });
+  $("realTeam").addEventListener("change", (e) => { realTeam = +e.target.value; loadGames(); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  // 처음 화면: 첫 갱·교전이 보이는 4분 근처에서 멈춘 상태로 시작
+  realTeam = D.sim[0].agent_team;
+  $("realTeam").value = String(realTeam);
+  t = 245;
+  loadGames();
+})();
+</script>

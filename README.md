@@ -29,6 +29,7 @@ pip install -r requirements.txt
 set RIOT_API_KEY=RGAPI-여기에-새-키
 python collect\collect_matches.py --patch 26.20 --target 1000
 python collect\summarize.py
+python tools\match_index.py   :: data\match_index.csv: 경기마다 시드 정글러 Riot ID·날짜·챔피언·승패·op.gg 링크
 ```
 
 WSL이면 `cd /mnt/d/AI/lol/ops-sim` 후 `export RIOT_API_KEY=...`, 경로 구분자는 `/`.
@@ -100,3 +101,19 @@ python -m sim.compare report                :: → reports\stage6_compare.md
 - 판정(2026-10-20): 학습 정글러는 라인 개입 51%(실제 25%), 귀환 2%(18%), 카정 3%(11%)로 크게 다르지만, 같은 상태에서 첫 1분을 천상계 선택으로 바꿔도 시뮬 20분 예측 승률이 −0.4%p(95% CI −0.9~+0.0)밖에 안 떨어진다.
   원인 분류: 카정·귀환·라이너 체력은 시뮬레이터 오류, 우리 정글 덜 돎은 조건 차이(캠프 타이머 추정), 대부분의 상황 단위 차이는 시뮬 안에서도 우열 없음.
 - 자세한 내용은 `reports/stage6_notes.md`.
+
+## 시각화: 협곡 운영 리플레이
+
+시뮬 경기(학습 정글러 `models/stage6b/policy_latest.npz` + 규칙 봇 9명)와 실제 천상계 경기를 미니맵 위에서 0~20분 나란히 재생한다.
+
+```bat
+python -m sim.replay                 :: data\stage6_compact.json.gz + 정책 → viz\replay_data.js (시뮬 6판 + 실제 6판)
+python -m sim.replay --sim 10 --real 10
+start viz\index.html                 :: 브라우저로 열기(서버 필요 없음)
+```
+
+- 시뮬은 2초마다 10명 위치(노드 사이 보간)·체력·하는 일, 캠프·에픽 몬스터 상태, 블루 예측 승률을 남긴다.
+- 실제 경기는 Riot 기록이 1분 간격이라 위치는 1분마다, 킬·에픽 몬스터·구매는 이벤트 시각 그대로. 일반 캠프 처치·와드 위치는 기록에 없다.
+- 실제 경기는 양 팀 정글러 10분 정글 CS가 56~84(대략 실제 p25~p75)인 '전형적인' 판 중에서 블루·레드 승리를 반씩 고른다.
+- 1분마다 정글러가 한 일은 6단계와 같은 분류 함수(`sim/stage6.py`의 `label`)로 붙인다.
+- 화면 위쪽에 알려진 한계(정글 CS 적음, 카정 거의 없음, 라인 개입 많음 등)를 이 데이터에서 계산해 보여 준다.
