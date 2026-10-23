@@ -411,6 +411,9 @@ class LanerBot:
     def maybe_rotate(self):
         """원딜·서폿이 미드로, 미드가 바텀으로 라인을 바꿈. 1단계: 원딜 14분 미드 띠 34%(바텀 외곽 포탑 남음) / 56%(깨짐)."""
         g, c, pr = self.g, self.c, self.g.p["laner"]["rotate"]
+        if c.role == "TOP":
+            self.maybe_group()
+            return
         if c.role != "BOTTOM" or c.lane_override or not c.alive(g.t):
             return
         down = any(g.lanes.towers[T]["bot"][0] <= 0 for T in (100, 200))
@@ -426,6 +429,20 @@ class LanerBot:
             elif m.team == c.team and m.role == "MIDDLE":
                 m.lane_override = "bot"
         g.events.append({"t": g.t, "type": "rotate", "team": c.team})
+
+    def maybe_group(self):
+        """탑이 14분 이후 잠깐 바텀·미드로 가서 합류. 리플레이 14~20분 탑이 라인에 있는 시간 중 탑 55%·바텀 26%·미드 19%,
+        1단계 탑 자기 라인 비율 14분 60% → 16분 37% → 20분 21%(sim/laner_tracks.py share_post)."""
+        g, c, pg = self.g, self.c, self.g.p["laner"]["top_group"]
+        if c.lane_override:
+            if g.t >= c.group_until and not c.task:
+                c.lane_override = None
+            return
+        if g.t < pg["after_s"] or not c.alive(g.t) or c.task or g.rng.random() >= pg["rate_per_min"] / 60:
+            return
+        c.lane_override = g.rng.choices(["bot", "mid"], weights=pg["dest"])[0]
+        c.group_until = g.t + g.rng.uniform(*pg["stay_s"])
+        g.events.append({"t": g.t, "type": "group", "pid": c.pid, "lane": c.lane_override})
 
     def start_roam(self):
         g, c, pr = self.g, self.c, self.g.p["laner"]["roam"]

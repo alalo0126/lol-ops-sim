@@ -319,7 +319,7 @@ class AgentJungler(JunglerBot):
             foes = [x for x in g.champs if x.team != T and x.role != "JUNGLE" and x.lane == lane]
             for grp in (mine, foes):
                 alive = [x for x in grp if x.alive(g.t)]
-                f += [len(alive) / 2, min((x.hp for x in alive), default=0.0), sum(x.level for x in grp) / len(grp) / 18,
+                f += [len(alive) / 2, min((x.hp for x in alive), default=0.0), sum(x.level for x in grp) / max(1, len(grp)) / 18,
                       sum(1 for x in alive if x.node == g.lane_node(lane)) / 2,
                       sum(1 for x in alive if x.flash_ready(g.t)) / 2]
             f += [g.wave_for(T, lane), min(1.0, self.travel(g.lane_node(lane)) / 60),

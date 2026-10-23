@@ -140,9 +140,13 @@ class Lanes:
                 # 막타는 비율이 높은 사람부터 가져가고 남은 미니언을 다음 사람이(원딜이 먹고 남은 것을 서폿이)
                 left = 1.0 - loss
                 xp_each = wave_xp * waves * pv["xp_share_mult"][min(len(here), 3) - 1] / len(here)
+                # 서폿도 원딜과 같이 있을 때 조금은 먹는다(1단계 서폿 3분 CS 중앙 3): 먼저 support_cut만큼 떼어 둠
+                cut = {c.pid: pv["support_cut"] * (1 - loss) for c in here if c.role == "UTILITY" and len(here) > 1}
+                left -= sum(cut.values())
                 for c in sorted(here, key=lambda m: -eff.get(m.role, eff["JUNGLE"])):
-                    got = min(left, eff.get(c.role, eff["JUNGLE"]) * (1 - loss))
+                    got = min(left, max(0.0, eff.get(c.role, eff["JUNGLE"]) * (1 - loss) - cut.get(c.pid, 0.0)))
                     left -= got
+                    got += cut.get(c.pid, 0.0)
                     share = got * waves
                     c.lane_cs += wave_n * share
                     g.give_gold(c, wave_gold * share, gv=True)
