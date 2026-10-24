@@ -32,6 +32,8 @@ def _init(path):
 
 
 def _probs(o, m):
+    if len(o) > _POL.obs_dim:
+        _POL.grow(len(o))
     z, _ = mlp_forward(_POL.pi, o[None].astype(np.float64))
     _, p = masked_log_softmax(z[0, :N_MAIN], m)
     return p

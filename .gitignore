@@ -35,3 +35,6 @@ models/stage9_b/*
 !models/stage10_a/
 models/stage10_a/*
 !models/stage10_a/policy_latest.npz
+!models/stage11_a/
+models/stage11_a/*
+!models/stage11_a/policy_latest.npz
