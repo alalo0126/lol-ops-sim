@@ -78,6 +78,14 @@ class Policy:
     def save(self, path):
         np.savez(path, **self.state())
 
+    def grow(self, obs_dim):
+        """관측 뒤에 새 입력을 붙였을 때: 첫 층에 0 가중치 행을 더해 예전 정책과 똑같이 행동하게 한다."""
+        for net in (self.pi, self.vf):
+            W = net[0]
+            net[0] = np.vstack([W, np.zeros((obs_dim - W.shape[0], W.shape[1]))])
+        self.obs_dim = obs_dim
+        return self
+
     @classmethod
     def from_file(cls, path):
         st = np.load(path)
@@ -87,6 +95,8 @@ class Policy:
     # -------------------------------------------------------------- 행동
     def act(self, obs, m_main, m_ward, m_smite, greedy=False):
         """한 결정. 기록용 dict(관측·마스크·행동·로그확률·가치)를 함께 돌려준다."""
+        if len(obs) > self.obs_dim:
+            self.grow(len(obs))
         x = obs[None, :].astype(np.float64)
         z, _ = mlp_forward(self.pi, x)
         v = float(mlp_forward(self.vf, x)[0][0, 0])

@@ -63,6 +63,8 @@ class AgentJungler(JunglerBot):
         self.ward_on_node = None
         self.seen_info = 0
         self.known = {}                   # 적 캠프·바위게 cid → (살아 있었나, 본 시각)
+        self.known_cs = {}                # cid → 그 상태를 확인했을 때 적 정글러 정글 CS(점수판)
+        self._ev_i = 0                    # 적 정글러 캠프 처치를 어디까지 봤나
         self.traj = []                    # 결정마다 policy가 돌려준 기록 + 보상
         self.last_phi = None              # 첫 결정에서 잼(봇은 캠프·오브젝트보다 먼저 만들어짐)
         self.counts = np.zeros(N_MAIN, dtype=int)
@@ -300,13 +302,13 @@ class AgentJungler(JunglerBot):
             f += [1.0 if camp.alive else 0.0, 0.0 if camp.alive else min(1.0, max(0.0, camp.spawn_at - g.t) / 150),
                   min(1.0, self.travel(camp.node) / 60)]
         # 적 캠프·바위게: 지금 보이면 실제 상태, 아니면 마지막으로 본 상태와 지난 시간
-        for cid in [f"{en}_{k}" for k in CAMP_KINDS] + ["river_top_scuttle", "river_bot_scuttle"]:
+        enemy_cids = [f"{en}_{k}" for k in CAMP_KINDS] + ["river_top_scuttle", "river_bot_scuttle"]
+        self.update_enemy_camps(enemy_cids, vis)
+        for cid in enemy_cids:
             camp = g.camps[cid]
-            if camp.node in vis:
-                self.known[cid] = (camp.alive, g.t)
             alive, seen_t = self.known.get(cid, (None, None))
-            f += [1.0 if camp.node in vis else 0.0, 1.0 if alive else 0.0, 1.0 if alive is None else 0.0,
-                  min(1.0, (g.t - seen_t) / 300) if seen_t is not None else 1.0, min(1.0, self.travel(camp.node) / 60)]
+            f += [1.0 if camp.node in vis else 0.0, 1.0 if alive and g.t >= seen_t else 0.0, 1.0 if alive is None else 0.0,
+                  min(1.0, max(0.0, g.t - seen_t) / 300) if seen_t is not None else 1.0, min(1.0, self.travel(camp.node) / 60)]
         # 오브젝트
         for o in OBJS:
             ob = g.objectives[o]
@@ -338,7 +340,38 @@ class AgentJungler(JunglerBot):
         s = 1 if T == 100 else -1
         f += [s * d["gold"] / 5000, s * d["xp"] / 5000, s * d["dragons"] / 3, s * d["grubs"] / 6, s * d["heralds"],
               self.wp.for_team(g, T), sum(1 for w in g.wards if w["team"] == T) / 5]
-        return np.concatenate([np.array(f, dtype=np.float32), node_oh, dest_oh, task_oh, cur_oh]).astype(np.float32)
+        # 카정 검수(sim/invade_check.py) 뒤 추가: 적 캠프 상태를 확인한 뒤 적 정글러가 캠프를 몇 개 더 먹었나(점수판 CS로 앎)
+        ej_cs = g.enemy(c, "JUNGLE").jungle_cs
+        extra = [min(1.0, (ej_cs - self.known_cs.get(cid, ej_cs)) / 16) for cid in enemy_cids]
+        return np.concatenate([np.array(f, dtype=np.float32), node_oh, dest_oh, task_oh, cur_oh,
+                               np.array(extra, dtype=np.float32)]).astype(np.float32)
+
+    def update_enemy_camps(self, cids, vis):
+        """적 캠프 추정(실제 정글러가 아는 만큼):
+        - 처음 생성 시각은 누구나 앎 → 처음엔 '생성 시각에 살아 있음'으로 둠,
+        - 보이면 실제 상태,
+        - 적 정글러가 캠프를 먹을 때 그 정글러를 10초 안에 그 캠프 2,500 안에서 봤으면 어느 캠프인지 앎(동선 추적).
+        """
+        g, c = self.g, self.c
+        ej = g.enemy(c, "JUNGLE")
+        for cid in cids:
+            if cid not in self.known:
+                self.known[cid] = (True, g.camps[cid].spawn_at)
+                self.known_cs[cid] = ej.jungle_cs
+        node, seen_t = g.enemy_jgl_seen[c.team]
+        while self._ev_i < len(g.events):
+            e = g.events[self._ev_i]
+            self._ev_i += 1
+            if e["type"] != "camp" or e["pid"] != ej.pid or e["camp"] not in self.known:
+                continue
+            cn = g.camps[e["camp"]].node
+            if node is not None and e["t"] - seen_t <= 10 and g.map.dist(node, cn) <= 2500:
+                self.known[e["camp"]] = (False, e["t"])
+                self.known_cs[e["camp"]] = ej.jungle_cs
+        for cid in cids:
+            if g.camps[cid].node in vis:
+                self.known[cid] = (g.camps[cid].alive, g.t)
+                self.known_cs[cid] = ej.jungle_cs
 
 
 def obs_size():

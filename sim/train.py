@@ -145,6 +145,11 @@ def main():
     log_path = os.path.join(cfg.out, "train_log.csv")
     obs_dim = obs_size()
     policy = Policy.from_file(cfg.init) if cfg.init else Policy(obs_dim, seed=0)
+    if policy.obs_dim < obs_dim:
+        policy.grow(obs_dim)
+    if cfg.real is not None and cfg.real[0].shape[1] < obs_dim:     # 새 입력이 생기기 전에 만든 모방 표본: 새 입력은 0
+        X = cfg.real[0]
+        cfg.real = (np.hstack([X, np.zeros((len(X), obs_dim - X.shape[1]))]),) + cfg.real[1:]
     if cfg.floor is not None:
         policy.floor = cfg.floor
     start_it = 0
