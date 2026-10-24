@@ -62,14 +62,17 @@ class Policy:
         self.pi = init_mlp(rng, [obs_dim, hidden, hidden, N_OUT], 0.01)
         self.vf = init_mlp(rng, [obs_dim, hidden, hidden, 1], 1.0)
         self.rng = np.random.default_rng(seed + 1)
+        self.floor = 0.0        # 주 행동 평균 확률 바닥(0이면 끔). sim/train.py revive_rare가 학습 반복마다 지킨다
 
     # -------------------------------------------------------------- 저장
     def state(self):
-        return {f"pi{i}": p for i, p in enumerate(self.pi)} | {f"vf{i}": p for i, p in enumerate(self.vf)} | {"obs_dim": np.array(self.obs_dim)}
+        return ({f"pi{i}": p for i, p in enumerate(self.pi)} | {f"vf{i}": p for i, p in enumerate(self.vf)}
+                | {"obs_dim": np.array(self.obs_dim), "floor": np.array(self.floor)})
 
     def load(self, st):
         self.pi = [st[f"pi{i}"] for i in range(len(self.pi))]
         self.vf = [st[f"vf{i}"] for i in range(len(self.vf))]
+        self.floor = float(st["floor"]) if "floor" in st else 0.0
         return self
 
     def save(self, path):
