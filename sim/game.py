@@ -173,6 +173,19 @@ class Game:
     def tower_node(self, lane, team):
         return f"{lane}_{SIDE[team]}_outer"
 
+    def xy(self, c):
+        """챔피언의 지금 좌표(엣지 위면 보간). 죽어 있으면 None."""
+        if not c.alive(self.t):
+            return None
+        n = self.map.nodes
+        a = n[c.node]
+        if not c.path:
+            return a["x"], a["y"]
+        b = n[c.path[0]]
+        d = self.map.dist(c.node, c.path[0]) or 1.0
+        frac = min(1.0, max(0.0, 1 - c.edge_left / d))
+        return a["x"] + (b["x"] - a["x"]) * frac, a["y"] + (b["y"] - a["y"]) * frac
+
     def wave_for(self, team, lane):
         w = self.wave[lane]
         return w if team == 100 else 1 - w

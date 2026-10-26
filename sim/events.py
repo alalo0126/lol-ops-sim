@@ -16,6 +16,7 @@ class GankInput:
     seen_prob: float         # 상대가 진입을 미리 봤을 확률(0~1)
     target_push: float       # 대상 기준 웨이브 위치(0 = 자기 포탑, 1 = 상대 포탑)
     at_tower: bool           # 대상이 자기 포탑 아래로 물러나 있음
+    enemy_jg_dist: float = None   # 갱 온 정글러와 적 정글러 사이 거리(죽어 있으면 None)
 
 
 @dataclass
@@ -52,9 +53,23 @@ def gank_success_prob(inp: GankInput, now, coef):
     return logistic(x)
 
 
+def death_mult(dist, p):
+    """적 정글러가 가까울수록 갱 온 정글러가 죽기 쉽다(리플레이 라인 방문 700번: 2,000 안 18%, 4,000 밖 1~2%)."""
+    ej = p.get("enemy_jg_death")
+    if not ej:
+        return 1.0
+    if dist is None:
+        return ej["mult"][-1]
+    for edge, m in zip(ej["edges"], ej["mult"]):
+        if dist < edge:
+            return m
+    return ej["mult"][-1]
+
+
 def resolve_gank(inp: GankInput, now, rng, p):
     """p = sim/params.json gank 블록."""
     prob = gank_success_prob(inp, now, p["coef"])
+    dm = death_mult(inp.enemy_jg_dist, p)
     res = GankResult(success=rng.random() < prob, duration_s=p["duration_s"], prob=prob)
     lo, hi = p["hp_cost"]
     for c in inp.attackers + inp.defenders:
@@ -71,11 +86,11 @@ def resolve_gank(inp: GankInput, now, rng, p):
         else:
             res.killer = rng.choice(laners)
         res.assists = [c for c in inp.attackers if c is not res.killer]
-        if rng.random() < p.get("success_attacker_death", 0.0):
+        if rng.random() < min(1.0, p.get("success_attacker_death", 0.0) * dm):
             others = [d for d in inp.defenders if d is not t]
             k = rng.choice(others) if others else t
             res.trades.append((jungler, k, [d for d in inp.defenders if d is not k]))
-    elif rng.random() < p["fail_attacker_death"]:
+    elif rng.random() < min(1.0, p["fail_attacker_death"] * dm):
         victim = inp.attackers[0]
         res.deaths.append(victim)
         res.killer = t
