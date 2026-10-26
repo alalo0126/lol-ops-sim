@@ -317,8 +317,11 @@ class JunglerBot:
             pg = g.p["gank"]
             seen = max(seen, pg["alert_seen"] * max(0.0, 1 - (g.t - last) / pg["alert_window_s"]))
         g.gank_alert[(300 - c.team, lane)] = g.t
+        ej = next((j for j in g.champs if j.team != c.team and j.role == "JUNGLE"), None)
+        a, b = g.xy(c), g.xy(ej) if ej is not None else None
+        ej_dist = math.dist(a, b) if a and b else None
         inp = events.GankInput(attackers=attackers, defenders=defenders, target=target, seen_prob=seen,
-                               target_push=g.wave_for(target.team, lane), at_tower=at_tower)
+                               target_push=g.wave_for(target.team, lane), at_tower=at_tower, enemy_jg_dist=ej_dist)
         res = events.resolve_gank(inp, g.t, g.rng, g.p["gank"])
         for pid, hp in res.hp_after.items():
             next(x for x in g.champs if x.pid == pid).hp = hp
