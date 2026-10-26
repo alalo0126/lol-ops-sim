@@ -3,6 +3,7 @@
 입력: 참가자 체력·레벨, 점멸 유무, 웨이브 위치, 상대가 진입을 미리 봤는지, 합류 가능한 아군 수
 출력: 성공/실패, 사망자, 점멸 소모, 남은 체력, 소요 시간
 """
+import math
 from dataclasses import dataclass, field
 
 from .vision import logistic
@@ -53,22 +54,34 @@ def gank_success_prob(inp: GankInput, now, coef):
     return logistic(x)
 
 
+def by_dist(dist, spec, key, default):
+    """적 정글러 거리 구간 값(마지막 = 마지막 경계 이상 또는 적 정글러 사망)."""
+    if not spec:
+        return default
+    if dist is None:
+        return spec[key][-1]
+    for edge, v in zip(spec["edges"], spec[key]):
+        if dist < edge:
+            return v
+    return spec[key][-1]
+
+
 def death_mult(dist, p):
     """적 정글러가 가까울수록 갱 온 정글러가 죽기 쉽다(리플레이 라인 방문 700번: 2,000 안 18%, 4,000 밖 1~2%)."""
-    ej = p.get("enemy_jg_death")
-    if not ej:
-        return 1.0
-    if dist is None:
-        return ej["mult"][-1]
-    for edge, m in zip(ej["edges"], ej["mult"]):
-        if dist < edge:
-            return m
-    return ej["mult"][-1]
+    return by_dist(dist, p.get("enemy_jg_death"), "mult", 1.0)
+
+
+def kill_offset(dist, p):
+    """갱 성공 로그오즈에 더하는 값, 적 정글러 거리 구간별(sim/params.json gank.enemy_jg_kill)."""
+    return by_dist(dist, p.get("enemy_jg_kill"), "logit", 0.0)
 
 
 def resolve_gank(inp: GankInput, now, rng, p):
     """p = sim/params.json gank 블록."""
     prob = gank_success_prob(inp, now, p["coef"])
+    off = kill_offset(inp.enemy_jg_dist, p)
+    if off:
+        prob = logistic(math.log(prob / max(1e-9, 1 - prob)) + off)
     dm = death_mult(inp.enemy_jg_dist, p)
     res = GankResult(success=rng.random() < prob, duration_s=p["duration_s"], prob=prob)
     lo, hi = p["hp_cost"]

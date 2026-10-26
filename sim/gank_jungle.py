@@ -57,20 +57,37 @@ def _one(seed):
         for span in visits(zones):
             o = xy[300 - t].get(span[0])
             d = math.dist(xy[t][span[0]], o) if o else None
-            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane_of(*xy[t][span[0]]), "enemy_jg_dist": d})
+            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane_of(*xy[t][span[0]]), "enemy_jg_dist": d, "match": seed})
         out.setdefault(who, []).extend(rows)
     return out
 
 
+def boot(rs, key, n=1000, seed=0):
+    """경기 단위 부트스트랩 95% 구간."""
+    by = {}
+    for r in rs:
+        by.setdefault(r["match"], []).append(float(r[key]))
+    ks = list(by)
+    if not ks:
+        return float("nan"), float("nan")
+    rng = np.random.default_rng(seed)
+    v = []
+    for _ in range(n):
+        pick = rng.integers(0, len(ks), len(ks))
+        num = sum(sum(by[ks[i]]) for i in pick)
+        den = sum(len(by[ks[i]]) for i in pick)
+        v.append(num / max(1, den))
+    return float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))
+
+
 def bins(rows):
+    groups = [[r for r in rows if r["enemy_jg_dist"] is not None and lo <= r["enemy_jg_dist"] < hi] for lo, hi in zip(EDGES[:-1], EDGES[1:])]
+    groups.append([r for r in rows if r["enemy_jg_dist"] is None])
     out = []
-    for lo, hi in zip(EDGES[:-1], EDGES[1:]):
-        rs = [r for r in rows if r["enemy_jg_dist"] is not None and lo <= r["enemy_jg_dist"] < hi]
-        out.append((len(rs), float(np.mean([r["kill"] for r in rs])) if rs else float("nan"),
-                    float(np.mean([r["death"] for r in rs])) if rs else float("nan")))
-    rs = [r for r in rows if r["enemy_jg_dist"] is None]
-    out.append((len(rs), float(np.mean([r["kill"] for r in rs])) if rs else float("nan"),
-                float(np.mean([r["death"] for r in rs])) if rs else float("nan")))
+    for rs in groups:
+        kr = float(np.mean([r["kill"] for r in rs])) if rs else float("nan")
+        dr = float(np.mean([r["death"] for r in rs])) if rs else float("nan")
+        out.append((len(rs), kr, dr, boot(rs, "kill"), boot(rs, "death")))
     return out
 
 
@@ -97,6 +114,7 @@ def main():
     labels = [f"{lo:g}~{hi:g}" if hi < 1e9 else f"{lo:g}+" for lo, hi in zip(EDGES[:-1], EDGES[1:])] + ["적 정글러 사망 중"]
     L = ["# 라인 방문 결과 × 적 정글러 거리", "",
          f"- 시뮬 {args.games}판, 정책 `{os.path.relpath(args.policy, ROOT)}`" + (f", 바꾼 값 {args.set}" if args.set else "") + ".",
+         "- 괄호 = 경기(시뮬은 시드) 단위 부트스트랩 95% 구간.",
          "- 방문 = 3~18분 라인 구역 연속 5초 이상. 거리 = 방문 시작 초 두 정글러 거리. 결과 = 방문 시작~끝+10초 정글러 킬 관여 / 사망.", "",
          "| 적 정글러 거리 | 실제 방문 | 실제 킬 | 실제 사망 | 학습 방문 | 학습 킬 | 학습 사망 | 규칙 봇 방문 | 규칙 봇 킬 | 규칙 봇 사망 |", "|---|---|---|---|---|---|---|---|---|---|"]
     bs = {k: bins(v) for k, v in [("real", real)] + list(sim.items())}
@@ -104,8 +122,8 @@ def main():
         cells = []
         for k in ("real", "ai", "rule"):
             if k in bs:
-                n, kr, dr = bs[k][i]
-                cells += [str(n), f"{kr:.0%}" if n else "-", f"{dr:.0%}" if n else "-"]
+                n, kr, dr, kc, dc = bs[k][i]
+                cells += [str(n), f"{kr:.0%} ({kc[0]:.0%}~{kc[1]:.0%})" if n else "-", f"{dr:.0%} ({dc[0]:.0%}~{dc[1]:.0%})" if n else "-"]
             else:
                 cells += ["-", "-", "-"]
         L.append(f"| {lab} | " + " | ".join(cells) + " |")
