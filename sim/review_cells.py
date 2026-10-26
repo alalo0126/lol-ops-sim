@@ -10,7 +10,9 @@
 결정을 만드는 규칙:
 - 그 칸에서 verified(시뮬 구간과 실제 1,000판 3분 뒤 구간이 둘 다 0 밖, 부호 같음)이고 시뮬 차이가 +인 범주가 '검증된 좋은 선택'.
   그중 sim_vs_mix가 가장 큰 범주를 추천으로 둔다.
-- 검증된 좋은 선택이 없는 칸의 분은 묶음에 넣지 않는다(코치가 말할 근거가 없음). 몇 분이 빠졌는지는 skipped에 남긴다.
+- 검증된 좋은 선택이 없는 칸에서는 천상계 데이터 사실만 붙인다(fact_decision, basis=pro_share, verified=false):
+  내 선택이 그 칸 천상계에서 15% 미만으로 드물고 천상계 최다 선택이 30% 이상일 때만. 코치는 '참고'로만 쓴다.
+  그 밖의 분은 넣지 않고 skipped에 남긴다.
 - winprob 값은 절대 승률이 아니라 '천상계 선택 비율로 섞은 평균 대비 20분 예측 승률 차이'(sim_vs_mix)다.
   diff = 추천 − 실제, ci = 추천 범주의 sim_vs_mix 구간(실제 범주와의 차이 구간이 아님).
 - objective는 실제 라벨이 처치 결과로 붙어 효과가 부풀려지므로 지금은 추천에서 뺀다(HOLD).
@@ -29,6 +31,8 @@ CELLS = os.path.join(ROOT, "sim", "advice_cells.json")
 # 실제 쪽 라벨이 결과를 보고 붙는 범주(stage6.label: 정글러가 에픽 처치에 관여해야 objective)는 실제 효과가
 # 처치 효과를 그대로 담아 부풀려진다. 표에 real_label(결과 없이 붙인 라벨)이 없으면 추천 근거로 쓰지 않는다.
 HOLD = {"objective"}
+# 천상계 사실만 붙이는 분의 조건: 칸 표본, 내 선택이 드문 정도, 천상계 최다 선택의 비율
+FACT_MIN_N, FACT_RARE, FACT_MODAL = 60, 0.15, 0.30
 
 
 def _pct(x):
@@ -67,8 +71,10 @@ def decision(rm, team, minute, cell, key, nid, nodes, outcome_free=False, hold=(
         real = label(w, team, nodes)
     cats = cell["cats"]
     good = good_cats(cell, hold)
-    if not good or cats.get(real, {}).get("contradicted"):
+    if cats.get(real, {}).get("contradicted"):
         return None
+    if not good:
+        return fact_decision(rm, team, minute, cell, key, nid, w, real)
     rec = real if real in good else good[0]
     cr, ca = cats[rec], cats.get(real, {})
     a_val = ca.get("sim_vs_mix", 0.0)
@@ -104,6 +110,54 @@ def decision(rm, team, minute, cell, key, nid, nodes, outcome_free=False, hold=(
         f"시뮬 {cell.get('n_sim_states', '?')}상태 × {cell.get('reps', '?')}회", "sim_effect")
     if rec != real and ca:
         add(f"이 상황 천상계가 실제 선택 '{CAT_KO[real]}'을(를) 고른 비율", _pct(ca["real_share"]), f"1,000판 {n}상황", "share")
+    return d
+
+
+def _record(rm, team, minute, w):
+    j = rm.jungler(team)
+    a, b = rm.pf(minute, j), rm.pf(minute + 1, j)
+    did = f"정글 CS +{b['jcs'] - a['jcs']}, 골드 +{b['total_gold'] - a['total_gold']}"
+    did += ", 사망" if w["died"] else (f", 킬 관여 {w['kills_for']}" if w["kills_for"] else "")
+    return a, did
+
+
+def fact_decision(rm, team, minute, cell, key, nid, w, real):
+    """시뮬로 검증된 추천이 없는 칸: 천상계 데이터 사실만 붙인다(verified=false, 코치는 '참고'로만 씀).
+    내 선택이 그 칸 천상계에서 드물고(FACT_RARE 미만) 천상계가 뚜렷하게 많이 고른 범주(FACT_MODAL 이상)가 있을 때만."""
+    cats = cell["cats"]
+    if cell.get("n_real", 0) < FACT_MIN_N:
+        return None
+    modal = max(CATS, key=lambda c: cats.get(c, {}).get("real_share", 0.0))
+    cm, ca = cats[modal], cats.get(real, {})
+    if modal == real or ca.get("real_share", 0.0) >= FACT_RARE or cm["real_share"] < FACT_MODAL:
+        return None
+    if cm.get("real_dwp3_diff") is None:
+        return None
+    a, did = _record(rm, team, minute, w)
+    a_eff = ca.get("real_dwp3_diff") or 0.0
+    d = {
+        "id": f"D{nid[0]}", "t": f"{minute}:00",
+        "state": f"{key.replace('|', ', ')}, 레벨 {a['level']}, 체력 {_pct(a['hp'])}",
+        "actual": {"action": real, "label": CAT_KO[real]},
+        "recommended": {"action": modal, "label": CAT_KO[modal]},
+        "basis": "pro_share",
+        "winprob": {"actual": round(a_eff, 4), "recommended": round(cm["real_dwp3_diff"], 4),
+                    "diff": round(cm["real_dwp3_diff"] - a_eff, 4), "ci": [round(x, 4) for x in cm["real_dwp3_ci"]]},
+        "cell": key, "evidence": [], "verified": False,
+    }
+    nid[0] += 1
+
+    def add(text, value, source, kind):
+        d["evidence"].append({"id": f"S{nid[1]}", "kind": kind, "text": text, "value": value, "source": source})
+        nid[1] += 1
+
+    n = cell["n_real"]
+    add("그 1분 실제 기록", did, "Riot 타임라인", "record")
+    add(f"이 상황 천상계가 '{CAT_KO[modal]}'을(를) 고른 비율", _pct(cm["real_share"]), f"1,000판 {n}상황", "share")
+    add(f"이 상황 천상계가 '{CAT_KO[real]}'을(를) 고른 비율", _pct(ca.get("real_share", 0.0)), f"1,000판 {n}상황", "share")
+    lo, hi = cm["real_dwp3_ci"]
+    add(f"'{CAT_KO[modal]}'을(를) 고른 천상계의 3분 뒤 예측 승률 차이(95% 구간 {_pp(lo)}~{_pp(hi)}, 고른 상황이 원래 달랐을 수 있어 인과 아님)",
+        _pp(cm["real_dwp3_diff"]), f"1,000판, 고른 {cm.get('real_n', '?')}상황", "real_effect")
     return d
 
 
