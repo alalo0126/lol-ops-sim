@@ -102,7 +102,7 @@ def real(nodes):
                 foe = [st(q) for q in parts if q["teamId"] != p["teamId"] and ROLE_LANE.get(q["teamPosition"]) == lane]
                 lead = (np.mean([a[0] for a in att]) - np.mean([a[0] for a in foe])
                         + ITEM_PER_LEVEL * (np.mean([a[1] for a in att]) - np.mean([a[1] for a in foe])))
-                out.append(outcome(span, kills, pid, team_pids) | {"lane": lane, "lead": float(lead)})
+                out.append(outcome(span, kills, pid, team_pids) | {"lane": lane, "lead": float(lead), "match": mid, "team": p["teamId"]})
             games.append(out)
     return games
 

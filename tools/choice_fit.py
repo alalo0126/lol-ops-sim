@@ -9,7 +9,8 @@
   - 결과(14분 전): 사망, 적 정글러가 관여한 사망(갱 사망), 라인 상대를 혼자 죽인 수(솔로킬), 라인 상대에게 혼자 죽은 수
 를 뽑아
   1) 선택 패턴: 포지션×유형별 핵심 룬 비율, 상대 근거리/원거리에 따른 핵심 룬 변화, 상대 AP일 때 마법 저항 먼저 사는 비율,
-  2) 효과: 갱 사망·솔로킬을 핵심 룬 묶음·유형·근거리로 로지스틱 회귀(포지션 고정효과, 레벨·골드 차는 분 프레임으로 통제)
+  2) 효과: 갱 사망·솔로킬을 핵심 룬·유형·근거리·상대 근거리로 로지스틱 회귀(포지션 고정효과. 10분 레벨·골드 차는
+     사망의 결과이기도 해서 통제하지 않음)
 를 낸다. 룬 이름은 Data Dragon 16.20.1 runesReforged(ko_KR).
 """
 import argparse
@@ -136,14 +137,15 @@ def main():
     # 2) 효과: 갱 사망(14분 전 1회 이상), 솔로킬(1회 이상)
     ks_top = [k for k, n in collections.Counter(r["keystone"] for r in rows).most_common() if n >= 40]
     tags = [t for t, n in collections.Counter(r["tag"] for r in rows).most_common() if n >= 40][1:]
-    feats = ["melee"] + [f"role_{x}" for x in LANERS[1:]] + [f"tag_{t}" for t in tags] + [f"ks_{k}" for k in ks_top[1:]] + ["lv_diff10", "gold_diff10_k"]
+    feats = ["melee"] + [f"role_{x}" for x in LANERS[1:]] + [f"tag_{t}" for t in tags] + [f"ks_{k}" for k in ks_top[1:]] + ["opp_melee"]
 
     def x(r):
         return [1.0, float(r["range"] == "melee")] + [float(r["role"] == x) for x in LANERS[1:]] + [float(r["tag"] == t) for t in tags] \
-            + [float(r["keystone"] == k) for k in ks_top[1:]] + [r["lv_diff10"], r["gold_diff10"]]
+            + [float(r["keystone"] == k) for k in ks_top[1:]] + [float(r["opp_range"] == "melee")]
     X = np.array([x(r) for r in rows])
     eff = {"base_keystone": ks_top[0] if ks_top else None, "base_tag": None}
-    for target, f in (("gank_death", lambda r: r["gank_deaths14"] > 0), ("solo_kill", lambda r: r["solo_kills14"] > 0)):
+    for target, f in (("gank_death", lambda r: r["gank_deaths14"] > 0), ("solo_kill", lambda r: r["solo_kills14"] > 0),
+                      ("solo_death", lambda r: r["solo_deaths14"] > 0)):
         y = np.array([float(f(r)) for r in rows])
         w, se = logistic(X, y)
         eff[target] = {"mean": round(float(y.mean()), 3),
