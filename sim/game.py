@@ -457,6 +457,8 @@ class Game:
         o = self.rules.objectives
         lv = self.avg_level()
         group = [c] + [h for h in helpers if h.alive(self.t)]
+        # 에픽 몬스터가 때리는 피해: 함께 친 인원이 나눠 받는다(params objective.hp_loss_per_kill, 실제 받은 피해 회귀)
+        c.hp = max(0.05, c.hp - self.p["objective"]["hp_loss_per_kill"][name] / len(group))
         if name == "dragon":
             for m in group:
                 self.give_gold(m, o["drake"]["rewards"]["kill_gold"])
@@ -478,7 +480,7 @@ class Game:
             self.herald_at = (self.t, c.team)
         ob["alive"] = False
         ob["spawn_at"] = self.t + ob["respawn"] if ob["respawn"] else None
-        self.events.append({"t": self.t, "type": "objective", "name": name, "team": c.team, "pid": c.pid})
+        self.events.append({"t": self.t, "type": "objective", "name": name, "team": c.team, "pid": c.pid, "people": len(group)})
         c.task = None
 
     # ------------------------------------------------------------------ 귀환

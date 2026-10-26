@@ -269,7 +269,7 @@ class JunglerBot:
             for a in g.champs:
                 if a.team != c.team or not free(a):
                     continue
-                if (a.lane == lane and a.node == g.lane_node(lane)) or \
+                if (a.lane == lane and a.node == g.lane_node(lane) and g.rng.random() < pr.get("adjacent_prob", [1.0, 1.0])[late]) or \
                         (g.map.travel_s(a.node, ob["node"], a.ms) <= pr["travel_s"] and g.rng.random() < pr["join_prob"][late]):
                     helpers.append(a)
             dur = g.objective_time(c, task["name"], helpers)

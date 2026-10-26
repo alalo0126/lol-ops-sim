@@ -1,0 +1,105 @@
+{
+ "n_events": 340,
+ "dragon": {
+  "n": 176,
+  "people": {
+   "1": 72,
+   "2": 55,
+   "3": 33,
+   "4": 15,
+   "5": 1
+  },
+  "people_mean": 1.97,
+  "dur_n": 164,
+  "dur_pct": [
+   13.4,
+   18.3,
+   22.1
+  ],
+  "delay_median": 63.8,
+  "recall90": 0.646,
+  "hp_next_median": 0.867,
+  "fight_share": 0.375,
+  "deaths_own": 0.27,
+  "deaths_opp": 0.47
+ },
+ "grubs": {
+  "n": 95,
+  "people": {
+   "1": 62,
+   "2": 25,
+   "3": 7,
+   "4": 1
+  },
+  "people_mean": 1.44,
+  "dur_n": 87,
+  "dur_pct": [
+   12.6,
+   18.7,
+   23.3
+  ],
+  "delay_median": 41.5,
+  "recall90": 0.707,
+  "hp_next_median": 0.935,
+  "fight_share": 0.305,
+  "deaths_own": 0.31,
+  "deaths_opp": 0.34
+ },
+ "herald": {
+  "n": 69,
+  "people": {
+   "1": 28,
+   "2": 23,
+   "3": 8,
+   "4": 8,
+   "5": 2
+  },
+  "people_mean": 2.03,
+  "dur_n": 64,
+  "dur_pct": [
+   15.5,
+   19.4,
+   22.1
+  ],
+  "delay_median": 64.0,
+  "recall90": 0.75,
+  "hp_next_median": 0.838,
+  "fight_share": 0.42,
+  "deaths_own": 0.3,
+  "deaths_opp": 0.38
+ },
+ "first_dragon_delay_pct": [
+  82,
+  201,
+  348
+ ],
+ "damage_taken_frac": {
+  "dragon_share": {
+   "coef": 0.305,
+   "se": 0.038
+  },
+  "grubs_share": {
+   "coef": 0.213,
+   "se": 0.061
+  },
+  "herald_share": {
+   "coef": 0.344,
+   "se": 0.063
+  },
+  "camps": {
+   "coef": 0.033,
+   "se": 0.007
+  },
+  "kill_involvement": {
+   "coef": 0.144,
+   "se": 0.009
+  },
+  "died": {
+   "coef": 0.499,
+   "se": 0.021
+  },
+  "n": 2240
+ },
+ "games": 70,
+ "_doc": "tools/objective_fit.py: 에픽 몬스터 처치 속도·체력 손해·처치 뒤 귀환·둥지 근처 교전(실제)"
+}
