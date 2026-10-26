@@ -327,16 +327,146 @@ def map_layout(g):
             "edges": sorted({tuple(sorted((a, b))) for a in g.map.nodes for b in g.map.adj[a]})}
 
 
+# ---------------------------------------------------------------------- 리플레이 1초 기록 경기
+TRACKS = os.path.join(ROOT, "data", "replay_tracks")
+REPLAY_RAW = os.path.join(ROOT, "data", "replay_raw")
+CAMP_RADIUS = 900     # 정글러가 이 거리 안에 머문 캠프를 처치 후보로 본다(맵 노드 좌표는 캠프 중심의 근사)
+
+
+def _read_csv(path):
+    with open(path, encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def replay_matches():
+    """10명 모두 1초 기록이 있고 위치 검증(summary.csv 거리 중앙값 1,000 이하)을 통과한 경기."""
+    if not os.path.isdir(TRACKS):
+        return []
+    bad = set()
+    summary = os.path.join(TRACKS, "summary.csv")
+    if os.path.exists(summary):
+        bad = {r["match"] for r in _read_csv(summary) if int(r["median_dist"]) > 1000}
+    out = []
+    for name in sorted(os.listdir(REPLAY_RAW)) if os.path.isdir(REPLAY_RAW) else []:
+        mid = name[:-5]
+        tracks = [f for f in os.listdir(TRACKS) if f.startswith(mid + "_") and not f.endswith(("_players.csv",))]
+        if mid not in bad and len(tracks) == 10:
+            out.append(mid)
+    return out
+
+
+def _track_xy(rows, grid, fallback):
+    """유효한 1초 기록을 grid 시각으로 보간. 앞뒤 유효 기록이 8초 넘게 비면 fallback(1분 위치 직선 보간)을 쓴다."""
+    ts = np.array([float(r["time"]) for r in rows if r.get("valid", "1") == "1"])
+    xs = np.array([float(r["x"]) for r in rows if r.get("valid", "1") == "1"])
+    ys = np.array([float(r["y"]) for r in rows if r.get("valid", "1") == "1"])
+    out = []
+    for i, t in enumerate(grid):
+        j = np.searchsorted(ts, t)
+        near = min(abs(ts[j - 1] - t) if j > 0 else 1e9, abs(ts[j] - t) if j < len(ts) else 1e9)
+        if len(ts) and near <= 8:
+            out.append((float(np.interp(t, ts, xs)), float(np.interp(t, ts, ys))))
+        else:
+            out.append(fallback[i])
+    return out
+
+
+def _camps_from_tracks(rm, nodes, jg_xy, grid, minutes):
+    """1분 동안 늘어난 정글 CS(4 = 캠프 1개)만큼, 정글러가 그 1분에 가장 오래 머문 캠프를 처치한 것으로 본다."""
+    camp_ids = sorted(cid for cid, n in nodes.items() if n["kind"] in ("camp", "scuttle"))
+    timing = {cid: _camp_timing(cid) for cid in camp_ids}
+    kills = {cid: [] for cid in camp_ids}
+    for k in range(1, minutes + 1):
+        t0, t1 = (k - 1) * 60, k * 60
+        for tm in (100, 200):
+            j = rm.jungler(tm)
+            n = max(0, round((rm.pf(k, j)["jcs"] - rm.pf(k - 1, j)["jcs"]) / 4))
+            if not n:
+                continue
+            stay = {}
+            for t, (x, y) in zip(grid, jg_xy[tm]):
+                if not t0 <= t <= t1:
+                    continue
+                for cid in camp_ids:
+                    first, respawn = timing[cid]
+                    if t < first - 5 or (kills[cid] and t < kills[cid][-1] + respawn):
+                        continue
+                    if math.dist((x, y), (nodes[cid]["x"], nodes[cid]["y"])) <= CAMP_RADIUS:
+                        s = stay.setdefault(cid, [0, t])
+                        s[0] += 1
+                        s[1] = t
+            for cid, (cnt, last) in sorted(stay.items(), key=lambda kv: -kv[1][0])[:n]:
+                if cnt >= 2:
+                    kills[cid].append(last)
+    for v in kills.values():
+        v.sort()
+    return {cid: [round(t) for t in v] for cid, v in kills.items()}
+
+
+def record_replay(mid, wp):
+    """리플레이에서 1초마다 기록한 10명 위치(tools/replay_track.py)로 실제 경기를 만든다. 골드·경험치·이벤트는 Riot 타임라인."""
+    from tools.stage6_compact import compact
+    with open(os.path.join(REPLAY_RAW, mid + ".json"), encoding="utf-8") as f:
+        d = json.load(f)
+    m = compact(d)
+    m["match"] = mid
+    out = record_real(m, wp)
+    rm = RealMatch(m)
+    nodes = _CACHE["nodes"]
+    grid = list(range(0, out["minutes"] * 60 + 1, STEP_S))
+    minute_pos = out["pos"]
+
+    def fallback(k):
+        res = []
+        for t in grid:
+            mi = min(out["minutes"] - 1, int(t // 60))
+            fr = min(1.0, t / 60 - mi)
+            a, b = minute_pos[mi], minute_pos[mi + 1]
+            res.append((a[2 * k] + (b[2 * k] - a[2 * k]) * fr, a[2 * k + 1] + (b[2 * k + 1] - a[2 * k + 1]) * fr))
+        return res
+
+    xy, dead = [], []
+    states = _read_csv(os.path.join(TRACKS, mid + "_players.csv"))
+    for k, ch in enumerate(out["champs"]):
+        path = os.path.join(TRACKS, f"{mid}_{ch['champion']}.csv")
+        xy.append(_track_xy(_read_csv(path), grid, fallback(k)) if os.path.exists(path) else fallback(k))
+        st_rows = sorted((float(r["time"]), r["is_dead"] in ("1", "True", "true")) for r in states if r["champion"] == ch["champion"])
+        ts = [t for t, _ in st_rows]
+        dead.append([bool(st_rows) and st_rows[max(0, np.searchsorted(ts, t, side="right") - 1)][1] for t in grid])
+    out["step_s"] = STEP_S
+    out["source"] = "replay"
+    out["pos"] = [[round(v) for k in range(10) for v in xy[k][i]] for i in range(len(grid))]
+    out["dead"] = ["".join("1" if dead[k][i] else "0" for k in range(10)) for i in range(len(grid))]
+    jg = {tm: xy[next(k for k, c in enumerate(out["champs"]) if c["team"] == tm and c["role"] == "JUNGLE")] for tm in (100, 200)}
+    out["camp_kills"] = _camps_from_tracks(rm, nodes, jg, grid, out["minutes"])
+    out["camp_timing"] = {cid: _camp_timing(cid) for cid in out["camp_kills"]}
+    del out["jg_track"]
+    info = d["detail"]["info"]
+    parts = {p["participantId"]: p for p in info["participants"]}
+    seed = parts.get((d.get("seed") or {}).get("participantId"), {})
+    import datetime
+    when = datetime.datetime.fromtimestamp(info["gameCreation"] / 1000, datetime.timezone(datetime.timedelta(hours=9)))
+    jname = {p["teamId"]: f"{p.get('riotIdGameName', '?')}#{p.get('riotIdTagline', '')}" for p in parts.values() if p.get("teamPosition") == "JUNGLE"}
+    out["info"] = {"date_kst": when.strftime("%Y-%m-%d %H:%M"), "patch": ".".join(info["gameVersion"].split(".")[:2]),
+                   "seed_team": "블루" if seed.get("teamId") == 100 else "레드" if seed else "",
+                   "seed_tier": (d.get("seed") or {}).get("tier", ""), "jungler_ids": {str(k): v for k, v in jname.items()}}
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sim", type=int, default=6)
-    ap.add_argument("--real", type=int, default=6)
+    ap.add_argument("--real", type=int, default=6, help="리플레이 1초 기록 경기가 없을 때만: 1,000판에서 고를 판 수")
+    ap.add_argument("--replays", type=int, default=12, help="리플레이 1초 기록 경기 수(있으면 이것을 실제 경기로 씀)")
     ap.add_argument("--out", default=os.path.join(ROOT, "viz", "replay_data.js"))
     a = ap.parse_args()
     wp = WinProb()
     pol = Policy.from_file(POLICY)
     sims = [record_sim(s, 100 if s % 2 == 0 else 200, pol, wp) for s in range(a.sim)]
-    reals = [record_real(m, wp) for m in pick_real(load_compact(), a.real)]
+    if "nodes" not in _CACHE:
+        _CACHE["nodes"] = Game(seed=0).map.nodes
+    replays = replay_matches()[: a.replays]
+    reals = [record_replay(mid, wp) for mid in replays] if replays else [record_real(m, wp) for m in pick_real(load_compact(), a.real)]
     data = {"map": map_layout(Game(seed=0)), "bands": bands(), "sim": sims, "real": reals,
             "policy": os.path.relpath(POLICY, ROOT).replace("\\", "/"), "cat_ko": CAT_KO}
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
