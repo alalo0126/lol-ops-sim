@@ -162,6 +162,7 @@
   },
   "objective": {
     "epic_dps_factor": {"value": 0.75, "level": "calibrated", "note": "에픽 몬스터 방어력 등으로 정글러 피해가 줄어드는 정도. tools/objective_fit.py: 리플레이 1초 동선 처치 시간 309건(정글러 도착→처치)에 시뮬 공식 맞춤(0.75, 이전 0.8)"},
+    "time_mult": {"value": {"dragon": 1.43, "grubs": 0.80, "herald": 0.78}, "level": "measured", "note": "종류별 처치 시간 배수. 리플레이 70판 처치 315건(sim/objective_fit_rows.json, 처치 팀 정글러 둥지 도착→처치)에 처치 순간 실제 인원·레벨·아이템 골드를 넣은 시뮬 공식 시간 대비 실제 중앙값 비: 용 1.43(95% 1.32~1.53, 164건), 유충 0.80(0.71~0.93, 87건), 전령 0.78(0.74~0.85, 64건). 공통 epic_dps_factor 하나로는 용은 너무 빠르고 유충·전령은 너무 느렸음(시뮬 실측 중앙 용 16·유충 29·전령 24초 vs 실제 18.3·18.7·19.4초)"},
     "helper_dps": {"value": 100, "level": "calibrated", "note": "합류한 라이너 1명이 더하는 초당 피해. 처치 시간 회귀 97~116(이전 70)"},
     "contest_loser_death": {"value": 0.35, "level": "unverified"},
     "hp_loss_per_kill": {"value": {"dragon": 0.305, "grubs": 0.213, "herald": 0.344}, "level": "measured", "note": "에픽 몬스터 한 번 처치(유충은 3마리)에 잃는 체력 비율(최대 체력 대비), 함께 친 인원이 나눠 받음. tools/objective_fit.py: 리플레이 70판 정글러-분 받은 피해 회귀(1/인원 몫 계수, se 0.04~0.06). 2026-10-24 전에는 0(공짜)"},

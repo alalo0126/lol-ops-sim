@@ -451,7 +451,7 @@ class Game:
         else:
             hp = lerp_level(o["rift_herald"]["stats_v26_1"]["hp_by_level"], lv)
         dps = self.jungler_dps(c, epic=True) + len(helpers) * self.p["objective"]["helper_dps"]
-        return hp / dps
+        return hp / dps * self.p["objective"].get("time_mult", {}).get(name, 1.0)
 
     def finish_objective(self, c, name, helpers):
         ob = self.objectives[name]
