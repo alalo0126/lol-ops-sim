@@ -13,6 +13,7 @@
 - 검증된 좋은 선택이 없는 칸의 분은 묶음에 넣지 않는다(코치가 말할 근거가 없음). 몇 분이 빠졌는지는 skipped에 남긴다.
 - winprob 값은 절대 승률이 아니라 '천상계 선택 비율로 섞은 평균 대비 20분 예측 승률 차이'(sim_vs_mix)다.
   diff = 추천 − 실제, ci = 추천 범주의 sim_vs_mix 구간(실제 범주와의 차이 구간이 아님).
+- objective는 실제 라벨이 처치 결과로 붙어 효과가 부풀려지므로 지금은 추천에서 뺀다(HOLD).
 - 실제 범주가 contradicted(시뮬과 실제가 반대 방향)면 그 분은 넣지 않는다.
 """
 import argparse
@@ -25,6 +26,9 @@ from .stage6 import CAT_KO, CATS, RealMatch, label, load_compact, situation
 
 MINUTES = range(3, 18)
 CELLS = os.path.join(ROOT, "sim", "advice_cells.json")
+# 실제 쪽 라벨이 결과를 보고 붙는 범주(stage6.label: 정글러가 에픽 처치에 관여해야 objective)는 실제 효과가
+# 처치 효과를 그대로 담아 부풀려진다. 라벨을 시도 기준으로 고치기 전까지 추천 근거로 쓰지 않는다.
+HOLD = {"objective"}
 
 
 def _pct(x):
@@ -50,7 +54,7 @@ def cell_key(sit, table):
 def good_cats(cell):
     """검증된 좋은 선택: verified이고 시뮬 차이가 +인 범주, 큰 순."""
     cats = cell["cats"]
-    ok = [c for c in CATS if c in cats and cats[c].get("verified") and cats[c]["sim_vs_mix"] > 0]
+    ok = [c for c in CATS if c in cats and c not in HOLD and cats[c].get("verified") and cats[c]["sim_vs_mix"] > 0]
     return sorted(ok, key=lambda c: -cats[c]["sim_vs_mix"])
 
 
