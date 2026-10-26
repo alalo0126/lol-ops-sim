@@ -10,6 +10,7 @@
       섞은 평균과 비교한 차이(어느 범주가 그 칸의 평균적인 실제 선택보다 나은가).
 실제: 1단계 1,000판 그 칸의 모든 정글러-분. 범주를 고른 경우 − 안 고른 경우(지금 예측 승률 통제 회귀)의
       실제 승패 차이와 3분 뒤 예측 승률 변화 차이.
+실제 범주는 결과를 보지 않는 intent_label(1분 끝 위치·귀환)로 붙인다.
 verified = 시뮬 95% 구간과 실제 3분 뒤 95% 구간이 둘 다 0을 벗어나고 부호가 같음. contradicted = 둘 다 벗어났는데 반대.
 실제 차이는 선택 편향(필요해서 고른 귀환 등)이 섞여 있으니 인과 효과가 아니다.
 """
@@ -67,9 +68,19 @@ def _real(mi):
             if len(rm.frames) <= minute + AHEAD or m["duration"] <= (minute + AHEAD) * 60:
                 continue
             out.append({"mi": mi, "team": team, "minute": minute, "cell": cell_key(situation(rm, team, minute)),
-                        "real": label(rm.window(team, minute, nodes), team, nodes), "phi": phi(minute),
+                        "real": intent_label(rm.window(team, minute, nodes), team, nodes), "phi": phi(minute),
                         "dphi3": phi(minute + AHEAD) - phi(minute), "win": m["win100"] if team == 100 else 1 - m["win100"]})
     return out
+
+
+def intent_label(w, team, nodes):
+    """결과를 보지 않는 실제 범주: 에픽 처치 관여·교전 위치를 빼고 1분 끝 위치·귀환만으로 붙인다.
+
+    stage6.label은 '정글러가 에픽 처치에 관여함 → objective', '라인 교전 관여 → lane'처럼 결과로 붙여서
+    실제 3분 뒤 차이에 처치 효과가 기계적으로 들어간다(시도했다 못 잡은 분은 objective가 아님).
+    시뮬 쪽은 첫 1분 행동을 묶는 방식이라 원래 시도 기준이다.
+    """
+    return label({**w, "elite": 0, "fights": []}, team, nodes)
 
 
 def ols_diff(rows, y, cat):
@@ -162,6 +173,8 @@ def main():
             sims[k].append(res)
             if len(sims) and sum(len(v) for v in sims.values()) % 200 == 0:
                 print(f"  {sum(len(v) for v in sims.values())}/{len(jobs)} ({time.time() - t:.0f}초)", flush=True)
+    with open(os.path.join(ROOT, "data", "advice_cells_sim.json"), "w", encoding="utf-8") as f:
+        json.dump({k: v for k, v in sims.items()}, f)   # 실제 범주 정의를 바꿔 다시 낼 때 시뮬 재사용
     cells = {}
     for key in sorted(by):
         rows = by[key]
@@ -196,7 +209,7 @@ def main():
             e["contradicted"] = bool(both and not same)
         cells[key] = c
     out = {"format": "advice_cells/1", "policy": os.path.relpath(args.policy, ROOT), "cell_keys": KEYS, "key_sep": "|",
-           "outcome_ahead_min": AHEAD, "cats": CATS, "cat_ko": CAT_KO, "cells": cells}
+           "outcome_ahead_min": AHEAD, "real_label": "intent (1분 끝 위치·귀환, 에픽·교전 관여 제외)", "cats": CATS, "cat_ko": CAT_KO, "cells": cells}
     out["validation"] = validation(cells)
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
