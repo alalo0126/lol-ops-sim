@@ -64,7 +64,14 @@ def _one(seed):
             foes = [x.pid for x in g.champs if x.team != t and ROLE_LANE.get(x.role) == lane]
             hm = hp_min.get(int(span[0] // 60), {})
             fh = float(np.mean([hm[q] for q in foes if q in hm])) if foes and hm else None
-            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane, "enemy_jg_dist": d, "match": seed, "foe_hp": fh})
+            fo = {100: g.map.nodes["B_fountain"], 200: g.map.nodes["R_fountain"]}
+            ov = []
+            for q in [x for x in g.champs if x.pid in foes]:
+                e = g.xy(q)
+                if e:
+                    ov.append((math.dist(e, (fo[300 - t]["x"], fo[300 - t]["y"])) - math.dist(e, (fo[t]["x"], fo[t]["y"]))) / 1000)
+            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane, "enemy_jg_dist": d, "match": seed, "foe_hp": fh,
+                                                           "foe_over": float(np.mean(ov)) if ov else None})
         out.setdefault(who, []).extend(rows)
     return out
 
@@ -87,12 +94,12 @@ def boot(rs, key, n=1000, seed=0):
     return float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))
 
 
-def hp_slope(rs, n=300, seed=0):
+def hp_slope(rs, n=300, seed=0, key="foe_hp"):
     """킬 관여 ~ 적 라이너 체력 로지스틱 기울기와 경기 단위 부트스트랩 95% 구간."""
-    rs = [r for r in rs if r.get("foe_hp") is not None]
+    rs = [r for r in rs if r.get(key) is not None]
 
     def fit(sub):
-        X = np.array([[1.0, r["foe_hp"]] for r in sub])
+        X = np.array([[1.0, r[key]] for r in sub])
         y = np.array([float(r["kill"]) for r in sub])
         w = np.zeros(2)
         for _ in range(30):
@@ -178,6 +185,13 @@ def main():
             b, c = hp_slope(v)
             sl.append(f"{name} {b:+.2f} ({c[0]:+.2f}~{c[1]:+.2f})")
     L += ["", "적 라이너 체력 1당 킬 관여 로그오즈(로지스틱 기울기, 95% 구간): " + ", ".join(sl) + "."]
+    sl = []
+    for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
+        v = real if k == "real" else sim.get(k, [])
+        if v:
+            b, c = hp_slope(v, key="foe_over")
+            sl.append(f"{name} {b:+.2f} ({c[0]:+.2f}~{c[1]:+.2f})")
+    L += ["", "적 라이너가 우리 쪽으로 나온 정도(천 거리, +면 우리 절반) 1당 킬 관여 로그오즈: " + ", ".join(sl) + "."]
     for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
         v = real if k == "real" else sim.get(k, [])
         if v:
