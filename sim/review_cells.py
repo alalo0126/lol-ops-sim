@@ -27,7 +27,7 @@ from .stage6 import CAT_KO, CATS, RealMatch, label, load_compact, situation
 MINUTES = range(3, 18)
 CELLS = os.path.join(ROOT, "sim", "advice_cells.json")
 # 실제 쪽 라벨이 결과를 보고 붙는 범주(stage6.label: 정글러가 에픽 처치에 관여해야 objective)는 실제 효과가
-# 처치 효과를 그대로 담아 부풀려진다. 라벨을 시도 기준으로 고치기 전까지 추천 근거로 쓰지 않는다.
+# 처치 효과를 그대로 담아 부풀려진다. 표에 real_label(결과 없이 붙인 라벨)이 없으면 추천 근거로 쓰지 않는다.
 HOLD = {"objective"}
 
 
@@ -51,18 +51,22 @@ def cell_key(sit, table):
     return table.get("key_sep", "|").join(sit[k] for k in table["cell_keys"])
 
 
-def good_cats(cell):
+def good_cats(cell, hold=HOLD):
     """검증된 좋은 선택: verified이고 시뮬 차이가 +인 범주, 큰 순."""
     cats = cell["cats"]
-    ok = [c for c in CATS if c in cats and c not in HOLD and cats[c].get("verified") and cats[c]["sim_vs_mix"] > 0]
+    ok = [c for c in CATS if c in cats and c not in hold and cats[c].get("verified") and cats[c]["sim_vs_mix"] > 0]
     return sorted(ok, key=lambda c: -cats[c]["sim_vs_mix"])
 
 
-def decision(rm, team, minute, cell, key, nid, nodes):
+def decision(rm, team, minute, cell, key, nid, nodes, outcome_free=False, hold=()):
     w = rm.window(team, minute, nodes)
-    real = label(w, team, nodes)
+    if outcome_free:
+        # 조언 검증 표와 같은 기준: 처치·교전 결과 없이 1분 끝 위치와 귀환만으로 범주를 붙인다
+        real = label(dict(w, elite=0, fights=[]), team, nodes)
+    else:
+        real = label(w, team, nodes)
     cats = cell["cats"]
-    good = good_cats(cell)
+    good = good_cats(cell, hold)
     if not good or cats.get(real, {}).get("contradicted"):
         return None
     rec = real if real in good else good[0]
@@ -108,10 +112,13 @@ def review_match(m, table, nodes):
     team = rm.team_of[m["me"]]
     mins = [mi for mi in MINUTES if len(rm.frames) > mi + 1 and m["duration"] > (mi + 1) * 60]
     nid, decisions, skipped = [1, 1], [], []
+    # 표에 real_label이 있으면 실제 범주가 결과 없이 붙은 표다. 그때만 objective 보류를 푼다.
+    outcome_free = "real_label" in table
+    hold = () if outcome_free else HOLD
     for mi in mins:
         key = cell_key(situation(rm, team, mi), table)
         cell = table["cells"].get(key)
-        d = decision(rm, team, mi, cell, key, nid, nodes) if cell else None
+        d = decision(rm, team, mi, cell, key, nid, nodes, outcome_free, hold) if cell else None
         if d is None:
             skipped.append(f"{mi}:00")
         else:
