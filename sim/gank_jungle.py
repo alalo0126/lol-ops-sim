@@ -14,7 +14,7 @@ import numpy as np
 from .data import ROOT, Rules
 from .evaluate import apply_overrides
 from .game import Game
-from .lane_visits import T0, T1, lane_of, outcome, visits
+from .lane_visits import ROLE_LANE, T0, T1, lane_of, outcome, visits
 from .stage6 import zone
 
 EDGES = [0, 2000, 4000, 7000, 1e9]
@@ -40,7 +40,10 @@ def _one(seed):
     g = Game(seed=seed, rules=rules, jungler_override=override)
     js = {c.team: c for c in g.champs if c.role == "JUNGLE"}
     xy = {t: {} for t in js}
+    hp_min = {}   # 분 시작 체력(실제 분 프레임과 같게)
     while g.t < 1200:
+        if g.t % 60 == 0:
+            hp_min[g.t // 60] = {x.pid: x.hp for x in g.champs}
         g.step()
         if T0 <= g.t < T1:
             for t, c in js.items():
@@ -57,7 +60,11 @@ def _one(seed):
         for span in visits(zones):
             o = xy[300 - t].get(span[0])
             d = math.dist(xy[t][span[0]], o) if o else None
-            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane_of(*xy[t][span[0]]), "enemy_jg_dist": d, "match": seed})
+            lane = lane_of(*xy[t][span[0]])
+            foes = [x.pid for x in g.champs if x.team != t and ROLE_LANE.get(x.role) == lane]
+            hm = hp_min.get(int(span[0] // 60), {})
+            fh = float(np.mean([hm[q] for q in foes if q in hm])) if foes and hm else None
+            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane, "enemy_jg_dist": d, "match": seed, "foe_hp": fh})
         out.setdefault(who, []).extend(rows)
     return out
 
@@ -78,6 +85,30 @@ def boot(rs, key, n=1000, seed=0):
         den = sum(len(by[ks[i]]) for i in pick)
         v.append(num / max(1, den))
     return float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))
+
+
+def hp_slope(rs, n=300, seed=0):
+    """킬 관여 ~ 적 라이너 체력 로지스틱 기울기와 경기 단위 부트스트랩 95% 구간."""
+    rs = [r for r in rs if r.get("foe_hp") is not None]
+
+    def fit(sub):
+        X = np.array([[1.0, r["foe_hp"]] for r in sub])
+        y = np.array([float(r["kill"]) for r in sub])
+        w = np.zeros(2)
+        for _ in range(30):
+            p = 1 / (1 + np.exp(-X @ w))
+            H = (X * (p * (1 - p))[:, None]).T @ X + 1e-6 * np.eye(2)
+            w += np.linalg.solve(H, X.T @ (y - p))
+        return w[1]
+    if len(rs) < 30:
+        return float("nan"), (float("nan"), float("nan"))
+    by = {}
+    for r in rs:
+        by.setdefault(r["match"], []).append(r)
+    ks = list(by)
+    rng = np.random.default_rng(seed)
+    bs = [fit([r for i in rng.integers(0, len(ks), len(ks)) for r in by[ks[i]]]) for _ in range(n)]
+    return fit(rs), (float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5)))
 
 
 def bins(rows):
@@ -127,6 +158,26 @@ def main():
             else:
                 cells += ["-", "-", "-"]
         L.append(f"| {lab} | " + " | ".join(cells) + " |")
+    L += ["", "### 방문 시작 분 프레임의 적 라이너 체력별 킬 관여", "",
+          "| 적 라이너 체력 | 실제 방문 | 실제 킬 | 학습 방문 | 학습 킬 | 규칙 봇 방문 | 규칙 봇 킬 |", "|---|---|---|---|---|---|---|"]
+    for lo, hi in ((0, 0.4), (0.4, 0.7), (0.7, 1.01)):
+        cells = []
+        for k in ("real", "ai", "rule"):
+            v = real if k == "real" else sim.get(k, [])
+            rs = [r for r in v if r.get("foe_hp") is not None and lo <= r["foe_hp"] < hi]
+            if rs:
+                c = boot(rs, "kill")
+                cells += [str(len(rs)), f"{np.mean([r['kill'] for r in rs]):.0%} ({c[0]:.0%}~{c[1]:.0%})"]
+            else:
+                cells += ["0", "-"]
+        L.append(f"| {lo:g}~{min(hi, 1):g} | " + " | ".join(cells) + " |")
+    sl = []
+    for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
+        v = real if k == "real" else sim.get(k, [])
+        if v:
+            b, c = hp_slope(v)
+            sl.append(f"{name} {b:+.2f} ({c[0]:+.2f}~{c[1]:+.2f})")
+    L += ["", "적 라이너 체력 1당 킬 관여 로그오즈(로지스틱 기울기, 95% 구간): " + ", ".join(sl) + "."]
     for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
         v = real if k == "real" else sim.get(k, [])
         if v:
