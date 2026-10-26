@@ -148,6 +148,7 @@ def rows_for(m, W, nodes, champs):
         kind[pid] = (champ_kind(p[3], champs), champ_kind(parts[opp][3], champs))
     win = {100: m["win100"], 200: 1 - m["win100"]}
     F = fights(m)
+    deaths = {(int(k[0] // 60000), k[2]) for k in m["events"]["kill"]}
     out = []
     last = min(M1, len(m["frames"]) - 1 - AHEAD)
     for minute in range(M0, last + 1):
@@ -162,7 +163,7 @@ def rows_for(m, W, nodes, champs):
             pl = place(x, y, T, nodes)
             mates = [q for q in parts if parts[q][1] == T and q != pid]
             near = sum(1 for q in mates if math.dist((x, y), fr[str(q)][:2]) <= 2500)
-            r = {"match": m["match"], "team": T, "role": role, "minute": minute, "state": state[pid], "kind": kind[pid][0],
+            r = {"match": m["match"], "pid": pid, "team": T, "role": role, "minute": minute, "died1": (minute, pid) in deaths, "state": state[pid], "kind": kind[pid][0],
                  "opp_kind": kind[pid][1], "place": pl, "depth": depth(x, y, T, nodes) if pl in ("side", "mid") else None,
                  "lane": lane_of(x, y) if pl in ("side", "mid") else None, "grouped": near >= 2,
                  "hp": fr[str(pid)][2] / max(1, fr[str(pid)][3]),
