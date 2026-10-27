@@ -1,6 +1,6 @@
 """둥지 근처 초(행동 라벨 없이, 반경 1,200, 3~18분) 실제 vs 시뮬, 판당 평균과 정글러 단위 부트스트랩 95% 구간.
 
-    python tools/pit_time_check.py
+    python tools/pit_time_check.py [models/stage17_a/policy_latest.npz]
 """
 import collections, os, sys
 import numpy as np
@@ -14,7 +14,8 @@ from sim.game import Game
 def main():
     nodes = Game(seed=0).map.nodes; rules = Rules()
     real = oc.real(nodes, rules)
-    oc._POLICY = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models", "stage16_a", "policy_latest.npz")
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    oc._POLICY = sys.argv[1] if len(sys.argv) > 1 else os.path.join(root, "models", "stage17_a", "policy_latest.npz")
     with Pool(4, initializer=oc._init, initargs=(oc._POLICY,)) as pool:
         sims = pool.map(oc._sim_one, range(200))
     groups = {"real": [r[3] for r in real], "ai": [s["ai"][3] for s in sims], "rule": [s["rule"][3] for s in sims]}

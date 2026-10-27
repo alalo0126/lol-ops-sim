@@ -218,9 +218,10 @@ class JunglerBot:
         if lane:
             return ("gank", g.lane_node(lane), {"lane": lane})
         live_obj = [n for n, ob in g.objectives.items() if ob["alive"]]
-        if live_obj and g.rng.random() < pj["objective_go_prob"]:
+        if live_obj:
             name = min(live_obj, key=lambda n: self.travel(g.objectives[n]["node"]))
-            return ("objective", g.objectives[name]["node"], {"name": name})
+            if g.rng.random() < pj.get("objective_go_prob_by", {}).get(name, pj["objective_go_prob"]):
+                return ("objective", g.objectives[name]["node"], {"name": name})
         alive = [k for k in self.own_camps() if k.alive]
         target = self.invade_target(min((self.travel(k.node) for k in alive), default=None))
         if target:
@@ -260,6 +261,14 @@ class JunglerBot:
                     return
                 c.task = None
                 return
+            rival = g.enemy(c, "JUNGLE")
+            rt = rival.task or {}
+            if rt.get("kind") == "objective" and rt.get("name") == task["name"] and rt.get("started") \
+                    and rival.alive(g.t) and rival.node == ob["node"]:
+                # 적 정글러가 이미 치는 중: 둘이 나란히 서서 치지 않고 도착하자마자 다툼을 정한다.
+                # 리플레이 처치 327건에서 처치 순간 상대 정글러가 둥지 1,200 안에 있던 비율 용 5%·유충 8%·전령 3%(규칙 봇은 30~38%였음)
+                if not g.contest_objective(c, rival):
+                    return
             helpers = []
             lane = OBJ_LANE[task["name"]]
             pr = g.p["objective"]["rally"]

@@ -453,6 +453,16 @@ class Game:
         dps = self.jungler_dps(c, epic=True) + len(helpers) * self.p["objective"]["helper_dps"]
         return hp / dps * self.p["objective"].get("time_mult", {}).get(name, 1.0)
 
+    def contest_objective(self, c, rival):
+        """같은 오브젝트 앞 두 정글러: 레벨 차로 승자를 뽑고 진 쪽은 일정 확률로 사망, 작업을 접는다. c가 이기면 True."""
+        p_win = 0.5 + 0.1 * (c.level - rival.level)
+        win, lose = (c, rival) if self.rng.random() < p_win else (rival, c)
+        if self.rng.random() < self.p["objective"]["contest_loser_death"]:
+            self.kill(win, lose, [])
+        lose.task = None
+        lose.busy_until = self.t
+        return win is c
+
     def finish_objective(self, c, name, helpers):
         ob = self.objectives[name]
         if not ob["alive"]:
