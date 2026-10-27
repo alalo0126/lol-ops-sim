@@ -14,7 +14,7 @@ import numpy as np
 from .data import ROOT, Rules
 from .evaluate import apply_overrides
 from .game import Game
-from .lane_visits import T0, T1, lane_of, outcome, visits
+from .lane_visits import ROLE_LANE, T0, T1, lane_of, outcome, visits
 from .stage6 import zone
 
 EDGES = [0, 2000, 4000, 7000, 1e9]
@@ -40,7 +40,10 @@ def _one(seed):
     g = Game(seed=seed, rules=rules, jungler_override=override)
     js = {c.team: c for c in g.champs if c.role == "JUNGLE"}
     xy = {t: {} for t in js}
+    hp_min = {}   # 분 시작 체력(실제 분 프레임과 같게)
     while g.t < 1200:
+        if g.t % 60 == 0:
+            hp_min[g.t // 60] = {x.pid: x.hp for x in g.champs}
         g.step()
         if T0 <= g.t < T1:
             for t, c in js.items():
@@ -57,20 +60,72 @@ def _one(seed):
         for span in visits(zones):
             o = xy[300 - t].get(span[0])
             d = math.dist(xy[t][span[0]], o) if o else None
-            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane_of(*xy[t][span[0]]), "enemy_jg_dist": d})
+            lane = lane_of(*xy[t][span[0]])
+            foes = [x.pid for x in g.champs if x.team != t and ROLE_LANE.get(x.role) == lane]
+            hm = hp_min.get(int(span[0] // 60), {})
+            fh = float(np.mean([hm[q] for q in foes if q in hm])) if foes and hm else None
+            fo = {100: g.map.nodes["B_fountain"], 200: g.map.nodes["R_fountain"]}
+            ov = []
+            for q in [x for x in g.champs if x.pid in foes]:
+                e = g.xy(q)
+                if e:
+                    ov.append((math.dist(e, (fo[300 - t]["x"], fo[300 - t]["y"])) - math.dist(e, (fo[t]["x"], fo[t]["y"]))) / 1000)
+            rows.append(outcome(span, kills, c.pid, tp) | {"lane": lane, "enemy_jg_dist": d, "match": seed, "foe_hp": fh,
+                                                           "foe_over": float(np.mean(ov)) if ov else None})
         out.setdefault(who, []).extend(rows)
     return out
 
 
+def boot(rs, key, n=1000, seed=0):
+    """경기 단위 부트스트랩 95% 구간."""
+    by = {}
+    for r in rs:
+        by.setdefault(r["match"], []).append(float(r[key]))
+    ks = list(by)
+    if not ks:
+        return float("nan"), float("nan")
+    rng = np.random.default_rng(seed)
+    v = []
+    for _ in range(n):
+        pick = rng.integers(0, len(ks), len(ks))
+        num = sum(sum(by[ks[i]]) for i in pick)
+        den = sum(len(by[ks[i]]) for i in pick)
+        v.append(num / max(1, den))
+    return float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))
+
+
+def hp_slope(rs, n=300, seed=0, key="foe_hp"):
+    """킬 관여 ~ 적 라이너 체력 로지스틱 기울기와 경기 단위 부트스트랩 95% 구간."""
+    rs = [r for r in rs if r.get(key) is not None]
+
+    def fit(sub):
+        X = np.array([[1.0, r[key]] for r in sub])
+        y = np.array([float(r["kill"]) for r in sub])
+        w = np.zeros(2)
+        for _ in range(30):
+            p = 1 / (1 + np.exp(-X @ w))
+            H = (X * (p * (1 - p))[:, None]).T @ X + 1e-6 * np.eye(2)
+            w += np.linalg.solve(H, X.T @ (y - p))
+        return w[1]
+    if len(rs) < 30:
+        return float("nan"), (float("nan"), float("nan"))
+    by = {}
+    for r in rs:
+        by.setdefault(r["match"], []).append(r)
+    ks = list(by)
+    rng = np.random.default_rng(seed)
+    bs = [fit([r for i in rng.integers(0, len(ks), len(ks)) for r in by[ks[i]]]) for _ in range(n)]
+    return fit(rs), (float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5)))
+
+
 def bins(rows):
+    groups = [[r for r in rows if r["enemy_jg_dist"] is not None and lo <= r["enemy_jg_dist"] < hi] for lo, hi in zip(EDGES[:-1], EDGES[1:])]
+    groups.append([r for r in rows if r["enemy_jg_dist"] is None])
     out = []
-    for lo, hi in zip(EDGES[:-1], EDGES[1:]):
-        rs = [r for r in rows if r["enemy_jg_dist"] is not None and lo <= r["enemy_jg_dist"] < hi]
-        out.append((len(rs), float(np.mean([r["kill"] for r in rs])) if rs else float("nan"),
-                    float(np.mean([r["death"] for r in rs])) if rs else float("nan")))
-    rs = [r for r in rows if r["enemy_jg_dist"] is None]
-    out.append((len(rs), float(np.mean([r["kill"] for r in rs])) if rs else float("nan"),
-                float(np.mean([r["death"] for r in rs])) if rs else float("nan")))
+    for rs in groups:
+        kr = float(np.mean([r["kill"] for r in rs])) if rs else float("nan")
+        dr = float(np.mean([r["death"] for r in rs])) if rs else float("nan")
+        out.append((len(rs), kr, dr, boot(rs, "kill"), boot(rs, "death")))
     return out
 
 
@@ -97,6 +152,7 @@ def main():
     labels = [f"{lo:g}~{hi:g}" if hi < 1e9 else f"{lo:g}+" for lo, hi in zip(EDGES[:-1], EDGES[1:])] + ["적 정글러 사망 중"]
     L = ["# 라인 방문 결과 × 적 정글러 거리", "",
          f"- 시뮬 {args.games}판, 정책 `{os.path.relpath(args.policy, ROOT)}`" + (f", 바꾼 값 {args.set}" if args.set else "") + ".",
+         "- 괄호 = 경기(시뮬은 시드) 단위 부트스트랩 95% 구간.",
          "- 방문 = 3~18분 라인 구역 연속 5초 이상. 거리 = 방문 시작 초 두 정글러 거리. 결과 = 방문 시작~끝+10초 정글러 킬 관여 / 사망.", "",
          "| 적 정글러 거리 | 실제 방문 | 실제 킬 | 실제 사망 | 학습 방문 | 학습 킬 | 학습 사망 | 규칙 봇 방문 | 규칙 봇 킬 | 규칙 봇 사망 |", "|---|---|---|---|---|---|---|---|---|---|"]
     bs = {k: bins(v) for k, v in [("real", real)] + list(sim.items())}
@@ -104,11 +160,38 @@ def main():
         cells = []
         for k in ("real", "ai", "rule"):
             if k in bs:
-                n, kr, dr = bs[k][i]
-                cells += [str(n), f"{kr:.0%}" if n else "-", f"{dr:.0%}" if n else "-"]
+                n, kr, dr, kc, dc = bs[k][i]
+                cells += [str(n), f"{kr:.0%} ({kc[0]:.0%}~{kc[1]:.0%})" if n else "-", f"{dr:.0%} ({dc[0]:.0%}~{dc[1]:.0%})" if n else "-"]
             else:
                 cells += ["-", "-", "-"]
         L.append(f"| {lab} | " + " | ".join(cells) + " |")
+    L += ["", "### 방문 시작 분 프레임의 적 라이너 체력별 킬 관여", "",
+          "| 적 라이너 체력 | 실제 방문 | 실제 킬 | 학습 방문 | 학습 킬 | 규칙 봇 방문 | 규칙 봇 킬 |", "|---|---|---|---|---|---|---|"]
+    for lo, hi in ((0, 0.4), (0.4, 0.7), (0.7, 1.01)):
+        cells = []
+        for k in ("real", "ai", "rule"):
+            v = real if k == "real" else sim.get(k, [])
+            rs = [r for r in v if r.get("foe_hp") is not None and lo <= r["foe_hp"] < hi]
+            if rs:
+                c = boot(rs, "kill")
+                cells += [str(len(rs)), f"{np.mean([r['kill'] for r in rs]):.0%} ({c[0]:.0%}~{c[1]:.0%})"]
+            else:
+                cells += ["0", "-"]
+        L.append(f"| {lo:g}~{min(hi, 1):g} | " + " | ".join(cells) + " |")
+    sl = []
+    for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
+        v = real if k == "real" else sim.get(k, [])
+        if v:
+            b, c = hp_slope(v)
+            sl.append(f"{name} {b:+.2f} ({c[0]:+.2f}~{c[1]:+.2f})")
+    L += ["", "적 라이너 체력 1당 킬 관여 로그오즈(로지스틱 기울기, 95% 구간): " + ", ".join(sl) + "."]
+    sl = []
+    for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
+        v = real if k == "real" else sim.get(k, [])
+        if v:
+            b, c = hp_slope(v, key="foe_over")
+            sl.append(f"{name} {b:+.2f} ({c[0]:+.2f}~{c[1]:+.2f})")
+    L += ["", "적 라이너가 우리 쪽으로 나온 정도(천 거리, +면 우리 절반) 1당 킬 관여 로그오즈: " + ", ".join(sl) + "."]
     for k, name in (("real", "실제"), ("ai", "학습"), ("rule", "규칙 봇")):
         v = real if k == "real" else sim.get(k, [])
         if v:

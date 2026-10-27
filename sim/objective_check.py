@@ -62,6 +62,13 @@ def analyse(pos, foe_pos, team, nodes, kills, deaths, rules):
     split = collections.Counter()      # (행동 묶음, 가는 중/머묾)
     pit_state = collections.Counter()  # (이름, 상태)
     visits = []
+    raw = collections.Counter()   # 행동 라벨과 무관하게 둥지 반경 안 초
+    for t, p in pos.items():
+        if not p or not (T0 <= t < T1):
+            continue
+        for nm, n in pit.items():
+            if math.hypot(n["x"] - p[0], n["y"] - p[1]) < RADIUS["epic"] and (nm != "herald" or t >= herald_spawn) and (nm != "grubs" or t < herald_spawn):
+                raw[(nm, state(nm, t, win, first[nm]))] += 1
     cur = None
     for t in sorted(seg):
         a = seg[t]
@@ -103,7 +110,7 @@ def analyse(pos, foe_pos, team, nodes, kills, deaths, rules):
         else:
             r["contest"] = v["contest"] if foe_pos is not None else None
         out.append(r)
-    return split, pit_state, out
+    return split, pit_state, out, raw
 
 
 # ---------------------------------------------------------------------- 실제
