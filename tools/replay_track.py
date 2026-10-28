@@ -131,6 +131,8 @@ def download_and_watch(lcu, game_id, timeout=300):
                 break
             if state in ("incompatible", "lost", "missingOrExpired", "error"):
                 sys.exit(f"\n다운로드 실패: {state}")
+            if state == "retryDownload" and time.time() - t0 > 20:   # 서버가 거절한 것(2026-10-29 79판째부터 연속), 기다려도 안 바뀜
+                sys.exit(f"\n다운로드 실패: {state} {meta}")
         print()
         if state != "watch":
             sys.exit("다운로드가 시간 안에 끝나지 않았습니다.")

@@ -111,22 +111,31 @@ class Tee:
         self.f.flush()
 
 
-def download_only(lcu, matches, timeout=180):
-    """리플레이(.rofl)만 받아 둔다. 다음 패치 뒤엔 클라이언트가 옛 빌드 경기를 못 받으므로 지금 받아 두는 것."""
-    ok = 0
+def download_only(lcu, matches, timeout=180, give_up=8):
+    """리플레이(.rofl)만 받아 둔다. 다음 패치 뒤엔 클라이언트가 옛 빌드 경기를 못 받으므로 지금 받아 두는 것.
+
+    retryDownload(서버 거절)가 20초 넘게 이어지면 그 판은 실패로 넘기고, give_up판 연속 실패면 받기 한도로 보고 멈춘다.
+    """
+    ok, fails = 0, 0
     for i, mid in enumerate(matches, 1):
         gid = mid.split("_")[-1]
-        state, _ = replay_state(lcu, gid)
+        state, meta = replay_state(lcu, gid)
         if state != "watch":
             lcu.post(f"/lol-replays/v1/rofls/{gid}/download/graceful", LCU_BODY)
             t0 = time.time()
             while time.time() - t0 < timeout:
                 time.sleep(2)
-                state, _ = replay_state(lcu, gid)
+                state, meta = replay_state(lcu, gid)
                 if state in ("watch", "incompatible", "lost", "missingOrExpired", "error", "unsupported"):
                     break
+                if state == "retryDownload" and time.time() - t0 > 20:
+                    break
         ok += state == "watch"
-        print(f"  [{i}/{len(matches)}] {mid} {state}")
+        fails = 0 if state == "watch" else fails + 1
+        print(f"  [{i}/{len(matches)}] {time.strftime('%H:%M:%S')} {mid} {state}" + ("" if state == "watch" else f" {meta}"))
+        if fails >= give_up:
+            print(f"  {give_up}판 연속 실패: 리플레이 받기 한도로 보고 멈춤. 받아 둔 경기부터 기록합니다.")
+            break
     print(f"리플레이 받아 둠 {ok}/{len(matches)}판")
 
 
