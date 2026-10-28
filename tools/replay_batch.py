@@ -27,7 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "collect"))
 
-from riot_api import RiotAPI  # noqa: E402
+from riot_api import KeyExpired, RiotAPI  # noqa: E402
 from tools.replay_compare import compare  # noqa: E402
 from tools.replay_track import (DEFAULT_GAME_DIR, LCU, LCU_BODY, OUT, REPLAY_RAW, Replay, download_and_watch,  # noqa: E402
                                 find_game_dir, last_time, record, replay_state)
@@ -168,7 +168,11 @@ def main():
 
     # 받아 둔 경기로 충분하면 API 키 없이도 돈다(키가 없으면 새 경기는 찾지 않음)
     api = RiotAPI(platform="kr") if os.environ.get("RIOT_API_KEY", "").startswith("RGAPI-") else None
-    matches = find_matches(api, build, args.count, args.hours, args.per_player, args.tiers.split(","))
+    try:
+        matches = find_matches(api, build, args.count, args.hours, args.per_player, args.tiers.split(","))
+    except KeyExpired as e:   # 키가 만료돼도 받아 둔 경기로 계속 기록한다
+        print(f"  {e}\n  -> 새 경기 찾기는 멈추고 받아 둔 경기만 씁니다")
+        matches = find_matches(None, build, args.count, args.hours, args.per_player, args.tiers.split(","))
     matches = matches[:args.count]   # 이미 받아 둔 경기가 더 많아도 --count판까지만
     print(f"대상 {len(matches)}판 ({', '.join(roles)})")
     if args.find_only:
