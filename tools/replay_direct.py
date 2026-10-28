@@ -116,4 +116,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:  # noqa: BLE001 - 실패 이유를 결과 파일에 남긴다(클라우드에서 확인)
+        import traceback
+        note(f"오류: {e!r}\n{traceback.format_exc()}")
