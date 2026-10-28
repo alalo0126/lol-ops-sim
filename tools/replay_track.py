@@ -348,7 +348,8 @@ def to_world(cx, cy, cz, pitch_deg):
     return cx, cz + (cy - GROUND_Y) / math.tan(math.radians(pitch_deg))
 
 
-def track(rp, champion, until, speed, step, lock="key", names=None):
+def track(rp, champion, until, speed, step, lock="key", names=None, start=START_TIME):
+    """until <= 0이면 리플레이 끝까지. start초부터(이어 기록할 때) 시작한다."""
     players = rp.players()
     player = find_player(players, champion, names)
     if not player:
@@ -362,7 +363,7 @@ def track(rp, champion, until, speed, step, lock="key", names=None):
         time.sleep(15)
     else:
         # 0초에는 챔피언이 소환 전이라 고정 키가 먹지 않는다. 소환된 뒤(10초)로 옮겨서 누른다 (kk PC 확인)
-        rp.post("/replay/playback", {"time": START_TIME, "paused": True})
+        rp.post("/replay/playback", {"time": max(start, START_TIME), "paused": True})
         time.sleep(2)
         if lock == "key":
             press_twice(scan)
@@ -375,7 +376,7 @@ def track(rp, champion, until, speed, step, lock="key", names=None):
     while True:
         pb = rp.get("/replay/playback")
         t = pb.get("time", 0.0)
-        if t >= until or t >= pb.get("length", 0) - 1:
+        if (until > 0 and t >= until) or t >= pb.get("length", 0) - 1:
             break
         if t - last_state >= STATE_EVERY:
             states += player_state_rows(t, rp.players(), names)
@@ -465,7 +466,7 @@ def main():
     ap.add_argument("match", nargs="?", help="경기 번호 (예: KR_8424846201)")
     ap.add_argument("--champion", action="append", help="따라갈 챔피언 영문 id (여러 번 가능). 없으면 data/replay_raw에서 --role의 양 팀 챔피언")
     ap.add_argument("--role", default="JUNGLE", choices=["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"], help="따라갈 포지션 (기본 JUNGLE)")
-    ap.add_argument("--until", type=float, default=1200, help="몇 초까지 기록 (기본 1200 = 20분)")
+    ap.add_argument("--until", type=float, default=1200, help="몇 초까지 기록 (기본 1200 = 20분, 0 = 경기 끝까지)")
     ap.add_argument("--speed", type=float, default=4, help="재생 배속 (기본 4)")
     ap.add_argument("--step", type=float, default=1, help="기록 간격, 게임 초 (기본 1)")
     ap.add_argument("--game-dir", default=DEFAULT_GAME_DIR)
@@ -502,17 +503,37 @@ def main():
         record(rp, args.match, champ, args.until, args.speed, args.step, args.lock)
 
 
-def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
-    """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 (경로, 유효 행 비율)을 돌려준다."""
+def last_time(match_id, champ):
+    """이미 기록한 CSV의 마지막 게임 시각(초). 없으면 None."""
+    path = os.path.join(OUT, f"{match_id}_{champ}.csv")
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        ts = [float(r["time"]) for r in csv.DictReader(f)]
+    return max(ts) if ts else None
+
+
+def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key", start=0.0):
+    """한 챔피언을 추적해 data/replay_tracks/<경기>_<챔피언>.csv로 저장하고 (경로, 유효 행 비율)을 돌려준다.
+
+    start > 0이면 이미 있는 CSV 뒤에 이어 붙인다(20분까지 기록한 경기를 끝까지 늘릴 때). 유효 판정은 합친 뒤 다시 한다.
+    """
     os.makedirs(OUT, exist_ok=True)
     if not same_game(rp, match_id):
         raise SystemExit(f"재생 중인 리플레이가 {match_id}가 아닙니다(선수 10명이 다름). 열린 리플레이 창을 닫고 다시 실행하세요.")
-    print(f"{champ} 추적 ({speed}배속, {until / 60:.0f}분까지)")
-    rows = track(rp, champ, until, speed, step, lock, champions_by_riot_id(match_id))
+    path = os.path.join(OUT, f"{match_id}_{champ}.csv")
+    old = []
+    if start > 0 and os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            old = [(float(r["time"]), int(r["x"]), int(r["y"]), int(r["cam_x"]), int(r["cam_y"]), int(r["cam_z"]), int(r["jump"]))
+                   for r in csv.DictReader(f) if float(r["time"]) < start]
+    end = "끝" if until <= 0 else f"{until / 60:.0f}분"
+    print(f"{champ} 추적 ({speed}배속, {start / 60:.1f}분부터 {end}까지)")
+    rows = track(rp, champ, until, speed, step, lock, champions_by_riot_id(match_id), start=start or START_TIME)
     if not rows:
         return None, 0.0
-    rows = mark_valid(rows)
-    path = os.path.join(OUT, f"{match_id}_{champ}.csv")
+    new_bad = sum(1 for r in mark_valid(old[-1:] + rows)[len(old[-1:]):] if not r[-1])
+    rows = mark_valid(old + rows)
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["time", "x", "y", "cam_x", "cam_y", "cam_z", "jump", "valid"])
@@ -521,14 +542,22 @@ def record(rp, match_id, champ, until=1200, speed=4, step=1, lock="key"):
     print(f"  저장 {path} ({len(rows)}행, 무효 {bad}행)")
     states = getattr(track, "states", [])
     spath = os.path.join(OUT, f"{match_id}_players.csv")
-    if states and (not os.path.exists(spath) or os.path.getsize(spath) < 1000):   # 10명 상태는 경기당 한 번만
-        with open(spath, "w", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            w.writerow(STATE_HEADER)
-            w.writerows(states)
-        print(f"  10명 상태 {spath} ({len(states) // 10}시점)")
-    return path, 1 - bad / len(rows)
-
+    if states:   # 10명 상태는 경기당 한 번만(이미 그 구간까지 있으면 다시 쓰지 않음)
+        have = 0.0
+        if os.path.exists(spath) and os.path.getsize(spath) >= 1000:
+            with open(spath, encoding="utf-8") as f:
+                have = max((float(r["time"]) for r in csv.DictReader(f)), default=0.0)
+        new = [r for r in states if r[0] > have]
+        if have == 0.0 or (new and states[0][0] <= have + STATE_EVERY * 2):
+            mode = "a" if have > 0 else "w"
+            with open(spath, mode, newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                if mode == "w":
+                    w.writerow(STATE_HEADER)
+                w.writerows(new)
+            print(f"  10명 상태 {spath} (+{len(new) // 10}시점)")
+    n_new = len(rows) - len(old)
+    return path, 1 - new_bad / max(1, n_new)
 
 if __name__ == "__main__":
     main()
