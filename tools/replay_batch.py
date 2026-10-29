@@ -212,6 +212,9 @@ def main():
             if not data["detail"]["info"]["gameVersion"].startswith(build):
                 print("  빌드가 달라져 재생 불가, 건너뜀")
                 continue
+            if replay_state(lcu, mid.split("_")[-1])[0] != "watch":   # 받아 두지 못한 경기(서버 거절)는 다시 받으려 하지 않는다
+                print("  리플레이 없음, 건너뜀")
+                continue
             try:
                 close_replay()   # 열려 있던 리플레이 창이 있으면 API가 그 경기에 붙으므로 먼저 닫는다
                 download_and_watch(lcu, mid.split("_")[-1])
