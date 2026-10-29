@@ -3,6 +3,8 @@
   python -m tools.replay_batch --count 20
   python -m tools.replay_batch --count 20 --role MIDDLE     # 양 팀 미드 (data/replay_raw에 있는 경기부터)
   python -m tools.replay_batch --count 20 --role MIDDLE,UTILITY,TOP,BOTTOM   # 한 경기를 열어 8명 모두
+  python -m tools.replay_batch --count 400 --hours 168 --download-only    # 기록 없이 경기 JSON·.rofl만 받아 둠
+  python -m tools.replay_batch --count 400 --until 0 --role JUNGLE,TOP,MIDDLE  # 경기 끝까지(20분까지 해 둔 건 이어서)
 
 필요: 롤 클라이언트 로그인, RIOT_API_KEY, game.cfg EnableReplayApi=1 (python -m tools.replay_track --enable-api).
 1. 찾기: 챌린저·그랜드마스터 상위부터 최근 --hours 시간 솔랭 중 지금 클라이언트와 같은 빌드, 20분 이상,
@@ -25,10 +27,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "collect"))
 
-from riot_api import RiotAPI  # noqa: E402
+from riot_api import KeyExpired, RiotAPI  # noqa: E402
 from tools.replay_compare import compare  # noqa: E402
-from tools.replay_track import (DEFAULT_GAME_DIR, LCU, OUT, REPLAY_RAW, Replay, download_and_watch,  # noqa: E402
-                                find_game_dir, record)
+from tools.replay_track import (DEFAULT_GAME_DIR, LCU, LCU_BODY, OUT, REPLAY_RAW, Replay, download_and_watch,  # noqa: E402
+                                find_game_dir, last_time, record, replay_state)
 
 SUMMARY = os.path.join(OUT, "summary.csv")
 MIN_DURATION = 20 * 60
@@ -93,6 +95,50 @@ def find_matches(api, build, count, hours, per_player, tiers):
     return found
 
 
+class Tee:
+    """print를 화면과 로그 파일에 같이 쓴다(클라우드에서 PC 폴더의 로그로 진행을 본다)."""
+
+    def __init__(self, path):
+        self.f = open(path, "a", encoding="utf-8", buffering=1)
+        self.out = sys.stdout
+
+    def write(self, s):
+        self.out.write(s)
+        self.f.write(s.replace("\r", "\n") if s.endswith("\r") else s)
+
+    def flush(self):
+        self.out.flush()
+        self.f.flush()
+
+
+def download_only(lcu, matches, timeout=180, give_up=8):
+    """리플레이(.rofl)만 받아 둔다. 다음 패치 뒤엔 클라이언트가 옛 빌드 경기를 못 받으므로 지금 받아 두는 것.
+
+    retryDownload(서버 거절)가 20초 넘게 이어지면 그 판은 실패로 넘기고, give_up판 연속 실패면 받기 한도로 보고 멈춘다.
+    """
+    ok, fails = 0, 0
+    for i, mid in enumerate(matches, 1):
+        gid = mid.split("_")[-1]
+        state, meta = replay_state(lcu, gid)
+        if state != "watch":
+            lcu.post(f"/lol-replays/v1/rofls/{gid}/download/graceful", LCU_BODY)
+            t0 = time.time()
+            while time.time() - t0 < timeout:
+                time.sleep(2)
+                state, meta = replay_state(lcu, gid)
+                if state in ("watch", "incompatible", "lost", "missingOrExpired", "error", "unsupported"):
+                    break
+                if state == "retryDownload" and time.time() - t0 > 20:
+                    break
+        ok += state == "watch"
+        fails = 0 if state == "watch" else fails + 1
+        print(f"  [{i}/{len(matches)}] {time.strftime('%H:%M:%S')} {mid} {state}" + ("" if state == "watch" else f" {meta}"))
+        if fails >= give_up:
+            print(f"  {give_up}판 연속 실패: 리플레이 받기 한도로 보고 멈춤. 받아 둔 경기부터 기록합니다.")
+            break
+    print(f"리플레이 받아 둠 {ok}/{len(matches)}판")
+
+
 def close_replay():
     subprocess.run(["taskkill", "/IM", "League of Legends.exe", "/F"], capture_output=True)
     time.sleep(5)
@@ -104,14 +150,20 @@ def main():
     ap.add_argument("--hours", type=float, default=24, help="최근 몇 시간 경기에서 찾을지")
     ap.add_argument("--per-player", type=int, default=2)
     ap.add_argument("--tiers", default="challenger,grandmaster")
-    ap.add_argument("--until", type=float, default=1200)
+    ap.add_argument("--until", type=float, default=1200, help="몇 초까지 기록 (0 = 경기 끝까지, 이미 짧게 기록한 건 이어서)")
     ap.add_argument("--speed", type=float, default=4)
     ap.add_argument("--game-dir", default=DEFAULT_GAME_DIR)
     ap.add_argument("--find-only", action="store_true", help="경기만 찾고 기록은 하지 않는다")
+    ap.add_argument("--download-only", action="store_true", help="경기를 찾고 리플레이(.rofl)만 받는다")
+    ap.add_argument("--log", default=os.path.join(OUT, "collect_log.txt"), help="진행 로그 파일 (빈 문자열이면 안 씀)")
     ap.add_argument("--role", default="JUNGLE",
                     help="기록할 포지션(양 팀), 쉼표로 여러 개(예: MIDDLE,UTILITY,TOP,BOTTOM). 한 경기를 한 번 열어 그 포지션을 모두 기록. "
                          "이미 받아 둔 data/replay_raw 경기부터 쓴다 (기본 JUNGLE)")
     args = ap.parse_args()
+    if args.log:
+        os.makedirs(os.path.dirname(args.log), exist_ok=True)
+        sys.stdout = Tee(args.log)
+        print(f"\n===== {time.strftime('%Y-%m-%d %H:%M:%S')} {' '.join(sys.argv[1:])}")
     roles = [r.strip().upper() for r in args.role.split(",") if r.strip()]
     bad = [r for r in roles if r not in ("TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY")]
     if bad:
@@ -125,10 +177,17 @@ def main():
 
     # 받아 둔 경기로 충분하면 API 키 없이도 돈다(키가 없으면 새 경기는 찾지 않음)
     api = RiotAPI(platform="kr") if os.environ.get("RIOT_API_KEY", "").startswith("RGAPI-") else None
-    matches = find_matches(api, build, args.count, args.hours, args.per_player, args.tiers.split(","))
+    try:
+        matches = find_matches(api, build, args.count, args.hours, args.per_player, args.tiers.split(","))
+    except KeyExpired as e:   # 키가 만료돼도 받아 둔 경기로 계속 기록한다
+        print(f"  {e}\n  -> 새 경기 찾기는 멈추고 받아 둔 경기만 씁니다")
+        matches = find_matches(None, build, args.count, args.hours, args.per_player, args.tiers.split(","))
     matches = matches[:args.count]   # 이미 받아 둔 경기가 더 많아도 --count판까지만
     print(f"대상 {len(matches)}판 ({', '.join(roles)})")
     if args.find_only:
+        return
+    if args.download_only:
+        download_only(lcu, matches)
         return
 
     done = set()
@@ -140,22 +199,32 @@ def main():
         with open(os.path.join(REPLAY_RAW, f"{mid}.json"), encoding="utf-8") as f:
             data = json.load(f)
         champs = [c for r in roles for c in by_role(data["detail"], r)]
-        todo = [c for c in champs if not os.path.exists(os.path.join(OUT, f"{mid}_{c}.csv"))]
-        print(f"\n[{i}/{len(matches)}] {mid} {' vs '.join(champs)}")
+        end = data["detail"]["info"]["gameDuration"] if args.until <= 0 else args.until
+        todo = []   # (챔피언, 시작 초): 없으면 0부터, 짧게 기록해 둔 건 마지막 시각 5초 전부터 이어서
+        for c in champs:
+            lt = last_time(mid, c)
+            if lt is None:
+                todo.append((c, 0.0))
+            elif lt < end - 30:
+                todo.append((c, max(0.0, lt - 5)))
+        print(f"\n[{i}/{len(matches)}] {mid} {' vs '.join(champs)} ({end / 60:.0f}분까지, 할 일 {len(todo)}명)")
         if todo:
             if not data["detail"]["info"]["gameVersion"].startswith(build):
                 print("  빌드가 달라져 재생 불가, 건너뜀")
+                continue
+            if replay_state(lcu, mid.split("_")[-1])[0] != "watch":   # 받아 두지 못한 경기(서버 거절)는 다시 받으려 하지 않는다
+                print("  리플레이 없음, 건너뜀")
                 continue
             try:
                 close_replay()   # 열려 있던 리플레이 창이 있으면 API가 그 경기에 붙으므로 먼저 닫는다
                 download_and_watch(lcu, mid.split("_")[-1])
                 rp = Replay()
                 rp.wait_ready()
-                for c in todo:
-                    _, ok = record(rp, mid, c, args.until, args.speed)
+                for c, start in todo:
+                    _, ok = record(rp, mid, c, args.until, args.speed, start=start)
                     if ok < MIN_VALID:
-                        print(f"  유효 기록 {ok:.0%}뿐이라 한 번 더 기록")
-                        record(rp, mid, c, args.until, args.speed)
+                        print(f"  유효 기록 {ok:.0%}뿐이라 4배속으로 한 번 더 기록")
+                        record(rp, mid, c, args.until, min(args.speed, 4), start=start)
             except SystemExit as e:
                 print(f"  실패: {e}")
             except Exception as e:  # 한 판 실패로 전체를 멈추지 않는다
