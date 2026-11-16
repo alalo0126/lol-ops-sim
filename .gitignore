@@ -42,3 +42,6 @@ models/stage11_a/*
 models/stage12_a/*
 !models/stage12_a/policy_latest.npz
 sim/choice_fit_rows.json
+!models/stage18_a/
+models/stage18_a/*
+!models/stage18_a/policy_latest.npz

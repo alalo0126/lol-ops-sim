@@ -6,7 +6,7 @@
 - 시작 쪽: 첫 우리 캠프가 맵 대각선 위(탑 쪽)인가 아래(바텀 쪽)인가
 - 첫 행동 전환: 첫 캠프 뒤 처음으로 캠프가 아닌 행동(갱 / 바위게 / 귀환 / 카정)과 그때까지 돈 우리 캠프 수
 - 유형: 풀캠(6개 이상) / 3~5캠프 / 2개 이하, 그리고 전환 행동
-- 첫 바위게(4:30 전 체류 3초 이상): 쪽·시각
+- 첫 바위게(4:30 전 체류 6초 이상): 쪽·시각
 - 첫 갱(7분 전 라인 구역 8초 이상, 미드 가로지르기 제외): 라인·시각·성공(방문~끝+10초 안 정글러 관여 킬)·정글러 사망
 경기 결과: 첫 유충·첫 용(15분 전)·첫 킬을 가져간 팀, 7분 전 정글러 사망.
 같은 함수를 시뮬 위치에도 써서 비교한다. 결과는 reports/route_types.md.
@@ -28,6 +28,7 @@ T_END = 420            # 동선은 0~7분
 SCUTTLE_BY = 270       # 첫 바위게는 4:30까지
 OUT_END = 900          # 첫 용·유충은 15분까지
 AFTER = 10
+SCUTTLE_MIN = 6        # 바위게 900 안 3~5초는 강가를 지나가는 길(시뮬은 바위게 노드를 지나 이동) → 6초 이상만
 GANK_MIN = 8           # 라인 5~7초는 대부분 미드 라인을 가로지르는 길(실제 동선 확인) → 8초 이상만 갱으로 본다
 
 
@@ -58,6 +59,7 @@ def visits(seg, prefix):
 def describe(seg, team, nodes, kills, pid, pos=None):
     """한 정글러의 초반 동선 요약. kills: [(초, 킬 팀, 관여 pid 집합, 피해자 pid)]."""
     short = {t for s, e, a in visits(seg, "gank_") if e - s + 1 < GANK_MIN for t in range(s, e + 1)}
+    short |= {t for s, e, a in visits(seg, "scuttle_") if e - s + 1 < SCUTTLE_MIN for t in range(s, e + 1)}
     seg = {t: ("move" if t in short else a) for t, a in seg.items()}
     ts = sorted(t for t in seg if t < T_END)
     acts = [seg[t] for t in ts]
@@ -80,7 +82,7 @@ def describe(seg, team, nodes, kills, pid, pos=None):
     n = len(camps)
     kind = "풀캠" if n >= 6 else "3~5캠프" if n >= 3 else "2캠프 이하"
     t0 = ts[i0]   # 첫 캠프로 출발한 초. 그 전(우물에서 나와 라인을 지나는 길)은 빼고 본다
-    sc = next(((s, a) for s, e, a in visits(seg, "scuttle_") if t0 <= s < SCUTTLE_BY and e - s + 1 >= 3), None)
+    sc = next(((s, a) for s, e, a in visits(seg, "scuttle_") if t0 <= s < SCUTTLE_BY), None)
     gk = next(((s, e, a) for s, e, a in visits(seg, "gank_") if s >= t0 and e - s + 1 >= GANK_MIN), None)
     g_ok = g_die = None
     if gk:
@@ -223,7 +225,7 @@ def report(groups, games, policy):
          f"- 실제: 리플레이 1초 동선 정글러 {len(groups['실제'])}명(26.21 한국 챌린저). 시뮬: {games}판, 규칙 봇 양 팀"
          + (f" + 학습 정글러 `{os.path.relpath(policy, ROOT)}`(상대 규칙 봇) {games}판" if policy else "") + ".",
          "- 0~7분 위치를 `sim.real_actions.segments`로 행동으로 바꿔 같은 규칙으로 잰다(`sim/route_types.py`).",
-         "- 전환 = 첫 캠프 뒤 처음 한 캠프 아닌 행동. 첫 바위게 = 4:30 전 3초 이상. 첫 갱 = 7분 전 라인 구역 8초 이상(5~7초는 대개 미드 라인을 가로지르는 길), 시각은 라인으로 출발한 초, 성공 = 그 동안~10초 뒤 정글러 관여 킬.",
+         "- 전환 = 첫 캠프 뒤 처음 한 캠프 아닌 행동. 첫 바위게 = 4:30 전 6초 이상(3~5초는 강가를 지나가는 길). 첫 갱 = 7분 전 라인 구역 8초 이상(5~7초는 대개 미드 라인을 가로지르는 길), 시각은 라인으로 출발한 초, 성공 = 그 동안~10초 뒤 정글러 관여 킬.",
          "- ± 는 95% 구간(이항 근사).", "",
          "## 동선 분포", "",
          "| 집단 | 정글러 | 시작 쪽 | 3분 위치 | 첫 전환 전 캠프 수 | 첫 전환 | 첫 전환 시각 | 첫 바위게 | 첫 바위게 시각 | 첫 갱 라인 | 첫 갱 시각 |",
