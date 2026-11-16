@@ -72,7 +72,7 @@ def match_inputs():
     herald = Game(seed=0).objectives["herald"]["spawn_at"]
     by_match = collections.defaultdict(dict)
     for mid, team, pid, pos in real_tracks():
-        by_match[mid][team] = segments(pos, team, nodes, herald, 60, 1200)
+        by_match[mid][team] = segments(pos, team, nodes, herald, 0, 1200)
     out = []
     for path in sorted(glob.glob(os.path.join(ROOT, "data", "replay_raw", "*.json"))):
         mid = os.path.basename(path)[:-5]
@@ -167,6 +167,8 @@ def _cf_job(job):
 # ---------------------------------------------------------------------- 실행
 def train_bc(X, M, A, init, epochs=200, lr=1e-3, seed=0):
     pol = Policy.from_file(init)
+    if pol.obs_dim < X.shape[1]:
+        pol.grow(X.shape[1])      # 옛 관측 크기 정책(stage5 bc)도 시작점으로 쓸 수 있게
     opt = Adam(pol.pi, lr)
     rng = np.random.default_rng(seed)
     for _ in range(epochs):
@@ -201,10 +203,14 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", default=os.path.join(ROOT, "reports", "imitate.md"))
     ap.add_argument("--minute-start-only", action="store_true", help="표본을 분 시작 시각만(2026-10-22 방식)")
+    ap.add_argument("--first-minute", type=int, default=3, help="표본 시작 분. 1이면 첫 풀캠 중간 판단(1~3분)도 포함(2026-11-16 B 갈래)")
+    ap.add_argument("--no-cf", action="store_true", help="반사실(느림)은 건너뛰고 표본·모방 정책만 만든다")
     ap.add_argument("--save-dir", default=os.path.join(ROOT, "models", "stage6c"), help="real_train/test.npz·policy_real_bc.npz 저장 위치")
     args = ap.parse_args()
-    global WITHIN
+    global WITHIN, MINUTES
     WITHIN = not args.minute_start_only
+    MINUTES = range(args.first_minute, 18)
+    os.makedirs(args.save_dir, exist_ok=True)
     inputs = match_inputs()
     with Pool(args.workers) as pool:
         S = [s for ss in pool.map(_samples, inputs) for s in ss]
@@ -220,13 +226,26 @@ def main():
         return X, M, A
     for name, ss in (("train", tr), ("test", te)):   # sim/train.py --real 용 표본
         X, M, A = arr(ss)
-        np.savez(os.path.join(args.save_dir, f"real_{name}.npz"), X=X, M=M, A=A)
+        np.savez(os.path.join(args.save_dir, f"real_{name}.npz"), X=X, M=M, A=A,
+                 minute=np.array([s["minute"] for s in ss]))   # 분(초반 표본 가중용, train.py는 X·M·A만 읽음)
     real_bc = train_bc(*arr(tr), init=os.path.join(ROOT, "models", "stage5", "policy_bc.npz"))
     real_bc.save(os.path.join(args.save_dir, "policy_real_bc.npz"))
-    pols = {"학습 정글러(stage6c)": Policy.from_file(args.policy),
-            "규칙 봇 모방(stage5 bc)": Policy.from_file(os.path.join(ROOT, "models", "stage5", "policy_bc.npz")),
+    pols = {f"학습 정글러({os.path.basename(os.path.dirname(args.policy))})": Policy.from_file(args.policy),
+            "규칙 봇 모방(stage5 bc)": Policy.from_file(os.path.join(ROOT, "models", "stage5", "policy_bc.npz")).grow(real_bc.obs_dim),
             "실제 모방(이번)": real_bc}
 
+    if args.no_cf:
+        lines = ["# 천상계 동선 모방 표본", "",
+                 f"- 리플레이 {len(matches)}판, 정글러 × {args.first_minute}~17분, 표본 {len(S)}개(학습 {len(tr)} / 시험 {len(te)}).", "",
+                 "| 정책 | 세부 행동 | 행동 묶음 |", "|---|---|---|"]
+        for name, p in pols.items():
+            lines.append(f"| {name} | {accuracy(p, te):.0%} | {group_accuracy(p, te):.0%} |")
+        early = collections.Counter(s["action"] for s in S if s["minute"] < 3)
+        lines += ["", f"3분 전 표본 {sum(early.values())}개: " + ", ".join(f"{a} {n}" for a, n in early.most_common(12))]
+        with open(args.out, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+        print("\n".join(lines))
+        return
     first = [s for s in S if s["t"] == s["minute"] * 60]   # 반사실은 분 시작 표본만(그 상태가 실제 그대로)
     jobs = [(s["match"], s["team"], s["minute"], s["action"], 1000 * k + i) for i, s in enumerate(first) for k in range(args.seeds)]
     with Pool(args.workers, initializer=_cf_init, initargs=(args.policy, inputs)) as pool:

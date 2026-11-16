@@ -37,14 +37,34 @@ class JunglerBot:
         c.clear_mult = math.exp(game.rng.gauss(0, pj["clear_speed_sigma"]))
         weights = pj["start_camp_weights"]
         start = game.rng.choices(list(weights), weights=list(weights.values()))[0]
-        c.route = [self.route_node(k) for k in pj["routes"][start]]
+        c.route = [self.route_node(k) for k in self.early_break(pj["routes"][start])]
         game.give_gold(c, 0)
         c.spent = game.rules.positions["jungle_item"]["cost"]   # 시작 정글 펫 구매
+
+    def early_break(self, route):
+        """첫 풀캠 중간에 캠프를 남기고 갱·카정으로 빠지는 동선(실제 천상계, reports/route_types_notes.md).
+
+        k개 캠프 뒤에 'gank_<라인>' 또는 'invade' 토큰을 끼워 넣고 남은 캠프는 그 뒤에 이어서 돈다.
+        이미 귀환이 들어 있는 동선(3캠프 후 귀환)은 그대로 둔다.
+        """
+        eb = self.g.p["jungler"].get("early_break")
+        if not eb or "recall" in route:
+            return route
+        rng = self.g.rng
+        plan = rng.choices(list(eb["plan"]), weights=list(eb["plan"].values()))[0]
+        if plan == "none":
+            return route
+        k = int(rng.choices(list(eb["after_camps"]), weights=list(eb["after_camps"].values()))[0])
+        if plan == "gank":
+            tok = "gank_" + rng.choices(list(eb["gank_lane"]), weights=list(eb["gank_lane"].values()))[0]
+        else:
+            tok = "invade"
+        return route[:k] + [tok] + route[k:]
 
     # -------------------------------------------------------------- 공용
     def route_node(self, token):
         """동선 표기 → 노드. 'recall'은 그대로, 바위게는 우리 블루 쪽/레드 쪽(점대칭이라 팀마다 위아래가 바뀜)."""
-        if token == "recall":
+        if token == "recall" or token == "invade" or token.startswith("gank_"):
             return token
         if token.startswith("scuttle_"):
             top = (token == "scuttle_blue_side") == (self.c.team == 100)
@@ -195,9 +215,22 @@ class JunglerBot:
         if c.route and c.route[0] == "recall":
             c.route.pop(0)
             return ("recall",)
+        if c.route and c.route[0].startswith("gank_"):
+            lane = c.route.pop(0)[5:]
+            self.last_gank = g.t
+            return ("gank", g.lane_node(lane), {"lane": lane})
+        if c.route and c.route[0] == "invade":
+            c.route.pop(0)
+            foe = [k for k in g.camps.values() if k.side == 300 - c.team]
+            camp = min(foe, key=lambda k: self.travel(k.node))
+            return ("camp", camp.node, {"camp": camp.cid, "invade": True})
         if c.route:
             camp = g.camps[c.route[0]]
-            if camp.alive or camp.spawn_at > g.t:
+            # 첫 생성 전이면 기다리고, 다시 생기는 데 오래 걸리면(적이 먹음) 건너뛴다.
+            # 조건은 still_valid와 같게 둔다. 다르면 고르기 → 이동 중 취소 → 다시 고르기를 되풀이해
+            # 뺏긴 캠프 앞에서 리젠까지 2분 넘게 멈춰 있었다(2026-11-16, reports/early_gank.md).
+            if camp.alive or (camp.first and camp.spawn_at > g.t) or \
+                    camp.spawn_at - g.t <= self.travel(camp.node) + 20:
                 return ("camp", camp.node, {"camp": camp.cid, "route": True})
             c.route.pop(0)    # 적이 먼저 먹었다
             return ("skip",)
@@ -636,7 +669,8 @@ class LanerBot:
         if not foes:
             return
         e = foes[0]
-        dlo, dhi = pl["trade_damage"]
+        dmg = pl["trade_damage"]
+        dlo, dhi = dmg[c.role] if isinstance(dmg, dict) else dmg
         c.hp -= g.rng.uniform(dlo, dhi)
         e.hp -= g.rng.uniform(dlo, dhi)
         for victim, killer in ((c, e), (e, c)):
