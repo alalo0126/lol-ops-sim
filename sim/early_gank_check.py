@@ -2,7 +2,7 @@
 
     python -m sim.early_gank_check [--games 400] [--policy models/stage18_c/policy_latest.npz ...]
 
-라인 방문 = 90~300초에 시작한 라인 구역(stage6.zone) 연속 8초 이상 체류(3초 이하 끊김은 이어 봄).
+라인 방문 = 90~300초에 시작한 라인 구역(stage6.zone) 연속 5초 이상 체류(sim.lane_visits와 같음)(3초 이하 끊김은 이어 봄).
 결과 = 방문 시작~끝+10초 안 정글러 관여 적 처치 / 정글러 사망(sim.lane_visits.outcome).
 방문 시작 직전 분 프레임으로 그 라인의 아군 라이너·적 라이너 레벨·체력 비율을 본다.
 시뮬은 같은 위치 정의 외에 갱 이벤트(성공 확률 prob)도 따로 모은다.
@@ -23,7 +23,7 @@ from .game import Game
 from .lane_visits import AFTER, GAP, ROLE_LANE, lane_of, outcome
 from .stage6 import zone
 
-S0, S1, MIN_S = 90, 300, 8
+S0, S1, MIN_S = 90, 300, 5    # 8초 이상만 보면 실제는 킬이 난 방문이 길어져 킬 비율이 부풀려짐(5초 33% · 8초 56% · 12초 72%)
 EARLY_INV, INV_MIN = (55, 130), 12    # 0:55~2:10 적 정글 12초 이상 = 1레벨 카정(첫 캠프 근처)
 BUCKETS = [(90, 150, "1:30~2:30"), (150, 210, "2:30~3:30"), (210, 300, "3:30~5:00")]
 LANE_ROLE = {"top": ["TOP"], "mid": ["MIDDLE"], "bot": ["BOTTOM", "UTILITY"]}

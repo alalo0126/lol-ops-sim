@@ -669,7 +669,8 @@ class LanerBot:
         if not foes:
             return
         e = foes[0]
-        dlo, dhi = pl["trade_damage"]
+        dmg = pl["trade_damage"]
+        dlo, dhi = dmg[c.role] if isinstance(dmg, dict) else dmg
         c.hp -= g.rng.uniform(dlo, dhi)
         e.hp -= g.rng.uniform(dlo, dhi)
         for victim, killer in ((c, e), (e, c)):
