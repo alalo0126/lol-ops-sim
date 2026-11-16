@@ -226,7 +226,11 @@ class JunglerBot:
             return ("camp", camp.node, {"camp": camp.cid, "invade": True})
         if c.route:
             camp = g.camps[c.route[0]]
-            if camp.alive or camp.spawn_at > g.t:
+            # 첫 생성 전이면 기다리고, 다시 생기는 데 오래 걸리면(적이 먹음) 건너뛴다.
+            # 조건은 still_valid와 같게 둔다. 다르면 고르기 → 이동 중 취소 → 다시 고르기를 되풀이해
+            # 뺏긴 캠프 앞에서 리젠까지 2분 넘게 멈춰 있었다(2026-11-16, reports/early_gank.md).
+            if camp.alive or (camp.first and camp.spawn_at > g.t) or \
+                    camp.spawn_at - g.t <= self.travel(camp.node) + 20:
                 return ("camp", camp.node, {"camp": camp.cid, "route": True})
             c.route.pop(0)    # 적이 먼저 먹었다
             return ("skip",)
