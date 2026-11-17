@@ -31,12 +31,18 @@ METRICS = [
     ("gd10", "10분 맞라이너 골드차"), ("gd14", "14분 맞라이너 골드차"), ("xp10", "10분 경험치"),
     ("deaths14", "14분 전 사망"), ("solo_deaths14", "14분 전 1:1 사망"), ("gank_deaths14", "14분 전 정글 낀 사망"),
     ("deaths_late_per10", "14분 뒤 10분당 사망"), ("kills", "킬"), ("deaths", "데스"), ("assists", "어시"),
-    ("first_back", "첫 귀환(분, 1:30 뒤 첫 구매)"), ("backs14", "14분 전 귀환 수"),
+    ("first_back", "첫 귀환(분, 1:30 뒤 첫 구매)"), ("backs14", "14분 전 상점 방문(사망 포함)"),
+    ("recalls14", "14분 전 귀환(사망 뒤 구매 뺌)"),
     ("unspent_back_gold", "귀환 때 들고 간 골드 중앙"),
     ("wards_per_min", "분당 와드 설치"), ("control_wards", "제어 와드 구매"),
     ("epic_share", "팀 에픽 처치 관여율"), ("kp", "킬 관여율"),
     ("dmg_share", "팀 내 챔피언 피해 비중"), ("plates", "방패 골드 획득 수"),
 ]
+# 정수 횟수 지표는 중앙값이 갈리지 않아 리포트에 평균을 쓴다
+COUNT = {"deaths14", "solo_deaths14", "gank_deaths14", "kills", "deaths", "assists", "backs14",
+         "recalls14", "control_wards", "plates"}
+# 맞라이너 골드차는 10명 전체로 보면 대칭(0)이라 seed만 의미 있음
+SEED_ONLY = {"gd10", "gd14"}
 MATCH_METRICS = [("duration", "경기 시간(분)"), ("first_dragon", "첫 용(분)"),
                  ("first_tower", "첫 포탑(분)"), ("kills_total", "양 팀 킬 합"),
                  ("dragons_winner", "이긴 팀 용 수")]
@@ -157,6 +163,10 @@ def rows_for_match(d):
                 backs.append(t)
         r["first_back"] = backs[0] / 60 if backs else None
         r["backs14"] = sum(1 for t in backs if t < 14 * 60)
+        deaths_t = [e["timestamp"] / 1000 for e in kills_ev if e.get("victimId") == pid]
+        # 사망 뒤 90초 안의 구매는 부활 후 상점(귀환 아님)
+        recalls = [t for t in backs if not any(0 <= t - dt <= 90 for dt in deaths_t)]
+        r["recalls14"] = sum(1 for t in recalls if t < 14 * 60)
         gold_at = []
         for t in backs[:3]:
             m = int(t // 60)
@@ -284,7 +294,7 @@ def main():
 def write_report(res, path):
     tiers = list(res["tiers"])
     L = ["# 티어별 기준선 (솔로랭크, 26.22, 15분 이상 판)", "",
-         "값은 중앙값. 'all'은 같은 판 10명, 'seed'는 그 티어에 오래 머문 선수 본인. "
+         "값은 중앙값(횟수 지표는 평균). 'all'은 같은 판 10명, 'seed'는 그 티어에 오래 머문 선수 본인. "
          "의심 선수(양학·고의 패배·잠수 패턴)를 뺀 값이 all_clean.", "",
          "## 판 단위", "", "| 지표 | " + " | ".join(tiers) + " |", "|---|" + "---|" * len(tiers)]
     for k, name in MATCH_METRICS:
@@ -304,12 +314,15 @@ def write_report(res, path):
             for t in tiers:
                 a = res["tiers"][t]["roles"][role]["all_clean"].get(k)
                 s = res["tiers"][t]["roles"][role]["seed"].get(k)
+                key = "mean" if k in COUNT else "median"
+                if k in SEED_ONLY:
+                    a, s = s, None
                 if not a:
                     cells.append("-")
                     continue
-                fmt = (lambda v: f"{v:.2f}") if abs(a["median"]) < 10 else (lambda v: f"{v:.0f}")
-                cells.append(fmt(a["median"]) + (f" ({fmt(s['median'])})" if s else ""))
-            L.append(f"| {name} | " + " | ".join(cells) + " |")
+                fmt = (lambda v: f"{v:.2f}") if abs(a[key]) < 10 else (lambda v: f"{v:.0f}")
+                cells.append(fmt(a[key]) + (f" ({fmt(s[key])})" if s else ""))
+            L.append(f"| {name}{' (seed만)' if k in SEED_ONLY else ''} | " + " | ".join(cells) + " |")
         L.append("| 표본(all_clean / seed) | " + " | ".join(
             f"{res['tiers'][t]['roles'][role]['all_clean']['_n']} / {res['tiers'][t]['roles'][role]['seed']['_n']}"
             for t in tiers) + " |")
