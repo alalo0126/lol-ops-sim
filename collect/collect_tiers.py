@@ -95,12 +95,21 @@ def fetch_seeds(api, tier, max_pages):
     return entries
 
 
-def is_long_stay(e, min_games, need_veteran):
+def win_rate(e):
+    return e["wins"] / max(e["wins"] + e["losses"], 1)
+
+
+def is_long_stay(e, min_games, need_veteran, wr=(0.0, 1.0)):
+    """오래 머문 선수: 판수 많음 + veteran + 최근 승급 아님 + 시즌 승률이 범위 안.
+
+    승률 범위는 부캐 양학(빠르게 올라가 승률 높음)과 일부러 던져 티어를 붙잡는 계정(한쪽으로 쏠림)을
+    줄이려는 것. 오래 머문 선수는 시즌 승률이 50% 근처에 모인다.
+    """
     if e["inactive"] or e["freshBlood"]:
         return False
     if need_veteran and not e["veteran"]:
         return False
-    return e["wins"] + e["losses"] >= min_games
+    return e["wins"] + e["losses"] >= min_games and wr[0] <= win_rate(e) <= wr[1]
 
 
 def probe(entries, tier):
@@ -114,6 +123,11 @@ def probe(entries, tier):
     print(f"  veteran {len(vet)}명 ({len(vet) / max(n, 1):.0%}), 그 판수 중앙 "
           f"{statistics.median([e['wins'] + e['losses'] for e in vet]) if vet else '-'}"
           f" · freshBlood {fresh}명 ({fresh / max(n, 1):.0%})")
+    wrs = sorted(win_rate(e) for e in entries if e["wins"] + e["losses"] >= 150)
+    if wrs:
+        m = len(wrs)
+        print(f"  판수>=150 시즌 승률 p5 {wrs[int(0.05 * m)]:.0%} · 중앙 {wrs[m // 2]:.0%} · "
+              f"p95 {wrs[min(m - 1, int(0.95 * m))]:.0%} · 60% 넘음 {sum(w > 0.6 for w in wrs) / m:.0%}")
     for g in (50, 100, 150, 200, 300):
         a = sum(is_long_stay(e, g, False) for e in entries)
         b = sum(is_long_stay(e, g, True) for e in entries)
@@ -173,6 +187,8 @@ def main():
     ap.add_argument("--target", type=int, default=1000, help="티어당 경기 수")
     ap.add_argument("--patch", default="", help="예: 26.22. 비우면 첫 시드의 최신 경기 패치")
     ap.add_argument("--min-games", type=int, default=150)
+    ap.add_argument("--wr-min", type=float, default=0.45, help="시즌 승률 하한")
+    ap.add_argument("--wr-max", type=float, default=0.58, help="시즌 승률 상한(양학 부캐 거르기)")
     ap.add_argument("--no-veteran", action="store_true", help="veteran 조건 끄기")
     ap.add_argument("--per-seed", type=int, default=3)
     ap.add_argument("--max-pages", type=int, default=8, help="구간당 목록 페이지(205명/쪽)")
@@ -192,7 +208,8 @@ def main():
             if args.probe:
                 probe(entries, tier)
                 continue
-            seeds = [e for e in entries if is_long_stay(e, args.min_games, not args.no_veteran)]
+            seeds = [e for e in entries if is_long_stay(e, args.min_games, not args.no_veteran,
+                                                (args.wr_min, args.wr_max))]
             random.Random(0).shuffle(seeds)
             print(f"[{tier}] 시드 후보 {len(seeds)}/{len(entries)}명 · 현재 {saved(tier)}/{args.target}판")
             if args.target > len(seeds) * args.per_seed:
