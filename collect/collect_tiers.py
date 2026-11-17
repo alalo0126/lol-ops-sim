@@ -2,7 +2,8 @@
 
 Riot은 티어 이력을 주지 않으므로 league-v4 목록의 값으로 대신 거른다.
   - 이번 시즌 판수(wins+losses) >= --min-games
-  - veteran=true (그 리그에서 오래 뛴 선수), freshBlood=false (최근 올라온 선수 아님)
+  - freshBlood=false (최근 올라온 선수 아님), 시즌 승률 --wr-min~--wr-max
+  - veteran은 --veteran일 때만 (2026-11-17 probe: 브론즈~에메랄드 0명, 아이언 1%, 다이아 5%, 마스터 78%라 기본 끔)
 선수 편중을 막기 위해 시드 1명당 최대 --per-seed 판만 받는다.
 받은 경기는 data/tiers/<TIER>/raw/<경기>.json.gz (경기 정보+타임라인+시드 정보).
 
@@ -187,9 +188,10 @@ def main():
     ap.add_argument("--target", type=int, default=1000, help="티어당 경기 수")
     ap.add_argument("--patch", default="", help="예: 26.22. 비우면 첫 시드의 최신 경기 패치")
     ap.add_argument("--min-games", type=int, default=150)
-    ap.add_argument("--wr-min", type=float, default=0.45, help="시즌 승률 하한")
+    ap.add_argument("--wr-min", type=float, default=0.35, help="시즌 승률 하한(아이언 150판+ 중앙 44%)")
     ap.add_argument("--wr-max", type=float, default=0.58, help="시즌 승률 상한(양학 부캐 거르기)")
-    ap.add_argument("--no-veteran", action="store_true", help="veteran 조건 끄기")
+    ap.add_argument("--veteran", action="store_true", help="veteran 조건 켜기(다이아 아래는 거의 0명)")
+    ap.add_argument("--no-veteran", action="store_true", help="(기본값과 같음, 예전 명령 호환)")
     ap.add_argument("--per-seed", type=int, default=3)
     ap.add_argument("--max-pages", type=int, default=8, help="구간당 목록 페이지(205명/쪽)")
     ap.add_argument("--platform", default="kr")
@@ -208,7 +210,7 @@ def main():
             if args.probe:
                 probe(entries, tier)
                 continue
-            seeds = [e for e in entries if is_long_stay(e, args.min_games, not args.no_veteran,
+            seeds = [e for e in entries if is_long_stay(e, args.min_games, args.veteran and not args.no_veteran,
                                                 (args.wr_min, args.wr_max))]
             random.Random(0).shuffle(seeds)
             print(f"[{tier}] 시드 후보 {len(seeds)}/{len(entries)}명 · 현재 {saved(tier)}/{args.target}판")
