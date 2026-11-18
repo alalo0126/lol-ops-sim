@@ -9,6 +9,7 @@ Riot은 티어 이력을 주지 않으므로 league-v4 목록의 값으로 대�
 
   python collect/collect_tiers.py --probe        # 티어별 시드 기준 분포만 보기(경기 안 받음)
   python collect/collect_tiers.py --target 1000  # 아이언→브론즈→…→마스터 순서
+  python collect/collect_tiers.py --patch 26.23 --target 30 --root data/tiers_26.23   # 리플레이용 새 패치 경기만 조금
 
 끊기거나 키가 만료돼도 같은 명령으로 다시 실행하면 이어서 받는다.
 """
@@ -196,7 +197,11 @@ def main():
     ap.add_argument("--max-pages", type=int, default=8, help="구간당 목록 페이지(205명/쪽)")
     ap.add_argument("--platform", default="kr")
     ap.add_argument("--probe", action="store_true")
+    ap.add_argument("--root", default="", help="저장 폴더(기본 data/tiers). 예: data/tiers_26.23 (패치별로 따로 둘 때)")
     args = ap.parse_args()
+    global OUT
+    if args.root:
+        OUT = os.path.join(ROOT, args.root)
 
     api = RiotAPI(platform=args.platform)
     state_path = os.path.join(OUT, "state.json")

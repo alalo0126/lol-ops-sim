@@ -2,6 +2,7 @@
 
   python -m tools.tier_replays --tier GOLD --count 20                       # 시드 팀 정글·서폿·미드
   python -m tools.tier_replays --tier GOLD --count 20 --roles JUNGLE,UTILITY,MIDDLE --both-teams
+  python -m tools.tier_replays --root data/tiers_26.23 --extra-from data/tiers --tier GOLD --count 20   # 새 패치 경기로 채우기
 
 천상계 기록(data/replay_raw, data/replay_tracks)과 섞이지 않게 data/tiers/<TIER>/replay_raw, replay_tracks에 쓴다.
 고르는 기준: 지금 클라이언트와 같은 빌드, 20분 이상, 시드 1명당 1판, 피딩(10데스 이상·KDA 0.3 이하)·
@@ -47,9 +48,11 @@ def pick(tier_dir, build, count):
     for path in sorted(glob.glob(os.path.join(tier_dir, "raw", "*.json.gz")), reverse=True):
         mid = os.path.basename(path)[:-8]
         out = os.path.join(raw_out, f"{mid}.json")
-        if os.path.exists(out):   # 앞서 고른 판은 그대로 쓴다
+        if os.path.exists(out):   # 앞서 고른 판은 그대로 쓴다(지금 빌드와 같을 때만)
             with open(out, encoding="utf-8") as f:
                 d = json.load(f)
+            if not d["detail"]["info"]["gameVersion"].startswith(build):
+                continue
             picked.append(mid)
             seeds.add(d["seed"]["puuid"])
             continue
@@ -86,9 +89,17 @@ def main():
     ap.add_argument("--give-up", type=int, default=3, help="연속 받기 실패 몇 판이면 멈출지")
     ap.add_argument("--game-dir", default=rt.DEFAULT_GAME_DIR)
     ap.add_argument("--pick-only", action="store_true")
+    ap.add_argument("--root", default="data/tiers", help="경기 폴더 루트(예: data/tiers_26.23)")
+    ap.add_argument("--extra-from", default="", help="이 루트의 같은 티어 기록(replay_tracks)도 '이미 한 판'으로 쳐서 "
+                                                  "--count를 채운다(예: data/tiers, 26.22 골드 18판 + 26.23 2판)")
     args = ap.parse_args()
 
-    tier_dir = os.path.join(ROOT, "data", "tiers", args.tier.upper())
+    tier_dir = os.path.join(ROOT, args.root, args.tier.upper())
+    if args.extra_from:
+        prev = os.path.join(ROOT, args.extra_from, args.tier.upper(), "replay_tracks")
+        done_prev = {n.split("_players.csv")[0] for n in os.listdir(prev) if n.endswith("_players.csv")} if os.path.isdir(prev) else set()
+        args.count = max(0, args.count - len(done_prev))
+        print(f"{args.extra_from}에 이미 {len(done_prev)}판 → 이번에 {args.count}판")
     rt.REPLAY_RAW = os.path.join(tier_dir, "replay_raw")
     rt.OUT = os.path.join(tier_dir, "replay_tracks")
     os.makedirs(rt.OUT, exist_ok=True)
