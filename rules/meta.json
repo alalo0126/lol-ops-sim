@@ -3,6 +3,12 @@
   "game_version_prefix": "16.20",
   "ddragon_version": "16.20.1",
   "checked_at": "2026-10-19",
+  "system_rules_checked_through": {
+    "patch": "26.23",
+    "game_version_prefix": "16.23",
+    "checked_at": "2026-11-18",
+    "note": "26.21~26.23 공식 패치 노트에 일반 협곡 시스템(정글·에픽 몬스터·포탑·미니언·보상·퀘스트·민병대·시야) 변경 없음 → camps/objectives/minions/positions/combat/levels 값은 26.23에도 그대로. champions.json·items.json은 아직 Data Dragon 16.20.1(챔피언·아이템 수치 26.21~26.23 변경 미반영, 예: 26.23 아지르 사거리 525→550). PC에서 python tools\\build_ddragon_rules.py --version 16.23.1 로 다시 만들 것."
+  },
   "source_levels": {
     "verified": "검증됨: 위키, 패치노트, Data Dragon",
     "consensus": "합의된 실전 지식: 천상계·프로가 기본기처럼 공유하는 지식",
@@ -38,6 +44,7 @@
     "pn:26.1": "https://www.sheepesports.com/en/lol/articles/patch-26-1-new-role-quests-atakhan-and-feats-of-strength-removed-new-items-added/en",
     "pn:26.20": "https://www.gameleap.com/articles/lol-26-20-patch-notes-all-changes",
     "ddragon": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/",
-    "stage1": "1단계 수집 데이터 data/raw (2026-10-19 시점 158~169판, gameVersion 16.20 전부)"
+    "stage1": "1단계 수집 데이터 data/raw (2026-10-19 시점 158~169판, gameVersion 16.20 전부)",
+    "pn:26.23": "https://www.leagueoflegends.com/ko-kr/news/game-updates/league-of-legends-patch-26-23-notes/"
   }
 }

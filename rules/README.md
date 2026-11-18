@@ -11,4 +11,6 @@
 | champions.json, items.json | PC에서 `python tools\build_ddragon_rules.py`로 생성 (Data Dragon 16.20.1) |
 | UNVERIFIED.md | 미검증 항목 목록 |
 
+시스템 규칙(캠프·오브젝트·미니언·포지션·전투·레벨)은 26.23까지 공식 패치 노트로 변경 없음 확인(meta.json `system_rules_checked_through`). champions.json·items.json만 16.20.1이라 PC에서 `python tools\build_ddragon_rules.py --version 16.23.1`로 다시 만들어야 26.21~26.23 챔피언·아이템 수치가 들어간다.
+
 항목 형식: `{value, src, level, note?, crosscheck?}`. `src`는 meta.json의 sources 키, `level`은 verified / consensus / unverified.
