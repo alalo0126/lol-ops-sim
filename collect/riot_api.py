@@ -88,6 +88,11 @@ class RiotAPI:
         data = self._get(f"https://{self.platform}.api.riotgames.com/lol/league/v4/{path}/by-queue/{queue}")
         return (data or {}).get("entries", [])
 
+    def tier_entries(self, tier, division, page=1, queue="RANKED_SOLO_5x5"):
+        """아이언~다이아 한 구간의 선수 목록(페이지당 최대 205명). 마지막 페이지 뒤는 빈 목록."""
+        return self._get(f"https://{self.platform}.api.riotgames.com/lol/league/v4/entries/"
+                         f"{queue}/{tier.upper()}/{division}", {"page": page}) or []
+
     def match_ids(self, puuid, start=0, count=100, queue=420, start_time=None):
         params = {"start": start, "count": count, "queue": queue}
         if start_time:
