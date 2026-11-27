@@ -396,7 +396,7 @@ class LanerBot:
         champ.ms = 335
         champ.spent = champ.item_gold = 500.0   # 시작 아이템(1단계: 1분 보유 골드 중앙 0)
         champ.ward_charges = 1
-        champ.ward_next = game.p["laner"]["ward_recharge_s"]
+        champ.ward_next = game.trinket()[1]
         lo, hi = game.p["laner"]["trade_every_s"]
         champ.next_trade = game.p["laner"]["lane_start_s"] + game.rng.uniform(lo, hi)
 
@@ -422,7 +422,7 @@ class LanerBot:
             c.support_wards = min(pr["max_charges"], c.support_wards + (pr["early"] if g.t < 600 else pr["late"]) / 60)
         if c.ward_charges < pl["ward_max_charges"] and g.t >= c.ward_next:
             c.ward_charges += 1
-            c.ward_next = g.t + pl["ward_recharge_s"]
+            c.ward_next = g.t + g.trinket()[1]
         if c.path:
             return
         if c.node not in (center, tower):
@@ -465,7 +465,7 @@ class LanerBot:
         if c.ward_charges > 0 and g.t - seen_t >= pl["unseen_ward_s"] and g.t >= pl["lane_start_s"]:
             spots = [n for n in RIVER_WARD_NODE[lane] if not any(w["team"] == c.team and w["node"] == n for w in g.wards)]
             if spots:
-                g.wards.append({"team": c.team, "node": spots[0], "until": g.t + pl["ward_duration_s"], "pid": c.pid})
+                g.place_ward(c, spots[0])
                 g.events.append({"t": g.t, "type": "ward", "pid": c.pid})
                 c.ward_charges -= 1
         # 기본: 받아먹기. CS·경험치는 웨이브가 도착할 때 라인에 서 있으면 sim/lanes.py가 준다
@@ -584,7 +584,7 @@ class LanerBot:
                 n = int(c.support_wards) if c.role == "UTILITY" else 0
                 n += 1 if c.ward_charges > 0 else 0
                 for _ in range(max(0, n)):
-                    g.wards.append({"team": c.team, "node": c.node, "until": g.t + pl["ward_duration_s"], "pid": c.pid})
+                    g.wards.append({"team": c.team, "node": c.node, "until": g.t + pl["ward_duration_s"], "pid": c.pid, "kind": "support"})
                     g.events.append({"t": g.t, "type": "ward", "pid": c.pid})
                 if c.ward_charges > 0:
                     c.ward_charges -= 1

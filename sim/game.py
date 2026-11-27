@@ -104,6 +104,9 @@ class Camp:
     first: bool = True
 
 
+RADIUS_VISION = True
+
+
 class Game:
     def __init__(self, seed=0, cognition="challenger", rules=None, bot_classes=None, jungler_override=None):
         """jungler_override = {팀: (game, champ) → 봇}. 5단계 학습 정글러를 한 팀에만 넣을 때 쓴다."""
@@ -122,6 +125,8 @@ class Game:
         self.wave = {"top": 0.5, "mid": 0.5, "bot": 0.5}   # 블루 기준 웨이브 위치(0 = 블루 포탑)
         # 팀별로 적 정글러를 마지막으로 본 (노드, 인지된 시각)
         self.enemy_jgl_seen = {100: (None, -999.0), 200: (None, -999.0)}
+        self.radius_vision = RADIUS_VISION   # False면 예전 '같은 노드만' 시야(비교용)
+        self._vis_cache = {}
         # 팀별로 적 챔피언을 마지막으로 본 상태(맵핵 금지 규칙, 공정 비교 설계 2장). pid → {t, node, hp, item_gold, flash_ready_at}
         # 관측·봇 판단은 보이지 않는 적의 실제 체력·아이템·점멸 대신 이 값을 쓴다. 사망은 전체 알림이라 부활 후 체력 1로 갱신
         self.intel = {100: {}, 200: {}}
@@ -194,7 +199,32 @@ class Game:
         return w if team == 100 else 1 - w
 
     def vision(self, team):
-        return team_vision(team, self.champs, self.wards, self.map.nodes, self.t)
+        # 한 틱 안에서는 같은 시야를 쓴다(1초 단위 근사, 반응 지연 0.4초보다 짧지 않음). 와드 설치·사망 때 비움
+        key = (team, self.t, len(self.wards))
+        hit = self._vis_cache.get(key)
+        if hit is not None:
+            return hit
+        vr = self.rules.vision if self.radius_vision else None
+        v = team_vision(team, self.champs, self.wards, self.map.nodes, self.t, pos=self.xy, rules=vr)
+        if len(self._vis_cache) > 8:
+            self._vis_cache.clear()
+        self._vis_cache[key] = v
+        return v
+
+    def trinket(self):
+        """장신구 와드 (지속 초, 재충전 초): 평균 챔피언 레벨로 [1, 18] 값 보간(rules/vision.json stealth_ward)."""
+        sw = self.rules.vision["stealth_ward"]["value"]
+        f = (sum(c.level for c in self.champs) / max(1, len(self.champs)) - 1) / 17 if self.champs else 0.0
+        lerp = lambda ab: ab[0] + (ab[1] - ab[0]) * f
+        return lerp(sw["duration_s"]), lerp(sw["recharge_s"])
+
+    def place_ward(self, c, node, duration=None):
+        """와드 설치. 장신구 와드는 한 명당 맵에 max_on_map_per_player개까지(넘으면 가장 오래된 것이 사라짐)."""
+        cap = self.rules.vision["stealth_ward"]["value"]["max_on_map_per_player"]
+        mine = [w for w in self.wards if w.get("pid") == c.pid and w["until"] > self.t and w.get("kind") != "support"]
+        if len(mine) >= cap:
+            self.wards.remove(min(mine, key=lambda w: w["until"]))
+        self.wards.append({"team": c.team, "node": node, "until": self.t + (duration or self.trinket()[0]), "pid": c.pid})
 
     # ------------------------------------------------------------------ 보상
     def give_xp(self, c, xp):
@@ -247,6 +277,7 @@ class Game:
         died_at = victim.node
         victim.dead_until = self.t + cb["death_timer_s"][victim.level - 1]
         victim.path, victim.task, victim.hp = [], None, 1.0
+        self._vis_cache.clear()
         rec = self.intel[300 - victim.team].setdefault(victim.pid, {"flash_ready_at": 0.0})
         rec.update(t=self.t, node=f"{SIDE[victim.team]}_fountain", hp=1.0)   # 사망은 전체 알림, 부활하면 체력 가득
         victim.node = f"{SIDE[victim.team]}_fountain"
@@ -362,6 +393,7 @@ class Game:
     def _on_node(self, c):
         """노드에 닿을 때 적 시야 노출을 기록하고, 적이 알아채면 그 팀의 '마지막으로 본 정글러'를 갱신한다."""
         enemy_team = 300 - c.team
+        self._vis_cache.clear()   # 누군가 노드에 닿았으니 시야를 다시 계산
         if c.node not in self.vision(enemy_team):
             return
         dwell = self.p["cognition"]["node_dwell_radius"] / c.ms
@@ -708,6 +740,7 @@ class Game:
             self._economy(c)
             self._finish_tasks(c)
             self._advance(c)
+        self._vis_cache.clear()
         self._skirmish()
         self._group_fight()
         self.lanes.tick()

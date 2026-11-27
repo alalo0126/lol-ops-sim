@@ -58,7 +58,7 @@ class AgentJungler(JunglerBot):
             c.route = []                  # 정해진 동선 없이 처음부터 스스로 고른다(모방 교사만 규칙 봇 동선을 씀)
         self.extra_kw = {}                # 교사가 넘기는 작업 정보(동선 캠프 표시 등)
         pw = game.p["agent"]["ward"]
-        c.ward_charges, c.ward_next = pw["start_charges"], pw["recharge_s"]
+        c.ward_charges, c.ward_next = pw["start_charges"], game.trinket()[1]
         self.team = c.team
         self.moves = move_nodes(c.team)
         self.cur_action = None
@@ -80,7 +80,7 @@ class AgentJungler(JunglerBot):
         pw = g.p["agent"]["ward"]
         if c.ward_charges < pw["max_charges"] and g.t >= c.ward_next:
             c.ward_charges += 1
-            c.ward_next = g.t + pw["recharge_s"]
+            c.ward_next = g.t + g.trinket()[1]
         if self.ward_on_node and c.node == self.ward_on_node:
             self.place_ward(c.node)
             self.ward_on_node = None
@@ -144,9 +144,9 @@ class AgentJungler(JunglerBot):
         if c.ward_charges <= 0:
             return
         if c.ward_charges == g.p["agent"]["ward"]["max_charges"]:
-            c.ward_next = g.t + g.p["agent"]["ward"]["recharge_s"]
+            c.ward_next = g.t + g.trinket()[1]
         c.ward_charges -= 1
-        g.wards.append({"team": c.team, "node": node, "until": g.t + g.p["agent"]["ward"]["duration_s"], "pid": c.pid})
+        g.place_ward(c, node)   # 지속은 평균 레벨에 따라 90~120초(rules/vision.json)
         self.ward_count += 1
 
     def finish_lanefarm(self, lane):

@@ -6,13 +6,32 @@
 import math
 
 
-def team_vision(team, champs, wards, nodes, now):
-    """team이 보는 노드 집합: 살아 있는 아군 챔피언 노드, 유효한 아군 와드, 아군 포탑·우물, 라인 중앙(양 팀 미니언)."""
+def team_vision(team, champs, wards, nodes, now, pos=None, rules=None):
+    """team이 보는 노드 집합.
+
+    rules(rules/vision.json)가 없으면 예전 방식: 살아 있는 아군 챔피언 노드, 유효한 아군 와드, 아군 포탑·우물, 라인 중앙.
+    있으면 반경 방식: 아군 챔피언(pos(c) 좌표, 이동 중이면 간선 위 위치)·와드·아군 포탑의 시야 반경 안 노드.
+    수풀 노드는 원천이 그 노드에 있을 때만 보인다. 라인 중앙은 양 팀 미니언 시야로 항상 보임(근사).
+    """
     seen = {c.node for c in champs if c.team == team and c.alive(now)}
     seen |= {w["node"] for w in wards if w["team"] == team and w["until"] > now}
     for nid, n in nodes.items():
         if n["kind"] == "lane" or (n["side"] == team and n["kind"] in ("tower", "fountain")):
             seen.add(nid)
+    if rules is None or pos is None:
+        return seen
+    brush = set(rules["brush_nodes"]["value"])
+    src = [(pos(c), rules["champion_sight"]["value"]) for c in champs if c.team == team and c.alive(now)]
+    src += [((nodes[w["node"]]["x"], nodes[w["node"]]["y"]), rules["ward_sight"]["value"])
+            for w in wards if w["team"] == team and w["until"] > now]
+    src += [((n["x"], n["y"]), rules["turret_sight"]["value"]) for n in nodes.values() if n["side"] == team and n["kind"] == "tower"]
+    for nid, n in nodes.items():
+        if nid in seen or nid in brush:
+            continue
+        for (x, y), r in src:
+            if (x - n["x"]) ** 2 + (y - n["y"]) ** 2 <= r * r:
+                seen.add(nid)
+                break
     return seen
 
 

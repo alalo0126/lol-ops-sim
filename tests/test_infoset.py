@@ -67,3 +67,31 @@ class InfoSetTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RadiusVisionTest(unittest.TestCase):
+    def test_radius_and_brush(self):
+        from sim.data import Rules
+        from sim.vision import team_vision
+        r = Rules()
+        nodes = r.map["nodes"]
+        g, _ = _game(0)
+        c = next(x for x in g.champs if x.team == 100 and x.role == "MIDDLE")
+        # 반경 안 노드는 보이고, 수풀 노드는 원천이 그 안에 있어야 보임
+        tx, ty = nodes["river_top_brush"]["x"], nodes["river_top_brush"]["y"]
+        vis = team_vision(100, [c], [], nodes, g.t, pos=lambda _: (tx + 100, ty), rules=r.vision)
+        self.assertNotIn("river_top_brush", vis)
+        near = [n for n, v in nodes.items() if n != "river_top_brush" and (v["x"] - tx) ** 2 + (v["y"] - ty) ** 2 <= 1350 ** 2 - 1e4]
+        for n in near:
+            if n not in r.vision["brush_nodes"]["value"]:
+                self.assertIn(n, vis)
+        ward = [{"team": 100, "node": "river_top_brush", "until": g.t + 60}]
+        self.assertIn("river_top_brush", team_vision(100, [], ward, nodes, g.t, pos=g.xy, rules=r.vision))
+
+    def test_trinket_scales_with_level(self):
+        g, _ = _game(0)
+        d1, r1 = g.trinket()
+        self.assertEqual((round(d1), round(r1)), (90, 210))
+        for c in g.champs:
+            c.level = 18
+        self.assertEqual(tuple(round(x) for x in g.trinket()), (120, 120))
