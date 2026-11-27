@@ -393,6 +393,8 @@ def reconstruct(rm, team, minute, policy_fn, wp, seed=0, rules=None, constrain=N
             pn = nearest_node(prev["x"], prev["y"], nodes)
             if pn in vis:
                 g.enemy_jgl_seen[tm] = (pn, float(t - 60))
+    # 적 라이너·정글러의 '아는 상태'(맵핵 금지): 지금 보이는 적만 채운다. 안 보이면 체력 1·점멸 있음으로 가정
+    g.update_intel()
     # 첫 결정에서 시작 승률을 잡도록 비워 둠
     bot = holder["bot"]
     return g, bot

@@ -1,0 +1,526 @@
+{
+ "_doc": "sim/scoreboard.py fit(): 규칙 봇 시뮬 경기 분별 회귀. 골드·경험치 팀 차이 ~ 점수판 차이(CS·정글 CS·킬·어시스트·레벨)",
+ "seeds": 200,
+ "minutes": {
+  "1": {
+   "gold": {
+    "coef": {
+     "lane_cs": 0.0,
+     "jungle_cs": 0.0,
+     "kills": 0.0,
+     "assists": 0.0,
+     "level": 0.0
+    },
+    "intercept": 0.0,
+    "resid_sd": 0.0,
+    "r2": 1.0
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 0.0,
+     "jungle_cs": 0.0,
+     "kills": 0.0,
+     "assists": 0.0,
+     "level": 0.0
+    },
+    "intercept": 0.0,
+    "resid_sd": 0.0,
+    "r2": 1.0
+   }
+  },
+  "2": {
+   "gold": {
+    "coef": {
+     "lane_cs": 14.39,
+     "jungle_cs": 11.953,
+     "kills": 331.104,
+     "assists": 172.478,
+     "level": 34.571
+    },
+    "intercept": -1.6,
+    "resid_sd": 64.2,
+    "r2": 0.99
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 35.096,
+     "jungle_cs": 23.577,
+     "kills": 93.637,
+     "assists": 96.628,
+     "level": 61.576
+    },
+    "intercept": -1.2,
+    "resid_sd": 71.0,
+    "r2": 0.972
+   }
+  },
+  "3": {
+   "gold": {
+    "coef": {
+     "lane_cs": 16.717,
+     "jungle_cs": 22.076,
+     "kills": 347.993,
+     "assists": 124.136,
+     "level": 22.653
+    },
+    "intercept": 4.3,
+    "resid_sd": 116.9,
+    "r2": 0.977
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 38.395,
+     "jungle_cs": 36.307,
+     "kills": 119.219,
+     "assists": 65.239,
+     "level": 78.161
+    },
+    "intercept": 8.7,
+    "resid_sd": 168.3,
+    "r2": 0.944
+   }
+  },
+  "4": {
+   "gold": {
+    "coef": {
+     "lane_cs": 17.99,
+     "jungle_cs": 17.452,
+     "kills": 334.627,
+     "assists": 110.423,
+     "level": 39.663
+    },
+    "intercept": -0.3,
+    "resid_sd": 189.0,
+    "r2": 0.962
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 34.833,
+     "jungle_cs": 38.253,
+     "kills": 130.071,
+     "assists": 43.582,
+     "level": 142.392
+    },
+    "intercept": 11.9,
+    "resid_sd": 264.5,
+    "r2": 0.925
+   }
+  },
+  "5": {
+   "gold": {
+    "coef": {
+     "lane_cs": 15.126,
+     "jungle_cs": 15.194,
+     "kills": 319.537,
+     "assists": 107.86,
+     "level": 59.789
+    },
+    "intercept": -6.9,
+    "resid_sd": 240.3,
+    "r2": 0.949
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 29.318,
+     "jungle_cs": 36.459,
+     "kills": 133.047,
+     "assists": 41.013,
+     "level": 162.539
+    },
+    "intercept": 25.3,
+    "resid_sd": 306.9,
+    "r2": 0.904
+   }
+  },
+  "6": {
+   "gold": {
+    "coef": {
+     "lane_cs": 19.253,
+     "jungle_cs": 16.343,
+     "kills": 309.928,
+     "assists": 102.833,
+     "level": 61.518
+    },
+    "intercept": -7.1,
+    "resid_sd": 293.8,
+    "r2": 0.945
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 27.593,
+     "jungle_cs": 31.841,
+     "kills": 121.62,
+     "assists": 37.993,
+     "level": 212.286
+    },
+    "intercept": 12.7,
+    "resid_sd": 343.3,
+    "r2": 0.917
+   }
+  },
+  "7": {
+   "gold": {
+    "coef": {
+     "lane_cs": 19.881,
+     "jungle_cs": 18.084,
+     "kills": 325.727,
+     "assists": 101.826,
+     "level": 58.797
+    },
+    "intercept": -7.8,
+    "resid_sd": 361.2,
+    "r2": 0.941
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 20.428,
+     "jungle_cs": 27.178,
+     "kills": 116.258,
+     "assists": 47.768,
+     "level": 297.776
+    },
+    "intercept": 23.0,
+    "resid_sd": 403.9,
+    "r2": 0.916
+   }
+  },
+  "8": {
+   "gold": {
+    "coef": {
+     "lane_cs": 21.456,
+     "jungle_cs": 13.462,
+     "kills": 313.083,
+     "assists": 104.675,
+     "level": 54.188
+    },
+    "intercept": -21.6,
+    "resid_sd": 423.9,
+    "r2": 0.934
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 19.115,
+     "jungle_cs": 19.09,
+     "kills": 128.442,
+     "assists": 19.582,
+     "level": 341.611
+    },
+    "intercept": -41.2,
+    "resid_sd": 455.4,
+    "r2": 0.911
+   }
+  },
+  "9": {
+   "gold": {
+    "coef": {
+     "lane_cs": 20.947,
+     "jungle_cs": 10.023,
+     "kills": 306.29,
+     "assists": 97.525,
+     "level": 109.923
+    },
+    "intercept": -85.8,
+    "resid_sd": 494.6,
+    "r2": 0.924
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 20.667,
+     "jungle_cs": 22.412,
+     "kills": 149.441,
+     "assists": 27.712,
+     "level": 305.992
+    },
+    "intercept": 78.3,
+    "resid_sd": 534.2,
+    "r2": 0.89
+   }
+  },
+  "10": {
+   "gold": {
+    "coef": {
+     "lane_cs": 23.774,
+     "jungle_cs": 7.881,
+     "kills": 303.44,
+     "assists": 118.706,
+     "level": 99.641
+    },
+    "intercept": -49.4,
+    "resid_sd": 665.1,
+    "r2": 0.897
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 18.434,
+     "jungle_cs": 15.394,
+     "kills": 123.69,
+     "assists": 17.831,
+     "level": 435.974
+    },
+    "intercept": 59.1,
+    "resid_sd": 566.7,
+    "r2": 0.905
+   }
+  },
+  "11": {
+   "gold": {
+    "coef": {
+     "lane_cs": 24.092,
+     "jungle_cs": 11.207,
+     "kills": 301.541,
+     "assists": 100.198,
+     "level": 157.188
+    },
+    "intercept": 7.2,
+    "resid_sd": 815.0,
+    "r2": 0.877
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 16.449,
+     "jungle_cs": 16.932,
+     "kills": 140.216,
+     "assists": 30.313,
+     "level": 452.266
+    },
+    "intercept": 57.3,
+    "resid_sd": 608.3,
+    "r2": 0.908
+   }
+  },
+  "12": {
+   "gold": {
+    "coef": {
+     "lane_cs": 31.835,
+     "jungle_cs": 14.178,
+     "kills": 323.948,
+     "assists": 118.685,
+     "level": 62.377
+    },
+    "intercept": -6.3,
+    "resid_sd": 990.8,
+    "r2": 0.853
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 16.782,
+     "jungle_cs": 23.182,
+     "kills": 135.467,
+     "assists": 54.597,
+     "level": 448.729
+    },
+    "intercept": 78.4,
+    "resid_sd": 636.8,
+    "r2": 0.91
+   }
+  },
+  "13": {
+   "gold": {
+    "coef": {
+     "lane_cs": 29.311,
+     "jungle_cs": 15.846,
+     "kills": 312.484,
+     "assists": 102.567,
+     "level": 149.888
+    },
+    "intercept": -88.8,
+    "resid_sd": 1144.0,
+    "r2": 0.835
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 15.626,
+     "jungle_cs": 18.54,
+     "kills": 131.097,
+     "assists": 17.536,
+     "level": 527.559
+    },
+    "intercept": 63.1,
+    "resid_sd": 627.6,
+    "r2": 0.928
+   }
+  },
+  "14": {
+   "gold": {
+    "coef": {
+     "lane_cs": 32.143,
+     "jungle_cs": 18.241,
+     "kills": 312.406,
+     "assists": 85.208,
+     "level": 189.12
+    },
+    "intercept": -67.9,
+    "resid_sd": 1302.5,
+    "r2": 0.818
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 17.862,
+     "jungle_cs": 23.47,
+     "kills": 145.37,
+     "assists": 27.274,
+     "level": 490.704
+    },
+    "intercept": -36.4,
+    "resid_sd": 736.2,
+    "r2": 0.912
+   }
+  },
+  "15": {
+   "gold": {
+    "coef": {
+     "lane_cs": 35.373,
+     "jungle_cs": 10.441,
+     "kills": 308.061,
+     "assists": 97.514,
+     "level": 215.03
+    },
+    "intercept": 47.7,
+    "resid_sd": 1399.8,
+    "r2": 0.81
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 20.648,
+     "jungle_cs": 23.817,
+     "kills": 142.833,
+     "assists": 23.922,
+     "level": 500.621
+    },
+    "intercept": -19.6,
+    "resid_sd": 740.6,
+    "r2": 0.915
+   }
+  },
+  "16": {
+   "gold": {
+    "coef": {
+     "lane_cs": 35.235,
+     "jungle_cs": 8.407,
+     "kills": 301.087,
+     "assists": 124.821,
+     "level": 195.368
+    },
+    "intercept": 81.8,
+    "resid_sd": 1463.7,
+    "r2": 0.799
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 17.349,
+     "jungle_cs": 19.303,
+     "kills": 118.662,
+     "assists": 33.428,
+     "level": 610.895
+    },
+    "intercept": 28.1,
+    "resid_sd": 778.9,
+    "r2": 0.914
+   }
+  },
+  "17": {
+   "gold": {
+    "coef": {
+     "lane_cs": 32.499,
+     "jungle_cs": 4.046,
+     "kills": 275.913,
+     "assists": 124.306,
+     "level": 220.377
+    },
+    "intercept": 109.8,
+    "resid_sd": 1655.7,
+    "r2": 0.753
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 18.154,
+     "jungle_cs": 12.901,
+     "kills": 132.906,
+     "assists": 37.398,
+     "level": 627.961
+    },
+    "intercept": 45.4,
+    "resid_sd": 827.9,
+    "r2": 0.913
+   }
+  },
+  "18": {
+   "gold": {
+    "coef": {
+     "lane_cs": 33.824,
+     "jungle_cs": 5.219,
+     "kills": 260.309,
+     "assists": 115.016,
+     "level": 239.777
+    },
+    "intercept": 52.9,
+    "resid_sd": 1754.6,
+    "r2": 0.763
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 18.55,
+     "jungle_cs": 17.639,
+     "kills": 128.824,
+     "assists": 21.052,
+     "level": 679.236
+    },
+    "intercept": 48.0,
+    "resid_sd": 883.6,
+    "r2": 0.92
+   }
+  },
+  "19": {
+   "gold": {
+    "coef": {
+     "lane_cs": 42.076,
+     "jungle_cs": 8.081,
+     "kills": 282.916,
+     "assists": 129.459,
+     "level": 122.281
+    },
+    "intercept": 24.7,
+    "resid_sd": 1940.3,
+    "r2": 0.748
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 20.315,
+     "jungle_cs": 17.523,
+     "kills": 123.375,
+     "assists": 43.849,
+     "level": 684.386
+    },
+    "intercept": -11.7,
+    "resid_sd": 929.7,
+    "r2": 0.916
+   }
+  },
+  "20": {
+   "gold": {
+    "coef": {
+     "lane_cs": 38.516,
+     "jungle_cs": 5.677,
+     "kills": 248.137,
+     "assists": 131.486,
+     "level": 231.21
+    },
+    "intercept": -99.1,
+    "resid_sd": 1926.8,
+    "r2": 0.76
+   },
+   "xp": {
+    "coef": {
+     "lane_cs": 17.449,
+     "jungle_cs": 15.115,
+     "kills": 111.559,
+     "assists": 26.45,
+     "level": 765.982
+    },
+    "intercept": 45.4,
+    "resid_sd": 873.9,
+    "r2": 0.93
+   }
+  }
+ }
+}
