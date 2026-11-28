@@ -30,7 +30,9 @@ HUMAN_LANE = {"last_hit": 0.97, "wave_first_s": 65.0, "wave_every_s": 30.0, "min
               "tower_range": 750.0, "flash_cd": 300.0, "flash_dist": 400.0, "flash_hp": 0.3,
               "potions": 2, "potion_hp": 120.0, "potion_s": 15.0, "potion_at": 0.65,
               # 콤보를 다 쏟는 건 '죽일 수 있을 때'만, 아니면 스킬 하나 교환 후 빠짐(초안)
-              "all_in_frac": 0.9, "farm_reach": 550.0}
+              "all_in_frac": 0.9, "farm_reach": 550.0,
+              # 시작 회복(미검증 기억값): 근접 미드 = 도란 방패류+두 번째 바람으로 5초당 체력 회복 추가, 원거리 = 도란 반지 마나
+              "melee_hp5": 12.0, "ranged_mp5": 6.0}
 
 
 def regen(name):
@@ -53,6 +55,10 @@ class Laner:
         self.away_until = 0.0      # 사망·귀환으로 라인에 없음
         self.recall_end = None
         self.hr, self.hrl, self.mr, self.mrl = regen(name)
+        if self.f.range <= 300:
+            self.hr += HUMAN_LANE["melee_hp5"]
+        else:
+            self.mr += HUMAN_LANE["ranged_mp5"]
 
     def home_spot(self):
         # 웨이브(0) 뒤 자기 쪽 막타 위치: 원거리는 사거리 0.8, 근접은 120
@@ -185,7 +191,9 @@ def step_duel(a, b, t, rng):
                 f.x += HUMAN_LANE["flash_dist"] * (1 if f.x > o.x else -1)
                 me.flash_ready = t + HUMAN_LANE["flash_cd"]
                 continue
-        ready = [s for s in f.spells.values() if s["ready"] <= t and f.mana >= s["cost"] and (not s["needs_cc"] or o.cc_until > t)]
+        f.self_heal(t)
+        ready = [s for s in f.spells.values() if s["ready"] <= t and f.mana >= s["cost"] and not s["self_cast"]
+                 and (not s["needs_cc"] or o.cc_until > t)]
         op_ready = [s for s in o.spells.values() if s["ready"] <= t]
         my_burst = sum(f.spell_damage(s, o) for s in ready)
         op_burst = sum(o.spell_damage(s, f) for s in op_ready)
@@ -222,6 +230,8 @@ def step_duel(a, b, t, rng):
                 if not o.blocks(best, t) and duel.resolve_hit(best, f, o, rng, t):
                     dmg = f.spell_damage(best, o) + f.proc(o, t)
                     f.dealt += o.take(dmg, best["magic"], t)
+                    if best.get("heal"):
+                        f.hp = min(f.max_hp, f.hp + f.heal_amount(best))
                     if best["cc"]:
                         o.cc_until = max(o.cc_until, t + best["cast"] + best["cc"])
             else:

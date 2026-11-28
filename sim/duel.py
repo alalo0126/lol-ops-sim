@@ -45,7 +45,7 @@ KIT_OVERRIDES = {
                "E": {"dmg": ["TotalDamage"], "hit": "area", "delay": 0.25, "radius": 200, "cc": 1.25},
                "R": {"dmg": ["DamageCalc"], "mult": 4.0}},   # 구체 기본 3+α개
     "Sylas": {"Q": {"dmg": ["Damage", "ExplosionDamage"], "hit": "area", "delay": 0.6, "radius": 180},
-              "W": {"dmg": ["MinDamage"], "range": 400},
+              "W": {"dmg": ["MinDamage"], "range": 400, "heal": "MinHealing"},
               "E": {"dmg": ["Damage"], "missile": "SylasE2", "cc": 0.5, "range": 800},
               "R": {"dmg": []}},
     "Galio": {"Q": {"dmg": ["QMissileDamage"], "missile": "GalioQMissile"},
@@ -81,7 +81,7 @@ KIT_OVERRIDES = {
                 "E": {"dmg": ["TotalDamageTooltip"], "mult": 0.5},
                 "R": {"dmg": ["TotalDamage"], "hit": "area", "delay": 0.75, "radius": 415, "range": 815}},
     "Locke": {"Q": {"dmg": ["MissileDamage", "NailDamage"], "missile": "LockeQMissile", "charges": 3},  # Ammo 3(게임 파일)
-              "W": {"dmg": []},
+              "W": {"dmg": [], "heal": "DamageRestoreAmount", "self": True},  # 받은 피해 일부 회복(최대치로 단순화)
               "E": {"dmg": ["DashDamage", "OnHitDamage"], "hit": "targeted"},
               "R": {"dmg": ["Damage"], "missile": "LockeRNailMissile"}},
 }
@@ -164,7 +164,7 @@ class Fighter:
             rk = self.ranks[slot]
             names = o.get("dmg") if "dmg" in o else [n for n, d in s["damage"].items() if d.get("base")][:1]
             is_dash = o.get("dash", bool(DASH_TAGS & set(s["tags"])))
-            if rk == 0 or not (names or is_dash):
+            if rk == 0 or not (names or is_dash or o.get("heal")):
                 continue
             m = s["missiles"].get(o.get("missile")) if o.get("missile") else None
             if m is None and s["missiles"]:
@@ -186,7 +186,8 @@ class Fighter:
                 "pct_maxhp": o.get("pct_maxhp", 0.0), "needs_cc": o.get("needs_cc", False),
                 "magic": not any(r["stat"] == "ad" for p in [s["damage"].get(n, {}) for n in names] for r in p.get("ratios", []))
                          or name not in MAGE_AD,
-                "ready": 0.0, "max_charges": o.get("charges", 1), "charges": o.get("charges", 1), "recharge_at": None,
+                "ready": 0.0, "heal": s["damage"].get(o["heal"]) if o.get("heal") else None, "self_cast": o.get("self", False),
+                "max_charges": o.get("charges", 1), "charges": o.get("charges", 1), "recharge_at": None,
             }
         self.passive = k.get("passive") or {}
         self.sp = SPECIALS.get(name, {})
@@ -215,7 +216,34 @@ class Fighter:
              "armor": 0.0 if bonus else self.armor, "mr": 0.0 if bonus else self.mr}.get(r["stat"], 0.0)
         return v
 
+    def heal_amount(self, sp):
+        h = sp.get("heal")
+        if not h:
+            return 0.0
+        base = (h.get("base") or [0])[min(sp["rank"], len(h.get("base") or [0])) - 1] if h.get("base") else 0.0
+        for r in h.get("ratios", []):
+            coef = r.get("coef")
+            if coef is None:
+                cb = r.get("coef_by_rank") or [0]
+                coef = cb[min(sp["rank"], len(cb)) - 1] or 0
+            if isinstance(r["stat"], str):
+                base += coef * self.stat(r)
+        return base
+
+    def self_heal(self, t):
+        """체력 60% 아래면 자기 회복 스킬(로크 W) 사용"""
+        if self.hp / self.max_hp >= 0.6 or t < self.busy_until or t < self.cc_until:
+            return
+        for sp in self.spells.values():
+            if sp["self_cast"] and sp["ready"] <= t and self.mana >= sp["cost"]:
+                self.use(sp, t)
+                self.mana -= sp["cost"]
+                self.hp = min(self.max_hp, self.hp + self.heal_amount(sp))
+                return
+
     def spell_damage(self, sp, target):
+        if sp.get("self_cast"):
+            return 0.0
         tot = 0.0
         for p in sp["dmg_parts"]:
             base = (p.get("base") or [0])[min(sp["rank"], len(p.get("base") or [0])) - 1] if p.get("base") else 0.0
@@ -367,7 +395,7 @@ def duel(a_name, b_name, kits, lv=6, gold=1000, seconds=60.0, seed=0, start_gap=
         for me, op in ((a, b), (b, a)):
             if me.hp <= 0 or op.hp <= 0 or t < me.busy_until or t < me.cc_until:
                 continue
-            ready = [s for s in me.spells.values() if s["ready"] <= t and me.mana >= s["cost"]
+            ready = [s for s in me.spells.values() if s["ready"] <= t and me.mana >= s["cost"] and not s["self_cast"]
                      and (not s["needs_cc"] or op.cc_until > t)]
             op_ready = [s for s in op.spells.values() if s["ready"] <= t]
             my_burst = sum(me.spell_damage(s, op) for s in ready)
