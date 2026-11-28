@@ -65,12 +65,19 @@ class Laner:
         hp_frac = self.f.hp / self.f.max_hp
         mana_frac = self.f.mana / self.f.max_mana if self.f.max_mana < 1e8 else 1
         ready = {k: v["ready"] for k, v in self.f.spells.items()}
-        x, cc, busy, aa, dealt = self.f.x, self.f.cc_until, self.f.busy_until, self.f.aa_ready, self.f.dealt
+        self._old_spells = dict(self.f.spells)
+        keep = {k: getattr(self.f, k) for k in ("x", "cc_until", "busy_until", "aa_ready", "dealt", "shield", "magic_shield",
+                                                "last_hurt", "empower_ready", "empowered", "proc_hits", "proc_lock",
+                                                "wall_ready", "wall_until")}
         self.f = duel.Fighter(self.name, self.kits, self.lv, self.items, self.side)
         self.f.hp, self.f.mana = hp_frac * self.f.max_hp, mana_frac * self.f.max_mana
         for k, v in self.f.spells.items():
             v["ready"] = ready.get(k, 0.0)
-        self.f.x, self.f.cc_until, self.f.busy_until, self.f.aa_ready, self.f.dealt = x, cc, busy, aa, dealt
+            old = self._old_spells.get(k)
+            if old and v["max_charges"] > 1:
+                v["charges"], v["recharge_at"] = old["charges"], old["recharge_at"]
+        for k, v in keep.items():
+            setattr(self.f, k, v)
 
     def present(self, t):
         return t >= self.away_until and self.recall_end is None
@@ -117,6 +124,8 @@ def lane_game(a_name, b_name, kits, seconds=600.0, seed=0):
         both = a.present(t) and b.present(t)
         for me, op in ((a, b), (b, a)):
             f = me.f
+            f.refill(t)
+            f.tick_charges(t)
             # 재생(초당). 마나는 자원형만
             f.hp = min(f.max_hp, f.hp + (me.hr + me.hrl * (me.lv - 1)) / 5 * duel.DT)
             if me.potions and f.hp / f.max_hp < HUMAN_LANE["potion_at"] and t >= me.potion_until:
@@ -208,11 +217,11 @@ def step_duel(a, b, t, rng):
                 if not kill_threat:
                     me.disengage_until = t + best["cast"] + 1.5
                 f.mana -= best["cost"]
-                best["ready"] = t + f.cdr(best["cd"])
-                if duel.resolve_hit(best, f, o, rng, t):
-                    dmg = f.spell_damage(best, o)
-                    o.hp -= dmg
-                    f.dealt += dmg
+                f.use(best, t)
+                f.empowered = True
+                if not o.blocks(best, t) and duel.resolve_hit(best, f, o, rng, t):
+                    dmg = f.spell_damage(best, o) + f.proc(o, t)
+                    f.dealt += o.take(dmg, best["magic"], t)
                     if best["cc"]:
                         o.cc_until = max(o.cc_until, t + best["cast"] + best["cc"])
             else:
@@ -232,8 +241,7 @@ def step_duel(a, b, t, rng):
                 f.x += f.ms * duel.DT * (1 if spot > f.x else -1)
         if d <= f.range + 35 and t >= f.aa_ready and t >= f.busy_until:
             dmg = f.ad * 100 / (100 + o.armor)
-            o.hp -= dmg
-            f.dealt += dmg
+            f.dealt += o.take(dmg, False, t) + o.take(f.aa_bonus(o, t, rng), True, t)
             f.aa_ready = t + 1 / f.as_
             f.busy_until = t + 0.25 / f.as_
 

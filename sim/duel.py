@@ -80,12 +80,41 @@ KIT_OVERRIDES = {
                 "W": {"dmg": ["TotalDamage"], "hit": "area", "delay": 0.6, "radius": 225, "range": 815},
                 "E": {"dmg": ["TotalDamageTooltip"], "mult": 0.5},
                 "R": {"dmg": ["TotalDamage"], "hit": "area", "delay": 0.75, "radius": 415, "range": 815}},
-    "Locke": {"Q": {"dmg": ["MissileDamage", "NailDamage"], "missile": "LockeQMissile"},
+    "Locke": {"Q": {"dmg": ["MissileDamage", "NailDamage"], "missile": "LockeQMissile", "charges": 3},  # Ammo 3(게임 파일)
               "W": {"dmg": []},
               "E": {"dmg": ["DashDamage", "OnHitDamage"], "hit": "targeted"},
               "R": {"dmg": ["Damage"], "missile": "LockeRNailMissile"}},
 }
 MAGE_AD = {"Yone", "Yasuo", "Talon", "Zed", "Qiyana", "Naafiri"}
+
+# 패시브·특수 기술(미드 10명). 수치는 게임 파일(패시브 계산식·스킬 데이터), 발동 방식은 Claude가 단순화(미검증).
+#   shield: 보호막(by_level 또는 스킬 계산식), 다시 차는 시간(recharge_s, 피해 안 받은 시간 기준)
+#   magic_shield: 마법 피해만 막는 보호막
+#   empower_aa: 스킬 뒤(after_spell) 또는 주기(every_s)마다 다음 평타 추가 피해, hit_rate=실제로 이어 칠 확률
+#   proc3: 같은 대상 3타(스킬·평타)마다 추가 피해, onhit: 평타마다 추가 피해(레벨 보간)
+#   windwall: 투사체 스킬 막기(쿨·지속은 W 데이터)
+SPECIALS = {
+    "Yasuo": {"shield": {"calc": "ShieldValue", "recharge_s": 18.0}, "windwall": {"duration": 4.0}},
+    "Galio": {"empower_aa": {"calc": "TotalDamage", "every_s": 5.0, "magic": True, "hit_rate": 0.8},
+              "magic_shield": {"spell": "W", "calc": "TotalPassiveShield", "recharge_s": 12.0}},
+    "Sylas": {"empower_aa": {"calc": "PassiveDamage", "after_spell": True, "magic": True, "hit_rate": 0.6}},
+    "Akali": {"empower_aa": {"calc": "Damage", "after_spell": True, "magic": True, "hit_rate": 0.5}},
+    "Ekko": {"proc3": {"calc": "ThreeHitDamage", "lockout_s": 4.0, "magic": True}},
+    "Locke": {"onhit": {"min": [5.0, 40.0], "max": [10.0, 80.0], "ap": [0.1, 0.2], "magic": True}},
+    "TwistedFate": {"spell_cc": {"W": 1.25}},   # 금색 카드 기절(초, 미검증)
+}
+
+
+def level_value(calc, lv, f):
+    """패시브 계산식(by_level + 계수) → 값"""
+    v = (calc.get("by_level") or [0.0] * 18)[lv - 1]
+    for r in calc.get("ratios", []):
+        coef = r.get("coef")
+        if coef is None:
+            coef = (r.get("coef_by_rank") or [0])[0] or 0
+        if isinstance(r["stat"], str):
+            v += coef * f.stat(r)
+    return v
 
 
 def load(path=None):
@@ -109,13 +138,15 @@ def skill_ranks(lv):
 class Fighter:
     def __init__(self, name, kits, lv, gold, side):
         k = kits[name]
+        self.kit = k
         st = k["stats"]
         self.name, self.side, self.lv = name, side, lv
         prof = PROFILE["ad" if name in MAGE_AD else "ap"]
         self.ap = gold * prof.get("ap", 0)
         self.bonus_ad = gold * prof.get("ad", 0)
         self.ad = grow(st["ad"], st["ad_lv"], lv) + self.bonus_ad
-        self.max_hp = grow(st["hp"], st["hp_lv"], lv) + gold * prof["hp"]
+        self.base_hp = grow(st["hp"], st["hp_lv"], lv)
+        self.max_hp = self.base_hp + gold * prof["hp"]
         self.hp = self.max_hp
         self.armor = grow(st["armor"], st["armor_lv"], lv)
         self.mr = grow(st["mr"], st["mr_lv"], lv)
@@ -155,8 +186,22 @@ class Fighter:
                 "pct_maxhp": o.get("pct_maxhp", 0.0), "needs_cc": o.get("needs_cc", False),
                 "magic": not any(r["stat"] == "ad" for p in [s["damage"].get(n, {}) for n in names] for r in p.get("ratios", []))
                          or name not in MAGE_AD,
-                "ready": 0.0,
+                "ready": 0.0, "max_charges": o.get("charges", 1), "charges": o.get("charges", 1), "recharge_at": None,
             }
+        self.passive = k.get("passive") or {}
+        self.sp = SPECIALS.get(name, {})
+        for slot, cc in self.sp.get("spell_cc", {}).items():
+            if slot in self.spells:
+                self.spells[slot]["cc"] = cc
+        self.shield = self.magic_shield = 0.0
+        self.last_hurt = -99.0
+        self.empower_ready = 0.0
+        self.empowered = False
+        self.proc_hits, self.proc_lock = 0, 0.0
+        self.wall_ready, self.wall_until = 0.0, -1.0
+        w = k["spells"].get("W", {})
+        self.wall_cd = (w.get("cooldown") or [25])[max(self.ranks["W"], 1) - 1] if "windwall" in self.sp else None
+        self.refill(0.0, force=True)
         self.x = 0.0
         self.cc_until = 0.0
         self.busy_until = 0.0
@@ -164,8 +209,10 @@ class Fighter:
         self.dealt = 0.0
 
     def stat(self, r):
-        v = {"ap": self.ap, "ad": self.ad if r["formula"] == "total" else self.bonus_ad, "cur_hp": self.hp,
-             "max_hp": self.max_hp, "armor": self.armor, "mr": self.mr, "ms": 0.0}.get(r["stat"], 0.0)
+        bonus = r["formula"] == "bonus"
+        v = {"ap": self.ap, "ad": self.bonus_ad if bonus else self.ad,
+             "max_hp": (self.max_hp - self.base_hp) if bonus else self.max_hp,
+             "armor": 0.0 if bonus else self.armor, "mr": 0.0 if bonus else self.mr}.get(r["stat"], 0.0)
         return v
 
     def spell_damage(self, sp, target):
@@ -185,8 +232,95 @@ class Fighter:
         res = target.mr if sp["magic"] else target.armor
         return tot * 100 / (100 + res)
 
+    def use(self, sp, t):
+        """스킬 사용: 충전형이면 한 충전 쓰고 0.5초 뒤 다시 쓸 수 있음, 충전은 쿨마다 하나씩"""
+        cd = self.cdr(sp["cd"])
+        if sp["max_charges"] <= 1:
+            sp["ready"] = t + cd
+            return
+        sp["charges"] -= 1
+        if sp["recharge_at"] is None:
+            sp["recharge_at"] = t + cd
+        sp["ready"] = t + 0.5 if sp["charges"] > 0 else sp["recharge_at"]
+
+    def tick_charges(self, t):
+        for sp in self.spells.values():
+            if sp["max_charges"] > 1 and sp["recharge_at"] is not None and t >= sp["recharge_at"]:
+                sp["charges"] += 1
+                sp["recharge_at"] = t + self.cdr(sp["cd"]) if sp["charges"] < sp["max_charges"] else None
+                sp["ready"] = min(sp["ready"], t)
+
     def cdr(self, cd):
         return cd * 100 / (100 + self.haste)
+
+    def refill(self, t, force=False):
+        """피해를 recharge_s 동안 안 받으면 보호막이 다시 참"""
+        sh = self.sp.get("shield")
+        if sh and (force or t - self.last_hurt >= sh["recharge_s"]):
+            self.shield = level_value(self.passive.get("damage", {}).get(sh["calc"], {}), self.lv, self)
+        ms = self.sp.get("magic_shield")
+        if ms and self.ranks.get(ms["spell"], 0) and (force or t - self.last_hurt >= ms["recharge_s"]):
+            calc = self.kit["spells"][ms["spell"]]["damage"].get(ms["calc"], {})
+            rk = self.ranks[ms["spell"]]
+            coef = (calc.get("ratios") or [{}])[0].get("coef_by_rank") or [0]
+            self.magic_shield = coef[min(rk, len(coef)) - 1] * self.max_hp
+
+    def take(self, dmg, magic, t):
+        """보호막 → 체력 순으로 피해"""
+        self.last_hurt = t
+        if magic and self.magic_shield > 0:
+            a = min(self.magic_shield, dmg)
+            self.magic_shield -= a
+            dmg -= a
+        if self.shield > 0:
+            a = min(self.shield, dmg)
+            self.shield -= a
+            dmg -= a
+        self.hp -= dmg
+        return dmg
+
+    def blocks(self, sp, t):
+        """바람 장막: 투사체 스킬(속도가 있는 스킬샷·대상 지정 투사체)을 막음. 쿨이면 지금 펼침."""
+        if self.wall_cd is None or not self.ranks.get("W") or not sp.get("speed"):
+            return False
+        if t < self.wall_until:
+            return True
+        if t >= self.wall_ready and t >= self.cc_until:
+            self.wall_until = t + self.sp["windwall"]["duration"]
+            self.wall_ready = t + self.cdr(self.wall_cd)
+            return True
+        return False
+
+    def aa_bonus(self, target, t, rng):
+        """평타 추가 피해(패시브)"""
+        add = 0.0
+        e = self.sp.get("empower_aa")
+        if e:
+            ok = self.empowered if e.get("after_spell") else t >= self.empower_ready
+            if ok and rng.random() < e["hit_rate"]:
+                v = level_value(self.passive.get("damage", {}).get(e["calc"], {}), self.lv, self)
+                add += v * 100 / (100 + (target.mr if e["magic"] else target.armor))
+                self.empowered = False
+                self.empower_ready = t + e.get("every_s", 0.0)
+        oh = self.sp.get("onhit")
+        if oh:
+            frac = (self.lv - 1) / 17
+            lo = oh["min"][0] + (oh["min"][1] - oh["min"][0]) * frac + oh["ap"][0] * self.ap
+            hi = oh["max"][0] + (oh["max"][1] - oh["max"][0]) * frac + oh["ap"][1] * self.ap
+            add += (lo + hi) / 2 * 100 / (100 + target.mr)
+        return add + self.proc(target, t)
+
+    def proc(self, target, t):
+        """3타 표식(에코 패시브)"""
+        p3 = self.sp.get("proc3")
+        if not p3 or t < self.proc_lock:
+            return 0.0
+        self.proc_hits += 1
+        if self.proc_hits < 3:
+            return 0.0
+        self.proc_hits, self.proc_lock = 0, t + p3["lockout_s"]
+        v = level_value(self.passive.get("damage", {}).get(p3["calc"], {}), self.lv, self)
+        return v * 100 / (100 + target.mr)
 
 
 def dist(a, b):
@@ -227,6 +361,9 @@ def duel(a_name, b_name, kits, lv=6, gold=1000, seconds=60.0, seed=0, start_gap=
     t = 0.0
     trades = 0
     while t < seconds and a.hp > 0 and b.hp > 0:
+        for x in (a, b):
+            x.refill(t)
+            x.tick_charges(t)
         for me, op in ((a, b), (b, a)):
             if me.hp <= 0 or op.hp <= 0 or t < me.busy_until or t < me.cc_until:
                 continue
@@ -253,12 +390,12 @@ def duel(a_name, b_name, kits, lv=6, gold=1000, seconds=60.0, seed=0, start_gap=
                 if d <= best["range"]:
                     me.busy_until = t + best["cast"]
                     me.mana -= best["cost"]
-                    best["ready"] = t + me.cdr(best["cd"])
+                    me.use(best, t)
                     trades += 1
-                    if resolve_hit(best, me, op, rng, t):
-                        dmg = me.spell_damage(best, op)
-                        op.hp -= dmg
-                        me.dealt += dmg
+                    me.empowered = True
+                    if not op.blocks(best, t) and resolve_hit(best, me, op, rng, t):
+                        dmg = me.spell_damage(best, op) + me.proc(op, t)
+                        me.dealt += op.take(dmg, best["magic"], t)
                         if best["cc"]:
                             op.cc_until = max(op.cc_until, t + best["cast"] + best["cc"])
                 else:
@@ -273,8 +410,7 @@ def duel(a_name, b_name, kits, lv=6, gold=1000, seconds=60.0, seed=0, start_gap=
                     me.x += step * 0.5
             if d <= me.range + 35 and t >= me.aa_ready and t >= me.busy_until and HUMAN["aa_trade"] > rng.random():
                 dmg = me.ad * 100 / (100 + op.armor)
-                op.hp -= dmg
-                me.dealt += dmg
+                me.dealt += op.take(dmg, False, t) + op.take(me.aa_bonus(op, t, rng), True, t)
                 me.aa_ready = t + 1 / me.as_
                 me.busy_until = t + 0.25 / me.as_
         t += DT

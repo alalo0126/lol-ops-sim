@@ -21,8 +21,9 @@ import json
 import os
 import re
 
-# CDTB 계산식 mStat 번호(일부만 확인: 0=AP는 아리 Q 50% AP로 확인, 2=AD). 나머지는 번호 그대로 둔다.
-STAT = {None: "ap", 0: "ap", 1: "armor", 2: "ad", 5: "mr", 6: "ms", 11: "max_hp", 12: "cur_hp"}
+# 계산식 mStat 번호. 실제 스킬로 확인(2026-11-28): 0/없음=AP(아리 Q), 1=방어력(말파 E·람머스), 2=AD(시온 Q),
+# 6=마법 저항력(람머스 W·갈리오 패시브), 12=최대 체력(초가스 R·문도·쉔, 공식 2=추가 체력). 나머지는 번호 그대로.
+STAT = {None: "ap", 0: "ap", 1: "armor", 2: "ad", 6: "mr", 12: "max_hp"}
 FORMULA = {None: "total", 0: "total", 1: "base", 2: "bonus"}
 TARGET_KIND = {"Target": "targeted", "TargetOrLocation": "targeted_or_ground",
                "Direction": "skillshot", "Location": "skillshot", "LocationClamped": "skillshot",
@@ -76,6 +77,20 @@ def calc_parts(calc, dv, n):
             out["ratios"].append({"stat": STAT.get(p.get("mStat"), p.get("mStat")),
                                   "formula": FORMULA.get(p.get("mStatFormula"), p.get("mStatFormula")),
                                   "coef_by_rank": ranks(dv.get(p.get("mDataValue")), n)})
+        elif t == "ByCharLevelInterpolationCalculationPart":
+            a0, a1 = p.get("mStartValue", 0.0), p.get("mEndValue", 0.0)
+            out["by_level"] = [round(a0 + (a1 - a0) * (lv - 1) / 17, 2) for lv in range(1, 19)]
+        elif t == "ByCharLevelBreakpointsCalculationPart":
+            # 1레벨 값 + 레벨마다 더하는 값(브레이크포인트에서 바뀜) + 그 레벨에 한 번 더하는 값
+            v, per = p.get("mLevel1Value", 0.0), p.get("mInitialBonusPerLevel", 0.0)
+            bps = {b.get("mLevel"): b for b in p.get("mBreakpoints", []) or []}
+            vals = [v]
+            for lv in range(2, 19):
+                b = bps.get(lv, {})
+                per = b.get("mBonusPerLevelAtAndAfter", per)
+                v += per + b.get("mAdditionalBonusAtThisLevel", 0.0)
+                vals.append(round(v, 3))
+            out["by_level"] = vals
         elif t == "NumberCalculationPart":
             out["other"].append({"number": p.get("mNumber")})
         else:
@@ -150,7 +165,15 @@ def champion(path, maxrank=None):
                                         "mChannelIsInterruptedByDisables", "canMoveAndCastWhileChanneling")
                       if s.get(k)},
         }
-    return {"name": root.get("mCharacterName"), "stats": stats, "spells": spells}
+    # 패시브: 데이터 값과 계산식만(효과 자체는 챔피언별로 sim에서 해석)
+    pobj = b.get(root.get("mCharacterPassiveSpell") or "") or {}
+    ps = pobj.get("mSpell") or {}
+    pdv = {d.get("name"): d.get("values") for d in ps.get("DataValues", []) or []}
+    passive = {"name": pobj.get("mScriptName"),
+               "values": {k: (round(v[1], 4) if isinstance(v, list) and len(v) > 1 else v) for k, v in pdv.items()},
+               "damage": {n: calc_parts(c, pdv, 1) for n, c in (ps.get("mSpellCalculations") or {}).items()},
+               "cooldown": first((ps.get("Cooldown") or {}).get("values") or ps.get("cooldownTime"))}
+    return {"name": root.get("mCharacterName"), "stats": stats, "spells": spells, "passive": passive}
 
 
 def main():
@@ -225,7 +248,7 @@ def main():
                     diff.append(f"{name} {slot}: 게임 파일 {s['targeting']} / Meraki {mt}")
         rep += ["", f"## Meraki(25.15) 타게팅 대조: {agree}/{tot} 일치", ""] + [f"- {x}" for x in diff]
     out = {"_doc": __doc__.strip().splitlines()[0], "_source": f"CommunityDragon {a.version}",
-           "_unverified": ["STAT 번호 대응(0=AP·2=AD만 확인)", "대상 지정 기본값", "투사체 묶기", "cast_time이 공격 속도에 비례하는 스킬"],
+           "_unverified": ["STAT 번호 3~5·7~11·13 이상 이름", "대상 지정 기본값", "투사체 묶기", "cast_time이 공격 속도에 비례하는 스킬"],
            "champions": champs}
     json.dump(out, open(a.out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     if a.report:
