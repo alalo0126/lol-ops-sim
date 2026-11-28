@@ -23,7 +23,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DT = 0.1
 
 # 사람 실행력 값(실제 경기로 맞출 대상). 반응 0.4초는 설계 기본값(리플레이 1초 간격으론 못 잰 값).
-HUMAN = {"reaction_s": 0.4, "dodge": 0.55, "area_delay": 0.5, "cc_s": 1.0, "retreat_hp": 0.3,
+HUMAN = {"reaction_s": 0.4, "dodge": 0.85, "dodge_base": 0.5, "area_delay": 0.5, "cc_s": 1.0, "retreat_hp": 0.3,
          "spacing": 75.0, "aa_trade": 1.0, "minion_aggro_dps": 0.0,
          # 웨이브 뒤로 물러날 수 있는 거리(포탑·웨이브 때문에 무한히 카이팅 못 함), 미니언에 막히는 확률
          "retreat_room": 500.0, "minion_block": 0.35}
@@ -209,9 +209,11 @@ def resolve_hit(sp, caster, target, rng, t):
     else:  # area
         travel = sp["cast"] + sp["delay"]
         need = (sp["radius"] + 35) / max(target.ms, 1)
-    if travel > HUMAN["reaction_s"] + need:
-        return rng.random() > HUMAN["dodge"]
-    return True
+    # 피할 여유(초) = 도착 시간 − (반응 + 옆으로 빠지는 시간). 여유가 클수록 dodge에 가깝게, 여유가 없어도
+    # 미리 움직임·예측 실패로 dodge_base만큼은 빗나감(사람 값, 실제 킬 수로 맞춤)
+    slack = travel - HUMAN["reaction_s"] - need
+    p_dodge = HUMAN["dodge_base"] + (HUMAN["dodge"] - HUMAN["dodge_base"]) / (1 + math.exp(-slack / 0.1))
+    return rng.random() > p_dodge
 
 
 def combo_value(f, other):
