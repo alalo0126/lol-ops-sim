@@ -25,14 +25,14 @@ KITS16 = KITS16.get("champions", KITS16)
 # 사람 값(미검증, 실제 10분 CS 평균에 맞출 것)
 HUMAN_LANE = {"last_hit": 0.97, "wave_first_s": 65.0, "wave_every_s": 30.0, "minion_gap_s": 3.0,
               "tower": 1500.0, "walk_s": 22.0, "recall_s": 8.0, "recall_hp": 0.3, "recall_gold": 1250.0,
-              "kill_gold": 300.0, "first_blood": 400.0, "farm_back": 120.0, "start_gold_items": 450.0,
+              "kill_gold": 300.0, "first_blood": 400.0, "farm_back": 450.0, "start_gold_items": 450.0,
               # 포탑 사거리(750, 미검증 기억값) 안으로는 쫓지 않음. 점멸(300초, 400 거리) 도망. 시작 포션 2개(15초 120)
               "tower_range": 750.0, "flash_cd": 300.0, "flash_dist": 400.0, "flash_hp": 0.3,
               "potions": 2, "potion_hp": 120.0, "potion_s": 15.0, "potion_at": 0.65,
               # 콤보를 다 쏟는 건 '죽일 수 있을 때'만, 아니면 스킬 하나 교환 후 빠짐(초안)
               "all_in_frac": 0.9, "farm_reach": 550.0,
               # 시작 회복(미검증 기억값): 근접 미드 = 도란 방패류+두 번째 바람으로 5초당 체력 회복 추가, 원거리 = 도란 반지 마나
-              "melee_hp5": 12.0, "ranged_mp5": 6.0}
+              "melee_hp5": 12.0, "ranged_mp5": 6.0, "farm_range_frac": 1.0, "back_farm": 0.6}
 
 
 def regen(name):
@@ -62,7 +62,7 @@ class Laner:
 
     def home_spot(self):
         # 웨이브(0) 뒤 자기 쪽 막타 위치: 원거리는 사거리 0.8, 근접은 120
-        back = max(self.f.range * 0.8, HUMAN_LANE["farm_back"])
+        back = max(self.f.range * HUMAN_LANE["farm_range_frac"], HUMAN_LANE["farm_back"])
         return -back if self.side == 0 else back
 
     def relevel(self):
@@ -105,7 +105,17 @@ def lane_game(a_name, b_name, kits, seconds=600.0, seed=0):
             deaths.append((t0 + i * HUMAN_LANE["minion_gap_s"], k))
         w += 1
     di = 0
+    dists, cs_at = [], {}
+    next_rec = 180.0
     while t < seconds:
+        # 기록: 3~10분 1초마다 둘 다 라인에 있을 때 거리, 5·8·10분 CS
+        if t >= next_rec:
+            next_rec += 1.0
+            if L[0].present(t) and L[1].present(t) and t < 600:
+                dists.append(abs(L[0].f.x - L[1].f.x))
+        for mm in (300, 480):
+            if mm not in cs_at and t >= mm:
+                cs_at[mm] = [L[0].cs, L[1].cs]
         # 미니언 처치 기회
         while di < len(deaths) and deaths[di][0] <= t:
             _, kind = deaths[di]
@@ -124,6 +134,10 @@ def lane_game(a_name, b_name, kits, seconds=600.0, seed=0):
                         me.f.busy_until = max(me.f.busy_until, t + 0.25 / me.f.as_)
                 elif abs(me.f.x) <= 1600:
                     me.xp += MX[kind]
+                    # 밀려서 뒤에 서 있어도 웨이브가 포탑 쪽으로 오면 포탑 아래서 일부는 먹음(받아먹기, 미검증 몫)
+                    if t >= me.f.busy_until and rng.random() < HUMAN_LANE["last_hit"] * HUMAN_LANE["back_farm"]:
+                        me.cs += 1
+                        me.gold += gold
             for me in L:
                 me.relevel()
         a, b = L
@@ -175,7 +189,9 @@ def lane_game(a_name, b_name, kits, seconds=600.0, seed=0):
                     me.f.x = me.home_spot()
         t += duel.DT
     a, b = L
-    return {"cs": [a.cs, b.cs], "gold": [a.gold, b.gold], "kills": [a.kills, b.kills], "lv": [a.lv, b.lv]}
+    cs_at[600] = [a.cs, b.cs]
+    return {"cs": [a.cs, b.cs], "gold": [a.gold, b.gold], "kills": [a.kills, b.kills], "lv": [a.lv, b.lv],
+            "dists": dists, "cs_at": cs_at}
 
 
 def step_duel(a, b, t, rng):

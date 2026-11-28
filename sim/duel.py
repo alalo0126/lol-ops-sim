@@ -23,7 +23,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DT = 0.1
 
 # 사람 실행력 값(실제 경기로 맞출 대상). 반응 0.4초는 설계 기본값(리플레이 1초 간격으론 못 잰 값).
-HUMAN = {"reaction_s": 0.4, "dodge": 0.85, "dodge_base": 0.5, "area_delay": 0.5, "cc_s": 1.0, "retreat_hp": 0.3,
+HUMAN = {"reaction_s": 0.4, "dodge": 0.85, "dodge_base": 0.4, "area_delay": 0.5, "cc_s": 1.0, "retreat_hp": 0.3,
          "spacing": 75.0, "aa_trade": 1.0, "minion_aggro_dps": 0.0,
          # 웨이브 뒤로 물러날 수 있는 거리(포탑·웨이브 때문에 무한히 카이팅 못 함), 미니언에 막히는 확률
          "retreat_room": 500.0, "minion_block": 0.35}
@@ -123,7 +123,7 @@ def load(path=None):
 
 
 def grow(base, g, lv):
-    return base + g * (lv - 1) * (0.7025 + 0.0175 * (lv - 1))
+    return (base or 0.0) + (g or 0.0) * (lv - 1) * (0.7025 + 0.0175 * (lv - 1))
 
 
 def skill_ranks(lv):
