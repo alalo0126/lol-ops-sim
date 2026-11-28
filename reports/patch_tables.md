@@ -22,3 +22,10 @@
 ## kk PC에서 실행
 
 `D:\AI\lol\ops-sim\run_patch_tables.bat` → `tools/run_patch_tables.py`: 최신 Data Dragon(아이템·championFull·룬·소환사 주문, 영어·한국어) 받기 → 아이템 표(+16.20.1과 비교) → 챔피언 표. 기록은 `data\patch_tables_log.txt`.
+
+## 16.23.1 실행 결과 (2026-11-28, kk PC)
+
+- 현재 Data Dragon 최신 버전은 16.23.1(패치 26.23). 아이템 215개, 챔피언 173명.
+- 16.20.1 대비 아이템 변경 5개(reports/item_diff_16.23.1.md): 도란의 활 AD 8→7, 군주의 피갑옷 AD 30→40, 방호 파괴자 관통 22→18, 탐욕의 장화·불멸의 길 1,000→1,100골드.
+- 검수에서 찾은 오류: Data Dragon의 attackdamageperlevel이 모든 챔피언 0(16.20.1도 같음). 실제로는 챔피언마다 레벨당 AD가 오름 → champ_kits의 레벨당 AD는 쓰면 안 됨. CommunityDragon이나 위키 값으로 채워야 함(미검증 표시).
+- 스킬 사거리 25000 같은 Data Dragon 자리값도 있어, 스킬 사거리·시전 시간·투사체 속도는 CommunityDragon에서 받아야 함.
