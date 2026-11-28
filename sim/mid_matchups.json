@@ -1,0 +1,1418 @@
+{
+"_doc": "\ubbf8\ub4dc \uc0c1\uc131 \ud45c: 1,000\ud310\uc5d0 \ub098\uc628 \ubbf8\ub4dc \uc30d(\uac19\uc740 \uc30d 2\ud310 \uc774\uc0c1, \ud0b7 \uc788\uc74c)\uc744 sim.lane_duel\ub85c \ub3cc\ub824 10\ubd84 \uace8\ub4dc\u00b7CS\u00b7\ud0ac \ucc28\ub97c \ud45c\ub85c.",
+"n_per_pair": 12,
+"pairs": 201,
+"failed": [],
+"covered_games": 636,
+"total_games": 995,
+"note": "\ud0a4\ub294 \uc0ac\uc804\uc21c 'A|B', \uac12\uc740 A \uae30\uc900(gold_diff = A \u2212 B). \uc0c1\uc131 \ud3ed\uc774 \uc2e4\uc81c\ubcf4\ub2e4 \ud07c(reports/duel_notes.md 5\ucc28) \u2192 \uc4f0\ub294 \ucabd\uc5d0\uc11c \uc904\uc5ec\uc11c \uc500",
+"table": {
+"Akali|Viktor": {
+"cs_diff": 11.25,
+"gold_diff": 709.0,
+"kill_diff": 1.5,
+"cs_a": 72.42,
+"games": 6
+},
+"Xerath|Zed": {
+"cs_diff": -2.17,
+"gold_diff": -48.0,
+"kill_diff": 0.0,
+"cs_a": 99.92,
+"games": 2
+},
+"TwistedFate|Zed": {
+"cs_diff": 13.58,
+"gold_diff": 217.5,
+"kill_diff": 0.0,
+"cs_a": 94.67,
+"games": 3
+},
+"Leblanc|Lissandra": {
+"cs_diff": 20.25,
+"gold_diff": 539.17,
+"kill_diff": 0.42,
+"cs_a": 94.17,
+"games": 5
+},
+"Orianna|Ryze": {
+"cs_diff": 1.0,
+"gold_diff": 18.92,
+"kill_diff": 0.0,
+"cs_a": 91.67,
+"games": 2
+},
+"Sylas|Zed": {
+"cs_diff": 9.08,
+"gold_diff": 263.5,
+"kill_diff": 0.33,
+"cs_a": 98.5,
+"games": 2
+},
+"Ekko|Galio": {
+"cs_diff": -6.0,
+"gold_diff": -79.58,
+"kill_diff": 0.0,
+"cs_a": 94.42,
+"games": 6
+},
+"AurelionSol|Sylas": {
+"cs_diff": 1.5,
+"gold_diff": -240.58,
+"kill_diff": -0.75,
+"cs_a": 78.58,
+"games": 4
+},
+"Syndra|Zed": {
+"cs_diff": 8.83,
+"gold_diff": 165.83,
+"kill_diff": 0.0,
+"cs_a": 94.92,
+"games": 3
+},
+"Lucian|Yasuo": {
+"cs_diff": -9.33,
+"gold_diff": -327.17,
+"kill_diff": -0.5,
+"cs_a": 70.83,
+"games": 2
+},
+"Sylas|Taliyah": {
+"cs_diff": 13.67,
+"gold_diff": 373.33,
+"kill_diff": 0.25,
+"cs_a": 102.0,
+"games": 2
+},
+"Galio|Taliyah": {
+"cs_diff": 13.17,
+"gold_diff": 232.08,
+"kill_diff": 0.0,
+"cs_a": 101.83,
+"games": 4
+},
+"Locke|TwistedFate": {
+"cs_diff": -5.92,
+"gold_diff": -130.83,
+"kill_diff": 0.0,
+"cs_a": 93.83,
+"games": 6
+},
+"Qiyana|Sylas": {
+"cs_diff": -2.58,
+"gold_diff": -132.33,
+"kill_diff": -0.17,
+"cs_a": 91.42,
+"games": 3
+},
+"Aurora|Locke": {
+"cs_diff": -6.42,
+"gold_diff": -91.67,
+"kill_diff": 0.0,
+"cs_a": 96.0,
+"games": 6
+},
+"Galio|Viktor": {
+"cs_diff": -21.5,
+"gold_diff": -323.25,
+"kill_diff": 0.08,
+"cs_a": 67.75,
+"games": 9
+},
+"Orianna|Taliyah": {
+"cs_diff": 6.33,
+"gold_diff": 142.5,
+"kill_diff": 0.08,
+"cs_a": 98.33,
+"games": 3
+},
+"Olaf|Sylas": {
+"cs_diff": -7.75,
+"gold_diff": -186.08,
+"kill_diff": -0.17,
+"cs_a": 92.75,
+"games": 2
+},
+"Akali|Locke": {
+"cs_diff": 59.25,
+"gold_diff": 3157.58,
+"kill_diff": 6.5,
+"cs_a": 98.58,
+"games": 9
+},
+"Akali|TwistedFate": {
+"cs_diff": 14.25,
+"gold_diff": 699.08,
+"kill_diff": 1.33,
+"cs_a": 69.92,
+"games": 4
+},
+"Akali|Sylas": {
+"cs_diff": 52.92,
+"gold_diff": 2757.83,
+"kill_diff": 5.58,
+"cs_a": 94.08,
+"games": 8
+},
+"Fizz|Syndra": {
+"cs_diff": -7.83,
+"gold_diff": -134.33,
+"kill_diff": 0.0,
+"cs_a": 90.67,
+"games": 5
+},
+"Galio|Locke": {
+"cs_diff": 4.08,
+"gold_diff": 76.08,
+"kill_diff": 0.0,
+"cs_a": 101.0,
+"games": 7
+},
+"Talon|Zoe": {
+"cs_diff": -0.58,
+"gold_diff": 9.42,
+"kill_diff": 0.0,
+"cs_a": 60.17,
+"games": 4
+},
+"Syndra|Zoe": {
+"cs_diff": 13.5,
+"gold_diff": 203.17,
+"kill_diff": 0.0,
+"cs_a": 100.25,
+"games": 6
+},
+"Galio|Sylas": {
+"cs_diff": -3.0,
+"gold_diff": -86.33,
+"kill_diff": -0.08,
+"cs_a": 93.67,
+"games": 7
+},
+"Galio|Xerath": {
+"cs_diff": 7.25,
+"gold_diff": 134.42,
+"kill_diff": 0.0,
+"cs_a": 99.5,
+"games": 2
+},
+"Taliyah|TwistedFate": {
+"cs_diff": -18.92,
+"gold_diff": -422.92,
+"kill_diff": -0.17,
+"cs_a": 83.83,
+"games": 2
+},
+"Galio|Zoe": {
+"cs_diff": 11.83,
+"gold_diff": 190.08,
+"kill_diff": 0.0,
+"cs_a": 97.83,
+"games": 4
+},
+"Anivia|Syndra": {
+"cs_diff": -11.25,
+"gold_diff": -190.58,
+"kill_diff": 0.0,
+"cs_a": 82.0,
+"games": 3
+},
+"Diana|Syndra": {
+"cs_diff": -1.83,
+"gold_diff": -40.83,
+"kill_diff": 0.0,
+"cs_a": 93.42,
+"games": 2
+},
+"Cassiopeia|Vladimir": {
+"cs_diff": 1.08,
+"gold_diff": 100.42,
+"kill_diff": 0.17,
+"cs_a": 76.67,
+"games": 2
+},
+"Irelia|Viktor": {
+"cs_diff": -33.08,
+"gold_diff": -617.67,
+"kill_diff": 0.0,
+"cs_a": 60.33,
+"games": 2
+},
+"Diana|Locke": {
+"cs_diff": -2.5,
+"gold_diff": -42.42,
+"kill_diff": 0.0,
+"cs_a": 100.5,
+"games": 2
+},
+"AurelionSol|Orianna": {
+"cs_diff": 18.92,
+"gold_diff": 406.42,
+"kill_diff": 0.08,
+"cs_a": 84.08,
+"games": 3
+},
+"Galio|Syndra": {
+"cs_diff": 15.33,
+"gold_diff": 319.08,
+"kill_diff": 0.08,
+"cs_a": 98.67,
+"games": 5
+},
+"Ryze|Taliyah": {
+"cs_diff": 7.33,
+"gold_diff": 145.08,
+"kill_diff": 0.0,
+"cs_a": 100.33,
+"games": 2
+},
+"Leblanc|Tristana": {
+"cs_diff": 21.58,
+"gold_diff": 722.0,
+"kill_diff": 0.75,
+"cs_a": 92.42,
+"games": 2
+},
+"Galio|Katarina": {
+"cs_diff": 8.67,
+"gold_diff": 192.0,
+"kill_diff": 0.08,
+"cs_a": 101.33,
+"games": 2
+},
+"AurelionSol|Vladimir": {
+"cs_diff": 23.5,
+"gold_diff": 1097.75,
+"kill_diff": 1.83,
+"cs_a": 84.75,
+"games": 2
+},
+"TwistedFate|Yasuo": {
+"cs_diff": -5.33,
+"gold_diff": -252.58,
+"kill_diff": -0.33,
+"cs_a": 73.83,
+"games": 2
+},
+"Ekko|Yone": {
+"cs_diff": -11.25,
+"gold_diff": -128.42,
+"kill_diff": 0.25,
+"cs_a": 78.25,
+"games": 4
+},
+"Ahri|Syndra": {
+"cs_diff": -7.08,
+"gold_diff": -121.33,
+"kill_diff": 0.08,
+"cs_a": 79.0,
+"games": 2
+},
+"Katarina|Sylas": {
+"cs_diff": -2.58,
+"gold_diff": -122.58,
+"kill_diff": -0.17,
+"cs_a": 96.25,
+"games": 3
+},
+"Leblanc|TwistedFate": {
+"cs_diff": -7.92,
+"gold_diff": -251.0,
+"kill_diff": -0.25,
+"cs_a": 63.08,
+"games": 2
+},
+"Ekko|Taliyah": {
+"cs_diff": 1.5,
+"gold_diff": 30.25,
+"kill_diff": 0.0,
+"cs_a": 101.58,
+"games": 2
+},
+"Mel|Zoe": {
+"cs_diff": 14.83,
+"gold_diff": 267.5,
+"kill_diff": 0.0,
+"cs_a": 95.67,
+"games": 2
+},
+"Akali|Galio": {
+"cs_diff": 49.5,
+"gold_diff": 2793.67,
+"kill_diff": 5.83,
+"cs_a": 91.75,
+"games": 3
+},
+"Ekko|Locke": {
+"cs_diff": 1.67,
+"gold_diff": 33.08,
+"kill_diff": 0.0,
+"cs_a": 102.33,
+"games": 8
+},
+"Akali|Talon": {
+"cs_diff": 65.92,
+"gold_diff": 3659.25,
+"kill_diff": 7.75,
+"cs_a": 97.0,
+"games": 6
+},
+"Katarina|Yone": {
+"cs_diff": -19.67,
+"gold_diff": -495.42,
+"kill_diff": -0.25,
+"cs_a": 73.08,
+"games": 2
+},
+"Locke|Lucian": {
+"cs_diff": -12.0,
+"gold_diff": -216.5,
+"kill_diff": 0.0,
+"cs_a": 79.67,
+"games": 5
+},
+"Lissandra|Yasuo": {
+"cs_diff": -38.58,
+"gold_diff": -934.08,
+"kill_diff": -0.58,
+"cs_a": 57.33,
+"games": 2
+},
+"Locke|Viktor": {
+"cs_diff": -19.58,
+"gold_diff": -330.17,
+"kill_diff": 0.0,
+"cs_a": 75.58,
+"games": 4
+},
+"Sylas|Syndra": {
+"cs_diff": 10.33,
+"gold_diff": 421.33,
+"kill_diff": 0.58,
+"cs_a": 97.33,
+"games": 4
+},
+"Locke|Syndra": {
+"cs_diff": 0.33,
+"gold_diff": 6.17,
+"kill_diff": 0.0,
+"cs_a": 97.92,
+"games": 10
+},
+"Viktor|Yone": {
+"cs_diff": 27.42,
+"gold_diff": 539.33,
+"kill_diff": 0.08,
+"cs_a": 86.5,
+"games": 3
+},
+"Lissandra|Yone": {
+"cs_diff": -18.92,
+"gold_diff": -575.25,
+"kill_diff": -0.58,
+"cs_a": 64.42,
+"games": 3
+},
+"Nasus|Yone": {
+"cs_diff": -28.33,
+"gold_diff": -1291.08,
+"kill_diff": -2.17,
+"cs_a": 57.92,
+"games": 2
+},
+"Syndra|Talon": {
+"cs_diff": 18.25,
+"gold_diff": 588.25,
+"kill_diff": 0.67,
+"cs_a": 89.08,
+"games": 2
+},
+"Locke|Taliyah": {
+"cs_diff": 8.75,
+"gold_diff": 160.33,
+"kill_diff": 0.0,
+"cs_a": 103.33,
+"games": 2
+},
+"Viktor|Zoe": {
+"cs_diff": 45.0,
+"gold_diff": 853.42,
+"kill_diff": 0.0,
+"cs_a": 88.83,
+"games": 5
+},
+"Ambessa|Xerath": {
+"cs_diff": 0.25,
+"gold_diff": 23.67,
+"kill_diff": 0.0,
+"cs_a": 101.08,
+"games": 2
+},
+"Cassiopeia|Syndra": {
+"cs_diff": -7.67,
+"gold_diff": -131.67,
+"kill_diff": 0.0,
+"cs_a": 87.92,
+"games": 5
+},
+"TwistedFate|Viktor": {
+"cs_diff": -11.42,
+"gold_diff": -178.75,
+"kill_diff": 0.17,
+"cs_a": 60.17,
+"games": 3
+},
+"TwistedFate|Yone": {
+"cs_diff": 18.75,
+"gold_diff": 402.67,
+"kill_diff": 0.08,
+"cs_a": 76.67,
+"games": 6
+},
+"Tristana|Yone": {
+"cs_diff": -10.25,
+"gold_diff": -277.25,
+"kill_diff": -0.25,
+"cs_a": 68.25,
+"games": 3
+},
+"Taliyah|Yasuo": {
+"cs_diff": -47.5,
+"gold_diff": -968.17,
+"kill_diff": -0.17,
+"cs_a": 47.0,
+"games": 2
+},
+"Lucian|Zoe": {
+"cs_diff": 30.08,
+"gold_diff": 619.5,
+"kill_diff": 0.17,
+"cs_a": 84.0,
+"games": 2
+},
+"Akali|Jayce": {
+"cs_diff": 67.67,
+"gold_diff": 4050.5,
+"kill_diff": 9.0,
+"cs_a": 101.67,
+"games": 2
+},
+"Syndra|Yasuo": {
+"cs_diff": -22.33,
+"gold_diff": -362.75,
+"kill_diff": 0.17,
+"cs_a": 67.08,
+"games": 2
+},
+"Sylas|Viktor": {
+"cs_diff": 1.5,
+"gold_diff": 446.5,
+"kill_diff": 1.08,
+"cs_a": 74.33,
+"games": 3
+},
+"Ryze|Sylas": {
+"cs_diff": -8.25,
+"gold_diff": -365.25,
+"kill_diff": -0.5,
+"cs_a": 88.75,
+"games": 4
+},
+"Talon|Yone": {
+"cs_diff": -46.5,
+"gold_diff": -1963.33,
+"kill_diff": -3.42,
+"cs_a": 40.75,
+"games": 2
+},
+"Talon|TwistedFate": {
+"cs_diff": -8.83,
+"gold_diff": -276.83,
+"kill_diff": -0.25,
+"cs_a": 73.67,
+"games": 2
+},
+"Cassiopeia|Galio": {
+"cs_diff": -10.33,
+"gold_diff": -167.58,
+"kill_diff": 0.0,
+"cs_a": 90.17,
+"games": 3
+},
+"Sylas|Yasuo": {
+"cs_diff": -6.33,
+"gold_diff": -111.75,
+"kill_diff": 0.0,
+"cs_a": 91.5,
+"games": 5
+},
+"Qiyana|Talon": {
+"cs_diff": 10.83,
+"gold_diff": 241.5,
+"kill_diff": 0.17,
+"cs_a": 95.25,
+"games": 2
+},
+"Galio|Orianna": {
+"cs_diff": 12.42,
+"gold_diff": 197.33,
+"kill_diff": 0.0,
+"cs_a": 101.75,
+"games": 2
+},
+"Diana|Ryze": {
+"cs_diff": 0.67,
+"gold_diff": 8.25,
+"kill_diff": 0.0,
+"cs_a": 94.0,
+"games": 2
+},
+"Akali|Ryze": {
+"cs_diff": 15.17,
+"gold_diff": 889.33,
+"kill_diff": 1.92,
+"cs_a": 72.33,
+"games": 4
+},
+"Aurora|Viktor": {
+"cs_diff": -32.5,
+"gold_diff": -628.58,
+"kill_diff": 0.0,
+"cs_a": 55.17,
+"games": 3
+},
+"Orianna|Syndra": {
+"cs_diff": -7.83,
+"gold_diff": -198.0,
+"kill_diff": -0.08,
+"cs_a": 80.42,
+"games": 6
+},
+"Akali|Katarina": {
+"cs_diff": 58.33,
+"gold_diff": 3941.67,
+"kill_diff": 9.08,
+"cs_a": 95.92,
+"games": 2
+},
+"Ahri|Locke": {
+"cs_diff": -3.42,
+"gold_diff": -62.25,
+"kill_diff": 0.0,
+"cs_a": 98.92,
+"games": 2
+},
+"Akali|Syndra": {
+"cs_diff": 19.75,
+"gold_diff": 760.42,
+"kill_diff": 1.25,
+"cs_a": 74.83,
+"games": 7
+},
+"Galio|Ryze": {
+"cs_diff": 4.92,
+"gold_diff": 35.58,
+"kill_diff": 0.0,
+"cs_a": 95.75,
+"games": 4
+},
+"Viego|Yasuo": {
+"cs_diff": -35.92,
+"gold_diff": -1099.5,
+"kill_diff": -1.17,
+"cs_a": 60.83,
+"games": 2
+},
+"Ekko|Orianna": {
+"cs_diff": -1.75,
+"gold_diff": -13.92,
+"kill_diff": 0.08,
+"cs_a": 92.0,
+"games": 3
+},
+"Leblanc|Viktor": {
+"cs_diff": -1.75,
+"gold_diff": 138.17,
+"kill_diff": 0.08,
+"cs_a": 66.25,
+"games": 3
+},
+"AurelionSol|Locke": {
+"cs_diff": 7.58,
+"gold_diff": 168.0,
+"kill_diff": 0.0,
+"cs_a": 91.83,
+"games": 5
+},
+"Leblanc|Locke": {
+"cs_diff": -0.0,
+"gold_diff": 10.5,
+"kill_diff": 0.0,
+"cs_a": 94.75,
+"games": 4
+},
+"Akali|Orianna": {
+"cs_diff": 43.0,
+"gold_diff": 1535.42,
+"kill_diff": 2.17,
+"cs_a": 84.92,
+"games": 5
+},
+"Pantheon|Yasuo": {
+"cs_diff": -22.58,
+"gold_diff": -469.33,
+"kill_diff": -0.17,
+"cs_a": 71.5,
+"games": 2
+},
+"Galio|Swain": {
+"cs_diff": 16.17,
+"gold_diff": 269.33,
+"kill_diff": 0.0,
+"cs_a": 101.08,
+"games": 3
+},
+"Ekko|Syndra": {
+"cs_diff": -7.5,
+"gold_diff": -31.67,
+"kill_diff": 0.25,
+"cs_a": 85.0,
+"games": 2
+},
+"Akali|Yasuo": {
+"cs_diff": 22.25,
+"gold_diff": 1276.67,
+"kill_diff": 2.5,
+"cs_a": 81.58,
+"games": 4
+},
+"Cassiopeia|Viktor": {
+"cs_diff": -2.58,
+"gold_diff": 128.92,
+"kill_diff": 0.33,
+"cs_a": 69.92,
+"games": 3
+},
+"AurelionSol|Kassadin": {
+"cs_diff": 22.58,
+"gold_diff": 1346.58,
+"kill_diff": 2.67,
+"cs_a": 77.5,
+"games": 2
+},
+"Locke|Zoe": {
+"cs_diff": 18.92,
+"gold_diff": 354.67,
+"kill_diff": 0.0,
+"cs_a": 100.17,
+"games": 3
+},
+"Lucian|Sylas": {
+"cs_diff": 5.17,
+"gold_diff": -88.08,
+"kill_diff": -0.58,
+"cs_a": 73.08,
+"games": 2
+},
+"Aurora|Leblanc": {
+"cs_diff": -15.75,
+"gold_diff": -284.83,
+"kill_diff": -0.08,
+"cs_a": 79.67,
+"games": 2
+},
+"Leblanc|Syndra": {
+"cs_diff": 1.25,
+"gold_diff": -9.08,
+"kill_diff": -0.08,
+"cs_a": 76.17,
+"games": 7
+},
+"Vex|Yasuo": {
+"cs_diff": -18.33,
+"gold_diff": -408.75,
+"kill_diff": -0.25,
+"cs_a": 68.25,
+"games": 2
+},
+"Leblanc|Yone": {
+"cs_diff": 15.5,
+"gold_diff": 197.58,
+"kill_diff": -0.25,
+"cs_a": 82.42,
+"games": 3
+},
+"Aurora|Talon": {
+"cs_diff": 6.58,
+"gold_diff": 137.67,
+"kill_diff": 0.0,
+"cs_a": 78.42,
+"games": 3
+},
+"Hwei|Talon": {
+"cs_diff": 13.5,
+"gold_diff": 64.75,
+"kill_diff": -0.42,
+"cs_a": 77.92,
+"games": 2
+},
+"Fizz|Yasuo": {
+"cs_diff": -41.08,
+"gold_diff": -1538.75,
+"kill_diff": -2.33,
+"cs_a": 56.67,
+"games": 4
+},
+"Jayce|Yasuo": {
+"cs_diff": -29.0,
+"gold_diff": -1054.42,
+"kill_diff": -1.42,
+"cs_a": 70.5,
+"games": 2
+},
+"Galio|Tristana": {
+"cs_diff": 10.58,
+"gold_diff": 158.92,
+"kill_diff": 0.0,
+"cs_a": 101.33,
+"games": 3
+},
+"Lucian|Taliyah": {
+"cs_diff": 27.0,
+"gold_diff": 548.83,
+"kill_diff": 0.08,
+"cs_a": 87.75,
+"games": 2
+},
+"Locke|Vex": {
+"cs_diff": 3.67,
+"gold_diff": 24.5,
+"kill_diff": 0.0,
+"cs_a": 99.25,
+"games": 2
+},
+"Syndra|TwistedFate": {
+"cs_diff": -5.25,
+"gold_diff": -109.83,
+"kill_diff": -0.08,
+"cs_a": 67.25,
+"games": 4
+},
+"Viktor|Vladimir": {
+"cs_diff": 26.0,
+"gold_diff": 448.75,
+"kill_diff": 0.0,
+"cs_a": 85.33,
+"games": 5
+},
+"Ryze|Syndra": {
+"cs_diff": -6.0,
+"gold_diff": -103.08,
+"kill_diff": 0.0,
+"cs_a": 87.92,
+"games": 4
+},
+"AurelionSol|Corki": {
+"cs_diff": 10.92,
+"gold_diff": 335.08,
+"kill_diff": 0.42,
+"cs_a": 79.08,
+"games": 2
+},
+"Locke|Vladimir": {
+"cs_diff": -16.75,
+"gold_diff": -237.75,
+"kill_diff": 0.08,
+"cs_a": 76.58,
+"games": 2
+},
+"Akshan|Viktor": {
+"cs_diff": -36.92,
+"gold_diff": -691.33,
+"kill_diff": 0.0,
+"cs_a": 60.33,
+"games": 2
+},
+"Locke|Yone": {
+"cs_diff": -25.0,
+"gold_diff": -622.0,
+"kill_diff": -0.33,
+"cs_a": 69.0,
+"games": 6
+},
+"Fizz|Galio": {
+"cs_diff": -7.75,
+"gold_diff": -142.17,
+"kill_diff": 0.0,
+"cs_a": 89.67,
+"games": 3
+},
+"Yone|Zoe": {
+"cs_diff": 21.58,
+"gold_diff": 502.25,
+"kill_diff": 0.25,
+"cs_a": 77.75,
+"games": 3
+},
+"Cassiopeia|Locke": {
+"cs_diff": -3.92,
+"gold_diff": -74.92,
+"kill_diff": 0.0,
+"cs_a": 99.67,
+"games": 2
+},
+"Akali|Azir": {
+"cs_diff": 16.58,
+"gold_diff": 1470.17,
+"kill_diff": 3.58,
+"cs_a": 75.42,
+"games": 2
+},
+"Galio|Lissandra": {
+"cs_diff": 10.83,
+"gold_diff": 184.83,
+"kill_diff": 0.0,
+"cs_a": 102.42,
+"games": 4
+},
+"Talon|Zed": {
+"cs_diff": -28.0,
+"gold_diff": -952.83,
+"kill_diff": -1.25,
+"cs_a": 65.17,
+"games": 2
+},
+"Sylas|Yone": {
+"cs_diff": -3.17,
+"gold_diff": 89.17,
+"kill_diff": 0.42,
+"cs_a": 86.42,
+"games": 4
+},
+"Ryze|Zed": {
+"cs_diff": 5.58,
+"gold_diff": 113.25,
+"kill_diff": 0.0,
+"cs_a": 97.0,
+"games": 2
+},
+"Diana|Lissandra": {
+"cs_diff": -0.25,
+"gold_diff": 19.75,
+"kill_diff": 0.0,
+"cs_a": 95.08,
+"games": 2
+},
+"Irelia|Sylas": {
+"cs_diff": -8.25,
+"gold_diff": -373.67,
+"kill_diff": -0.5,
+"cs_a": 89.33,
+"games": 2
+},
+"Akali|Aurora": {
+"cs_diff": 42.25,
+"gold_diff": 2216.08,
+"kill_diff": 4.42,
+"cs_a": 85.83,
+"games": 3
+},
+"Galio|Yone": {
+"cs_diff": -12.08,
+"gold_diff": -149.33,
+"kill_diff": 0.25,
+"cs_a": 70.58,
+"games": 3
+},
+"Akali|Diana": {
+"cs_diff": 58.0,
+"gold_diff": 3464.17,
+"kill_diff": 7.67,
+"cs_a": 94.17,
+"games": 2
+},
+"Yasuo|Zed": {
+"cs_diff": 38.83,
+"gold_diff": 1132.25,
+"kill_diff": 1.08,
+"cs_a": 100.17,
+"games": 2
+},
+"Vladimir|Yasuo": {
+"cs_diff": -5.83,
+"gold_diff": -263.83,
+"kill_diff": -0.5,
+"cs_a": 76.0,
+"games": 2
+},
+"AurelionSol|Syndra": {
+"cs_diff": 8.5,
+"gold_diff": 297.67,
+"kill_diff": 0.33,
+"cs_a": 79.83,
+"games": 2
+},
+"AurelionSol|Ekko": {
+"cs_diff": 21.0,
+"gold_diff": 409.0,
+"kill_diff": -0.08,
+"cs_a": 91.17,
+"games": 3
+},
+"Sylas|Vladimir": {
+"cs_diff": 0.92,
+"gold_diff": 282.92,
+"kill_diff": 0.75,
+"cs_a": 77.33,
+"games": 4
+},
+"Nasus|Yasuo": {
+"cs_diff": -39.67,
+"gold_diff": -1240.75,
+"kill_diff": -1.42,
+"cs_a": 57.75,
+"games": 2
+},
+"Fizz|Vladimir": {
+"cs_diff": -26.25,
+"gold_diff": -690.83,
+"kill_diff": -0.5,
+"cs_a": 61.58,
+"games": 2
+},
+"Akshan|Diana": {
+"cs_diff": -8.42,
+"gold_diff": -127.33,
+"kill_diff": 0.0,
+"cs_a": 93.0,
+"games": 2
+},
+"Akshan|AurelionSol": {
+"cs_diff": -26.5,
+"gold_diff": -543.5,
+"kill_diff": -0.17,
+"cs_a": 73.83,
+"games": 2
+},
+"Syndra|Viktor": {
+"cs_diff": -4.33,
+"gold_diff": 44.75,
+"kill_diff": 0.17,
+"cs_a": 66.33,
+"games": 5
+},
+"Vladimir|Yone": {
+"cs_diff": 16.83,
+"gold_diff": 483.0,
+"kill_diff": 0.5,
+"cs_a": 82.83,
+"games": 3
+},
+"Diana|Orianna": {
+"cs_diff": 0.25,
+"gold_diff": -4.75,
+"kill_diff": 0.0,
+"cs_a": 94.42,
+"games": 2
+},
+"Yasuo|Yone": {
+"cs_diff": 27.92,
+"gold_diff": 1112.42,
+"kill_diff": 1.67,
+"cs_a": 94.5,
+"games": 4
+},
+"Locke|Viego": {
+"cs_diff": -10.67,
+"gold_diff": -181.58,
+"kill_diff": 0.0,
+"cs_a": 86.92,
+"games": 2
+},
+"Cassiopeia|Yone": {
+"cs_diff": -4.17,
+"gold_diff": -147.25,
+"kill_diff": -0.25,
+"cs_a": 69.67,
+"games": 3
+},
+"Ekko|Pantheon": {
+"cs_diff": -2.42,
+"gold_diff": -62.0,
+"kill_diff": 0.0,
+"cs_a": 98.17,
+"games": 2
+},
+"Lissandra|Locke": {
+"cs_diff": -5.33,
+"gold_diff": -53.33,
+"kill_diff": 0.0,
+"cs_a": 94.58,
+"games": 7
+},
+"Fizz|TwistedFate": {
+"cs_diff": -19.17,
+"gold_diff": -370.33,
+"kill_diff": 0.0,
+"cs_a": 73.58,
+"games": 2
+},
+"Locke|Sylas": {
+"cs_diff": -4.75,
+"gold_diff": -127.5,
+"kill_diff": -0.08,
+"cs_a": 90.92,
+"games": 7
+},
+"Syndra|Vladimir": {
+"cs_diff": 14.92,
+"gold_diff": 502.08,
+"kill_diff": 0.58,
+"cs_a": 82.58,
+"games": 2
+},
+"Yasuo|Zoe": {
+"cs_diff": 47.83,
+"gold_diff": 904.33,
+"kill_diff": 0.08,
+"cs_a": 93.25,
+"games": 3
+},
+"Azir|Yone": {
+"cs_diff": 7.83,
+"gold_diff": 243.75,
+"kill_diff": 0.33,
+"cs_a": 76.08,
+"games": 3
+},
+"Akshan|Locke": {
+"cs_diff": -9.42,
+"gold_diff": -164.42,
+"kill_diff": 0.0,
+"cs_a": 94.33,
+"games": 4
+},
+"Cassiopeia|Orianna": {
+"cs_diff": 1.83,
+"gold_diff": 56.0,
+"kill_diff": 0.0,
+"cs_a": 91.33,
+"games": 2
+},
+"Locke|Talon": {
+"cs_diff": 5.17,
+"gold_diff": 105.58,
+"kill_diff": 0.0,
+"cs_a": 100.5,
+"games": 4
+},
+"Akali|Yone": {
+"cs_diff": 54.42,
+"gold_diff": 3025.17,
+"kill_diff": 6.42,
+"cs_a": 91.83,
+"games": 3
+},
+"Mel|TwistedFate": {
+"cs_diff": -10.67,
+"gold_diff": -219.75,
+"kill_diff": -0.08,
+"cs_a": 84.67,
+"games": 2
+},
+"Locke|Zed": {
+"cs_diff": -0.75,
+"gold_diff": -20.25,
+"kill_diff": 0.0,
+"cs_a": 99.67,
+"games": 2
+},
+"Cassiopeia|Talon": {
+"cs_diff": -2.58,
+"gold_diff": -177.83,
+"kill_diff": -0.25,
+"cs_a": 69.92,
+"games": 4
+},
+"Akshan|Katarina": {
+"cs_diff": -31.5,
+"gold_diff": -608.25,
+"kill_diff": 0.0,
+"cs_a": 69.42,
+"games": 2
+},
+"Fizz|Sylas": {
+"cs_diff": -3.5,
+"gold_diff": -177.08,
+"kill_diff": -0.33,
+"cs_a": 93.17,
+"games": 3
+},
+"Ekko|Katarina": {
+"cs_diff": -2.75,
+"gold_diff": -6.83,
+"kill_diff": 0.08,
+"cs_a": 99.5,
+"games": 3
+},
+"Sylas|TwistedFate": {
+"cs_diff": 0.0,
+"gold_diff": 20.25,
+"kill_diff": 0.08,
+"cs_a": 89.83,
+"games": 2
+},
+"Ekko|Sylas": {
+"cs_diff": -8.33,
+"gold_diff": -197.83,
+"kill_diff": -0.08,
+"cs_a": 90.67,
+"games": 7
+},
+"Galio|Zeri": {
+"cs_diff": -31.75,
+"gold_diff": -2598.33,
+"kill_diff": -6.25,
+"cs_a": 36.67,
+"games": 2
+},
+"Vex|Yone": {
+"cs_diff": 4.75,
+"gold_diff": 125.58,
+"kill_diff": 0.08,
+"cs_a": 75.75,
+"games": 2
+},
+"Lissandra|Sylas": {
+"cs_diff": -14.58,
+"gold_diff": -442.33,
+"kill_diff": -0.42,
+"cs_a": 87.5,
+"games": 3
+},
+"Ekko|Zoe": {
+"cs_diff": 4.58,
+"gold_diff": 155.42,
+"kill_diff": 0.17,
+"cs_a": 99.5,
+"games": 2
+},
+"Ekko|Kayle": {
+"cs_diff": 1.75,
+"gold_diff": 48.83,
+"kill_diff": 0.0,
+"cs_a": 102.0,
+"games": 2
+},
+"Leblanc|Sylas": {
+"cs_diff": -12.25,
+"gold_diff": -800.25,
+"kill_diff": -1.5,
+"cs_a": 85.25,
+"games": 2
+},
+"Locke|Yasuo": {
+"cs_diff": -10.83,
+"gold_diff": -210.33,
+"kill_diff": -0.08,
+"cs_a": 89.5,
+"games": 3
+},
+"Lissandra|Viktor": {
+"cs_diff": -36.58,
+"gold_diff": -766.5,
+"kill_diff": -0.17,
+"cs_a": 53.42,
+"games": 2
+},
+"Galio|Talon": {
+"cs_diff": 11.92,
+"gold_diff": 365.17,
+"kill_diff": 0.33,
+"cs_a": 99.0,
+"games": 2
+},
+"Fizz|Locke": {
+"cs_diff": -1.5,
+"gold_diff": -55.42,
+"kill_diff": 0.0,
+"cs_a": 101.33,
+"games": 2
+},
+"TwistedFate|Zoe": {
+"cs_diff": 16.42,
+"gold_diff": 277.0,
+"kill_diff": 0.0,
+"cs_a": 100.83,
+"games": 4
+},
+"Ekko|Yasuo": {
+"cs_diff": -17.08,
+"gold_diff": -267.67,
+"kill_diff": 0.08,
+"cs_a": 83.17,
+"games": 2
+},
+"Syndra|Yone": {
+"cs_diff": 5.83,
+"gold_diff": 138.83,
+"kill_diff": 0.08,
+"cs_a": 75.92,
+"games": 3
+},
+"Lissandra|TwistedFate": {
+"cs_diff": -18.92,
+"gold_diff": -485.92,
+"kill_diff": -0.42,
+"cs_a": 66.33,
+"games": 4
+},
+"Cassiopeia|Diana": {
+"cs_diff": -1.42,
+"gold_diff": -26.08,
+"kill_diff": 0.0,
+"cs_a": 97.92,
+"games": 2
+},
+"Leblanc|Zoe": {
+"cs_diff": 25.42,
+"gold_diff": 492.17,
+"kill_diff": 0.08,
+"cs_a": 97.0,
+"games": 4
+},
+"Galio|Nasus": {
+"cs_diff": 6.67,
+"gold_diff": 88.25,
+"kill_diff": 0.0,
+"cs_a": 102.33,
+"games": 2
+},
+"Ekko|Lissandra": {
+"cs_diff": 6.17,
+"gold_diff": 171.75,
+"kill_diff": 0.08,
+"cs_a": 100.42,
+"games": 4
+},
+"Locke|Pantheon": {
+"cs_diff": -3.0,
+"gold_diff": -44.5,
+"kill_diff": 0.0,
+"cs_a": 99.42,
+"games": 4
+},
+"Aurora|Ryze": {
+"cs_diff": -7.67,
+"gold_diff": -143.0,
+"kill_diff": 0.0,
+"cs_a": 92.42,
+"games": 3
+},
+"Diana|Zed": {
+"cs_diff": 1.67,
+"gold_diff": 24.08,
+"kill_diff": 0.0,
+"cs_a": 100.17,
+"games": 2
+},
+"Taliyah|Viktor": {
+"cs_diff": -45.33,
+"gold_diff": -850.17,
+"kill_diff": 0.0,
+"cs_a": 51.17,
+"games": 2
+},
+"Locke|Ryze": {
+"cs_diff": 2.58,
+"gold_diff": 34.08,
+"kill_diff": 0.0,
+"cs_a": 101.42,
+"games": 2
+},
+"Viktor|Xerath": {
+"cs_diff": 40.42,
+"gold_diff": 793.42,
+"kill_diff": 0.08,
+"cs_a": 90.58,
+"games": 2
+},
+"Akshan|Pantheon": {
+"cs_diff": -11.67,
+"gold_diff": -223.0,
+"kill_diff": -0.08,
+"cs_a": 90.58,
+"games": 2
+},
+"Akshan|Galio": {
+"cs_diff": -12.92,
+"gold_diff": -208.58,
+"kill_diff": 0.0,
+"cs_a": 89.67,
+"games": 2
+},
+"Orianna|Viktor": {
+"cs_diff": -40.08,
+"gold_diff": -746.33,
+"kill_diff": 0.0,
+"cs_a": 49.42,
+"games": 2
+},
+"Jayce|Taliyah": {
+"cs_diff": 0.25,
+"gold_diff": 62.33,
+"kill_diff": 0.17,
+"cs_a": 88.5,
+"games": 2
+},
+"Galio|Lucian": {
+"cs_diff": -8.5,
+"gold_diff": -175.08,
+"kill_diff": -0.08,
+"cs_a": 76.17,
+"games": 3
+},
+"Galio|Hwei": {
+"cs_diff": 6.25,
+"gold_diff": 258.5,
+"kill_diff": 0.33,
+"cs_a": 91.67,
+"games": 2
+},
+"Talon|Yasuo": {
+"cs_diff": -45.0,
+"gold_diff": -1347.42,
+"kill_diff": -1.42,
+"cs_a": 47.33,
+"games": 2
+},
+"Ekko|TwistedFate": {
+"cs_diff": -7.58,
+"gold_diff": -34.0,
+"kill_diff": 0.25,
+"cs_a": 85.42,
+"games": 2
+},
+"Akali|Taliyah": {
+"cs_diff": 45.83,
+"gold_diff": 2676.25,
+"kill_diff": 5.67,
+"cs_a": 85.42,
+"games": 2
+},
+"Locke|Qiyana": {
+"cs_diff": 7.08,
+"gold_diff": 119.08,
+"kill_diff": 0.0,
+"cs_a": 90.83,
+"games": 2
+},
+"Anivia|Xerath": {
+"cs_diff": -3.67,
+"gold_diff": -73.08,
+"kill_diff": 0.0,
+"cs_a": 100.83,
+"games": 2
+}
+}
+}

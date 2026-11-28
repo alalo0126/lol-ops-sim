@@ -18,6 +18,20 @@ SIDE = {100: "B", 200: "R"}
 GAME_END_S = 1200
 
 
+def _load_mid_table():
+    import json as _json
+    import os as _os
+    p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "mid_matchups.json")
+    if not _os.path.exists(p):
+        return {}, [], []
+    t = _json.load(open(p, encoding="utf-8"))["table"]
+    keys = sorted(t)
+    return t, keys, [t[k].get("games", 1) for k in keys]
+
+
+MID_TABLE, MID_KEYS, MID_W = _load_mid_table()
+
+
 @dataclass
 class Champ:
     pid: int
@@ -140,6 +154,18 @@ class Game:
             for i, role in enumerate(ROLES):
                 c = Champ(pid=i + 1 + (0 if team == 100 else 5), team=team, role=role, node=f"{SIDE[team]}_fountain")
                 self.champs.append(c)
+        self.mid_matchup = None
+        mm = self.p["lanes"].get("mid_matchup") or {}
+        if mm.get("enabled") and MID_TABLE:
+            key = self.rng.choices(MID_KEYS, weights=MID_W)[0]
+            a, b = key.split("|")
+            if self.rng.random() < 0.5:
+                a, b = b, a
+            mids = {c.team: c for c in self.champs if c.role == "MIDDLE"}
+            mids[100].champion, mids[200].champion = a, b
+            # 블루 기준 10분 골드 차(표는 사전순 A 기준)
+            gd = MID_TABLE[key]["gold_diff"] * (1 if key.split("|")[0] == a else -1)
+            self.mid_matchup = {"blue_gold_edge": gd * mm["scale"], "until_s": mm["until_s"]}
         jb, lb = (bot_classes or (JunglerBot, LanerBot))
         override = jungler_override or {}
         self.bots = {c.pid: ((override.get(c.team) or jb)(self, c) if c.role == "JUNGLE" else lb(self, c)) for c in self.champs}

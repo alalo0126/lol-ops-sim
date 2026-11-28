@@ -69,10 +69,22 @@ class Lanes:
                         g.give_gold(c, self.p["support_item_gold_per_s"], gv=True)
             w = g.wave[ln] + p["rate"] * (s[100] - s[200]) + p["revert"] * (0.5 - g.wave[ln]) + g.rng.gauss(0, p["sigma"])
             g.wave[ln] = min(1.0, max(0.0, w))
+            if ln == "mid" and g.mid_matchup and g.t < g.mid_matchup["until_s"]:
+                self.mid_matchup_tick(here)
             self.lane_fight(ln, here)
             for att, w_att in ((100, g.wave[ln]), (200, 1 - g.wave[ln])):
                 if w_att >= self.p["siege_at"]:
                     self.siege(att, ln, s[att])
+
+    def mid_matchup_tick(self, here):
+        """미드 상성 몫: 두 미드가 다 라인에 있는 초마다 이긴 쪽 +, 진 쪽 −(10분 골드 차 ÷ 라인 시간)."""
+        g = self.g
+        mids = {T: next((c for c in here[T] if c.role == "MIDDLE"), None) for T in (100, 200)}
+        if not mids[100] or not mids[200]:
+            return
+        per_s = g.mid_matchup["blue_gold_edge"] / 2 / (g.mid_matchup["until_s"] - self.p["first_arrival_s"])
+        g.give_gold(mids[100], per_s, gv=True)
+        g.give_gold(mids[200], -per_s, gv=True)
 
     def lane_fight(self, ln, here):
         """정글러 없는 라인 교전(솔로킬·2대2). 양 팀 라이너가 라인에 있을 때 초당 확률로 시작한다.

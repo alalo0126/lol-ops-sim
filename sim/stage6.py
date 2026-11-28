@@ -394,6 +394,19 @@ def reconstruct(rm, team, minute, policy_fn, wp, seed=0, rules=None, constrain=N
             if pn in vis:
                 g.enemy_jgl_seen[tm] = (pn, float(t - 60))
     # 적 라이너·정글러의 '아는 상태'(맵핵 금지): 지금 보이는 적만 채운다. 안 보이면 체력 1·점멸 있음으로 가정
+    # 미드 상성은 실제 두 미드 챔피언으로(표에 없는 쌍이면 상성 몫 없음). Game이 처음에 뽑은 가짜 쌍을 덮어씀
+    from .game import MID_TABLE
+    mids = {c.team: c for c in g.champs if c.role == "MIDDLE"}
+    names = {c.team: rm.champ_of.get(c.pid, "") for c in mids.values()}
+    for T, c in mids.items():
+        c.champion = names[T]
+    key = "|".join(sorted((names[100], names[200])))
+    mm = g.p["lanes"].get("mid_matchup") or {}
+    if mm.get("enabled") and key in MID_TABLE and names[100] != names[200]:
+        gd = MID_TABLE[key]["gold_diff"] * (1 if key.split("|")[0] == names[100] else -1)
+        g.mid_matchup = {"blue_gold_edge": gd * mm["scale"], "until_s": mm["until_s"]}
+    else:
+        g.mid_matchup = None
     g.update_intel()
     # 첫 결정에서 시작 승률을 잡도록 비워 둠
     bot = holder["bot"]
