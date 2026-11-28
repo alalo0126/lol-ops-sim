@@ -135,13 +135,17 @@ def champion(path, maxrank=None):
             dmg[name] = calc_parts(calc, dv, n)
         spells[slot] = {
             "name": obj.get("mScriptName"), "targeting": t, "kind": TARGET_KIND.get(t, t),
+            # mCastTime 우선(모르가나 Q: mCastTime 0.25, spellCastTime 0). 둘 다 없으면 None(기본값 미확인)
             "cast_time": s.get("mCastTime", s.get("spellCastTime")),
             "total_time": s.get("spellTotalTime"),
             "range": round(rng, 1) if isinstance(rng, (int, float)) and rng < PLACEHOLDER_RANGE else None,
             "radius": first(s.get("castRadius")),
             # Cooldown(새 칸, Data Dragon과 같음) 우선. cooldownTime은 옛 칸이라 패치 전 값이 남아 있기도 함(신드라 W)
-            "cooldown": ranks((s.get("Cooldown") or {}).get("values") or s.get("cooldownTime"), n), "cost": ranks((s.get("manaValues") or {}).get("values") or s.get("mana"), n),
+            # 쿨 칸이 아예 없으면 게임 기본값 10초(Data Dragon도 10으로 냄: 럭스 Q 등). defaults에 표시
+            "cooldown": ranks((s.get("Cooldown") or {}).get("values") or s.get("cooldownTime"), n) or [10.0] * n, "cost": ranks((s.get("manaValues") or {}).get("values") or s.get("mana"), n),
             "missiles": missiles, "damage": dmg, "tags": s.get("mSpellTags") or [],
+            "defaults": [k for k, ok in (("cooldown", not ((s.get("Cooldown") or {}).get("values") or s.get("cooldownTime"))),
+                                         ("cast_time", "mCastTime" not in s and "spellCastTime" not in s)) if ok],
             "flags": {k: True for k in ("mCantCancelWhileWindingUp", "mCantCancelWhileChanneling",
                                         "mChannelIsInterruptedByDisables", "canMoveAndCastWhileChanneling")
                       if s.get(k)},
