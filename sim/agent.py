@@ -21,6 +21,9 @@ import numpy as np
 
 from .bots import JunglerBot
 from .game import SIDE, ROLES
+from .scoreboard import Scoreboard
+
+SCOREBOARD = Scoreboard()
 
 CAMP_KINDS = ["blue", "gromp", "wolves", "raptors", "red", "krugs"]
 LANES = ["top", "mid", "bot"]
@@ -55,7 +58,7 @@ class AgentJungler(JunglerBot):
             c.route = []                  # 정해진 동선 없이 처음부터 스스로 고른다(모방 교사만 규칙 봇 동선을 씀)
         self.extra_kw = {}                # 교사가 넘기는 작업 정보(동선 캠프 표시 등)
         pw = game.p["agent"]["ward"]
-        c.ward_charges, c.ward_next = pw["start_charges"], pw["recharge_s"]
+        c.ward_charges, c.ward_next = pw["start_charges"], game.trinket()[1]
         self.team = c.team
         self.moves = move_nodes(c.team)
         self.cur_action = None
@@ -77,7 +80,7 @@ class AgentJungler(JunglerBot):
         pw = g.p["agent"]["ward"]
         if c.ward_charges < pw["max_charges"] and g.t >= c.ward_next:
             c.ward_charges += 1
-            c.ward_next = g.t + pw["recharge_s"]
+            c.ward_next = g.t + g.trinket()[1]
         if self.ward_on_node and c.node == self.ward_on_node:
             self.place_ward(c.node)
             self.ward_on_node = None
@@ -141,9 +144,9 @@ class AgentJungler(JunglerBot):
         if c.ward_charges <= 0:
             return
         if c.ward_charges == g.p["agent"]["ward"]["max_charges"]:
-            c.ward_next = g.t + g.p["agent"]["ward"]["recharge_s"]
+            c.ward_next = g.t + g.trinket()[1]
         c.ward_charges -= 1
-        g.wards.append({"team": c.team, "node": node, "until": g.t + g.p["agent"]["ward"]["duration_s"], "pid": c.pid})
+        g.place_ward(c, node)   # 지속은 평균 레벨에 따라 90~120초(rules/vision.json)
         self.ward_count += 1
 
     def finish_lanefarm(self, lane):
@@ -321,9 +324,12 @@ class AgentJungler(JunglerBot):
             foes = [x for x in g.champs if x.team != T and x.role != "JUNGLE" and x.lane == lane]
             for grp in (mine, foes):
                 alive = [x for x in grp if x.alive(g.t)]
-                f += [len(alive) / 2, min((x.hp for x in alive), default=0.0), sum(x.level for x in grp) / max(1, len(grp)) / 18,
-                      sum(1 for x in alive if x.node == g.lane_node(lane)) / 2,
-                      sum(1 for x in alive if x.flash_ready(g.t)) / 2]
+                # 적은 마지막으로 본 체력·점멸 쿨만 안다(맵핵 금지). 생존·레벨은 점수판, 라인 중앙은 미니언 시야로 보임
+                hp = (lambda x: x.hp) if grp is mine else (lambda x: g.known_hp(T, x))
+                fr = (lambda x: x.flash_ready(g.t)) if grp is mine else (lambda x: g.known_flash_ready(T, x))
+                f += [len(alive) / 2, min((hp(x) for x in alive), default=0.0), sum(x.level for x in grp) / max(1, len(grp)) / 18,
+                      sum(1 for x in alive if x.node == g.lane_node(lane) and (grp is mine or x.node in vis)) / 2,
+                      sum(1 for x in alive if fr(x)) / 2]
             f += [g.wave_for(T, lane), min(1.0, self.travel(g.lane_node(lane)) / 60),
                   1.0 if g.t < g.lane_taken_until[lane] else 0.0]
         # 적 정글러: 마지막으로 본 곳(인지 제약 반영), 레벨·생존은 점수판으로 앎
@@ -336,10 +342,12 @@ class AgentJungler(JunglerBot):
             f += [0.0, 0.0, 0.0, 1.0, 1.0]
         f += [1.0 if ej.alive(g.t) else 0.0, (ej.level - c.level) / 5, ej.kills / 5, ej.deaths / 5, c.kills / 5, c.deaths / 5]
         # 팀 차이와 지금 예측 승률
-        d = self.wp.diffs(g)
+        # 골드·경험치는 상대 것이 안 보이므로 점수판 추정(sim/scoreboard.py). 보상은 실제 승률 그대로
+        d = SCOREBOARD.diffs(g)
         s = 1 if T == 100 else -1
+        pb = self.wp.blue_from_diffs(d, g.t)
         f += [s * d["gold"] / 5000, s * d["xp"] / 5000, s * d["dragons"] / 3, s * d["grubs"] / 6, s * d["heralds"],
-              self.wp.for_team(g, T), sum(1 for w in g.wards if w["team"] == T) / 5]
+              pb if T == 100 else 1.0 - pb, sum(1 for w in g.wards if w["team"] == T) / 5]
         # 카정 검수(sim/invade_check.py) 뒤 추가: 적 캠프 상태를 확인한 뒤 적 정글러가 캠프를 몇 개 더 먹었나(점수판 CS로 앎)
         ej_cs = g.enemy(c, "JUNGLE").jungle_cs
         extra = [min(1.0, (ej_cs - self.known_cs.get(cid, ej_cs)) / 16) for cid in enemy_cids]

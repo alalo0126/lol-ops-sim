@@ -51,3 +51,6 @@ models/stage18_b/*
 !models/stage18_c/
 models/stage18_c/*
 !models/stage18_c/policy_latest.npz
+!models/stage19_a/
+models/stage19_a/*
+!models/stage19_a/policy_latest.npz

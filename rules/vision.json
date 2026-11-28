@@ -1,0 +1,10 @@
+{
+ "_doc": "시야 규칙(공정 비교 설계 2장). sim/vision.py team_vision이 읽는다. 노드가 시야 원천의 반경 안이면 보이고, 수풀 노드는 원천이 같은 노드 안에 있어야 보인다. 라인 중앙 노드는 양 팀 미니언 시야로 항상 보인다고 둔다(근사).",
+ "_source": {"patch": "26.21", "checked": "2026-11-28"},
+ "champion_sight": {"value": 1350, "level": "unverified", "note": "기억값. 위키 Warding 페이지는 읽기 실패"},
+ "turret_sight": {"value": 1350, "level": "unverified", "note": "기억값"},
+ "ward_sight": {"value": 900, "level": "verified", "note": "wiki:Stealth Ward(투명 와드 반경 900), wiki:Control Ward(900)"},
+ "stealth_ward": {"value": {"duration_s": [90, 120], "recharge_s": [210, 120], "max_charges": 2, "max_on_map_per_player": 3},
+                  "level": "verified", "note": "wiki:Stealth Ward 마지막 변경 V14.19(재충전 V13.3). [레벨 1, 레벨 18] 값을 평균 챔피언 레벨로 보간한다 — 보간 방식(선형)과 '평균'이 10명 평균인지는 미검증"},
+ "brush_nodes": {"value": ["river_top_brush", "river_bot_brush"], "level": "unverified", "note": "33노드 중 수풀로 보는 노드. 실제 수풀은 더 많음"}
+}

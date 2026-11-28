@@ -1,0 +1,1390 @@
+{
+ "games": 68,
+ "skipped": [],
+ "dist_median": {
+  "real": 991,
+  "sim": 872
+ },
+ "abs_cs_diff_5_8_10": {
+  "real": [
+   7.4,
+   9.3,
+   13.4
+  ],
+  "sim_per_game": [
+   6.5,
+   9.6,
+   13.5
+  ]
+ },
+ "cs10": {
+  "real": 80.8,
+  "sim": 84.3
+ },
+ "pair_corr_d10": -0.133,
+ "pair_same_sign": "31/68",
+ "sd_pair_mean_sim_d10": 16.9,
+ "sd_real_d10": 15.9,
+ "rows": [
+  {
+   "match": "KR_8426999058",
+   "pair": "Orianna|Ekko",
+   "real_d10": 11,
+   "sim_d10": -0.3,
+   "sim_abs": [
+    3,
+    2,
+    4.3
+   ],
+   "sim_dist_med": 959.5,
+   "sim_cs10": 93.95,
+   "real_dist_med": 906.3520287393856,
+   "real_abs": [
+    2,
+    4,
+    11
+   ],
+   "real_cs10": 86.5
+  },
+  {
+   "match": "KR_8426999177",
+   "pair": "Orianna|Yone",
+   "real_d10": 51,
+   "sim_d10": -17.5,
+   "sim_abs": [
+    10.6,
+    16.5,
+    17.5
+   ],
+   "sim_dist_med": 662.0,
+   "sim_cs10": 70.45,
+   "real_dist_med": 802.1396387163521,
+   "real_abs": [
+    21,
+    33,
+    51
+   ],
+   "real_cs10": 78.5
+  },
+  {
+   "match": "KR_8427029935",
+   "pair": "Swain|AurelionSol",
+   "real_d10": -10,
+   "sim_d10": -16.8,
+   "sim_abs": [
+    9.2,
+    12.3,
+    16.8
+   ],
+   "sim_dist_med": 783.0,
+   "sim_cs10": 75.5,
+   "real_dist_med": 1371.1108634971863,
+   "real_abs": [
+    8,
+    4,
+    10
+   ],
+   "real_cs10": 79
+  },
+  {
+   "match": "KR_8427044839",
+   "pair": "Syndra|Qiyana",
+   "real_d10": 8,
+   "sim_d10": 7.2,
+   "sim_abs": [
+    3.3,
+    7.2,
+    9.2
+   ],
+   "sim_dist_med": 718.5,
+   "sim_cs10": 75.7,
+   "real_dist_med": 900.0294439628072,
+   "real_abs": [
+    21,
+    6,
+    8
+   ],
+   "real_cs10": 71
+  },
+  {
+   "match": "KR_8427067003",
+   "pair": "Talon|Vladimir",
+   "real_d10": -8,
+   "sim_d10": -14.1,
+   "sim_abs": [
+    6.9,
+    10.7,
+    14.1
+   ],
+   "sim_dist_med": 679.0,
+   "sim_cs10": 75.45,
+   "real_dist_med": 680.7121271139512,
+   "real_abs": [
+    7,
+    18,
+    8
+   ],
+   "real_cs10": 74
+  },
+  {
+   "match": "KR_8427068023",
+   "pair": "Galio|Ahri",
+   "real_d10": -7,
+   "sim_d10": 7,
+   "sim_abs": [
+    1.3,
+    3,
+    7
+   ],
+   "sim_dist_med": 980.0,
+   "sim_cs10": 95.9,
+   "real_dist_med": 1076.3569230377773,
+   "real_abs": [
+    4,
+    1,
+    7
+   ],
+   "real_cs10": 76.5
+  },
+  {
+   "match": "KR_8427074120",
+   "pair": "Mel|Jayce",
+   "real_d10": 7,
+   "sim_d10": 8.4,
+   "sim_abs": [
+    7.7,
+    8.6,
+    9.6
+   ],
+   "sim_dist_med": 704.5,
+   "sim_cs10": 82.7,
+   "real_dist_med": 999.1901720893776,
+   "real_abs": [
+    0,
+    9,
+    7
+   ],
+   "real_cs10": 80.5
+  },
+  {
+   "match": "KR_8427087043",
+   "pair": "Sylas|Talon",
+   "real_d10": 15,
+   "sim_d10": 15.7,
+   "sim_abs": [
+    2.2,
+    4.4,
+    15.7
+   ],
+   "sim_dist_med": 867.5,
+   "sim_cs10": 92.15,
+   "real_dist_med": 1163.7621214060125,
+   "real_abs": [
+    3,
+    1,
+    15
+   ],
+   "real_cs10": 84.5
+  },
+  {
+   "match": "KR_8427095161",
+   "pair": "Yone|Locke",
+   "real_d10": 10,
+   "sim_d10": 24.9,
+   "sim_abs": [
+    11,
+    18.3,
+    24.9
+   ],
+   "sim_dist_med": 623.5,
+   "sim_cs10": 80.95,
+   "real_dist_med": 798.7147830444203,
+   "real_abs": [
+    6,
+    1,
+    10
+   ],
+   "real_cs10": 84
+  },
+  {
+   "match": "KR_8427099636",
+   "pair": "Ahri|Yone",
+   "real_d10": 16,
+   "sim_d10": -1.4,
+   "sim_abs": [
+    5,
+    6.4,
+    8.4
+   ],
+   "sim_dist_med": 710.5,
+   "sim_cs10": 72.9,
+   "real_dist_med": 755.7419636902114,
+   "real_abs": [
+    1,
+    2,
+    16
+   ],
+   "real_cs10": 88
+  },
+  {
+   "match": "KR_8427110811",
+   "pair": "Yone|Ekko",
+   "real_d10": -17,
+   "sim_d10": 12.3,
+   "sim_abs": [
+    7.1,
+    13.4,
+    12.3
+   ],
+   "sim_dist_med": 601.0,
+   "sim_cs10": 83.85,
+   "real_dist_med": 867.2589002137712,
+   "real_abs": [
+    0,
+    1,
+    17
+   ],
+   "real_cs10": 76.5
+  },
+  {
+   "match": "KR_8427112235",
+   "pair": "Qiyana|Syndra",
+   "real_d10": -13,
+   "sim_d10": -4.7,
+   "sim_abs": [
+    4.6,
+    5.8,
+    6.5
+   ],
+   "sim_dist_med": 786.0,
+   "sim_cs10": 77.25,
+   "real_dist_med": 841.5729320742201,
+   "real_abs": [
+    1,
+    0,
+    13
+   ],
+   "real_cs10": 63.5
+  },
+  {
+   "match": "KR_8427117343",
+   "pair": "Taliyah|Yone",
+   "real_d10": 4,
+   "sim_d10": -33.9,
+   "sim_abs": [
+    14,
+    24,
+    33.9
+   ],
+   "sim_dist_med": 626.5,
+   "sim_cs10": 69.35,
+   "real_dist_med": 960.3016508957467,
+   "real_abs": [
+    3,
+    6,
+    4
+   ],
+   "real_cs10": 88
+  },
+  {
+   "match": "KR_8427126824",
+   "pair": "Vladimir|Zed",
+   "real_d10": 14,
+   "sim_d10": 25.2,
+   "sim_abs": [
+    9.9,
+    16.8,
+    25.2
+   ],
+   "sim_dist_med": 587.0,
+   "sim_cs10": 76.6,
+   "real_dist_med": 855.9345836990351,
+   "real_abs": [
+    9,
+    12,
+    14
+   ],
+   "real_cs10": 84
+  },
+  {
+   "match": "KR_8427142382",
+   "pair": "Talon|Cassiopeia",
+   "real_d10": -31,
+   "sim_d10": 0.9,
+   "sim_abs": [
+    5.2,
+    4.9,
+    5.1
+   ],
+   "sim_dist_med": 677.0,
+   "sim_cs10": 71.15,
+   "real_dist_med": 1070.2818725793222,
+   "real_abs": [
+    15,
+    24,
+    31
+   ],
+   "real_cs10": 73.5
+  },
+  {
+   "match": "KR_8427156060",
+   "pair": "Azir|Syndra",
+   "real_d10": 11,
+   "sim_d10": -4.8,
+   "sim_abs": [
+    1.4,
+    4.7,
+    8
+   ],
+   "sim_dist_med": 649.0,
+   "sim_cs10": 65.8,
+   "real_dist_med": 1080.185632194763,
+   "real_abs": [
+    1,
+    12,
+    11
+   ],
+   "real_cs10": 100.5
+  },
+  {
+   "match": "KR_8427156885",
+   "pair": "Ryze|Orianna",
+   "real_d10": -8,
+   "sim_d10": -0.9,
+   "sim_abs": [
+    4.5,
+    3.3,
+    3.9
+   ],
+   "sim_dist_med": 1075.0,
+   "sim_cs10": 91.15,
+   "real_dist_med": 994.7164658239232,
+   "real_abs": [
+    8,
+    4,
+    8
+   ],
+   "real_cs10": 87
+  },
+  {
+   "match": "KR_8427158122",
+   "pair": "Anivia|Taliyah",
+   "real_d10": 13,
+   "sim_d10": 7.2,
+   "sim_abs": [
+    1.4,
+    2.3,
+    7.6
+   ],
+   "sim_dist_med": 1125.0,
+   "sim_cs10": 95.2,
+   "real_dist_med": 1121.7355026787304,
+   "real_abs": [
+    6,
+    2,
+    13
+   ],
+   "real_cs10": 77.5
+  },
+  {
+   "match": "KR_8427164915",
+   "pair": "Yone|Aurora",
+   "real_d10": 14,
+   "sim_d10": 21.8,
+   "sim_abs": [
+    9.6,
+    17,
+    21.8
+   ],
+   "sim_dist_med": 650.75,
+   "sim_cs10": 72.5,
+   "real_dist_med": 990.9439555108167,
+   "real_abs": [
+    13,
+    14,
+    14
+   ],
+   "real_cs10": 80
+  },
+  {
+   "match": "KR_8427176534",
+   "pair": "Sylas|Katarina",
+   "real_d10": 16,
+   "sim_d10": 3.9,
+   "sim_abs": [
+    1.2,
+    5.1,
+    4.9
+   ],
+   "sim_dist_med": 885.0,
+   "sim_cs10": 97.25,
+   "real_dist_med": 910.9454377158872,
+   "real_abs": [
+    8,
+    17,
+    16
+   ],
+   "real_cs10": 73
+  },
+  {
+   "match": "KR_8427191816",
+   "pair": "Nasus|AurelionSol",
+   "real_d10": -7,
+   "sim_d10": -30.7,
+   "sim_abs": [
+    15.9,
+    26.3,
+    30.7
+   ],
+   "sim_dist_med": 852.0,
+   "sim_cs10": 78.45,
+   "real_dist_med": 949.4824906231815,
+   "real_abs": [
+    7,
+    4,
+    7
+   ],
+   "real_cs10": 78.5
+  },
+  {
+   "match": "KR_8427192220",
+   "pair": "Syndra|Yone",
+   "real_d10": -6,
+   "sim_d10": 2.6,
+   "sim_abs": [
+    5.4,
+    6,
+    6
+   ],
+   "sim_dist_med": 722.5,
+   "sim_cs10": 74.4,
+   "real_dist_med": 860.1391560193415,
+   "real_abs": [
+    3,
+    15,
+    6
+   ],
+   "real_cs10": 81
+  },
+  {
+   "match": "KR_8427193986",
+   "pair": "Sylas|Yasuo",
+   "real_d10": -18,
+   "sim_d10": -6.4,
+   "sim_abs": [
+    1.3,
+    2.6,
+    7.8
+   ],
+   "sim_dist_med": 880.0,
+   "sim_cs10": 94.1,
+   "real_dist_med": 849.8946993598678,
+   "real_abs": [
+    1,
+    11,
+    18
+   ],
+   "real_cs10": 75
+  },
+  {
+   "match": "KR_8427208111",
+   "pair": "Ryze|Yone",
+   "real_d10": 9,
+   "sim_d10": -7,
+   "sim_abs": [
+    5.9,
+    5.2,
+    8.8
+   ],
+   "sim_dist_med": 664.0,
+   "sim_cs10": 73.6,
+   "real_dist_med": 1174.8226007368116,
+   "real_abs": [
+    20,
+    16,
+    9
+   ],
+   "real_cs10": 86.5
+  },
+  {
+   "match": "KR_8427218335",
+   "pair": "Syndra|Fizz",
+   "real_d10": 7,
+   "sim_d10": 8.1,
+   "sim_abs": [
+    3,
+    4.4,
+    8.1
+   ],
+   "sim_dist_med": 979.0,
+   "sim_cs10": 94.65,
+   "real_dist_med": 1207.350818942034,
+   "real_abs": [
+    5,
+    5,
+    7
+   ],
+   "real_cs10": 79.5
+  },
+  {
+   "match": "KR_8427218643",
+   "pair": "Zed|Katarina",
+   "real_d10": 10,
+   "sim_d10": -3.8,
+   "sim_abs": [
+    3,
+    3.6,
+    7
+   ],
+   "sim_dist_med": 645.0,
+   "sim_cs10": 91.8,
+   "real_dist_med": 1490.1610651201433,
+   "real_abs": [
+    7,
+    4,
+    10
+   ],
+   "real_cs10": 91
+  },
+  {
+   "match": "KR_8427224140",
+   "pair": "TwistedFate|Jax",
+   "real_d10": 6,
+   "sim_d10": -1.1,
+   "sim_abs": [
+    2,
+    5.9,
+    4.3
+   ],
+   "sim_dist_med": 953.0,
+   "sim_cs10": 84.95,
+   "real_dist_med": 797.2124905403125,
+   "real_abs": [
+    14,
+    3,
+    6
+   ],
+   "real_cs10": 67
+  },
+  {
+   "match": "KR_8427276167",
+   "pair": "Talon|Yorick",
+   "real_d10": -10,
+   "sim_d10": -13.2,
+   "sim_abs": [
+    5.7,
+    2.4,
+    13.2
+   ],
+   "sim_dist_med": 635.0,
+   "sim_cs10": 86.4,
+   "real_dist_med": 1312.8564277939915,
+   "real_abs": [
+    1,
+    6,
+    10
+   ],
+   "real_cs10": 76
+  },
+  {
+   "match": "KR_8427284380",
+   "pair": "Talon|Aurora",
+   "real_d10": 5,
+   "sim_d10": -6.5,
+   "sim_abs": [
+    4.2,
+    4.7,
+    8.5
+   ],
+   "sim_dist_med": 627.5,
+   "sim_cs10": 75.85,
+   "real_dist_med": 1698.6386896110007,
+   "real_abs": [
+    5,
+    8,
+    5
+   ],
+   "real_cs10": 83.5
+  },
+  {
+   "match": "KR_8427314233",
+   "pair": "Sylas|Orianna",
+   "real_d10": -5,
+   "sim_d10": 10.7,
+   "sim_abs": [
+    3.3,
+    5.4,
+    10.7
+   ],
+   "sim_dist_med": 953.0,
+   "sim_cs10": 92.45,
+   "real_dist_med": 1031.7562696683747,
+   "real_abs": [
+    4,
+    6,
+    5
+   ],
+   "real_cs10": 84.5
+  },
+  {
+   "match": "KR_8427315242",
+   "pair": "TwistedFate|Ahri",
+   "real_d10": 11,
+   "sim_d10": 6.6,
+   "sim_abs": [
+    5.2,
+    7.2,
+    9.4
+   ],
+   "sim_dist_med": 1042.0,
+   "sim_cs10": 80.9,
+   "real_dist_med": 833.8297188275313,
+   "real_abs": [
+    6,
+    2,
+    11
+   ],
+   "real_cs10": 80.5
+  },
+  {
+   "match": "KR_8427323943",
+   "pair": "TwistedFate|Irelia",
+   "real_d10": -12,
+   "sim_d10": 10.6,
+   "sim_abs": [
+    3.4,
+    7.9,
+    10.6
+   ],
+   "sim_dist_med": 822.0,
+   "sim_cs10": 79.3,
+   "real_dist_med": 950.1294648625523,
+   "real_abs": [
+    9,
+    16,
+    12
+   ],
+   "real_cs10": 97
+  },
+  {
+   "match": "KR_8427333365",
+   "pair": "Aurora|Yone",
+   "real_d10": -13,
+   "sim_d10": -22.9,
+   "sim_abs": [
+    10.6,
+    16.6,
+    22.9
+   ],
+   "sim_dist_med": 657.0,
+   "sim_cs10": 73.05,
+   "real_dist_med": 1016.5431618972211,
+   "real_abs": [
+    2,
+    4,
+    13
+   ],
+   "real_cs10": 74.5
+  },
+  {
+   "match": "KR_8427345309",
+   "pair": "Annie|Ryze",
+   "real_d10": -18,
+   "sim_d10": 25.4,
+   "sim_abs": [
+    11.1,
+    17.7,
+    25.4
+   ],
+   "sim_dist_med": 850.0,
+   "sim_cs10": 82.4,
+   "real_dist_med": 979.5228430210293,
+   "real_abs": [
+    0,
+    7,
+    18
+   ],
+   "real_cs10": 89
+  },
+  {
+   "match": "KR_8427356692",
+   "pair": "Yasuo|Ekko",
+   "real_d10": 21,
+   "sim_d10": 14.1,
+   "sim_abs": [
+    7.3,
+    9.5,
+    14.1
+   ],
+   "sim_dist_med": 878.5,
+   "sim_cs10": 92.05,
+   "real_dist_med": 776.1784588611049,
+   "real_abs": [
+    6,
+    6,
+    21
+   ],
+   "real_cs10": 89.5
+  },
+  {
+   "match": "KR_8427357263",
+   "pair": "Jayce|Orianna",
+   "real_d10": 2,
+   "sim_d10": -9.2,
+   "sim_abs": [
+    8,
+    8.6,
+    10.8
+   ],
+   "sim_dist_med": 909.0,
+   "sim_cs10": 86.5,
+   "real_dist_med": 1374.5124373594576,
+   "real_abs": [
+    6,
+    4,
+    2
+   ],
+   "real_cs10": 89
+  },
+  {
+   "match": "KR_8427361496",
+   "pair": "Galio|Ambessa",
+   "real_d10": -3,
+   "sim_d10": 5.4,
+   "sim_abs": [
+    2.5,
+    2.8,
+    5.4
+   ],
+   "sim_dist_med": 888.0,
+   "sim_cs10": 99.5,
+   "real_dist_med": 1095.1868955558757,
+   "real_abs": [
+    0,
+    3,
+    3
+   ],
+   "real_cs10": 70.5
+  },
+  {
+   "match": "KR_8427366371",
+   "pair": "Galio|Zed",
+   "real_d10": 9,
+   "sim_d10": 7.2,
+   "sim_abs": [
+    1.7,
+    3.7,
+    7.2
+   ],
+   "sim_dist_med": 884.0,
+   "sim_cs10": 97.9,
+   "real_dist_med": 1180.3053345870326,
+   "real_abs": [
+    16,
+    8,
+    9
+   ],
+   "real_cs10": 84.5
+  },
+  {
+   "match": "KR_8427394026",
+   "pair": "Zoe|Locke",
+   "real_d10": 24,
+   "sim_d10": -20.7,
+   "sim_abs": [
+    17.7,
+    13.1,
+    20.7
+   ],
+   "sim_dist_med": 992.0,
+   "sim_cs10": 90.95,
+   "real_dist_med": 1020.2894083771085,
+   "real_abs": [
+    22,
+    20,
+    24
+   ],
+   "real_cs10": 72
+  },
+  {
+   "match": "KR_8427398739",
+   "pair": "Lissandra|Akshan",
+   "real_d10": -8,
+   "sim_d10": 8.4,
+   "sim_abs": [
+    5.8,
+    7.3,
+    8.4
+   ],
+   "sim_dist_med": 887.0,
+   "sim_cs10": 86.8,
+   "real_dist_med": 1304.7752321171788,
+   "real_abs": [
+    7,
+    1,
+    8
+   ],
+   "real_cs10": 91
+  },
+  {
+   "match": "KR_8427441820",
+   "pair": "Sylas|Locke",
+   "real_d10": -14,
+   "sim_d10": 3.1,
+   "sim_abs": [
+    3.8,
+    3,
+    4.3
+   ],
+   "sim_dist_med": 907.0,
+   "sim_cs10": 94.75,
+   "real_dist_med": 621.1119061811647,
+   "real_abs": [
+    13,
+    11,
+    14
+   ],
+   "real_cs10": 62
+  },
+  {
+   "match": "KR_8427445502",
+   "pair": "Orianna|Katarina",
+   "real_d10": 12,
+   "sim_d10": -20.1,
+   "sim_abs": [
+    15.3,
+    18.1,
+    20.1
+   ],
+   "sim_dist_med": 823.5,
+   "sim_cs10": 84.45,
+   "real_dist_med": 1318.5298631430385,
+   "real_abs": [
+    8,
+    14,
+    12
+   ],
+   "real_cs10": 73
+  },
+  {
+   "match": "KR_8427445592",
+   "pair": "Galio|Jayce",
+   "real_d10": 9,
+   "sim_d10": 3,
+   "sim_abs": [
+    0.9,
+    2.5,
+    4.4
+   ],
+   "sim_dist_med": 872.0,
+   "sim_cs10": 103.9,
+   "real_dist_med": 728.7112971751526,
+   "real_abs": [
+    9,
+    7,
+    9
+   ],
+   "real_cs10": 84.5
+  },
+  {
+   "match": "KR_8427449612",
+   "pair": "Yasuo|Orianna",
+   "real_d10": -19,
+   "sim_d10": 41.2,
+   "sim_abs": [
+    16.8,
+    31,
+    41.2
+   ],
+   "sim_dist_med": 680.5,
+   "sim_cs10": 74.5,
+   "real_dist_med": 844.7869553917129,
+   "real_abs": [
+    10,
+    20,
+    19
+   ],
+   "real_cs10": 87.5
+  },
+  {
+   "match": "KR_8427481420",
+   "pair": "TwistedFate|Xerath",
+   "real_d10": 3,
+   "sim_d10": 5.6,
+   "sim_abs": [
+    3.3,
+    3,
+    6.4
+   ],
+   "sim_dist_med": 1050.0,
+   "sim_cs10": 96,
+   "real_dist_med": 1228.1795471347014,
+   "real_abs": [
+    4,
+    2,
+    3
+   ],
+   "real_cs10": 78.5
+  },
+  {
+   "match": "KR_8427522462",
+   "pair": "Cassiopeia|Akali",
+   "real_d10": 20,
+   "sim_d10": -24,
+   "sim_abs": [
+    9.1,
+    15.2,
+    24
+   ],
+   "sim_dist_med": 634.0,
+   "sim_cs10": 63.6,
+   "real_dist_med": 801.678402456406,
+   "real_abs": [
+    8,
+    13,
+    20
+   ],
+   "real_cs10": 76
+  },
+  {
+   "match": "KR_8427562395",
+   "pair": "Annie|Galio",
+   "real_d10": 33,
+   "sim_d10": 4.6,
+   "sim_abs": [
+    2.6,
+    5.7,
+    5.2
+   ],
+   "sim_dist_med": 1054.0,
+   "sim_cs10": 88.6,
+   "real_dist_med": 978.3187832764193,
+   "real_abs": [
+    16,
+    22,
+    33
+   ],
+   "real_cs10": 78.5
+  },
+  {
+   "match": "KR_8427565093",
+   "pair": "Syndra|Pantheon",
+   "real_d10": 17,
+   "sim_d10": 0.5,
+   "sim_abs": [
+    4.1,
+    6.1,
+    5.7
+   ],
+   "sim_dist_med": 979.0,
+   "sim_cs10": 87.75,
+   "real_dist_med": 810.2993274093222,
+   "real_abs": [
+    6,
+    13,
+    17
+   ],
+   "real_cs10": 67.5
+  },
+  {
+   "match": "KR_8427581927",
+   "pair": "Orianna|Qiyana",
+   "real_d10": 20,
+   "sim_d10": -5.3,
+   "sim_abs": [
+    4.3,
+    5.5,
+    6.3
+   ],
+   "sim_dist_med": 876.0,
+   "sim_cs10": 81.95,
+   "real_dist_med": 1023.5355391973451,
+   "real_abs": [
+    7,
+    16,
+    20
+   ],
+   "real_cs10": 66
+  },
+  {
+   "match": "KR_8427599641",
+   "pair": "Belveth|Sylas",
+   "real_d10": -35,
+   "sim_d10": -0.2,
+   "sim_abs": [
+    6.3,
+    2.8,
+    4.4
+   ],
+   "sim_dist_med": 872.0,
+   "sim_cs10": 89.1,
+   "real_dist_med": 902.9424123386829,
+   "real_abs": [
+    21,
+    19,
+    35
+   ],
+   "real_cs10": 83.5
+  },
+  {
+   "match": "KR_8427647224",
+   "pair": "Vex|Syndra",
+   "real_d10": 12,
+   "sim_d10": -11.4,
+   "sim_abs": [
+    6.1,
+    8,
+    11.4
+   ],
+   "sim_dist_med": 902.0,
+   "sim_cs10": 79.9,
+   "real_dist_med": 1221.8809270955987,
+   "real_abs": [
+    4,
+    21,
+    12
+   ],
+   "real_cs10": 82
+  },
+  {
+   "match": "KR_8427655782",
+   "pair": "TwistedFate|Ryze",
+   "real_d10": -31,
+   "sim_d10": 9.5,
+   "sim_abs": [
+    1.4,
+    6.9,
+    9.5
+   ],
+   "sim_dist_med": 1041.0,
+   "sim_cs10": 88.25,
+   "real_dist_med": 929.1776404802422,
+   "real_abs": [
+    21,
+    17,
+    31
+   ],
+   "real_cs10": 79.5
+  },
+  {
+   "match": "KR_8427691604",
+   "pair": "Galio|Sylas",
+   "real_d10": 10,
+   "sim_d10": -5.5,
+   "sim_abs": [
+    1.7,
+    1.8,
+    6.3
+   ],
+   "sim_dist_med": 880.0,
+   "sim_cs10": 93.65,
+   "real_dist_med": 1514.0336852263229,
+   "real_abs": [
+    3,
+    13,
+    10
+   ],
+   "real_cs10": 84
+  },
+  {
+   "match": "KR_8427736588",
+   "pair": "Locke|Lux",
+   "real_d10": -14,
+   "sim_d10": 1.1,
+   "sim_abs": [
+    2.8,
+    3.2,
+    3.7
+   ],
+   "sim_dist_med": 1000.0,
+   "sim_cs10": 101.25,
+   "real_dist_med": 957.648160860762,
+   "real_abs": [
+    8,
+    10,
+    14
+   ],
+   "real_cs10": 86
+  },
+  {
+   "match": "KR_8427737055",
+   "pair": "Ryze|Zoe",
+   "real_d10": 12,
+   "sim_d10": 7.5,
+   "sim_abs": [
+    2.1,
+    3.4,
+    7.9
+   ],
+   "sim_dist_med": 1100.0,
+   "sim_cs10": 92.55,
+   "real_dist_med": 1269.6424942766962,
+   "real_abs": [
+    5,
+    10,
+    12
+   ],
+   "real_cs10": 84
+  },
+  {
+   "match": "KR_8427745608",
+   "pair": "Syndra|Sylas",
+   "real_d10": -11,
+   "sim_d10": -10.8,
+   "sim_abs": [
+    2,
+    3.3,
+    10.8
+   ],
+   "sim_dist_med": 985.0,
+   "sim_cs10": 91.8,
+   "real_dist_med": 1633.6648983191137,
+   "real_abs": [
+    1,
+    12,
+    11
+   ],
+   "real_cs10": 76.5
+  },
+  {
+   "match": "KR_8427788442",
+   "pair": "Naafiri|Qiyana",
+   "real_d10": 2,
+   "sim_d10": -4.1,
+   "sim_abs": [
+    0.7,
+    3,
+    5.3
+   ],
+   "sim_dist_med": 887.0,
+   "sim_cs10": 96.95,
+   "real_dist_med": null,
+   "real_abs": [
+    4,
+    1,
+    2
+   ],
+   "real_cs10": 73
+  },
+  {
+   "match": "KR_8427828515",
+   "pair": "Locke|Anivia",
+   "real_d10": -17,
+   "sim_d10": 2,
+   "sim_abs": [
+    1.9,
+    3,
+    2.8
+   ],
+   "sim_dist_med": 1035.5,
+   "sim_cs10": 101.1,
+   "real_dist_med": 1065.5547011834283,
+   "real_abs": [
+    1,
+    3,
+    17
+   ],
+   "real_cs10": 83.5
+  },
+  {
+   "match": "KR_8427846592",
+   "pair": "Taliyah|Akali",
+   "real_d10": 5,
+   "sim_d10": -45.2,
+   "sim_abs": [
+    15.8,
+    34.3,
+    45.2
+   ],
+   "sim_dist_med": 598.5,
+   "sim_cs10": 63.3,
+   "real_dist_med": 1136.1478776990257,
+   "real_abs": [
+    10,
+    2,
+    5
+   ],
+   "real_cs10": 90.5
+  },
+  {
+   "match": "KR_8427856418",
+   "pair": "Locke|Akali",
+   "real_d10": -4,
+   "sim_d10": -59.1,
+   "sim_abs": [
+    21.6,
+    44.1,
+    59.1
+   ],
+   "sim_dist_med": 365.0,
+   "sim_cs10": 69.75,
+   "real_dist_med": 602.7354311802153,
+   "real_abs": [
+    2,
+    8,
+    4
+   ],
+   "real_cs10": 68
+  },
+  {
+   "match": "KR_8427895644",
+   "pair": "TwistedFate|Zoe",
+   "real_d10": -23,
+   "sim_d10": 14.9,
+   "sim_abs": [
+    4.5,
+    8.5,
+    14.9
+   ],
+   "sim_dist_med": 1075.0,
+   "sim_cs10": 92.35,
+   "real_dist_med": 997.9506722886787,
+   "real_abs": [
+    11,
+    16,
+    23
+   ],
+   "real_cs10": 86.5
+  },
+  {
+   "match": "KR_8427898319",
+   "pair": "Syndra|Orianna",
+   "real_d10": -2,
+   "sim_d10": 7.9,
+   "sim_abs": [
+    4.7,
+    8.3,
+    7.9
+   ],
+   "sim_dist_med": 1009.0,
+   "sim_cs10": 83.85,
+   "real_dist_med": 884.4474961381412,
+   "real_abs": [
+    3,
+    3,
+    2
+   ],
+   "real_cs10": 86
+  },
+  {
+   "match": "KR_8427906000",
+   "pair": "Hwei|TwistedFate",
+   "real_d10": 33,
+   "sim_d10": -27.3,
+   "sim_abs": [
+    11,
+    19.5,
+    27.3
+   ],
+   "sim_dist_med": 679.0,
+   "sim_cs10": 73.15,
+   "real_dist_med": 1040.096149401583,
+   "real_abs": [
+    14,
+    22,
+    33
+   ],
+   "real_cs10": 85.5
+  },
+  {
+   "match": "KR_8427908509",
+   "pair": "Annie|Akali",
+   "real_d10": 9,
+   "sim_d10": 7.4,
+   "sim_abs": [
+    10.9,
+    9.5,
+    11
+   ],
+   "sim_dist_med": 702.5,
+   "sim_cs10": 69.4,
+   "real_dist_med": 905.1702053671634,
+   "real_abs": [
+    8,
+    6,
+    9
+   ],
+   "real_cs10": 95.5
+  },
+  {
+   "match": "KR_8427930024",
+   "pair": "Yasuo|Renekton",
+   "real_d10": 16,
+   "sim_d10": 28.5,
+   "sim_abs": [
+    13.6,
+    19.7,
+    28.5
+   ],
+   "sim_dist_med": 501.5,
+   "sim_cs10": 83.05,
+   "real_dist_med": 861.0284548143575,
+   "real_abs": [
+    22,
+    12,
+    16
+   ],
+   "real_cs10": 92
+  },
+  {
+   "match": "KR_8427939026",
+   "pair": "Akshan|Lucian",
+   "real_d10": 24,
+   "sim_d10": -22,
+   "sim_abs": [
+    12.2,
+    16.9,
+    22
+   ],
+   "sim_dist_med": 983.5,
+   "sim_cs10": 82.6,
+   "real_dist_med": 1440.67684944694,
+   "real_abs": [
+    3,
+    16,
+    24
+   ],
+   "real_cs10": 72
+  },
+  {
+   "match": "KR_8439384756",
+   "pair": "Ekko|Yone",
+   "real_d10": 5,
+   "sim_d10": -8.8,
+   "sim_abs": [
+    10.8,
+    9.8,
+    10.4
+   ],
+   "sim_dist_med": 636.0,
+   "sim_cs10": 84.7,
+   "real_dist_med": 946.7993451624267,
+   "real_abs": [
+    1,
+    6,
+    5
+   ],
+   "real_cs10": 81.5
+  },
+  {
+   "match": "KR_8439408225",
+   "pair": "Tristana|Syndra",
+   "real_d10": -10,
+   "sim_d10": -16.8,
+   "sim_abs": [
+    8.3,
+    10.5,
+    16.8
+   ],
+   "sim_dist_med": 1070.0,
+   "sim_cs10": 91.4,
+   "real_dist_med": 1129.9839220873173,
+   "real_abs": [
+    3,
+    0,
+    10
+   ],
+   "real_cs10": 87
+  }
+ ]
+}

@@ -28,6 +28,7 @@ class Rules:
         self.minions = values(load_json("rules", "minions.json"))
         self.levels = values(load_json("rules", "levels.json"))["xp_to_reach"]
         self.map = load_json("rules", "map_nodes.json")
+        self.vision = load_json("rules", "vision.json")   # value/level 그대로(sim/vision.py가 ["value"]로 읽음)
         self.champions = load_json("rules", "champions.json")["champions"]
         self.params = values(load_json("sim", "params.json"))
         self.laner_recall = load_json(*self.params["laner"]["recall_model"].split("/"))

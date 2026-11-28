@@ -1,0 +1,2561 @@
+{
+ "_doc": "tools/build_item_vectors.py. stats=설명 <stats> 값, effects=키워드 태그(미검증), stat_gold=기본 아이템 단가 환산",
+ "_source": {
+  "src": "ddragon",
+  "version": "16.20.1",
+  "unit_prices": {
+   "ad": 33.84,
+   "ap": 21.67,
+   "hp": 2.68,
+   "armor": 22.66,
+   "mr": 25.01,
+   "as": 25.18,
+   "crit": 39.27,
+   "haste": 41.26,
+   "ms": 12.72,
+   "ms_pct": 63.37,
+   "pen": 37.01,
+   "pen_pct": 42.95
+  },
+  "unit_price_rows": 52,
+  "level": "stats verified(ddragon), effects unverified"
+ },
+ "items": {
+  "1001": {
+   "name": "Boots",
+   "gold": 300,
+   "depth": 1,
+   "stats": {
+    "ms": 25.0
+   },
+   "effects": [],
+   "stat_gold": 317.9
+  },
+  "1004": {
+   "name": "Faerie Charm",
+   "gold": 200,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "1006": {
+   "name": "Rejuvenation Bead",
+   "gold": 300,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "1011": {
+   "name": "Giant's Belt",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "hp": 350.0
+   },
+   "effects": [],
+   "stat_gold": 938.8
+  },
+  "1018": {
+   "name": "Cloak of Agility",
+   "gold": 600,
+   "depth": 1,
+   "stats": {
+    "crit": 15.0
+   },
+   "effects": [],
+   "stat_gold": 589.1
+  },
+  "1026": {
+   "name": "Blasting Wand",
+   "gold": 850,
+   "depth": 1,
+   "stats": {
+    "ap": 45.0
+   },
+   "effects": [],
+   "stat_gold": 975.3
+  },
+  "1027": {
+   "name": "Sapphire Crystal",
+   "gold": 300,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "1028": {
+   "name": "Ruby Crystal",
+   "gold": 400,
+   "depth": 1,
+   "stats": {
+    "hp": 150.0
+   },
+   "effects": [],
+   "stat_gold": 402.3
+  },
+  "1029": {
+   "name": "Cloth Armor",
+   "gold": 300,
+   "depth": 1,
+   "stats": {
+    "armor": 15.0
+   },
+   "effects": [],
+   "stat_gold": 339.9
+  },
+  "1031": {
+   "name": "Chain Vest",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "armor": 40.0
+   },
+   "effects": [],
+   "stat_gold": 906.3
+  },
+  "1033": {
+   "name": "Null-Magic Mantle",
+   "gold": 400,
+   "depth": 1,
+   "stats": {
+    "mr": 20.0
+   },
+   "effects": [],
+   "stat_gold": 500.1
+  },
+  "1036": {
+   "name": "Long Sword",
+   "gold": 350,
+   "depth": 1,
+   "stats": {
+    "ad": 10.0
+   },
+   "effects": [],
+   "stat_gold": 338.4
+  },
+  "1037": {
+   "name": "Pickaxe",
+   "gold": 875,
+   "depth": 1,
+   "stats": {
+    "ad": 25.0
+   },
+   "effects": [],
+   "stat_gold": 846.0
+  },
+  "1038": {
+   "name": "B. F. Sword",
+   "gold": 1300,
+   "depth": 1,
+   "stats": {
+    "ad": 40.0
+   },
+   "effects": [],
+   "stat_gold": 1353.6
+  },
+  "1042": {
+   "name": "Dagger",
+   "gold": 250,
+   "depth": 1,
+   "stats": {
+    "as": 10.0
+   },
+   "effects": [],
+   "stat_gold": 251.8
+  },
+  "1043": {
+   "name": "Recurve Bow",
+   "gold": 700,
+   "depth": 2,
+   "stats": {
+    "as": 15.0
+   },
+   "effects": [],
+   "stat_gold": 377.7
+  },
+  "1052": {
+   "name": "Amplifying Tome",
+   "gold": 400,
+   "depth": 1,
+   "stats": {
+    "ap": 20.0
+   },
+   "effects": [],
+   "stat_gold": 433.5
+  },
+  "1053": {
+   "name": "Vampiric Scepter",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0
+   },
+   "effects": [],
+   "stat_gold": 507.6
+  },
+  "1054": {
+   "name": "Doran's Shield",
+   "gold": 450,
+   "depth": 1,
+   "stats": {
+    "hp": 110.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 295.1
+  },
+  "1055": {
+   "name": "Doran's Blade",
+   "gold": 450,
+   "depth": 1,
+   "stats": {
+    "ad": 10.0,
+    "hp": 80.0
+   },
+   "effects": [],
+   "stat_gold": 553.0
+  },
+  "1056": {
+   "name": "Doran's Ring",
+   "gold": 400,
+   "depth": 1,
+   "stats": {
+    "ap": 18.0,
+    "hp": 90.0
+   },
+   "effects": [
+    "mana",
+    "sustain"
+   ],
+   "stat_gold": 631.5
+  },
+  "1057": {
+   "name": "Negatron Cloak",
+   "gold": 850,
+   "depth": 2,
+   "stats": {
+    "mr": 45.0
+   },
+   "effects": [],
+   "stat_gold": 1125.3
+  },
+  "1058": {
+   "name": "Needlessly Large Rod",
+   "gold": 1200,
+   "depth": 1,
+   "stats": {
+    "ap": 65.0
+   },
+   "effects": [],
+   "stat_gold": 1408.8
+  },
+  "1082": {
+   "name": "Dark Seal",
+   "gold": 350,
+   "depth": 1,
+   "stats": {
+    "ap": 15.0,
+    "hp": 50.0
+   },
+   "effects": [],
+   "stat_gold": 459.2
+  },
+  "1083": {
+   "name": "Cull",
+   "gold": 450,
+   "depth": 1,
+   "stats": {
+    "ad": 7.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 236.9
+  },
+  "1086": {
+   "name": "Doran's Bow",
+   "gold": 400,
+   "depth": 1,
+   "stats": {
+    "ad": 8.0,
+    "as": 15.0
+   },
+   "effects": [],
+   "stat_gold": 648.4
+  },
+  "1101": {
+   "name": "Scorchclaw Pup",
+   "gold": 450,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 0.0
+  },
+  "1102": {
+   "name": "Gustwalker Hatchling",
+   "gold": 450,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "1103": {
+   "name": "Mosstomper Seedling",
+   "gold": 450,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 0.0
+  },
+  "1105": {
+   "name": "Mosstomper Seedling",
+   "gold": 450,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 0.0
+  },
+  "1106": {
+   "name": "Gustwalker Hatchling",
+   "gold": 450,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "1107": {
+   "name": "Scorchclaw Pup",
+   "gold": 450,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 0.0
+  },
+  "1120": {
+   "name": "Doran's Helm",
+   "gold": 450,
+   "depth": 1,
+   "stats": {
+    "hp": 150.0,
+    "armor": 8.0,
+    "mr": 8.0
+   },
+   "effects": [],
+   "stat_gold": 783.6
+  },
+  "2003": {
+   "name": "Health Potion",
+   "gold": 50,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 0.0
+  },
+  "2019": {
+   "name": "Steel Sigil",
+   "gold": 1100,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0,
+    "armor": 30.0
+   },
+   "effects": [],
+   "stat_gold": 1187.3
+  },
+  "2020": {
+   "name": "The Brutalizer",
+   "gold": 1337,
+   "depth": 2,
+   "stats": {
+    "ad": 25.0,
+    "haste": 10.0,
+    "pen": 5.0
+   },
+   "effects": [],
+   "stat_gold": 1443.7
+  },
+  "2021": {
+   "name": "Tunneler",
+   "gold": 1150,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0,
+    "hp": 250.0
+   },
+   "effects": [],
+   "stat_gold": 1178.2
+  },
+  "2022": {
+   "name": "Glowing Mote",
+   "gold": 250,
+   "depth": 1,
+   "stats": {
+    "haste": 5.0
+   },
+   "effects": [],
+   "stat_gold": 206.3
+  },
+  "2031": {
+   "name": "Refillable Potion",
+   "gold": 150,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 0.0
+  },
+  "2051": {
+   "name": "Guardian's Horn",
+   "gold": 950,
+   "depth": 1,
+   "stats": {
+    "hp": 150.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 402.3
+  },
+  "2055": {
+   "name": "Control Ward",
+   "gold": 75,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "2065": {
+   "name": "Shurelya's Battlesong",
+   "gold": 2200,
+   "depth": 3,
+   "stats": {
+    "ap": 50.0,
+    "haste": 15.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 1956.0
+  },
+  "2138": {
+   "name": "Elixir of Iron",
+   "gold": 500,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "2139": {
+   "name": "Elixir of Sorcery",
+   "gold": 500,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "mana",
+    "structure"
+   ],
+   "stat_gold": 0.0
+  },
+  "2140": {
+   "name": "Elixir of Wrath",
+   "gold": 500,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "2141": {
+   "name": "Cappa Juice",
+   "gold": 300,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "2420": {
+   "name": "Seeker's Armguard",
+   "gold": 1600,
+   "depth": 2,
+   "stats": {
+    "ap": 40.0,
+    "armor": 25.0
+   },
+   "effects": [
+    "stasis"
+   ],
+   "stat_gold": 1433.4
+  },
+  "2421": {
+   "name": "Shattered Armguard",
+   "gold": 1600,
+   "depth": 2,
+   "stats": {
+    "ap": 40.0,
+    "armor": 25.0
+   },
+   "effects": [],
+   "stat_gold": 1433.4
+  },
+  "2501": {
+   "name": "Overlord's Bloodmail",
+   "gold": 3300,
+   "depth": 3,
+   "stats": {
+    "ad": 30.0,
+    "hp": 550.0
+   },
+   "effects": [],
+   "stat_gold": 2490.5
+  },
+  "2502": {
+   "name": "Unending Despair",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "hp": 400.0,
+    "armor": 50.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "area",
+    "sustain"
+   ],
+   "stat_gold": 2824.6
+  },
+  "2503": {
+   "name": "Blackfire Torch",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ap": 80.0,
+    "haste": 20.0
+   },
+   "effects": [],
+   "stat_gold": 2559.0
+  },
+  "2504": {
+   "name": "Kaenic Rookern",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "hp": 400.0,
+    "mr": 80.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 3073.4
+  },
+  "2508": {
+   "name": "Fated Ashes",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "ap": 30.0
+   },
+   "effects": [],
+   "stat_gold": 650.2
+  },
+  "2510": {
+   "name": "Dusk and Dawn",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "ap": 60.0,
+    "hp": 300.0,
+    "as": 20.0,
+    "haste": 20.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 3433.9
+  },
+  "2512": {
+   "name": "Fiendhunter Bolts",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "as": 45.0,
+    "crit": 25.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 2368.4
+  },
+  "2517": {
+   "name": "Endless Hunger",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "ad": 65.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 2199.7
+  },
+  "2520": {
+   "name": "Bastionbreaker",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "haste": 15.0,
+    "pen": 22.0
+   },
+   "effects": [
+    "structure"
+   ],
+   "stat_gold": 3294.4
+  },
+  "2522": {
+   "name": "Actualizer",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ap": 90.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "mana",
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 2363.2
+  },
+  "2523": {
+   "name": "Hexoptics C44",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "crit": 25.0
+   },
+   "effects": [],
+   "stat_gold": 2843.0
+  },
+  "2524": {
+   "name": "Bandlepipes",
+   "gold": 2300,
+   "depth": 3,
+   "stats": {
+    "hp": 200.0,
+    "armor": 20.0,
+    "mr": 20.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 2108.6
+  },
+  "2525": {
+   "name": "Protoplasm Harness",
+   "gold": 2600,
+   "depth": 3,
+   "stats": {
+    "hp": 600.0,
+    "haste": 20.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 2434.5
+  },
+  "2526": {
+   "name": "Whispering Circlet",
+   "gold": 2250,
+   "depth": 3,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [
+    "mana",
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 536.5
+  },
+  "3003": {
+   "name": "Archangel's Staff",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "ap": 70.0,
+    "haste": 25.0
+   },
+   "effects": [
+    "mana"
+   ],
+   "stat_gold": 2548.6
+  },
+  "3004": {
+   "name": "Manamune",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "ad": 35.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "mana"
+   ],
+   "stat_gold": 1803.3
+  },
+  "3006": {
+   "name": "Berserker's Greaves",
+   "gold": 1100,
+   "depth": 2,
+   "stats": {
+    "as": 30.0,
+    "ms": 45.0
+   },
+   "effects": [],
+   "stat_gold": 1327.7
+  },
+  "3008": {
+   "name": "Gluttonous Greaves",
+   "gold": 1000,
+   "depth": 2,
+   "stats": {
+    "ms": 45.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 572.3
+  },
+  "3009": {
+   "name": "Boots of Swiftness",
+   "gold": 1000,
+   "depth": 2,
+   "stats": {
+    "ms": 55.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 699.4
+  },
+  "3020": {
+   "name": "Sorcerer's Shoes",
+   "gold": 1100,
+   "depth": 2,
+   "stats": {
+    "ms": 45.0,
+    "pen": 12.0
+   },
+   "effects": [],
+   "stat_gold": 1016.4
+  },
+  "3024": {
+   "name": "Glacial Buckler",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "armor": 25.0,
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 979.0
+  },
+  "3026": {
+   "name": "Guardian Angel",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "armor": 45.0
+   },
+   "effects": [
+    "mana",
+    "stasis",
+    "sustain"
+   ],
+   "stat_gold": 2880.8
+  },
+  "3031": {
+   "name": "Infinity Edge",
+   "gold": 3500,
+   "depth": 2,
+   "stats": {
+    "ad": 75.0,
+    "crit": 25.0
+   },
+   "effects": [],
+   "stat_gold": 3519.8
+  },
+  "3032": {
+   "name": "Yun Tal Wildarrows",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 50.0,
+    "as": 45.0
+   },
+   "effects": [],
+   "stat_gold": 2825.2
+  },
+  "3033": {
+   "name": "Mortal Reminder",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 35.0,
+    "crit": 25.0,
+    "pen_pct": 30.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 3454.6
+  },
+  "3035": {
+   "name": "Last Whisper",
+   "gold": 1450,
+   "depth": 2,
+   "stats": {
+    "ad": 20.0,
+    "pen_pct": 18.0
+   },
+   "effects": [],
+   "stat_gold": 1449.9
+  },
+  "3036": {
+   "name": "Lord Dominik's Regards",
+   "gold": 3300,
+   "depth": 3,
+   "stats": {
+    "ad": 35.0,
+    "crit": 25.0,
+    "pen_pct": 35.0
+   },
+   "effects": [],
+   "stat_gold": 3669.4
+  },
+  "3041": {
+   "name": "Mejai's Soulstealer",
+   "gold": 1500,
+   "depth": 2,
+   "stats": {
+    "ap": 20.0,
+    "hp": 100.0
+   },
+   "effects": [],
+   "stat_gold": 701.7
+  },
+  "3044": {
+   "name": "Phage",
+   "gold": 1100,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0,
+    "hp": 200.0
+   },
+   "effects": [],
+   "stat_gold": 1044.1
+  },
+  "3046": {
+   "name": "Phantom Dancer",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "as": 65.0,
+    "crit": 25.0,
+    "ms_pct": 10.0
+   },
+   "effects": [],
+   "stat_gold": 3252.2
+  },
+  "3047": {
+   "name": "Plated Steelcaps",
+   "gold": 1200,
+   "depth": 2,
+   "stats": {
+    "armor": 25.0,
+    "ms": 45.0
+   },
+   "effects": [],
+   "stat_gold": 1138.7
+  },
+  "3050": {
+   "name": "Zeke's Convergence",
+   "gold": 2200,
+   "depth": 3,
+   "stats": {
+    "hp": 300.0,
+    "armor": 25.0,
+    "mr": 25.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "area",
+    "slow"
+   ],
+   "stat_gold": 2408.8
+  },
+  "3051": {
+   "name": "Hearthbound Axe",
+   "gold": 1200,
+   "depth": 2,
+   "stats": {
+    "ad": 20.0,
+    "as": 20.0
+   },
+   "effects": [],
+   "stat_gold": 1180.4
+  },
+  "3053": {
+   "name": "Sterak's Gage",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "hp": 400.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 1072.9
+  },
+  "3057": {
+   "name": "Sheen",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 412.6
+  },
+  "3065": {
+   "name": "Spirit Visage",
+   "gold": 2700,
+   "depth": 3,
+   "stats": {
+    "hp": 400.0,
+    "mr": 50.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 2735.8
+  },
+  "3066": {
+   "name": "Winged Moonplate",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 789.9
+  },
+  "3067": {
+   "name": "Kindlegem",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0,
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 949.0
+  },
+  "3068": {
+   "name": "Sunfire Aegis",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "hp": 350.0,
+    "armor": 50.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 2484.2
+  },
+  "3070": {
+   "name": "Tear of the Goddess",
+   "gold": 400,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "mana"
+   ],
+   "stat_gold": 0.0
+  },
+  "3071": {
+   "name": "Black Cleaver",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 45.0,
+    "hp": 400.0,
+    "haste": 20.0
+   },
+   "effects": [],
+   "stat_gold": 3420.9
+  },
+  "3072": {
+   "name": "Bloodthirster",
+   "gold": 3400,
+   "depth": 3,
+   "stats": {
+    "ad": 80.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 2707.3
+  },
+  "3073": {
+   "name": "Experimental Hexplate",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "hp": 450.0,
+    "as": 20.0
+   },
+   "effects": [],
+   "stat_gold": 3064.3
+  },
+  "3074": {
+   "name": "Ravenous Hydra",
+   "gold": 3300,
+   "depth": 3,
+   "stats": {
+    "ad": 65.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "area",
+    "sustain"
+   ],
+   "stat_gold": 2818.5
+  },
+  "3075": {
+   "name": "Thornmail",
+   "gold": 2450,
+   "depth": 3,
+   "stats": {
+    "hp": 150.0,
+    "armor": 75.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 2101.7
+  },
+  "3076": {
+   "name": "Bramble Vest",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "armor": 30.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 679.7
+  },
+  "3077": {
+   "name": "Tiamat",
+   "gold": 1200,
+   "depth": 2,
+   "stats": {
+    "ad": 25.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 846.0
+  },
+  "3078": {
+   "name": "Trinity Force",
+   "gold": 3333,
+   "depth": 3,
+   "stats": {
+    "ad": 36.0,
+    "hp": 333.0,
+    "as": 30.0,
+    "haste": 15.0
+   },
+   "effects": [],
+   "stat_gold": 3485.7
+  },
+  "3082": {
+   "name": "Warden's Mail",
+   "gold": 1000,
+   "depth": 2,
+   "stats": {
+    "armor": 40.0
+   },
+   "effects": [],
+   "stat_gold": 906.3
+  },
+  "3083": {
+   "name": "Warmog's Armor",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "hp": 1000.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 2682.3
+  },
+  "3084": {
+   "name": "Heartsteel",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "hp": 900.0
+   },
+   "effects": [],
+   "stat_gold": 2414.0
+  },
+  "3085": {
+   "name": "Runaan's Hurricane",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "as": 40.0,
+    "crit": 25.0,
+    "ms_pct": 5.0
+   },
+   "effects": [],
+   "stat_gold": 2305.9
+  },
+  "3086": {
+   "name": "Zeal",
+   "gold": 1200,
+   "depth": 2,
+   "stats": {
+    "as": 15.0,
+    "crit": 15.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 1220.3
+  },
+  "3087": {
+   "name": "Statikk Shiv",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 45.0,
+    "ap": 45.0,
+    "as": 30.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 3507.1
+  },
+  "3089": {
+   "name": "Rabadon's Deathcap",
+   "gold": 3500,
+   "depth": 2,
+   "stats": {
+    "ap": 130.0
+   },
+   "effects": [],
+   "stat_gold": 2817.6
+  },
+  "3091": {
+   "name": "Wit's End",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "mr": 45.0,
+    "as": 50.0
+   },
+   "effects": [],
+   "stat_gold": 2384.3
+  },
+  "3094": {
+   "name": "Rapid Firecannon",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "as": 35.0,
+    "crit": 25.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 2116.6
+  },
+  "3095": {
+   "name": "Stormrazor",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "ad": 50.0,
+    "as": 25.0,
+    "crit": 25.0
+   },
+   "effects": [],
+   "stat_gold": 3303.3
+  },
+  "3100": {
+   "name": "Lich Bane",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "ap": 100.0,
+    "haste": 10.0,
+    "ms_pct": 6.0
+   },
+   "effects": [],
+   "stat_gold": 2960.2
+  },
+  "3102": {
+   "name": "Banshee's Veil",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ap": 105.0,
+    "mr": 40.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 3276.0
+  },
+  "3107": {
+   "name": "Redemption",
+   "gold": 2300,
+   "depth": 3,
+   "stats": {
+    "ap": 30.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 1269.1
+  },
+  "3108": {
+   "name": "Fiendish Codex",
+   "gold": 850,
+   "depth": 2,
+   "stats": {
+    "ap": 25.0,
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 954.4
+  },
+  "3109": {
+   "name": "Knight's Vow",
+   "gold": 2300,
+   "depth": 3,
+   "stats": {
+    "hp": 200.0,
+    "armor": 40.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 1855.3
+  },
+  "3110": {
+   "name": "Frozen Heart",
+   "gold": 2500,
+   "depth": 3,
+   "stats": {
+    "armor": 75.0,
+    "haste": 20.0
+   },
+   "effects": [],
+   "stat_gold": 2524.4
+  },
+  "3111": {
+   "name": "Mercury's Treads",
+   "gold": 1250,
+   "depth": 2,
+   "stats": {
+    "mr": 20.0,
+    "ms": 45.0
+   },
+   "effects": [],
+   "stat_gold": 1072.4
+  },
+  "3112": {
+   "name": "Guardian's Orb",
+   "gold": 950,
+   "depth": 1,
+   "stats": {
+    "ap": 50.0,
+    "hp": 150.0
+   },
+   "effects": [
+    "mana",
+    "sustain"
+   ],
+   "stat_gold": 1486.0
+  },
+  "3113": {
+   "name": "Aether Wisp",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "ap": 30.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 903.7
+  },
+  "3114": {
+   "name": "Forbidden Idol",
+   "gold": 600,
+   "depth": 2,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "3115": {
+   "name": "Nashor's Tooth",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "ap": 80.0,
+    "as": 50.0,
+    "haste": 15.0
+   },
+   "effects": [],
+   "stat_gold": 3611.8
+  },
+  "3116": {
+   "name": "Rylai's Crystal Scepter",
+   "gold": 2600,
+   "depth": 3,
+   "stats": {
+    "ap": 65.0,
+    "hp": 400.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 2481.7
+  },
+  "3118": {
+   "name": "Malignance",
+   "gold": 2700,
+   "depth": 3,
+   "stats": {
+    "ap": 90.0,
+    "haste": 15.0
+   },
+   "effects": [],
+   "stat_gold": 2569.5
+  },
+  "3119": {
+   "name": "Winter's Approach",
+   "gold": 2400,
+   "depth": 3,
+   "stats": {
+    "hp": 550.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "mana"
+   ],
+   "stat_gold": 2094.1
+  },
+  "3123": {
+   "name": "Executioner's Calling",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 507.6
+  },
+  "3124": {
+   "name": "Guinsoo's Rageblade",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 30.0,
+    "ap": 30.0,
+    "as": 25.0
+   },
+   "effects": [],
+   "stat_gold": 2295.0
+  },
+  "3133": {
+   "name": "Caulfield's Warhammer",
+   "gold": 1050,
+   "depth": 2,
+   "stats": {
+    "ad": 20.0,
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 1089.4
+  },
+  "3134": {
+   "name": "Serrated Dirk",
+   "gold": 1000,
+   "depth": 2,
+   "stats": {
+    "ad": 20.0,
+    "pen": 10.0
+   },
+   "effects": [],
+   "stat_gold": 1047.0
+  },
+  "3135": {
+   "name": "Void Staff",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ap": 95.0,
+    "pen_pct": 40.0
+   },
+   "effects": [],
+   "stat_gold": 3776.9
+  },
+  "3137": {
+   "name": "Cryptbloom",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ap": 75.0,
+    "haste": 20.0,
+    "pen_pct": 30.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 3739.1
+  },
+  "3139": {
+   "name": "Mercurial Scimitar",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "ad": 50.0,
+    "mr": 35.0
+   },
+   "effects": [],
+   "stat_gold": 2567.3
+  },
+  "3140": {
+   "name": "Quicksilver Sash",
+   "gold": 1300,
+   "depth": 2,
+   "stats": {
+    "mr": 30.0
+   },
+   "effects": [],
+   "stat_gold": 750.2
+  },
+  "3142": {
+   "name": "Youmuu's Ghostblade",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "ms_pct": 4.0,
+    "pen": 18.0
+   },
+   "effects": [],
+   "stat_gold": 2781.0
+  },
+  "3143": {
+   "name": "Randuin's Omen",
+   "gold": 2700,
+   "depth": 3,
+   "stats": {
+    "hp": 350.0,
+    "armor": 75.0
+   },
+   "effects": [
+    "area",
+    "slow"
+   ],
+   "stat_gold": 2638.1
+  },
+  "3144": {
+   "name": "Scout's Slingshot",
+   "gold": 600,
+   "depth": 2,
+   "stats": {
+    "as": 20.0
+   },
+   "effects": [],
+   "stat_gold": 503.6
+  },
+  "3145": {
+   "name": "Hextech Alternator",
+   "gold": 1100,
+   "depth": 2,
+   "stats": {
+    "ap": 45.0
+   },
+   "effects": [],
+   "stat_gold": 975.3
+  },
+  "3146": {
+   "name": "Hextech Gunblade",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "ap": 80.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 3087.6
+  },
+  "3147": {
+   "name": "Haunting Guise",
+   "gold": 1300,
+   "depth": 2,
+   "stats": {
+    "ap": 30.0,
+    "hp": 200.0
+   },
+   "effects": [],
+   "stat_gold": 1186.7
+  },
+  "3152": {
+   "name": "Hextech Rocketbelt",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "ap": 60.0,
+    "hp": 350.0,
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 2651.8
+  },
+  "3153": {
+   "name": "Blade of The Ruined King",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "as": 25.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 1983.2
+  },
+  "3155": {
+   "name": "Hexdrinker",
+   "gold": 1300,
+   "depth": 2,
+   "stats": {
+    "ad": 25.0,
+    "mr": 25.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 1471.2
+  },
+  "3156": {
+   "name": "Maw of Malmortius",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "ad": 60.0,
+    "mr": 40.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 3649.5
+  },
+  "3157": {
+   "name": "Zhonya's Hourglass",
+   "gold": 3250,
+   "depth": 3,
+   "stats": {
+    "ap": 105.0,
+    "armor": 50.0
+   },
+   "effects": [
+    "stasis"
+   ],
+   "stat_gold": 3408.7
+  },
+  "3158": {
+   "name": "Ionian Boots of Lucidity",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "haste": 10.0,
+    "ms": 45.0
+   },
+   "effects": [],
+   "stat_gold": 984.8
+  },
+  "3161": {
+   "name": "Spear of Shojin",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "ad": 45.0,
+    "hp": 450.0
+   },
+   "effects": [],
+   "stat_gold": 2729.9
+  },
+  "3165": {
+   "name": "Morellonomicon",
+   "gold": 2850,
+   "depth": 3,
+   "stats": {
+    "ap": 75.0,
+    "hp": 350.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 3183.2
+  },
+  "3168": {
+   "name": "Immortal Path",
+   "gold": 1000,
+   "depth": 3,
+   "stats": {
+    "ms": 45.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 572.3
+  },
+  "3170": {
+   "name": "Swiftmarch",
+   "gold": 1000,
+   "depth": 3,
+   "stats": {
+    "ms": 65.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 826.6
+  },
+  "3171": {
+   "name": "Crimson Lucidity",
+   "gold": 900,
+   "depth": 3,
+   "stats": {
+    "haste": 20.0,
+    "ms": 45.0
+   },
+   "effects": [],
+   "stat_gold": 1397.4
+  },
+  "3172": {
+   "name": "Gunmetal Greaves",
+   "gold": 1100,
+   "depth": 3,
+   "stats": {
+    "as": 45.0,
+    "ms": 45.0
+   },
+   "effects": [],
+   "stat_gold": 1705.4
+  },
+  "3173": {
+   "name": "Chainlaced Crushers",
+   "gold": 1250,
+   "depth": 3,
+   "stats": {
+    "mr": 25.0,
+    "ms": 45.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 1197.4
+  },
+  "3174": {
+   "name": "Armored Advance",
+   "gold": 1200,
+   "depth": 3,
+   "stats": {
+    "armor": 35.0,
+    "ms": 45.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 1365.3
+  },
+  "3175": {
+   "name": "Spellslinger's Shoes",
+   "gold": 1100,
+   "depth": 3,
+   "stats": {
+    "ms": 45.0,
+    "pen": 20.0,
+    "pen_pct": 8.0
+   },
+   "effects": [],
+   "stat_gold": 1656.1
+  },
+  "3177": {
+   "name": "Guardian's Blade",
+   "gold": 950,
+   "depth": 1,
+   "stats": {
+    "ad": 30.0,
+    "hp": 150.0,
+    "haste": 15.0
+   },
+   "effects": [],
+   "stat_gold": 2036.4
+  },
+  "3179": {
+   "name": "Umbral Glaive",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ad": 60.0,
+    "haste": 15.0,
+    "pen": 18.0
+   },
+   "effects": [],
+   "stat_gold": 3315.5
+  },
+  "3181": {
+   "name": "Hullbreaker",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "hp": 500.0,
+    "ms_pct": 4.0
+   },
+   "effects": [
+    "structure"
+   ],
+   "stat_gold": 2948.3
+  },
+  "3184": {
+   "name": "Guardian's Hammer",
+   "gold": 950,
+   "depth": 1,
+   "stats": {
+    "ad": 25.0,
+    "hp": 150.0
+   },
+   "effects": [],
+   "stat_gold": 1248.4
+  },
+  "3190": {
+   "name": "Locket of the Iron Solari",
+   "gold": 2200,
+   "depth": 3,
+   "stats": {
+    "hp": 200.0,
+    "armor": 30.0,
+    "mr": 30.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 2378.9
+  },
+  "3211": {
+   "name": "Spectre's Cowl",
+   "gold": 1250,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0,
+    "mr": 35.0
+   },
+   "effects": [],
+   "stat_gold": 1411.7
+  },
+  "3222": {
+   "name": "Mikael's Blessing",
+   "gold": 2300,
+   "depth": 3,
+   "stats": {
+    "hp": 250.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 1289.4
+  },
+  "3302": {
+   "name": "Terminus",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 30.0,
+    "as": 35.0
+   },
+   "effects": [],
+   "stat_gold": 1896.6
+  },
+  "3340": {
+   "name": "Stealth Ward",
+   "gold": 0,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "3363": {
+   "name": "Farsight Alteration",
+   "gold": 0,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 0.0
+  },
+  "3364": {
+   "name": "Oracle Lens",
+   "gold": 0,
+   "depth": 1,
+   "stats": {},
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 0.0
+  },
+  "3504": {
+   "name": "Ardent Censer",
+   "gold": 2200,
+   "depth": 3,
+   "stats": {
+    "ap": 45.0,
+    "ms_pct": 4.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 1228.8
+  },
+  "3508": {
+   "name": "Essence Reaver",
+   "gold": 3050,
+   "depth": 3,
+   "stats": {
+    "ad": 50.0,
+    "crit": 25.0,
+    "haste": 20.0
+   },
+   "effects": [
+    "mana"
+   ],
+   "stat_gold": 3498.9
+  },
+  "3742": {
+   "name": "Dead Man's Plate",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "hp": 350.0,
+    "armor": 55.0,
+    "ms_pct": 4.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 2438.4
+  },
+  "3748": {
+   "name": "Titanic Hydra",
+   "gold": 3300,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "hp": 600.0
+   },
+   "effects": [],
+   "stat_gold": 2963.0
+  },
+  "3801": {
+   "name": "Crystalline Bracer",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [],
+   "stat_gold": 536.5
+  },
+  "3802": {
+   "name": "Lost Chapter",
+   "gold": 1200,
+   "depth": 2,
+   "stats": {
+    "ap": 40.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "mana",
+    "sustain"
+   ],
+   "stat_gold": 1279.5
+  },
+  "3803": {
+   "name": "Catalyst of Aeons",
+   "gold": 1300,
+   "depth": 2,
+   "stats": {
+    "hp": 300.0
+   },
+   "effects": [
+    "mana",
+    "sustain"
+   ],
+   "stat_gold": 804.7
+  },
+  "3814": {
+   "name": "Edge of Night",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 50.0,
+    "hp": 250.0,
+    "pen": 15.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 2917.8
+  },
+  "3865": {
+   "name": "World Atlas",
+   "gold": 400,
+   "depth": 1,
+   "stats": {},
+   "effects": [],
+   "stat_gold": 0.0
+  },
+  "3869": {
+   "name": "Celestial Opposition",
+   "gold": 400,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [
+    "area",
+    "slow"
+   ],
+   "stat_gold": 536.5
+  },
+  "3870": {
+   "name": "Dream Maker",
+   "gold": 400,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 536.5
+  },
+  "3871": {
+   "name": "Zaz'Zak's Realmspike",
+   "gold": 400,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [],
+   "stat_gold": 536.5
+  },
+  "3876": {
+   "name": "Solstice Sleigh",
+   "gold": 400,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [
+    "slow",
+    "sustain"
+   ],
+   "stat_gold": 536.5
+  },
+  "3877": {
+   "name": "Bloodsong",
+   "gold": 400,
+   "depth": 2,
+   "stats": {
+    "hp": 200.0
+   },
+   "effects": [],
+   "stat_gold": 536.5
+  },
+  "3916": {
+   "name": "Oblivion Orb",
+   "gold": 800,
+   "depth": 2,
+   "stats": {
+    "ap": 25.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 541.9
+  },
+  "4005": {
+   "name": "Imperial Mandate",
+   "gold": 2400,
+   "depth": 3,
+   "stats": {
+    "ap": 60.0,
+    "haste": 15.0
+   },
+   "effects": [],
+   "stat_gold": 1919.3
+  },
+  "4401": {
+   "name": "Force of Nature",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "hp": 400.0,
+    "mr": 55.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 2701.7
+  },
+  "4628": {
+   "name": "Horizon Focus",
+   "gold": 2700,
+   "depth": 3,
+   "stats": {
+    "ap": 75.0,
+    "haste": 25.0
+   },
+   "effects": [],
+   "stat_gold": 2656.9
+  },
+  "4629": {
+   "name": "Cosmic Drive",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ap": 70.0,
+    "hp": 350.0,
+    "haste": 25.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 3740.9
+  },
+  "4630": {
+   "name": "Blighting Jewel",
+   "gold": 1100,
+   "depth": 2,
+   "stats": {
+    "ap": 25.0,
+    "pen_pct": 13.0
+   },
+   "effects": [],
+   "stat_gold": 1100.2
+  },
+  "4632": {
+   "name": "Verdant Barrier",
+   "gold": 1600,
+   "depth": 2,
+   "stats": {
+    "ap": 40.0,
+    "mr": 25.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 1492.1
+  },
+  "4633": {
+   "name": "Riftmaker",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "ap": 70.0,
+    "hp": 350.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 3074.8
+  },
+  "4642": {
+   "name": "Bandleglass Mirror",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "ap": 20.0,
+    "haste": 10.0
+   },
+   "effects": [],
+   "stat_gold": 846.0
+  },
+  "4645": {
+   "name": "Shadowflame",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "ap": 110.0,
+    "pen": 15.0
+   },
+   "effects": [],
+   "stat_gold": 2939.3
+  },
+  "4646": {
+   "name": "Stormsurge",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ap": 90.0,
+    "ms_pct": 6.0,
+    "pen": 15.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 2886.1
+  },
+  "6333": {
+   "name": "Death's Dance",
+   "gold": 3300,
+   "depth": 3,
+   "stats": {
+    "ad": 60.0,
+    "armor": 50.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 3782.2
+  },
+  "6609": {
+   "name": "Chempunk Chainsword",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 45.0,
+    "hp": 450.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "antiheal"
+   ],
+   "stat_gold": 3348.7
+  },
+  "6610": {
+   "name": "Sundered Sky",
+   "gold": 3100,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "hp": 400.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "sustain"
+   ],
+   "stat_gold": 2839.1
+  },
+  "6616": {
+   "name": "Staff of Flowing Water",
+   "gold": 2250,
+   "depth": 3,
+   "stats": {
+    "ap": 35.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 1171.1
+  },
+  "6617": {
+   "name": "Moonstone Renewer",
+   "gold": 2200,
+   "depth": 3,
+   "stats": {
+    "ap": 25.0,
+    "hp": 200.0,
+    "haste": 20.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 1903.4
+  },
+  "6620": {
+   "name": "Echoes of Helia",
+   "gold": 2200,
+   "depth": 3,
+   "stats": {
+    "ap": 35.0,
+    "hp": 200.0,
+    "haste": 20.0
+   },
+   "effects": [
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 2120.2
+  },
+  "6621": {
+   "name": "Dawncore",
+   "gold": 2500,
+   "depth": 3,
+   "stats": {
+    "ap": 45.0
+   },
+   "effects": [
+    "mana",
+    "shield",
+    "sustain"
+   ],
+   "stat_gold": 975.3
+  },
+  "6631": {
+   "name": "Stridebreaker",
+   "gold": 3300,
+   "depth": 3,
+   "stats": {
+    "ad": 40.0,
+    "hp": 450.0,
+    "as": 25.0
+   },
+   "effects": [
+    "area",
+    "slow"
+   ],
+   "stat_gold": 3190.2
+  },
+  "6653": {
+   "name": "Liandry's Torment",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ap": 60.0,
+    "hp": 300.0
+   },
+   "effects": [],
+   "stat_gold": 2105.1
+  },
+  "6655": {
+   "name": "Luden's Echo",
+   "gold": 2750,
+   "depth": 3,
+   "stats": {
+    "ap": 100.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 2580.0
+  },
+  "6657": {
+   "name": "Rod of Ages",
+   "gold": 2600,
+   "depth": 3,
+   "stats": {
+    "ap": 45.0,
+    "hp": 350.0
+   },
+   "effects": [
+    "mana",
+    "sustain"
+   ],
+   "stat_gold": 1914.1
+  },
+  "6660": {
+   "name": "Bami's Cinder",
+   "gold": 900,
+   "depth": 2,
+   "stats": {
+    "hp": 150.0,
+    "haste": 5.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 608.6
+  },
+  "6662": {
+   "name": "Iceborn Gauntlet",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "hp": 300.0,
+    "armor": 50.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 2556.4
+  },
+  "6664": {
+   "name": "Hollow Radiance",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "hp": 400.0,
+    "mr": 40.0,
+    "haste": 10.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 2485.7
+  },
+  "6665": {
+   "name": "Jak'Sho, The Protean",
+   "gold": 3200,
+   "depth": 3,
+   "stats": {
+    "hp": 350.0,
+    "armor": 45.0,
+    "mr": 45.0
+   },
+   "effects": [],
+   "stat_gold": 3083.6
+  },
+  "6670": {
+   "name": "Noonquiver",
+   "gold": 1300,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0,
+    "crit": 20.0
+   },
+   "effects": [],
+   "stat_gold": 1293.0
+  },
+  "6672": {
+   "name": "Kraken Slayer",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 45.0,
+    "as": 40.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 2783.6
+  },
+  "6673": {
+   "name": "Immortal Shieldbow",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "crit": 25.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 2843.0
+  },
+  "6675": {
+   "name": "Navori Flickerblade",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "as": 40.0,
+    "crit": 25.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 2242.5
+  },
+  "6676": {
+   "name": "The Collector",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 50.0,
+    "crit": 25.0,
+    "pen": 10.0
+   },
+   "effects": [],
+   "stat_gold": 3043.9
+  },
+  "6690": {
+   "name": "Rectrix",
+   "gold": 775,
+   "depth": 2,
+   "stats": {
+    "ad": 15.0,
+    "ms_pct": 4.0
+   },
+   "effects": [],
+   "stat_gold": 761.1
+  },
+  "6692": {
+   "name": "Eclipse",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "ad": 60.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 2649.3
+  },
+  "6694": {
+   "name": "Serylda's Grudge",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 45.0,
+    "haste": 15.0,
+    "pen_pct": 35.0
+   },
+   "effects": [
+    "slow"
+   ],
+   "stat_gold": 3644.8
+  },
+  "6695": {
+   "name": "Serpent's Fang",
+   "gold": 2500,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "pen": 15.0
+   },
+   "effects": [
+    "shield"
+   ],
+   "stat_gold": 2416.5
+  },
+  "6696": {
+   "name": "Axiom Arc",
+   "gold": 2750,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "haste": 20.0,
+    "pen": 18.0
+   },
+   "effects": [],
+   "stat_gold": 3352.6
+  },
+  "6697": {
+   "name": "Hubris",
+   "gold": 2800,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "haste": 10.0,
+    "pen": 18.0
+   },
+   "effects": [],
+   "stat_gold": 2940.1
+  },
+  "6698": {
+   "name": "Profane Hydra",
+   "gold": 2850,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "haste": 10.0,
+    "pen": 18.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 2940.1
+  },
+  "6699": {
+   "name": "Voltaic Cyclosword",
+   "gold": 3000,
+   "depth": 3,
+   "stats": {
+    "ad": 55.0,
+    "haste": 10.0,
+    "pen": 10.0
+   },
+   "effects": [],
+   "stat_gold": 2644.0
+  },
+  "8010": {
+   "name": "Bloodletter's Curse",
+   "gold": 2900,
+   "depth": 3,
+   "stats": {
+    "ap": 65.0,
+    "hp": 400.0,
+    "haste": 15.0
+   },
+   "effects": [],
+   "stat_gold": 3100.6
+  },
+  "8020": {
+   "name": "Abyssal Mask",
+   "gold": 2650,
+   "depth": 3,
+   "stats": {
+    "hp": 350.0,
+    "mr": 45.0,
+    "haste": 15.0
+   },
+   "effects": [
+    "area"
+   ],
+   "stat_gold": 2682.9
+  }
+ }
+}

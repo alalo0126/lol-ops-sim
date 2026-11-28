@@ -1,0 +1,216 @@
+{
+ "champions": {
+  "Locke": {
+   "games": 60,
+   "sim_edge": -28.225,
+   "real_gold10": 275,
+   "real_solo_diff": 0.2,
+   "real_cs10": -4.1,
+   "sim_gold10": -1021
+  },
+  "Syndra": {
+   "games": 42,
+   "sim_edge": 17.611,
+   "real_gold10": -71,
+   "real_solo_diff": -0.381,
+   "real_cs10": 8.3,
+   "sim_gold10": 402
+  },
+  "Sylas": {
+   "games": 47,
+   "sim_edge": -15.176,
+   "real_gold10": -196,
+   "real_solo_diff": -0.085,
+   "real_cs10": -4.9,
+   "sim_gold10": -671
+  },
+  "Galio": {
+   "games": 41,
+   "sim_edge": -16.896,
+   "real_gold10": -54,
+   "real_solo_diff": 0.073,
+   "real_cs10": -2.8,
+   "sim_gold10": -575
+  },
+  "Akali": {
+   "games": 44,
+   "sim_edge": 24.619,
+   "real_gold10": 20,
+   "real_solo_diff": 0.227,
+   "real_cs10": 0.8,
+   "sim_gold10": 1878
+  },
+  "Yone": {
+   "games": 36,
+   "sim_edge": -8.039,
+   "real_gold10": -350,
+   "real_solo_diff": -0.417,
+   "real_cs10": 1.1,
+   "sim_gold10": -246
+  },
+  "Viktor": {
+   "games": 34,
+   "sim_edge": 26.603,
+   "real_gold10": -151,
+   "real_solo_diff": -0.147,
+   "real_cs10": 4.7,
+   "sim_gold10": 364
+  },
+  "TwistedFate": {
+   "games": 29,
+   "sim_edge": 18.922,
+   "real_gold10": 97,
+   "real_solo_diff": -0.103,
+   "real_cs10": -5.8,
+   "sim_gold10": 286
+  },
+  "Ekko": {
+   "games": 31,
+   "sim_edge": -7.159,
+   "real_gold10": -42,
+   "real_solo_diff": 0.129,
+   "real_cs10": -4.6,
+   "sim_gold10": -190
+  },
+  "Yasuo": {
+   "games": 24,
+   "sim_edge": 13.944,
+   "real_gold10": 554,
+   "real_solo_diff": 0.583,
+   "real_cs10": 13.2,
+   "sim_gold10": 454
+  }
+ },
+ "pairs": [
+  {
+   "pair": "Akali|Viktor",
+   "games": 6,
+   "sim_edge": -11.667,
+   "real_gold10": 312,
+   "same_sign": false
+  },
+  {
+   "pair": "Ekko|Galio",
+   "games": 6,
+   "sim_edge": -0.167,
+   "real_gold10": -182,
+   "same_sign": true
+  },
+  {
+   "pair": "Locke|TwistedFate",
+   "games": 6,
+   "sim_edge": -41.167,
+   "real_gold10": -144,
+   "same_sign": true
+  },
+  {
+   "pair": "Galio|Viktor",
+   "games": 9,
+   "sim_edge": -36.167,
+   "real_gold10": 190,
+   "same_sign": false
+  },
+  {
+   "pair": "Akali|Locke",
+   "games": 9,
+   "sim_edge": 57.333,
+   "real_gold10": -542,
+   "same_sign": false
+  },
+  {
+   "pair": "Akali|Sylas",
+   "games": 8,
+   "sim_edge": 53.417,
+   "real_gold10": 313,
+   "same_sign": true
+  },
+  {
+   "pair": "Galio|Locke",
+   "games": 7,
+   "sim_edge": 4.75,
+   "real_gold10": -308,
+   "same_sign": false
+  },
+  {
+   "pair": "Galio|Sylas",
+   "games": 7,
+   "sim_edge": -0.833,
+   "real_gold10": -47,
+   "same_sign": true
+  },
+  {
+   "pair": "Galio|Syndra",
+   "games": 5,
+   "sim_edge": -35.0,
+   "real_gold10": -340,
+   "same_sign": true
+  },
+  {
+   "pair": "Ekko|Locke",
+   "games": 8,
+   "sim_edge": 4.667,
+   "real_gold10": 116,
+   "same_sign": true
+  },
+  {
+   "pair": "Locke|Syndra",
+   "games": 10,
+   "sim_edge": -40.5,
+   "real_gold10": 607,
+   "same_sign": false
+  },
+  {
+   "pair": "TwistedFate|Yone",
+   "games": 6,
+   "sim_edge": 30.5,
+   "real_gold10": -55,
+   "same_sign": false
+  },
+  {
+   "pair": "Sylas|Yasuo",
+   "games": 5,
+   "sim_edge": -21.167,
+   "real_gold10": -1404,
+   "same_sign": true
+  },
+  {
+   "pair": "Akali|Syndra",
+   "games": 7,
+   "sim_edge": -14.25,
+   "real_gold10": 207,
+   "same_sign": false
+  },
+  {
+   "pair": "Locke|Yone",
+   "games": 6,
+   "sim_edge": -27.583,
+   "real_gold10": 200,
+   "same_sign": false
+  },
+  {
+   "pair": "Syndra|Viktor",
+   "games": 5,
+   "sim_edge": -27.917,
+   "real_gold10": 272,
+   "same_sign": false
+  },
+  {
+   "pair": "Locke|Sylas",
+   "games": 7,
+   "sim_edge": -5.667,
+   "real_gold10": 551,
+   "same_sign": false
+  },
+  {
+   "pair": "Ekko|Sylas",
+   "games": 7,
+   "sim_edge": -2.583,
+   "real_gold10": -91,
+   "same_sign": true
+  }
+ ],
+ "spearman_gold10": 0.018,
+ "spearman_solo": -0.139,
+ "spearman_cs10": 0.309,
+ "pairs_same_sign": "8/18"
+}

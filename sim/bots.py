@@ -96,13 +96,17 @@ class JunglerBot:
         for role in ("TOP", "MIDDLE", "BOTTOM"):
             lane = g.enemy(c, role).lane
             node = g.lane_node(lane)
-            enemies = [e for e in g.champs if e.team != c.team and e.role != "JUNGLE" and e.lane == lane and e.alive(g.t) and e.node in (node, g.tower_node(lane, e.team))]
+            # 맵핵 금지: 적 포탑 앞 라이너는 우리 시야에 있을 때만 보이고, 체력은 마지막으로 본 값
+            vis = g.vision(c.team)
+            enemies = [e for e in g.champs if e.team != c.team and e.role != "JUNGLE" and e.lane == lane and e.alive(g.t)
+                       and e.node in (node, g.tower_node(lane, e.team)) and e.node in vis]
             if not enemies:
                 continue
-            t = min(enemies, key=lambda e: e.hp)
+            hp = {e.pid: g.known_hp(c.team, e) for e in enemies}
+            t = min(enemies, key=lambda e: hp[e.pid])
             tt = self.travel(node)
-            if t.hp < hp_threshold and tt <= max_travel and (best is None or t.hp < best[1]):
-                best = (lane, t.hp)
+            if hp[t.pid] < hp_threshold and tt <= max_travel and (best is None or hp[t.pid] < best[1]):
+                best = (lane, hp[t.pid])
         return best[0] if best else None
 
     def invade_target(self, own_best_travel):
@@ -130,9 +134,10 @@ class JunglerBot:
         g, c = self.g, self.c
         pj = g.p["jungler"]
         ej = g.enemy(c, "JUNGLE")
-        if ej.alive(g.t) and ej.task and ej.task.get("kind") == "objective" and ej.task.get("started") \
+        ob_seen = lambda name: g.objectives[name]["node"] in g.vision(c.team)
+        if ej.alive(g.t) and ej.task and ej.task.get("kind") == "objective" and ej.task.get("started") and ob_seen(ej.task["name"]) \
                 and self.travel(g.objectives[ej.task["name"]]["node"]) <= ej.busy_until - g.t and g.rng.random() < pj["contest_prob"]:
-            return ej.task["name"]     # 적이 오브젝트를 치는 중(시야·라이너 핑으로 안다고 봄)
+            return ej.task["name"]     # 적이 오브젝트를 치는 중이고 그 둥지가 우리 시야 안(맵핵 금지: 안 보이면 모름)
         node, seen_t = g.enemy_jgl_seen[c.team]
         if node is None or g.t - seen_t > pj["contest_seen_within_s"]:
             return self.setup_target()
@@ -319,8 +324,9 @@ class JunglerBot:
                 h.task = {"kind": "helping", "until": g.t + dur}
                 g.move_to(h, ob["node"])
             # 적도 오브젝트를 보고 모인다(리플레이 10~20분 3명 이상 관여 킬 판당 11번, sim/game.py _group_fight가 교전)
+            seen_by_enemy = ob["node"] in g.vision(300 - c.team)   # 적 팀이 둥지를 볼 때만 모인다(맵핵 금지)
             for a in g.champs:
-                if a.team != c.team and free(a) and g.map.travel_s(a.node, ob["node"], a.ms) <= pr["travel_s"] \
+                if seen_by_enemy and a.team != c.team and free(a) and g.map.travel_s(a.node, ob["node"], a.ms) <= pr["travel_s"] \
                         and g.rng.random() < pr["respond_prob"][late]:
                     a.task = {"kind": "helping", "until": g.t + dur + pr["respond_hold_s"]}
                     g.move_to(a, ob["node"])
@@ -369,6 +375,7 @@ class JunglerBot:
             next(x for x in g.champs if x.pid == pid).hp = hp
         for f in res.flash_used:
             f.flash_at = g.t + g.p["gank"]["flash_cooldown_s"]
+            g.note_flash(f)
         for v in res.deaths:
             g.kill(res.killer, v, res.assists)
         for v, k, a in res.trades:
@@ -389,7 +396,7 @@ class LanerBot:
         champ.ms = 335
         champ.spent = champ.item_gold = 500.0   # 시작 아이템(1단계: 1분 보유 골드 중앙 0)
         champ.ward_charges = 1
-        champ.ward_next = game.p["laner"]["ward_recharge_s"]
+        champ.ward_next = game.trinket()[1]
         lo, hi = game.p["laner"]["trade_every_s"]
         champ.next_trade = game.p["laner"]["lane_start_s"] + game.rng.uniform(lo, hi)
 
@@ -415,7 +422,7 @@ class LanerBot:
             c.support_wards = min(pr["max_charges"], c.support_wards + (pr["early"] if g.t < 600 else pr["late"]) / 60)
         if c.ward_charges < pl["ward_max_charges"] and g.t >= c.ward_next:
             c.ward_charges += 1
-            c.ward_next = g.t + pl["ward_recharge_s"]
+            c.ward_next = g.t + g.trinket()[1]
         if c.path:
             return
         if c.node not in (center, tower):
@@ -458,7 +465,7 @@ class LanerBot:
         if c.ward_charges > 0 and g.t - seen_t >= pl["unseen_ward_s"] and g.t >= pl["lane_start_s"]:
             spots = [n for n in RIVER_WARD_NODE[lane] if not any(w["team"] == c.team and w["node"] == n for w in g.wards)]
             if spots:
-                g.wards.append({"team": c.team, "node": spots[0], "until": g.t + pl["ward_duration_s"], "pid": c.pid})
+                g.place_ward(c, spots[0])
                 g.events.append({"t": g.t, "type": "ward", "pid": c.pid})
                 c.ward_charges -= 1
         # 기본: 받아먹기. CS·경험치는 웨이브가 도착할 때 라인에 서 있으면 sim/lanes.py가 준다
@@ -577,7 +584,7 @@ class LanerBot:
                 n = int(c.support_wards) if c.role == "UTILITY" else 0
                 n += 1 if c.ward_charges > 0 else 0
                 for _ in range(max(0, n)):
-                    g.wards.append({"team": c.team, "node": c.node, "until": g.t + pl["ward_duration_s"], "pid": c.pid})
+                    g.wards.append({"team": c.team, "node": c.node, "until": g.t + pl["ward_duration_s"], "pid": c.pid, "kind": "support"})
                     g.events.append({"t": g.t, "type": "ward", "pid": c.pid})
                 if c.ward_charges > 0:
                     c.ward_charges -= 1
@@ -644,7 +651,7 @@ class LanerBot:
             return False
         foes = [e for e in g.champs if e.team != c.team and (e.role == c.role or e.role == "JUNGLE")]
         lv = sum(e.level for e in foes) / len(foes) - c.level
-        items = (sum(e.item_gold for e in foes) / len(foes) - c.item_gold) / 1000
+        items = (sum(g.known_item_gold(c.team, e) for e in foes) / len(foes) - c.item_gold) / 1000   # 마지막으로 본 아이템
         return lv >= pl["behind_level"] or items >= pl["behind_item_k"]
 
     def should_retreat(self, center):
