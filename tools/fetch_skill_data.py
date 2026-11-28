@@ -3,7 +3,7 @@
     python tools/fetch_skill_data.py
     → data/skills/meraki_champions.json   (Meraki Analytics: 전 챔피언 스킬 시전 시간·투사체 속도·폭·타게팅·계수, 레벨당 능력치)
       data/skills/meraki_items.json
-      data/skills/cdragon/<챔피언>.bin.json (CommunityDragon 게임 파일 원본, 교차 검수용 일부 챔피언)
+      data/skills/cdragon/<챔피언>.bin.json (CommunityDragon 게임 파일 원본, 기본은 전 챔피언, 이미 받은 건 건너뜀)
       data/skills/cdragon_version.txt
       data/skills/fetch_log.txt
 
@@ -44,7 +44,7 @@ def main():
         log.write(msg + "\n")
         log.flush()
 
-    for name, url in [("meraki_champions.json", f"{MERAKI}/champions.json"),
+    for name, url in [] if os.path.exists(os.path.join(OUT, "meraki_items.json")) else [("meraki_champions.json", f"{MERAKI}/champions.json"),
                       ("meraki_items.json", f"{MERAKI}/items.json")]:
         try:
             b = get(url)
@@ -58,8 +58,29 @@ def main():
         note("OK cdragon version " + meta.decode("utf-8", "replace")[:200])
     except Exception as e:  # noqa: BLE001
         note(f"실패 cdragon version: {e}")
-    names = sys.argv[1:] or SAMPLE
+    # 룬·아이템 효과 원본(효과 표 effects_<패치>.json용). 경로가 틀리면 실패로만 남김
+    for name, path in [("cdragon_items.bin.json", "game/items.cdtb.bin.json"),
+                       ("cdragon_perks.json", "plugins/rcp-be-lol-game-data/global/default/v1/perks.json"),
+                       ("cdragon_perkstyles.json", "plugins/rcp-be-lol-game-data/global/default/v1/perkstyles.json"),
+                       ("cdragon_items.json", "plugins/rcp-be-lol-game-data/global/default/v1/items.json")]:
+        if os.path.exists(os.path.join(OUT, name)):
+            continue
+        try:
+            b = get(f"{CDRAGON}/{path}")
+            open(os.path.join(OUT, name), "wb").write(b)
+            note(f"OK {name} {len(b)} bytes")
+        except Exception as e:  # noqa: BLE001
+            note(f"실패 {name}: {e}")
+    names = sys.argv[1:]
+    if names == ["--all"] or not names:
+        # 최신 Data Dragon 챔피언 목록(fetch_patch_data.py가 받아 둔 것) → 전 챔피언
+        vers = sorted(os.listdir(os.path.join("data", "ddragon")), key=lambda v: [int(x) for x in v.split(".")])
+        full = os.path.join("data", "ddragon", vers[-1], "en_US", "championFull.json")
+        names = sorted(c.lower() for c in json.load(open(full, encoding="utf-8"))["data"]) if os.path.exists(full) else SAMPLE
     for c in names:
+        p = os.path.join(OUT, "cdragon", f"{c}.bin.json")
+        if os.path.exists(p) and os.path.getsize(p) > 1000:
+            continue
         try:
             b = get(f"{CDRAGON}/game/data/characters/{c}/{c}.bin.json")
             open(os.path.join(OUT, "cdragon", f"{c}.bin.json"), "wb").write(b)
